@@ -1,0 +1,69 @@
+<div>
+  <h2 id="page-heading" data-cy="AuthorityHeading">
+    <span >Authorities</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <!-- <span class="sync" ></span> -->
+        <span >Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-authority"
+        [routerLink]="['/authority/new']"
+      >
+        <!-- <span class="plus"></span> -->
+        <span >Créer un nouveau Authority</span>
+      </button>
+    </div>
+  </h2>
+
+  @if (authorities?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span >Aucun Authority trouvé</span>
+    </div>
+  }
+
+  @if (authorities && authorities.length > 0) {
+    <div class="table-responsive table-entities" >
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ngelmakSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" ngelmakSortBy="name">
+              <div class="d-flex">
+                <span >Name</span>
+
+                <!-- <span class="p-1" class="sort"></span> -->
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (authority of authorities; track trackName(authority)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/authority', authority.name, 'view']">{{ authority.name }}</a>
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/authority', authority.name, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <!-- <span class="eye"></span> -->
+                    <span class="d-none d-md-inline" >Voir</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(authority)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <!-- <span class="times"></span> -->
+                    <span class="d-none d-md-inline" >Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

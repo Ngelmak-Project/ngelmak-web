@@ -1,0 +1,74 @@
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { AlertService } from 'app/shared/alert/alert.service';
+import { SignInService } from 'app/authentication/sign-in/sign-in.service';
+import { AuthenticationService } from 'app/core/auth/auth.service';
+import SharedModule from 'app/shared/shared.module';
+import { Field, form, required } from '@angular/forms/signals';
+
+interface LoginForm {
+  username: string;
+  password: string;
+  rememberMe: boolean;
+}
+
+@Component({
+  standalone: true,
+  selector: 'app-sign-in',
+  templateUrl: './sign-in.component.html',
+
+  imports: [SharedModule, RouterModule, Field],
+})
+export class SignInComponent implements OnInit {
+  private signInService = inject(SignInService);
+  private authService = inject(AuthenticationService);
+  private router = inject(Router);
+  private alertService = inject(AlertService);
+
+  protected loginModel = signal<LoginForm>({
+    username: 'user',
+    password: 'user',
+    rememberMe: false,
+  });
+
+  protected loginForm = form(this.loginModel, (schemaPath) => {
+    required(schemaPath.username, { message: 'Username is required' });
+    required(schemaPath.password, { message: 'Password is required' });
+  });
+
+  hide = true;
+
+  ngOnInit(): void {
+    // if already authenticated then navigate to home page
+    this.authService.identity().subscribe(() => {
+      if (this.authService.isAuthenticated()) {
+        this.router.navigate(['']);
+      }
+    });
+  }
+
+  signIn(): void {
+    const credentials = this.loginForm().value();
+    this.signInService.signIn(credentials).subscribe({
+      next: () => {
+        // There were no routing during signIn (eg from navigationToStoredUrl)
+        if (!this.router.currentNavigation()) {
+          this.router.navigate(['']);
+        } else {
+          console.log('Current Navigation', this.router.currentNavigation());
+        }
+        this.alertService.addAlert({
+          type: 'success',
+          message: 'Connexion avec succès!',
+        });
+      },
+      error: () => {
+        this.alertService.addAlert({
+          type: 'error',
+          message:
+            '<strong>Erreur d&apos;authentification !</strong> Veuillez vérifier vos identifiants de connexion.',
+        });
+      },
+    });
+  }
+}

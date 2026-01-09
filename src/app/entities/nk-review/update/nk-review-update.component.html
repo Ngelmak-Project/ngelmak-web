@@ -1,0 +1,160 @@
+<!-- <div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="app-review-heading" data-cy="ReviewCreateUpdateHeading" >
+        Créer ou éditer un Review
+      </h2>
+
+      <div>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" >ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_at" >At</label>
+          <div class="d-flex">
+            <input
+              id="field_at"
+              data-cy="at"
+              type="datetime-local"
+              class="form-control"
+              name="at"
+              formControlName="at"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (editForm.get('at')!.invalid && (editForm.get('at')!.dirty || editForm.get('at')!.touched)) {
+            <div>
+              @if (editForm.get('at')?.errors?.['required']) {
+                <small class="form-text text-danger" >Ce champ est obligatoire.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('at')?.errors?.['datetimelocal']"
+                id="entity.validation.datetimelocal"
+                >Ce champ doit être une date et une heure.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_status" >Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'ngelmakprojectApp.Status.null'  }}</option>
+            @for (status of statusValues; track $index) {
+              <option [value]="status">{{ 'ngelmakprojectApp.Status.' + status  }}</option>
+            }
+          </select>
+          @if (editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)) {
+            <div>
+              @if (editForm.get('status')?.errors?.['required']) {
+                <small class="form-text text-danger" >Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            for="field_timeout"
+            id="ngelmakprojectApp.review.timeout"
+            >Timeout</label
+          >
+          <input type="number" class="form-control" name="timeout" id="field_timeout" data-cy="timeout" formControlName="timeout" />
+          @if (editForm.get('timeout')!.invalid && (editForm.get('timeout')!.dirty || editForm.get('timeout')!.touched)) {
+            <div>
+              @if (editForm.get('timeout')?.errors?.['required']) {
+                <small class="form-text text-danger" >Ce champ est obligatoire.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('timeout')?.errors?.['number']"
+                id="entity.validation.number"
+                >Ce champ doit être un nombre.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_account" >Account</label>
+          <select
+            class="form-control"
+            id="field_account"
+            data-cy="account"
+            name="account"
+            formControlName="account"
+          >
+            @if (editForm.get(['account'])!.value == null) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (nkAccountOption of nkAccountsSharedCollection; track $index) {
+              <option [ngValue]="nkAccountOption">{{ nkAccountOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['account'])!.invalid && (editForm.get(['account'])!.dirty || editForm.get(['account'])!.touched)) {
+          <div>
+            @if (editForm.get(['account'])?.errors?.['required']) {
+              <small class="form-text text-danger" >Ce champ est obligatoire.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_ticket" >Ticket</label>
+          <select
+            class="form-control"
+            id="field_ticket"
+            data-cy="ticket"
+            name="ticket"
+            formControlName="ticket"
+          >
+            <option [ngValue]="null"></option>
+            @for (ticketOption of ticketsSharedCollection; track $index) {
+              <option [ngValue]="ticketOption">{{ ticketOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_replyto" >Replyto</label>
+          <select
+            class="form-control"
+            id="field_replyto"
+            data-cy="replyto"
+            name="replyto"
+            formControlName="replyto"
+          >
+            <option [ngValue]="null"></option>
+            @for (reviewOption of reviewsSharedCollection; track $index) {
+              <option [ngValue]="reviewOption">{{ reviewOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <span class="ban"></span>&nbsp;<span >Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <span class="save"></span>&nbsp;<span >Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div> -->

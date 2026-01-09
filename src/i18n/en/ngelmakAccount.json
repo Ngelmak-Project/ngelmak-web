@@ -1,0 +1,37 @@
+{
+  "ngelmakprojectApp": {
+    "nkAccount": {
+      "home": {
+        "title": "Ngelmak Accounts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Ngelmak Account",
+        "createOrEditLabel": "Create or edit a Ngelmak Account",
+        "notFound": "No Ngelmak Accounts found"
+      },
+      "created": "A new Ngelmak Account is created with identifier {{ param }}",
+      "updated": "A Ngelmak Account is updated with identifier {{ param }}",
+      "deleted": "A Ngelmak Account is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Ngelmak Account {{ id }}?"
+      },
+      "detail": {
+        "title": "Ngelmak Account"
+      },
+      "id": "ID",
+      "name": "Name",
+      "foregroundPicture": "Foreground Picture",
+      "backgroundPicture": "Background Picture",
+      "visibility": "Visibility",
+      "createdAt": "Created At",
+      "configuration": "Configuration",
+      "user": "User",
+      "reports": "Reports",
+      "owners": "Owners",
+      "comment": "Comment",
+      "memberships": "Memberships",
+      "subscriptions": "Subscriptions",
+      "post": "Post",
+      "review": "Review"
+    }
+  }
+}

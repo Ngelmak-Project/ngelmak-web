@@ -1,0 +1,155 @@
+<div class="bg-white dark:bg-slate-800 box-border m-4 rounded-xl p-5 relative gap-6 sm:w-[80%] w-[90%] mx-auto" *ngIf="post">
+  <button matTooltip="Fermer" (click)="previousState()" class="absolute top-5 right-5" type="button">
+    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+      height="24" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M6 18 17.94 6M18 18 6.06 6" />
+    </svg>
+  </button>
+  <!-- Header -->
+  <div class="flex flex-col gap-5">
+    <div class="flex items-center">
+      <a class="inline-flex mr-4" [routerLink]="['/profile', post.account.name]">
+        @if (post.account.avatar) {
+        <img [src]="post.account.avatar" alt="Account avatar" class="rounded-full max-w-none w-12 h-12" />
+        } @else {
+        <div
+          class="flex items-center justify-center rounded-full max-w-none w-12 h-12 text-6xl uppercase text-black bg-gray-50 dark:bg-gray-300]">
+          {{post.account.name.at(0)}}
+        </div>
+        }
+      </a>
+      <div class="flex flex-col flex-grow">
+        <!-- Name and following button -->
+        <div class="flex items-center space-x-2">
+          <a class="inline-block text-xl font-medium text-gray-900 dark:text-white"
+            [routerLink]="['/account', post.account.name ]">{{post.account.name}}</a>
+          <svg class="w-5 h-5 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd"
+              d="M12 2c-.791 0-1.55.314-2.11.874l-.893.893a.985.985 0 0 1-.696.288H7.04A2.984 2.984 0 0 0 4.055 7.04v1.262a.986.986 0 0 1-.288.696l-.893.893a2.984 2.984 0 0 0 0 4.22l.893.893a.985.985 0 0 1 .288.696v1.262a2.984 2.984 0 0 0 2.984 2.984h1.262c.261 0 .512.104.696.288l.893.893a2.984 2.984 0 0 0 4.22 0l.893-.893a.985.985 0 0 1 .696-.288h1.262a2.984 2.984 0 0 0 2.984-2.984V15.7c0-.261.104-.512.288-.696l.893-.893a2.984 2.984 0 0 0 0-4.22l-.893-.893a.985.985 0 0 1-.288-.696V7.04a2.984 2.984 0 0 0-2.984-2.984h-1.262a.985.985 0 0 1-.696-.288l-.893-.893A2.984 2.984 0 0 0 12 2Zm3.683 7.73a1 1 0 1 0-1.414-1.413l-4.253 4.253-1.277-1.277a1 1 0 0 0-1.415 1.414l1.985 1.984a1 1 0 0 0 1.414 0l4.96-4.96Z"
+              clip-rule="evenodd" />
+          </svg>
+          <button type="button" class="inline-flex items-center text-xl font-medium text-gray-900 dark:text-white">
+            Following
+          </button>
+        </div>
+        <!-- Keywords and publish at -->
+        <div class="flex flex-col-reverse items-start sm:flex-row sm:items-center space-x-1">
+          <div class="inline-flex items-center justify-start flex-wrap">
+            <span *ngFor="let keyword of post.keywords.split(',')"
+              class="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 text-xs font-medium me-2 px-2.5 py-0.5 rounded">{{keyword}}</span>
+          </div>
+          <span class="w-1 h-1 bg-gray-600 dark:bg-slate-400 rounded-full mr-1 hidden sm:block"></span>
+          <div class="text-gray-500 dark:text-gray-400 break-words">
+            {{post.at | date : "long"}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Replay to a post content -->
+  <div>
+  </div>
+  <!-- Actual post's content -->
+  <div class="px-2">
+    <div class="text-black dark:text-gray-200" [innerHTML]="post.content"></div>
+  </div>
+
+  <!-- Attachments -->
+  <!-- <div [@scaleInOutAnimation]="files()" class="flex flex-col gap-5 mt-14 p-3 sm:p-5">
+    <div *ngFor="let file of files()" class="flex flex-col gap-3.5">
+      @if (file.type == 'TEXT') {
+      <div @fadeInUp class="mt-4 relative text-gray-900 dark:text-white overflow-y-auto"
+        [innerHTML]="file.textContent"></div>
+
+      } @else if (file.type == 'IMAGE') {
+      <div class="flex items-start">
+        <figure class="w-full">
+          <img class="h-auto w-full rounded-lg" [src]="file.url" alt="Imported image">
+          @if (file.caption) {
+          <figcaption class="mt-2 text-sm text-left text-gray-500 dark:text-gray-400">{{file.caption}}
+          </figcaption>
+          }
+        </figure>
+      </div>
+      }
+    </div>
+  </div> -->
+
+  <!-- Comments -->
+  <div class="flex flex-col gap-4 p-5 mt-14">
+    <!-- Write a comment -->
+    <app-comment-update [post]="post" (onSaveSuccess)="onSaveSuccess($event)"></app-comment-update>
+
+    @if (comments()) {
+    <ol class="relative border-s border-gray-200 dark:border-gray-700">
+      <li *ngFor="let comment of sortReverse(comments())" class="mb-5 ms-6">
+        <span
+          class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 dark:bg-blue-900">
+          <img class="rounded-full shadow-lg" src="https://randomuser.me/api/portraits/men/35.jpg" alt="Bonnie image" />
+        </span>
+        @if (updatingComment() && updatingComment().id==comment.id) {
+        <!-- Replay comment -->
+        <app-comment-update [post]="post" [comment]="updatingComment()"
+          (onSaveSuccess)="onSaveSuccess($event)"></app-comment-update>
+        } @else {
+        <div
+          class="flex items-start justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+          <div class="flex flex-col gap-2">
+            <div class="text-sm font-normal text-gray-500 dark:text-gray-300" [innerHTML]="comment.content"></div>
+            <div class="inline-flex max-h-48" *ngIf="comment.url">
+              <img class="h-auto rounded-lg shadow-xl dark:shadow-gray-800" [src]="comment.url" alt="Imported image">
+            </div>
+          </div>
+          <div class="flex-shrink-0 text-xs font-normal text-gray-400">{{comment.at | duration}}</div>
+        </div>
+        }
+        <div class="flex items-center mt-4 space-x-4 flex-wrap">
+          <button type="button"
+            class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium">
+            <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 20 18">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
+            </svg>
+            <span class="hidden sm:inline-flex">Répondre</span>
+          </button>
+          @if (comment.account.id==nkAccount().id) {
+          @if (!updatingComment()) {
+          <button (click)="updatingComment.set(comment)" type="button"
+            class="flex items-center text-sm text-gray-500 dark:text-gray-400 font-medium">
+            <svg class="mr-1.5 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28" />
+            </svg>
+            <span class="hidden sm:inline-flex">Modifier</span>
+          </button>
+          <button (click)="deleteComment(comment.id)" type="button"
+            class="flex items-center text-red-300 hover:text-white font-medium text-sm">
+            <svg class="mr-1.5 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
+            </svg>
+            <span class="hidden sm:inline-flex">Supprimer</span>
+          </button>
+          } @else {
+          <button (click)="updatingComment.set(null)" type="button"
+            class="flex items-center text-sm text-gray-500 dark:text-gray-400 font-medium">
+            <svg class="mr-1.5 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M6 18 17.94 6M18 18 6.06 6" />
+            </svg>
+            Annuler
+          </button>
+          }
+          }
+        </div>
+      </li>
+    </ol>
+    }
+  </div>
+</div>

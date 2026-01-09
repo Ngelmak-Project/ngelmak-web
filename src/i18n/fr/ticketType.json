@@ -1,0 +1,9 @@
+{
+  "ngelmakprojectApp": {
+    "TicketType": {
+      "null": "",
+      "ABUSE": "ABUSE",
+      "APPROVAL_REQUEST": "APPROVAL_REQUEST"
+    }
+  }
+}

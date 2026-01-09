@@ -1,0 +1,20 @@
+.wrapper {
+  @apply flex flex-col p-2 bg-white border border-gray-200 dark:border-gray-600 rounded-lg shadow dark:bg-gray-800 top-10 right-0 z-30 absolute  before:border-x-transparent before:border-x-8 before:border-b-[.4rem] before:border-b-gray-200 dark:before:border-b-gray-600 before:w-0 before:h-0 before:right-2 before:-top-[.4rem] before:absolute;
+}
+
+.plyr-action {
+  @apply flex cursor-pointer items-center justify-center h-8 w-8 text-gray-700 rounded-sm hover:bg-cyan-400 dark:text-gray-300 dark:hover:text-white transition-[background-color] duration-500 disabled:cursor-not-allowed;
+}
+
+.menu-item {
+  @apply flex items-center justify-between gap-2 rounded-md p-2 text-sm font-medium text-gray-900 dark:text-white cursor-pointer hover:bg-cyan-400 hover:text-white transition-[background-color,text-color] duration-300;
+}
+
+.menu-subitem {
+  @apply flex items-center justify-between gap-1 rounded-md p-2 px-4 hover:bg-cyan-400 text-xs font-medium text-gray-900 dark:text-white cursor-pointer hover:text-white transition-[background-color,text-color];
+}
+
+// input[type='radio'] {
+//   @apply appearance-none flex items-center justify-center w-4 h-4 rounded-full outline-none border-2 focus:border-cyan-500 dark:focus:border-cyan-600 checked:border-cyan-500 dark:checked:border-cyan-600;
+//   @apply before:block before:w-2 before:h-2 before:rounded-full focus:before:bg-cyan-500 dark:focus:before:bg-cyan-600 checked:before:bg-cyan-500 dark:checked:before:bg-cyan-600;
+// }

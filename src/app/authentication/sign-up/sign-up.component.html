@@ -1,0 +1,117 @@
+<!-- <div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900">
+  <a href="" class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
+    <img src="assets/images/logo.svg" class="mr-4 h-11" alt="FlowBite Logo" />
+    <span>Ngelmak</span>
+  </a>
+  <div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+      Créer un compte gratuitement
+    </h2>
+    <form class="flex flex-col gap-4" (ngSubmit)="register()" [formGroup]="registerForm">
+      <div class="grid grid-cols-1 sm:grid-cols-2 items-start gap-4 mt-8">
+        <mat-form-field>
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="firstName" />
+          <mat-error *ngIf="registerForm.get('firstName')!.dirty &&
+          registerForm.get('firstName')?.errors?.['required']">Votre prénom est obligatoire.</mat-error>
+          <mat-error *ngIf="registerForm.get('firstName')!.dirty &&
+          registerForm.get('firstName')?.errors?.['minlength']">Votre prénom doit contenir plus d'un
+            caractère.</mat-error>
+          <mat-error *ngIf="registerForm.get('firstName')!.dirty &&
+          registerForm.get('firstName')?.errors?.['maxlength']">Votre prénom ne peut pas contenir plus de 50
+            caractères.</mat-error>
+          <mat-error *ngIf="registerForm.get('firstName')!.dirty &&
+          registerForm.get('firstName')?.errors?.['pattern']">Votre prénom est invalide.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="lastName" />
+          <mat-error *ngIf="registerForm.get('lastName')!.dirty &&
+          registerForm.get('lastName')?.errors?.['required']">Votre nom est obligatoire.</mat-error>
+          <mat-error *ngIf="registerForm.get('lastName')!.dirty &&
+          registerForm.get('lastName')?.errors?.['minlength']">Votre nom doit contenir plus d'un
+            caractère.</mat-error>
+          <mat-error *ngIf="registerForm.get('lastName')!.dirty &&
+          registerForm.get('lastName')?.errors?.['maxlength']">Votre nom ne peut pas contenir plus de 50
+            caractères.</mat-error>
+          <mat-error *ngIf="registerForm.get('lastName')!.dirty &&
+          registerForm.get('lastName')?.errors?.['pattern']">Votre nom est invalide.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Nom d'utilisateur</mat-label>
+          <input matInput formControlName="login" />
+          <mat-error *ngIf="registerForm.get('login')!.dirty &&
+          registerForm.get('login')?.errors?.['required']">Votre nom d'utilisateur est obligatoire.</mat-error>
+          <mat-error *ngIf="registerForm.get('login')!.dirty &&
+          registerForm.get('login')?.errors?.['minlength']">Votre nom d'utilisateur doit contenir plus d'un
+            caractère.</mat-error>
+          <mat-error *ngIf="registerForm.get('login')!.dirty &&
+          registerForm.get('login')?.errors?.['maxlength']">Votre nom d'utilisateur ne peut pas contenir plus de 50
+            caractères.</mat-error>
+          <mat-error *ngIf="registerForm.get('login')!.dirty &&
+          registerForm.get('login')?.errors?.['pattern']">Votre nom d'utilisateur est invalide.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" />
+          <mat-error *ngIf="registerForm.get('email')!.dirty &&
+          registerForm.get('email')?.errors?.['required']">Votre email est requis.</mat-error>
+          <mat-error *ngIf="registerForm.get('email')!.dirty &&
+          registerForm.get('email')?.errors?.['invalid']">Votre email n'est pas valide.</mat-error>
+          <mat-error *ngIf="registerForm.get('email')!.dirty &&
+          registerForm.get('email')?.errors?.['minlength']">Votre email doit comporter au moins 5
+            caractères.</mat-error>
+          <mat-error *ngIf="registerForm.get('email')!.dirty &&
+          registerForm.get('email')?.errors?.['maxlength']">Votre email ne doit pas comporter plus de 50
+            caractères.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Nouveau mot de passe</mat-label>
+          <input matInput type="password" formControlName="password" />
+          <mat-error *ngIf="registerForm.get('password')!.dirty &&
+          registerForm.get('password')?.errors?.['required']">Votre mot de passe est requis.</mat-error>
+          <mat-error *ngIf="registerForm.get('password')!.dirty &&
+          registerForm.get('password')?.errors?.['minlength']">
+            Votre mot de passe doit comporter au moins 4 caractères.
+          </mat-error>
+          <mat-error *ngIf="registerForm.get('password')!.dirty &&
+          registerForm.get('password')?.errors?.['maxlength']">
+            Votre mot de passe ne doit pas comporter plus de 50 caractères.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Confirmation du nouveau mot de passe</mat-label>
+          <input matInput required type="password" formControlName="confirmPassword" />
+          <mat-error *ngIf="registerForm.get('confirmPassword')!.dirty &&
+          registerForm.get('confirmPassword')?.errors?.['required']">Votre confirmation du mot de passe est
+            requise.</mat-error>
+          <mat-error *ngIf="registerForm.get('confirmPassword')!.dirty &&
+          registerForm.get('confirmPassword')?.errors?.['minlength']">
+            Votre confirmation du mot de passe doit comporter au moins 4
+            caractères.
+          </mat-error>
+          <mat-error *ngIf="registerForm.get('confirmPassword')!.dirty &&
+          registerForm.get('confirmPassword')?.errors?.['maxlength']">Votre confirmation du mot de passe ne doit pas
+            comporter plus de 50
+            caractères.
+          </mat-error>
+        </mat-form-field>
+
+        <app-password-strength-bar [passwordToCheck]="registerForm.get('password')!.value"></app-password-strength-bar>
+      </div>
+      <button type="submit"
+        class="col-span-full px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-2 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+        Enregistrement
+      </button>
+    </form>
+    <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
+      Vous avez déjà un compte ?
+      <a routerLink="/sign-in" class="text-primary-700 hover:underline dark:text-primary-500">Connectez-vous ici</a>
+    </div>
+  </div>
+</div> -->

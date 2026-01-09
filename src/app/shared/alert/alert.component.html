@@ -1,0 +1,53 @@
+<div class="flex justify-center fixed left-0 bottom-0 w-full">
+  <div [@scaleInOutAnimation]="alertService.get().slice(-3)" class="flex flex-col gap-2 absolute bottom-0">
+    <div class="flex items-center space-x-2 w-full sm:w-96 p-4 rounded-sm shadow dark:divide-gray-700  border-l-4"
+      [ngClass]="alert.type" *ngFor="let alert of alertService.get().slice(-3)" @fadeInUp>
+      <div class="flex items-center w-full divide-x divide-gray-800 space-x-4">
+        @if (alert.showIcon) {
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="alert-icon w-6 h-6">
+          <use *ngIf="alert.type=='info'" href="#info"></use>
+          <use *ngIf="alert.type=='error'" href="#error"></use>
+          <use *ngIf="alert.type=='success'" href="#success"></use>
+          <use *ngIf="alert.type=='warning'" href="#warning"></use>
+        </svg>
+        }
+        <div class="flex-grow ps-4 text-md font-normal text-gray-800" [innerHTML]="alert.message"></div>
+      </div>
+      @if (alert.showCloseButton) {
+      <div class="flex items-center">
+        <button type="button" (click)="alertService.closeAlert(alert.id)"
+          class="ms-auto -mx-1.5 -my-1.5 justify-center items-center flex-shrink-0 text-gray-400 hover:text-gray-50 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-800 inline-flex h-8 w-8"
+          data-dismiss-target="#toast-alert" aria-label="Close">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+</div>
+
+
+<svg style="display: none">
+  <defs>
+    <symbol id="error" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+    </symbol>
+    <symbol id="warning" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+    </symbol>
+    <symbol id="info" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+    </symbol>
+    <symbol id="success" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+    </symbol>
+  </defs>
+</svg>

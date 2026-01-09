@@ -1,0 +1,57 @@
+<!-- <h2 mat-dialog-title>Enregistrement vocal</h2>
+<mat-dialog-content>
+  <div class="flex flex-col gap-2 justify-center items-center">
+    <div class="frame rounded-full">
+      <input
+        type="checkbox"
+        name="toggle"
+        id="record-toggle"
+      />
+
+      <svg viewBox="0 0 100 100">
+        <circle cx="50%" cy="50%" r="45" class="circle-svg" />
+      </svg>
+
+      <div class="mic">
+        <div
+          class="bg-[linear-gradient(45deg,_#686666_50%,_rgb(150,_148,_148)_50%)] dark:bg-[linear-gradient(45deg,_#e0e0e0_50%,_white_50%)] mic__head"
+        ></div>
+        <div
+          class="bg-[linear-gradient(45deg,_#686666_50%,_rgb(150,_148,_148)_50%)] dark:bg-[linear-gradient(45deg,_#e0e0e0_50%,_white_50%)] mic__neck"
+        ></div>
+        <div
+          class="bg-[linear-gradient(45deg,_#686666_50%,_rgb(150,_148,_148)_50%)] dark:bg-[linear-gradient(45deg,_#e0e0e0_50%,_white_50%)] mic__leg"
+        ></div>
+      </div>
+
+      <div class="recording">
+        <div class="round"></div>
+        <div class="round"></div>
+        <div class="round"></div>
+      </div>
+
+      <label for="record-toggle" class="toggle-label rounded-full" (click)="toggleRecording()"></label>
+    </div>
+    <span
+      class="text-2xl font-bold text-gray-600 dark:text-white tracking-wide"
+      >{{ timer }}</span
+    >
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="flex gap-2">
+  <button
+    mat-dialog-close
+    class="text-md text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 hover:dark:bg-gray-700 dark:text-red-400 focus:border-white focus:border-2 px-4 py-2"
+    type="button"
+  >
+    Annuler
+  </button>
+  <button
+    (click)="save()"
+    class="text-md text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 hover:dark:bg-gray-700 dark:text-blue-400 px-4 py-2"
+    type="button"
+    *ngIf="isStarted()"
+  >
+    Enregistrer
+  </button>
+</mat-dialog-actions> -->

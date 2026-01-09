@@ -1,0 +1,12 @@
+{
+  "ngelmakprojectApp": {
+    "AttachmentType": {
+      "null": "",
+      "DOCUMENT": "DOCUMENT",
+      "IMAGE": "IMAGE",
+      "VIDEO": "VIDEO",
+      "SONG": "SONG",
+      "LINK": "LINK"
+    }
+  }
+}

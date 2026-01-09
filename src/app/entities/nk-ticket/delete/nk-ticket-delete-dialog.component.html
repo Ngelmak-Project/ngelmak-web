@@ -1,0 +1,22 @@
+@if (ticket) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(ticket.id!)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="ticketDeleteDialogHeading" >Confirmation de suppression</h4>
+    </div>
+
+    <div class="modal-body">      <p id="app-delete-ticket-heading" >
+        Êtes-vous certain de vouloir supprimer le Ticket {{ ticket.id }} ?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+        <span class="ban"></span>&nbsp;<span >Annuler</span>
+      </button>
+
+      <button id="app-confirm-delete-ticket" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <span class="times"></span>&nbsp;<span >Supprimer</span>
+      </button>
+    </div>
+  </form>
+}

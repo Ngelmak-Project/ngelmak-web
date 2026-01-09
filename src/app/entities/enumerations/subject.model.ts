@@ -1,0 +1,11 @@
+export enum Subject {
+  OPEN_LETTER = 'OPEN_LETTER',
+
+  CRITIC = 'CRITIC',
+
+  OPINION = 'OPINION',
+
+  SUGGESTION = 'SUGGESTION',
+
+  IDEA = 'IDEA',
+}

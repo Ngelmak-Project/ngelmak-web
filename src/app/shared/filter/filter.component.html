@@ -1,0 +1,20 @@
+@if (filters.hasAnyFilterSet()) {
+  <div class="filter-display">
+    <span >Following filters are set</span>
+    <button class="btn" (click)="clearAllFilters()" (keydown.enter)="clearAllFilters()">
+      <span class="times" title="{{ 'entity.filters.clearAll'  }}"></span>
+    </button>
+    <ul>
+      @for (filterOption of filters.filterOptions; track filterOption.name) {
+        @for (value of filterOption.values; track value) {
+          <li>
+            <span>{{ filterOption.name }}:</span> {{ value }}
+            <button class="btn" (click)="clearFilter(filterOption.name, value)" (keydown.enter)="clearFilter(filterOption.name, value)">
+              <span class="times" title="{{ 'entity.filters.clear'  }}"></span>
+            </button>
+          </li>
+        }
+      }
+    </ul>
+  </div>
+}

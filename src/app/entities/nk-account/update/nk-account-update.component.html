@@ -1,0 +1,75 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-nk-account-heading"
+        data-cy="NkAccountCreateUpdateHeading"
+        id="ngelmakprojectApp.nkAccount.home.createOrEditLabel"
+      >
+        Créer ou éditer un Ngelmak Account
+      </h2>
+
+      <div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_name" >Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <!-- <div class="mb-3">
+          <label class="form-label" for="field_avatar" id="ngelmakprojectApp.nkAccount.avatar"
+            >Foreground Picture</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="avatar"
+            id="field_avatar"
+            data-cy="avatar"
+            formControlName="avatar"
+          />
+        </div> -->
+
+        <!-- <div class="mb-3">
+          <label class="form-label" for="field_banner" id="ngelmakprojectApp.nkAccount.banner"
+            >Background Picture</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="banner"
+            id="field_banner"
+            data-cy="banner"
+            formControlName="banner"
+          />
+        </div> -->
+
+        <div class="mb-3">
+          <label class="form-label" for="field_visibility" >Visibility</label>
+          <select class="form-control" name="visibility" formControlName="visibility" id="field_visibility" data-cy="visibility">
+            <option [ngValue]="null">{{ 'ngelmakprojectApp.Accessibility.null'  }}</option>
+            @for (accessibility of accessibilityValues; track $index) {
+              <option [value]="accessibility">{{ 'ngelmakprojectApp.Accessibility.' + accessibility  }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <span class="ban"></span>&nbsp;<span >Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <span class="save"></span>&nbsp;<span >Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

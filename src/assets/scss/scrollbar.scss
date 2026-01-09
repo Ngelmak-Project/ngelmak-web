@@ -1,0 +1,74 @@
+/* General scrollbar styles */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+  height: 12px; /* Height of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Default light background */
+  border-radius: 10px; /* Rounded corners */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1; /* Default thumb color */
+  border-radius: 10px; /* Rounded corners */
+  border: 2px solid #f1f1f1; /* Creates space around the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a1a1a1; /* Hover state color */
+}
+
+/* Scrollbar buttons */
+::-webkit-scrollbar-button:vertical:decrement {
+  background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8"><path d="M0 4l4-4 4 4H0z" fill="gray"/></svg>') no-repeat center center;
+  background-size: 10px;
+  height: 16px; /* Height of the up button */
+}
+
+::-webkit-scrollbar-button:vertical:increment {
+  background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8"><path d="M0 0l4 4 4-4H0z" fill="gray"/></svg>') no-repeat center center;
+  background-size: 10px;
+  height: 16px; /* Height of the down button */
+}
+
+
+/* Light Theme */
+.light {
+  --scrollbar-bg: #f1f1f1;
+  --scrollbar-thumb: #c1c1c1;
+  --scrollbar-thumb-hover: #a1a1a1;
+}
+
+.light ::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg);
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border: 3px solid var(--scrollbar-bg);
+}
+
+.light ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
+/* Dark Theme */
+.dark {
+  --scrollbar-bg: #2a2a2a;
+  --scrollbar-thumb: #4a4a4a;
+  --scrollbar-thumb-hover: #6a6a6a;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border: 3px solid var(--scrollbar-bg);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}

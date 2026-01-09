@@ -1,0 +1,22 @@
+@if (post) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(post.id!)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="postDeleteDialogHeading" >Confirmation de suppression</h4>
+    </div>
+
+    <div class="modal-body">      <p id="app-delete-post-heading" >
+        Êtes-vous certain de vouloir supprimer le Post {{ post.id }} ?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+        <span class="ban"></span>&nbsp;<span >Annuler</span>
+      </button>
+
+      <button id="app-confirm-delete-post" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <span class="times"></span>&nbsp;<span >Supprimer</span>
+      </button>
+    </div>
+  </form>
+}

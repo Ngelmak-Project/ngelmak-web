@@ -1,0 +1,35 @@
+<nav *ngIf="page" class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4 px-4"
+  aria-label="Table navigation">
+  <span
+    class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">Affichage
+    <span class="font-semibold text-gray-900 dark:text-white">{{page.number * page.size + 1 }}-{{page.number * page.size
+      + page.size}}</span> sur
+    <span class="font-semibold text-gray-900 dark:text-white">{{page.totalElements}}</span></span>
+  <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+    <li>
+      <button type="button" (click)="this.gotopage.emit(page.number-1)" [disabled]="page.isFirst"
+        class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+          viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="m15 19-7-7 7-7" />
+        </svg>
+      </button>
+    </li>
+    <li *ngFor="let item of sequence(page.number, page.totalPages)">
+      <button (click)="gotopage.emit(item.value)"
+        [ngClass]="{'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-white': item.value==page.number, 'text-gray-500 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400': item.value!=page.number }"
+        class="flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-white">{{item?.name}}</button>
+    </li>
+    <li>
+      <button type="button" (click)="this.gotopage.emit(page.number + 1)" [disabled]="page.isLast"
+        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+          viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="m9 5 7 7-7 7" />
+        </svg>
+      </button>
+    </li>
+  </ul>
+</nav>

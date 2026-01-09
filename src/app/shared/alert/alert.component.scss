@@ -1,0 +1,27 @@
+.success {
+  @apply bg-green-200 border-l-green-400;
+  .alert-icon {
+    @apply text-green-800;
+  }
+}
+
+.info {
+  @apply bg-blue-200 border-l-blue-400;
+  .alert-icon {
+    @apply text-blue-800;
+  }
+}
+
+.warning {
+  @apply bg-orange-200 border-l-orange-400;
+  .alert-icon {
+    @apply text-orange-800;
+  }
+}
+
+.error {
+  @apply bg-red-200 border-l-red-400;
+  .alert-icon {
+    @apply text-red-800;
+  }
+}

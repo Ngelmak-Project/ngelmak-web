@@ -1,0 +1,12 @@
+{
+  "ngelmakprojectApp": {
+    "Accessibility": {
+      "null": "",
+      "DEFAULT": "DEFAULT",
+      "PUBLIC": "PUBLIC",
+      "PRIVATE": "PRIVATE",
+      "AUTHORITY": "AUTHORITY",
+      "JURNALIST": "JURNALIST"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<!-- <h2 mat-dialog-title>Importation d'un document</h2>
+<mat-dialog-content class="w-full">
+  <div class="flex flex-col items-center justify-center gap-1 w-full">
+    <label for="ngelmak-file-input"
+      class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+      <div class="flex flex-col items-center justify-center pt-5 pb-6">
+        <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          fill="none" viewBox="0 0 20 16">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+        </svg>
+        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+          <span class="font-semibold">Cliquer pour importer un ficher</span>
+        </p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">
+          VIDEO, IMAGE, PDF, XSF, ... (MAX. 10MEGA)
+        </p>
+      </div>
+      <input id="ngelmak-file-input" type="file" class="hidden" (change)="onFileSelected($event)" #fileUpload />
+    </label>
+    @if (file()) {
+    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400 font-semibold">
+      {{ file().filename }}
+    </p>
+    <div [formGroup]="fileForm">
+      <mat-form-field>
+        <mat-label>Légende</mat-label>
+        <input matInput formControlName="caption" type="text">
+        <mat-error *ngIf="fileForm.get('caption')!.dirty &&
+        fileForm.get('caption')?.errors?.['maxlength']">Le titre ne doit pas dépasser 50
+          caractères.</mat-error>
+        <mat-error *ngIf="fileForm.get('caption')!.dirty &&
+        fileForm.get('caption')?.errors?.['pattern']">Eviter les caractères spéciaux</mat-error>
+      </mat-form-field>
+    </div>
+    }
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="flex gap-2">
+  <div class="inline-flex justify-end">
+    <button mat-dialog-close cdkFocusInitial type="button"
+      class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-2 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Annuler</button>
+    <button type="button" (click)="save()"
+      class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Enregistrer</button>
+  </div>
+</mat-dialog-actions> -->

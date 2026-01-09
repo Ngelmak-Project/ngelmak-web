@@ -1,0 +1,183 @@
+<div #videoPlyr *ngIf="source">
+  <div class="plyr-container">
+    <!-- screen button player -->
+    <div class="plyr-playback-animation opacity-100">
+      <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+        width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+        <use href="#playback-play"></use>
+        <use class="hidden" href="#playback-pause"></use>
+      </svg>
+    </div>
+
+    <!-- hides video controls by default -->
+    <video [controls]="false" class="plyr" preload="metadata" [poster]="poster">
+      @if (!lazyloaded) {
+      <source [src]="source" type="video/mp4" />
+      }
+    </video>
+
+    <div class="plyr-controls">
+      <!-- PROGRESS -->
+      <div class="plyr-progress group/plyr-progress">
+        <progress class="progress-bar hidden" value="0" min="0"></progress>
+        <input
+          class="progress-bar-input w-full h-2 mb-5 accent-blue-600 ring-0 hover:ring-1 ring-gray-50 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700"
+          value="0" min="0" type="range" step="1" />
+        <!-- tooltip of duration on hover -->
+        <div class="progress-bar-tooltip group-hover/plyr-progress:block">
+          00:00
+        </div>
+      </div>
+
+      <div class="plyr-bottom-controls">
+        <div class="plyr-left-bottom-controls">
+          <!-- PLAY -->
+          <button type="button" data-title="Play (k)" class="play">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+              viewBox="0 0 24 24" class="playback-icons w-6 h-6 text-gray-800 dark:text-white">
+              <use href="#play-icon"></use>
+              <use class="hidden" href="#pause"></use>
+            </svg>
+          </button>
+
+          <!-- VOLUME -->
+          <div class="volume-controls">
+            <button type="button" data-title="Mute" class="volume-button">
+              <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <use class="hidden" href="#volume-mute"></use>
+                <use class="hidden" href="#volume-low"></use>
+                <use href="#volume-high"></use>
+              </svg>
+            </button>
+
+            <input class="volume" id="volume" value="1" data-mute="0.5" type="range" max="1" min="0" step="0.01" />
+          </div>
+
+          <!-- TIME -->
+          <div class="time">
+            <time class="time-elapsed">00:00</time>
+            <span> / </span>
+            <time class="duration">00:00</time>
+          </div>
+        </div>
+
+        <div class="plyr-right-bottom-controls">
+          <div class="plyr-speed-settings">
+            <!-- hidden by default -->
+            <div class="plyr-speed-settings-options hide">
+              <label>
+                <input type="radio" class="plyr-speed" name="plyr-speed" value="1.75" />
+                1.75&times;
+              </label>
+              <label>
+                <input type="radio" class="plyr-speed" name="plyr-speed" value="1.5" />
+                1.5&times;
+              </label>
+              <label>
+                <input type="radio" class="plyr-speed" name="plyr-speed" value="1" checked />
+                Normal
+              </label>
+              <label>
+                <input type="radio" class="plyr-speed" name="plyr-speed" value="0.5" />
+                0.5&times;
+              </label>
+              <label>
+                <input type="radio" class="plyr-speed" name="plyr-speed" value="0.75" />
+                0.75&times;
+              </label>
+            </div>
+            <button type="button" data-title="Vitesse" class="settings-button">
+              <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 13v-2a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.536a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.536.535L14 4.757V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v.757l-1.707.707-.536-.535a1 1 0 0 0-1.414 0L4.929 6.343a1 1 0 0 0 0 1.414l.536.536L4.757 10H4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.536a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.536-.535 1.707.707V20a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.708.536.536a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.536.707-1.707H20a1 1 0 0 0 1-1Z" />
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+              </svg>
+            </button>
+          </div>
+          <button type="button" data-title="Fenêtre" class="pip-button">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <use href="#pip"></use>
+            </svg>
+          </button>
+          <button type="button" data-title="Plein écran" class="fullscreen-button" id="fullscreen-button">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <use href="#fullscreen"></use>
+              <use href="#fullscreen-exit" class="hidden"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<svg style="display: none">
+  <defs>
+    <symbol id="playback-pause" viewBox="0 0 24 24">
+      <path fill-rule="evenodd"
+        d="M8 5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H8Zm7 0a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1Z"
+        clip-rule="evenodd" />
+    </symbol>
+
+    <symbol id="playback-play" viewBox="0 0 24 24">
+      <path fill-rule="evenodd" d="M8.6 5.2A1 1 0 0 0 7 6v12a1 1 0 0 0 1.6.8l8-6a1 1 0 0 0 0-1.6l-8-6Z"
+        clip-rule="evenodd" />
+    </symbol>
+
+    <symbol id="playback-load" viewBox="0 0 24 24">
+      <path
+        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+        fill="currentColor" />
+      <path
+        d="M9^3.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+        fill="currentFill" />
+    </symbol>
+
+    <symbol id="pause" viewBox="0 0 24 24">
+      <path d="M14.016 5.016h3.984v13.969h-3.984v-13.969zM6 18.984v-13.969h3.984v13.969h-3.984z"></path>
+    </symbol>
+
+    <symbol id="play-icon" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M8 18V6l8 6-8 6Z" />
+    </symbol>
+
+    <symbol id="volume-high" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M15.5 8.43A4.985 4.985 0 0 1 17 12a4.984 4.984 0 0 1-1.43 3.5m2.794 2.864A8.972 8.972 0 0 0 21 12a8.972 8.972 0 0 0-2.636-6.364M12 6.135v11.73a1 1 0 0 1-1.64.768L6 15H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2l4.36-3.633a1 1 0 0 1 1.64.768Z" />
+    </symbol>
+
+    <symbol id="volume-low" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M17.5 8.43A4.985 4.985 0 0 1 19 12a4.984 4.984 0 0 1-1.43 3.5M14 6.135v11.73a1 1 0 0 1-1.64.768L8 15H6a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2l4.36-3.633a1 1 0 0 1 1.64.768Z" />
+    </symbol>
+
+    <symbol id="volume-mute" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M15.5 8.43A4.985 4.985 0 0 1 17 12c0 1.126-.5 2.5-1.5 3.5m2.864-9.864A8.972 8.972 0 0 1 21 12c0 2.023-.5 4.5-2.5 6M7.8 7.5l2.56-2.133a1 1 0 0 1 1.64.768V12m0 4.5v1.365a1 1 0 0 1-1.64.768L6 15H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1m1-4 14 14" />
+    </symbol>
+
+    <symbol id="fullscreen" viewBox="0 0 24 24">
+      <path
+        d="M14.016 5.016h4.969v4.969h-1.969v-3h-3v-1.969zM17.016 17.016v-3h1.969v4.969h-4.969v-1.969h3zM5.016 9.984v-4.969h4.969v1.969h-3v3h-1.969zM6.984 14.016v3h3v1.969h-4.969v-4.969h1.969z">
+      </path>
+    </symbol>
+
+    <symbol id="fullscreen-exit" viewBox="0 0 24 24">
+      <path
+        d="M15.984 8.016h3v1.969h-4.969v-4.969h1.969v3zM14.016 18.984v-4.969h4.969v1.969h-3v3h-1.969zM8.016 8.016v-3h1.969v4.969h-4.969v-1.969h3zM5.016 15.984v-1.969h4.969v4.969h-1.969v-3h-3z">
+      </path>
+    </symbol>
+
+    <symbol id="pip" viewBox="0 0 24 24">
+      <path
+        d="M21 19.031v-14.063h-18v14.063h18zM23.016 18.984q0 0.797-0.609 1.406t-1.406 0.609h-18q-0.797 0-1.406-0.609t-0.609-1.406v-14.016q0-0.797 0.609-1.383t1.406-0.586h18q0.797 0 1.406 0.586t0.609 1.383v14.016zM18.984 11.016v6h-7.969v-6h7.969z">
+      </path>
+    </symbol>
+  </defs>
+</svg>

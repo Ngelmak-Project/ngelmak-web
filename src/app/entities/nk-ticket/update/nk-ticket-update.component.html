@@ -1,0 +1,196 @@
+<!-- <div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="app-ticket-heading" data-cy="TicketCreateUpdateHeading" >
+        Créer ou éditer un Ticket
+      </h2>
+
+      <div>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" >ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            for="field_object"
+            id="ngelmakprojectApp.ticket.object"
+            >Object</label
+          >
+          <input type="text" class="form-control" name="object" id="field_object" data-cy="object" formControlName="object" />
+          @if (editForm.get('object')!.invalid && (editForm.get('object')!.dirty || editForm.get('object')!.touched)) {
+            <div>
+              @if (editForm.get('object')?.errors?.['required']) {
+                <small class="form-text text-danger" >Ce champ est obligatoire.</small>
+              }
+              @if (editForm.get('object')?.errors?.['minlength']) {
+                <small class="form-text text-danger" id="entity.validation.minlength"
+                  >Ce champ doit faire au minimum 50 caractères.</small
+                >
+              }
+              @if (editForm.get('object')?.errors?.['maxlength']) {
+                <small class="form-text text-danger" id="entity.validation.maxlength"
+                  >Ce champ doit faire moins de 200 caractères.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_type" >Type</label>
+          <select class="form-control" name="type" formControlName="type" id="field_type" data-cy="type">
+            <option [ngValue]="null">{{ 'ngelmakprojectApp.TicketType.null'  }}</option>
+            @for (ticketType of ticketTypeValues; track $index) {
+              <option [value]="ticketType">{{ 'ngelmakprojectApp.TicketType.' + ticketType  }}</option>
+            }
+          </select>
+          @if (editForm.get('type')!.invalid && (editForm.get('type')!.dirty || editForm.get('type')!.touched)) {
+            <div>
+              @if (editForm.get('type')?.errors?.['required']) {
+                <small class="form-text text-danger" >Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_at" >At</label>
+          <div class="d-flex">
+            <input
+              id="field_at"
+              data-cy="at"
+              type="datetime-local"
+              class="form-control"
+              name="at"
+              formControlName="at"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (editForm.get('at')!.invalid && (editForm.get('at')!.dirty || editForm.get('at')!.touched)) {
+            <div>
+              @if (editForm.get('at')?.errors?.['required']) {
+                <small class="form-text text-danger" >Ce champ est obligatoire.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('at')?.errors?.['datetimelocal']"
+                id="entity.validation.datetimelocal"
+                >Ce champ doit être une date et une heure.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_closed" >Closed</label>
+          <input type="checkbox" class="form-check" name="closed" id="field_closed" data-cy="closed" formControlName="closed" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_content" >Content</label>
+          <textarea class="form-control" name="content" id="field_content" data-cy="content" formControlName="content"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_postRelated" >Post Related</label>
+          <select
+            class="form-control"
+            id="field_postRelated"
+            data-cy="postRelated"
+            name="postRelated"
+            formControlName="postRelated"
+          >
+            <option [ngValue]="null"></option>
+            @for (postOption of postsSharedCollection; track $index) {
+              <option [ngValue]="postOption">{{ postOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_commentRelated" id="ngelmakprojectApp.ticket.commentRelated"
+            >Comment Related</label
+          >
+          <select
+            class="form-control"
+            id="field_commentRelated"
+            data-cy="commentRelated"
+            name="commentRelated"
+            formControlName="commentRelated"
+          >
+            <option [ngValue]="null"></option>
+            @for (commentOption of commentsSharedCollection; track $index) {
+              <option [ngValue]="commentOption">{{ commentOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_accountRelated" id="ngelmakprojectApp.ticket.accountRelated"
+            >Account Related</label
+          >
+          <select
+            class="form-control"
+            id="field_accountRelated"
+            data-cy="accountRelated"
+            name="accountRelated"
+            formControlName="accountRelated"
+            [compareWith]="compareNkAccount"
+          >
+            <option [ngValue]="null"></option>
+            @for (nkAccountOption of nkAccountsSharedCollection; track $index) {
+              <option [ngValue]="nkAccountOption">{{ nkAccountOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_issuedby" >Issuedby</label>
+          <select
+            class="form-control"
+            id="field_issuedby"
+            data-cy="issuedby"
+            name="issuedby"
+            formControlName="issuedby"
+            [compareWith]="compareNkAccount"
+          >
+            @if (editForm.get(['issuedby'])!.value == null) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (nkAccountOption of nkAccountsSharedCollection; track $index) {
+              <option [ngValue]="nkAccountOption">{{ nkAccountOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['issuedby'])!.invalid && (editForm.get(['issuedby'])!.dirty || editForm.get(['issuedby'])!.touched)) {
+          <div>
+            @if (editForm.get(['issuedby'])?.errors?.['required']) {
+              <small class="form-text text-danger" >Ce champ est obligatoire.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <span class="ban"></span>&nbsp;<span >Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <span class="save"></span>&nbsp;<span >Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div> -->

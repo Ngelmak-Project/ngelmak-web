@@ -1,0 +1,12 @@
+{
+  "ngelmakprojectApp": {
+    "Opinion": {
+      "null": "",
+      "DEFAULT": "DEFAULT",
+      "OPPOSED": "OPPOSED",
+      "SUPPORT": "SUPPORT",
+      "NEUTRAL": "NEUTRAL",
+      "STRENGTHENED": "REINFORCED"
+    }
+  }
+}

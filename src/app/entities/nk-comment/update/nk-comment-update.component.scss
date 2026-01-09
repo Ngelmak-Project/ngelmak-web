@@ -1,0 +1,10 @@
+/* Placeholder styling (default hidden) */
+.nk-editor.placeholder:before {
+  content: attr(data-placeholder);
+  position: absolute;
+  color: black;
+  pointer-events: none;
+  opacity: .5;
+  left: 10px;
+  top: 8px;
+}

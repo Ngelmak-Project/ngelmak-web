@@ -1,0 +1,86 @@
+<!-- <div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="app-privilege-heading" data-cy="PrivilegeCreateUpdateHeading" >
+        Créer ou éditer un Privilege
+      </h2>
+
+      <div>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" >ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_lastUpdate" >Last Update</label>
+          <div class="d-flex">
+            <input
+              id="field_lastUpdate"
+              data-cy="lastUpdate"
+              type="datetime-local"
+              class="form-control"
+              name="lastUpdate"
+              formControlName="lastUpdate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_defaultAccessibility" id="ngelmakprojectApp.privilege.defaultAccessibility"
+            >Default Accessibility</label
+          >
+          <select
+            class="form-control"
+            name="defaultAccessibility"
+            formControlName="defaultAccessibility"
+            id="field_defaultAccessibility"
+            data-cy="defaultAccessibility"
+          >
+            <option [ngValue]="null">{{ 'ngelmakprojectApp.Accessibility.null'  }}</option>
+            @for (accessibility of accessibilityValues; track $index) {
+              <option [value]="accessibility">{{ 'ngelmakprojectApp.Accessibility.' + accessibility  }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_defaultVisibility" id="ngelmakprojectApp.privilege.defaultVisibility"
+            >Default Visibility</label
+          >
+          <select
+            class="form-control"
+            name="defaultVisibility"
+            formControlName="defaultVisibility"
+            id="field_defaultVisibility"
+            data-cy="defaultVisibility"
+          >
+            <option [ngValue]="null">{{ 'ngelmakprojectApp.Visibility.null'  }}</option>
+            @for (visibility of visibilityValues; track $index) {
+              <option [value]="visibility">{{ 'ngelmakprojectApp.Visibility.' + visibility  }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <span class="ban"></span>&nbsp;<span >Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <span class="save"></span>&nbsp;<span >Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div> -->

@@ -1,0 +1,139 @@
+@if (nkAccount()) {
+<section class="w-full overflow-hidden dark:bg-gray-900">
+  <div class="flex flex-col">
+    @if (nkAccount().banner) {
+    <img [src]="nkAccount().banner" alt="Account banner"
+      class="rounded-md w-full xl:h-[20rem] lg:h-[18rem] md:h-[16rem] sm:h-[14rem] h-[11rem]" />
+    } @else {
+    <div class="bg-gray-100 dark:bg-gray-700 w-full xl:h-[20rem] lg:h-[18rem] md:h-[16rem] sm:h-[14rem] h-[11rem]">
+    </div>
+    }
+
+    <div class="sm:w-[80%] w-[90%] mx-auto h-48 relative">
+      <div class="flex gap-2 items-center w-full absolute -top-1/3">
+        <!-- AVATAR -->
+        @if (!editAvatar()) {
+        <div class="w-48 h-48 rounded-md outline outline-2 outline-offset-2 outline-blue-500 relative group/avatar">
+          @if (nkAccount().avatar) {
+          <img [src]="nkAccount().avatar" alt="Account avatar" class="w-full h-full rounded-md" />
+          } @else {
+          <div
+            class="flex items-center justify-center rounded-md w-full h-full text-9xl uppercase text-black bg-gray-50 dark:bg-gray-300]">
+            {{nkAccount()?.name.at(0)}}
+          </div>
+          }
+          <label (click)="fileUpload.click();"
+            class="flex items-center rounded-md justify-center w-full h-full bg-gray-400/75 invisible group-hover/avatar:visible absolute top-0 right-0">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-9 h-9 text-white dark:text-gray-50">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+            </svg>
+            <input type="file" accept=".png, .jpg, .jpeg" class="hidden" (change)="handleImage($event)" #fileUpload />
+          </label>
+        </div>
+        <!-- EDIT AVATAR -->
+        } @else {
+        <div class="flex flex-col items-center relative">
+          <div class="w-48 h-48 rounded-md outline outline-2 outline-offset-2 outline-blue-500">
+            <img class="rounded-md w-full h-full" [src]="imageSrc()" alt="Uploaded avatar image" />
+          </div>
+
+          <div class="inline-flex rounded-md shadow-xs absolute bottom-2">
+            <button type="button" [disabled]="isUploading()" (click)="editAvatar.set(false)"
+              class="inline-flex items-center p-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+              <svg class="w-3 h-3 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M6 18 17.94 6M18 18 6.06 6" />
+              </svg>
+              Annuler
+            </button>
+            <button (click)="uploadAvatar()" type="button" [disabled]="isUploading()"
+              class="inline-flex items-center p-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+              @if (isUploading()) {
+              <svg aria-hidden="true" role="status"
+                class="inline w-3 h-3 me-1 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101"
+                fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="currentColor" />
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="#1C64F2" />
+              </svg>
+              } @else {
+              <svg class="w-3 h-3 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 17h3a3 3 0 0 0 0-6h-.025a5.56 5.56 0 0 0 .025-.5A5.5 5.5 0 0 0 7.207 9.021C7.137 9.017 7.071 9 7 9a4 4 0 1 0 0 8h2.167M12 19v-9m0 0-2 2m2-2 2 2" />
+              </svg>
+              }
+              Enregistrer
+            </button>
+          </div>
+        </div>
+        }
+        <h1 class="text-gray-800 dark:text-white lg:text-4xl md:text-3xl sm:text-3xl text-xl font-serif">
+          {{nkAccount()?.name}}
+        </h1>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-col gap-4 xl:w-[80%] lg:w-[90%] md:w-[90%] sm:w-[92%] w-[90%] mx-auto relative lg:-top-8 md:-top-6 sm:-top-4 -top-4">
+      @if (nkAccount().description) {
+      <p class="w-fit text-gray-700 dark:text-gray-400 text-md">{{nkAccount().description}}</p>
+      } @else {
+      <blockquote class="w-full text-xl italic font-semibold text-gray-900 dark:text-white">
+        <p>Aucune description...</p>
+      </blockquote>
+      }
+
+      <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
+          <li class="me-2">
+            <a routerLink="./" [routerLinkActiveOptions]="{exact: true}"
+              routerLinkActive="border-blue-600 dark:border-blue-500 hover:text-blue-600 dark:hover:text-blue-500"
+              class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-4 h-4 me-2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
+              </svg>
+              Details
+            </a>
+          </li>
+          <li class="me-2">
+            <a routerLink="posts"
+              routerLinkActive="border-blue-600 dark:border-blue-500 hover:text-blue-600 dark:hover:text-blue-500"
+              class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-4 h-4 me-2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z" />
+              </svg>
+              Publications
+            </a>
+          </li>
+          <!-- <li class="me-2">
+            <a routerLink="subscriptions"
+              routerLinkActive="border-blue-600 dark:border-blue-500 hover:text-blue-600 dark:hover:text-blue-500"
+              class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-4 h-4 me-2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
+              </svg>
+              Subscriptions
+            </a>
+          </li> -->
+        </ul>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</section>
+}

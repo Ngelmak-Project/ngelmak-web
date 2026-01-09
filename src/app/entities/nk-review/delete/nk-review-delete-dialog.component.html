@@ -1,0 +1,22 @@
+@if (review) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(review.id!)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="reviewDeleteDialogHeading" >Confirmation de suppression</h4>
+    </div>
+
+    <div class="modal-body">      <p id="app-delete-review-heading" >
+        Êtes-vous certain de vouloir supprimer le Review {{ review.id }} ?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+        <span class="ban"></span>&nbsp;<span >Annuler</span>
+      </button>
+
+      <button id="app-confirm-delete-review" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <span class="times"></span>&nbsp;<span >Supprimer</span>
+      </button>
+    </div>
+  </form>
+}

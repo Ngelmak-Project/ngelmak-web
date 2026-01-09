@@ -1,0 +1,36 @@
+<!-- <h2 mat-dialog-title>
+  <div class="inline-flex items-center">Certification de compte</div>
+</h2>
+
+
+<mat-dialog-content class="w-full">
+  <form class="flex flex-col gap-4 py-2" [formGroup]="privilegeForm">
+    <mat-form-field class="w-full">
+      <mat-label>Type de document</mat-label>
+      <mat-select required formControlName="officialDocType">
+        <mat-option value="NATIONAL_ID_CARD">Carte Nationale d'Identité (CNI)</mat-option>
+        <mat-option value="PASSPORT">Passeport</mat-option>
+      </mat-select>
+      <mat-error *ngIf="privilegeForm.get('officialDocType')!.dirty &&
+      privilegeForm.get('officialDocType')?.errors?.['required']">Ce champ est requis.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full min-h-[50px]">
+      <mat-label>Numéro d'identification</mat-label>
+      <input matInput required formControlName="officialDocIdentification"
+        placeholder="Pourquoi accorder ce privilège ?">
+      <mat-error *ngIf="privilegeForm.get('officialDocIdentification')!.dirty &&
+      privilegeForm.get('officialDocIdentification')?.errors?.['required']">Ce champ est requis.</mat-error>
+      <mat-error *ngIf="privilegeForm.get('officialDocIdentification')!.dirty &&
+      privilegeForm.get('officialDocIdentification')?.errors?.['maxlength']">Écrivez au plus 20 caractères.
+      </mat-error>
+      <mat-hint align="end">Numéro de la CNI ou du passeport.</mat-hint>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="inline-flex justify-end">
+    <button mat-dialog-close cdkFocusInitial type="button" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-2 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Annuler</button>
+    <button type="button" (click)="save()" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Enregistrer</button>
+  </div>
+</mat-dialog-actions> -->

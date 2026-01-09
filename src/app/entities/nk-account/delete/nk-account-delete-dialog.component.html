@@ -1,0 +1,28 @@
+@if (nkAccount) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(nkAccount.id!)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="nkAccountDeleteDialogHeading" >
+        Confirmation de suppression
+      </h4>
+    </div>
+
+    <div class="modal-body">      <p
+        id="app-delete-nkAccount-heading"
+        id="ngelmakprojectApp.nkAccount.delete.question"
+
+      >
+        Êtes-vous certain de vouloir supprimer le Ngelmak Account {{ nkAccount.id }} ?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+        <span class="ban"></span>&nbsp;<span >Annuler</span>
+      </button>
+
+      <button id="app-confirm-delete-nkAccount" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <span class="times"></span>&nbsp;<span >Supprimer</span>
+      </button>
+    </div>
+  </form>
+}

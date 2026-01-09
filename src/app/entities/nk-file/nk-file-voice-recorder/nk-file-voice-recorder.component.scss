@@ -1,0 +1,179 @@
+%pseudo {
+  content: "";
+  display: inline-block;
+}
+
+%absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+// use only the available space inside the 400x400 frame
+.frame {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 2px;
+  overflow: hidden;
+  font-family: "Open Sans", Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input {
+  display: none;
+}
+
+$circle-size: 100px;
+svg {
+  @extend %absolute-center;
+  width: $circle-size;
+  height: $circle-size;
+  margin-top: $circle-size * -0.5;
+  margin-left: $circle-size * -0.5;
+  .circle-svg {
+    @apply stroke-gray-800 dark:stroke-white fill-transparent;
+    stroke-width: 3;
+  }
+}
+
+$mic-size: 65px;
+.mic {
+  width: $mic-size;
+  height: $mic-size;
+  @extend %absolute-center;
+  margin-top: $mic-size * -0.5;
+  margin-left: $mic-size * -0.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+  &__head {
+    width: $mic-size * 0.3;
+    width: 30px;
+    height: $mic-size * 0.75;
+    border-radius: 30px;
+    &::after {
+      @extend %pseudo;
+      @extend %absolute-center;
+      top: 10%;
+      width: 8px;
+      height: 20px;
+      border-radius: inherit;
+      transform: translate(-50%);
+    }
+  }
+  &__neck {
+    width: $mic-size * 0.05;
+    height: $mic-size * 0.2;
+  }
+  &__leg {
+    width: $mic-size * 0.3;
+    height: $mic-size * 0.05;
+    border-radius: 50px;
+  }
+}
+
+.recording {
+  @extend %absolute-center;
+  width: $mic-size;
+  height: $mic-size;
+  margin-top: $mic-size * -0.5;
+  margin-left: $mic-size * -0.5;
+  transform: scale(0.5);
+  opacity: 0;
+  transition: all 0.3s 0s ease;
+}
+.round {
+  @apply bg-gray-800 dark:bg-white;
+  $round-size: $mic-size * 0.15;
+  @extend %absolute-center;
+  width: $round-size;
+  height: $round-size;
+  border-radius: 50%;
+  margin-top: $round-size * -0.5;
+  margin-left: $round-size * -0.5;
+  animation: recording 1s ease-in-out infinite;
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.15);
+  &:first-child {
+    left: 20%;
+  }
+  &:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  &:last-child {
+    left: 80%;
+    animation-delay: 0.3s;
+  }
+}
+
+.toggle-label {
+  @extend %absolute-center;
+  display: inline-block;
+  width: $circle-size;
+  height: $circle-size;
+  margin-top: $circle-size * -0.5;
+  margin-left: $circle-size * -0.5;
+  cursor: pointer;
+}
+
+#record-toggle:checked {
+  ~ svg {
+    animation: spinning 3s ease-in-out infinite alternate;
+    .circle-svg {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: dash 3s ease-in-out infinite alternate;
+    }
+  }
+
+  ~ .mic {
+    transform: scale(1.128);
+    animation: gone 0.5s 0.3s ease;
+    animation-fill-mode: forwards;
+  }
+
+  ~ .recording {
+    opacity: 1;
+    transform: scale(0.98);
+    transition-delay: 0.3s;
+  }
+}
+
+@keyframes spinning {
+  to {
+    transform: rotatez(360deg);
+  }
+}
+
+@keyframes gone {
+  to {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes recording {
+  0% {
+    transform: translatey(0%);
+  }
+  30% {
+    transform: translatey(-30%);
+  }
+  60% {
+    transform: translatey(30%);
+  }
+  90% {
+    transform: translatey(0%);
+  }
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 300;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (review()) {
+      <div>
+        <h2 data-cy="reviewDetailsHeading"><span >Review</span></h2>
+
+        <hr />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span >ID</span></dt>
+          <dd>
+            <span>{{ review()!.id }}</span>
+          </dd>
+          <dt><span >At</span></dt>
+          <dd>
+            <span>{{ review()!.at | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span >Status</span></dt>
+          <dd>
+            <span >{{
+              {
+                null: '',
+                PENDING: 'PENDING',
+                REJECTED: 'REJECTED',
+                VALIDATED: 'VALIDATED',
+                SUSPENDED: 'SUSPENDED',
+                DELETING: 'DELETING',
+                NOT_QUALIFIED: 'NOT_QUALIFIED',
+              }[review()!.status ?? 'null']
+            }}</span>
+          </dd>
+          <dt>
+            <span id="ngelmakprojectApp.review.timeout"
+              >Timeout</span
+            >
+          </dt>
+          <dd>
+            <span>{{ review()!.timeout }}</span>
+          </dd>
+          <dt><span >Account</span></dt>
+          <dd>
+            @if (review()!.account) {
+              <div>
+                <a [routerLink]="['/nk-account', review()!.account?.id, 'view']">{{ review()!.account?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span >Ticket</span></dt>
+          <dd>
+            @if (review()!.ticket) {
+              <div>
+                <a [routerLink]="['/ticket', review()!.ticket?.id, 'view']">{{ review()!.ticket?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span >Replyto</span></dt>
+          <dd>
+            @if (review()!.replyto) {
+              <div>
+                <a [routerLink]="['/review', review()!.replyto?.id, 'view']">{{ review()!.replyto?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <span icon="arrow-left"></span>&nbsp;<span >Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/review', review()!.id, 'edit']" class="btn btn-primary">
+          <span icon="pencil-alt"></span>&nbsp;<span >Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

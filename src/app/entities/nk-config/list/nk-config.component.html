@@ -1,0 +1,125 @@
+<div>
+  <h2 id="page-heading" data-cy="ConfigHeading">
+    <span >Configs</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <span class="sync" ></span>
+        <span >Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-config"
+        [routerLink]="['/config/new']"
+      >
+        <span class="plus"></span>
+        <span >Créer un nouveau Config</span>
+      </button>
+    </div>
+  </h2>
+
+  @if (configs?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span >Aucun Config trouvé</span>
+    </div>
+  }
+
+  @if (configs && configs.length > 0) {
+    <div class="table-responsive table-entities" >
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ngelmakSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" ngelmakSortBy="id">
+              <div class="d-flex">
+                <span >ID</span>
+
+                <span class="p-1" class="sort"></span>
+              </div>
+            </th>
+            <th scope="col" ngelmakSortBy="lastUpdate">
+              <div class="d-flex">
+                <span >Last Update</span>
+
+                <span class="p-1" class="sort"></span>
+              </div>
+            </th>
+            <th scope="col" ngelmakSortBy="defaultAccessibility">
+              <div class="d-flex">
+                <span >Default Accessibility</span>
+
+                <span class="p-1" class="sort"></span>
+              </div>
+            </th>
+            <th scope="col" ngelmakSortBy="defaultVisibility">
+              <div class="d-flex">
+                <span >Default Visibility</span>
+
+                <span class="p-1" class="sort"></span>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- @for (config of configs) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/config', config.id, 'view']">{{ config.id }}</a>
+              </td>
+              <td>{{ config.lastUpdate | formatMediumDatetime }}</td>
+              <td >
+                {{
+                  { null: '', DEFAULT: 'DEFAULT', PUBLIC: 'PUBLIC', PRIVATE: 'PRIVATE', AUTHORITY: 'AUTHORITY', JURNALIST: 'JURNALIST' }[
+                    config.defaultAccessibility ?? 'null'
+                  ]
+                }}
+              </td>
+              <td >
+                {{ { null: '', PUBLIC: 'PUBLIC', PRIVATE: 'PRIVATE' }[config.defaultVisibility ?? 'null'] }}
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/config', config.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <span class="eye"></span>
+                    <span class="d-none d-md-inline" >Voir</span>
+                  </a>
+
+                  <a [routerLink]="['/config', config.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <span icon="pencil-alt"></span>
+                    <span class="d-none d-md-inline" >Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(config)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <span class="times"></span>
+                    <span class="d-none d-md-inline" >Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          } -->
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (configs && configs.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <!-- <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count> -->
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <!-- <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination> -->
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,120 @@
+<!-- <div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-membership-heading"
+        data-cy="MembershipCreateUpdateHeading"
+        id="ngelmakprojectApp.membership.home.createOrEditLabel"
+      >
+        Créer ou éditer un Membership
+      </h2>
+
+      <div>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" >ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_at" >At</label>
+          <div class="d-flex">
+            <input
+              id="field_at"
+              data-cy="at"
+              type="datetime-local"
+              class="form-control"
+              name="at"
+              formControlName="at"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_activateNotification" id="ngelmakprojectApp.membership.activateNotification"
+            >Activate Notification</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="activateNotification"
+            id="field_activateNotification"
+            data-cy="activateNotification"
+            formControlName="activateNotification"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_account" >Account</label>
+          <select
+            class="form-control"
+            id="field_account"
+            data-cy="account"
+            name="account"
+            formControlName="account"
+            [compareWith]="compareNkAccount"
+          >
+            @if (editForm.get(['account'])!.value == null) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (nkAccountOption of nkAccountsSharedCollection; track $index) {
+              <option [ngValue]="nkAccountOption">{{ nkAccountOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['account'])!.invalid && (editForm.get(['account'])!.dirty || editForm.get(['account'])!.touched)) {
+          <div>
+            @if (editForm.get(['account'])?.errors?.['required']) {
+              <small class="form-text text-danger" >Ce champ est obligatoire.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_subscriber" >Subscriber</label>
+          <select
+            class="form-control"
+            id="field_subscriber"
+            data-cy="subscriber"
+            name="subscriber"
+            formControlName="subscriber"
+            [compareWith]="compareNkAccount"
+          >
+            @if (editForm.get(['subscriber'])!.value == null) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (nkAccountOption of nkAccountsSharedCollection; track $index) {
+              <option [ngValue]="nkAccountOption">{{ nkAccountOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['subscriber'])!.invalid && (editForm.get(['subscriber'])!.dirty || editForm.get(['subscriber'])!.touched)) {
+          <div>
+            @if (editForm.get(['subscriber'])?.errors?.['required']) {
+              <small class="form-text text-danger" >Ce champ est obligatoire.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <span class="ban"></span>&nbsp;<span >Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <span class="save"></span>&nbsp;<span >Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div> -->

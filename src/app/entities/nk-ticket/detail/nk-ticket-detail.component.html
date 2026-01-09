@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (ticket()) {
+      <div>
+        <h2 data-cy="ticketDetailsHeading"><span >Ticket</span></h2>
+
+        <hr />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span >ID</span></dt>
+          <dd>
+            <span>{{ ticket()!.id }}</span>
+          </dd>
+          <dt>
+            <span id="ngelmakprojectApp.ticket.object"
+              >Object</span
+            >
+          </dt>
+          <dd>
+            <span>{{ ticket()!.object }}</span>
+          </dd>
+          <dt><span >Type</span></dt>
+          <dd>
+            <span >{{
+              { null: '', ABUSE: 'ABUSE', APPROVAL_REQUEST: 'APPROVAL_REQUEST' }[ticket()!.type ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span >At</span></dt>
+          <dd>
+            <span>{{ ticket()!.at | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span >Closed</span></dt>
+          <dd>
+            <span>{{ ticket()!.closed }}</span>
+          </dd>
+          <dt><span >Content</span></dt>
+          <dd>
+            <span>{{ ticket()!.content }}</span>
+          </dd>
+          <dt><span >Post Related</span></dt>
+          <dd>
+            @if (ticket()!.postRelated) {
+              <div>
+                <a [routerLink]="['/nk-post', ticket()!.postRelated?.id, 'view']">{{ ticket()!.postRelated?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span >Comment Related</span></dt>
+          <dd>
+            @if (ticket()!.commentRelated) {
+              <div>
+                <a [routerLink]="['/nk-comment', ticket()!.commentRelated?.id, 'view']">{{ ticket()!.commentRelated?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span >Account Related</span></dt>
+          <dd>
+            @if (ticket()!.accountRelated) {
+              <div>
+                <a [routerLink]="['/nk-account', ticket()!.accountRelated?.id, 'view']">{{ ticket()!.accountRelated?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span >Issuedby</span></dt>
+          <dd>
+            @if (ticket()!.issuedby) {
+              <div>
+                <a [routerLink]="['/nk-account', ticket()!.issuedby?.id, 'view']">{{ ticket()!.issuedby?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <span icon="arrow-left"></span>&nbsp;<span >Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/ticket', ticket()!.id, 'edit']" class="btn btn-primary">
+          <span icon="pencil-alt"></span>&nbsp;<span >Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,208 @@
+<!-- <div class="flex flex-col px-4 pt-6 gap-6">
+  <div class="mb-4 col-span-full xl:mb-2">
+    <nav class="flex mb-5">
+      <ol
+        class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2"
+      >
+        <li class="inline-flex items-center">
+          <a
+            href="#"
+            class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white"
+          >
+            <svg
+              class="w-5 h-5 mr-2.5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
+              ></path>
+            </svg>
+            Home
+          </a>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg
+              class="w-6 h-6 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <a
+              href="#"
+              class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white"
+              >Users</a
+            >
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg
+              class="w-6 h-6 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span
+              class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500"
+              aria-current="page"
+              >Settings</span
+            >
+          </div>
+        </li>
+      </ol>
+    </nav>
+    <div class="flex justify-between gap-4 flex-wrap">
+      <h1
+        class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"
+      >
+        List des publications
+      </h1>
+      <a
+        class="inline-flex items-center gap-1 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+        routerLink="new"
+      >
+        <svg
+          class="w-6 h-6"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 12h14m-7 7V5"
+          />
+        </svg>
+        Créer un post
+      </a>
+    </div>
+  </div>
+
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    <ng-container sticky="true" matColumnDef="title" disableClear>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Titre
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.title }}
+      </mat-cell>
+    </ng-container>
+    <ng-container sticky="true" matColumnDef="at">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Créer à
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.at | date : "dd/MM/YYYY" }}
+      </mat-cell>
+    </ng-container>
+    <ng-container sticky="true" matColumnDef="keywords">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.keywords }}
+      </mat-cell>
+    </ng-container>
+    <ng-container sticky="true" matColumnDef="subject">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Sujet
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.subject }}
+      </mat-cell>
+    </ng-container>
+    <ng-container sticky="true" matColumnDef="visibility">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Visibilité
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.visibility }}
+      </mat-cell>
+    </ng-container>
+    <ng-container sticky="true" matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Status
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.status }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container sticky="true" matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button
+          (click)="$event.stopPropagation(); post = row"
+          [matMenuTriggerFor]="postMenu"
+          type="button"
+        >
+          <svg
+            class="w-6 h-6"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-width="2"
+              d="M12 6h.01M12 12h.01M12 18h.01"
+            />
+          </svg>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="visibleColumns"></mat-header-row>
+
+    <mat-row
+      *matRowDef="let row; columns: visibleColumns"
+      class="text-sm font-medium text-gray-900 bg-white hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700"
+    ></mat-row>
+  </mat-table>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of periodic rows"
+  >
+  </mat-paginator>
+</div>
+
+<mat-menu #postMenu="matMenu" xPosition="before" yPosition="below">
+  <a [routerLink]="['./', post?.id, 'view']" mat-menu-item>
+    <span ngelmakTranslate="examenDecDscApp.post.dataTable.trait.button"
+      >Consulter</span
+    >
+  </a>
+  <a [routerLink]="['./', post?.id, 'edit']" mat-menu-item>
+    <span ngelmakTranslate="examenDecDscApp.post.dataTable.trait.button"
+      >Modifier</span
+    >
+  </a>
+  <button mat-menu-item>
+    <span ngelmakTranslate="examenDecDscApp.post.dataTable.delete"
+      >Supprimer</span
+    >
+  </button>
+</mat-menu> -->
