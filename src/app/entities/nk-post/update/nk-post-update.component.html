@@ -1,251 +1,77 @@
-<!-- <div class="box-border mx-4 sm:columns-1 rounded-xl overflow-hidden p-4">
-  <form name="postForm" class="flex flex-col gap-6 sm:w-[80%] w-[90%] mx-auto" novalidate (ngSubmit)="save()"
-    [formGroup]="postForm">
-    <div class="flex flex-row justify-between items-start gap-1 flex-wrap">
-      <h2 class="text-4xl font-bold text-slate-600 dark:text-white">
-        @if (post()?.id) { Modifier une publication } @else { Créer une publication }
-      </h2>
-      <button type="button" (click)="previousState()"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-          viewBox="0 0 24 24">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M5 12h14M5 12l4-4m-4 4 4 4" />
-        </svg>
-        <span>Retour</span>
-      </button>
-    </div>
-
-    <div class="grid grid-cols-1 items-start sm:grid-cols-6 gap-6">
-      <mat-form-field class="col-span-full">
-        <mat-label>Titre</mat-label>
-        <input matInput type="text" formControlName="title" class="!border-2 !border-red-500" />
-        <mat-hint align="start" *ngIf="postForm.get('title')?.errors?.['required'] && (postForm.get('title')!.dirty
-        || postForm.get('title')!.touched)" class="text-sm text-red-800">
-          Ce champ est obligatoire.
-        </mat-hint>
-      </mat-form-field>
-
-      <mat-form-field class="col-span-full">
-        <mat-label>Sous titre</mat-label>
-        <input matInput type="text" formControlName="subtitle" />
-      </mat-form-field>
-
-      <mat-form-field class="col-span-full">
-        <mat-label>Mots clés</mat-label>
-        <mat-chip-grid #templateChipGrid aria-label="Enter template form keywords">
-          <mat-chip-row *ngFor="let keyword of keywords; let i = index" (removed)="removekeyword(i)">
-            {{ keyword }}
-            <button matChipRemove aria-label="'remove template form' + keyword">
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip-row>
-        </mat-chip-grid>
-        <input placeholder="Mot clé..." [matChipInputFor]="templateChipGrid"
-          (matChipInputTokenEnd)="addkeyword($event)" />
-      </mat-form-field>
-
-      <mat-form-field class="col-span-full">
-        <mat-label>Sommaire</mat-label>
-        <textarea matInput placeholder="Ecrivez ici le sommaire de votre présentation..."
-          formControlName="content"></textarea>
-        <mat-hint align="end" class="text-black dark:text-gray-200">
-          Pour plus de contenu, veuillez utiliser l'outil de création de sections.
-        </mat-hint>
-        <mat-error align="start" *ngIf="postForm.get('content')?.errors?.['required'] && (postForm.get('content')!.dirty
-        || postForm.get('content')!.touched)" class="text-sm text-red-800">
-          Ce champ est obligatoire.
-        </mat-error>
-        <mat-error align="start" *ngIf="postForm.get('content')?.errors?.['maxLength'] && (postForm.get('content')!.dirty
-        || postForm.get('content')!.touched)" class="text-sm text-red-800">
-          Le résumé doit comporter au maximum 1000 caractères.
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <div [@scaleInOutAnimation]="updatedFiles" class="flex flex-col gap-3.5">
-      <div *ngFor="let file of updatedFiles" class="flex flex-col gap-3.5">
-        @if (file.type == 'IMAGE') {
-        <div class="flex items-start gap-1 p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
-          <figure class="w-full">
-            <div class="w-full relative group/image">
-              <div (click)="openFileImage(file.position)"
-                class="flex items-center rounded-md justify-center w-full h-full bg-gray-400/75 invisible group-hover/image:visible absolute top-0 right-0">
-                <svg class="w-9 h-9 text-white dark:text-gray-50" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                  width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
-                </svg>
-              </div>
-              <img class="h-auto w-full rounded-lg" [src]="file.url" alt="Imported image">
-            </div>
-          </figure>
-        </div>
-        } @else if (file.type == 'VIDEO') {
-        <div class="flex items-start gap-1 p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
-          <app-video-plyr [source]="file.url" [poster]="file.posterUrl" [duration]="file.duration"></app-video-plyr>
-        </div>
-        }
-      </div>
-
-      <div class="inline-flex gap-2 mt-5 self-start group">
-        <button type="button"
-          class="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-2 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
-          <svg class="w-5 h-5 transition-transform group-hover:rotate-45" aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M9 1v16M1 9h16" />
-          </svg>
-        </button>
-        <div class="group-hover:flex items-center hidden me-4 space-x-2 rtl:space-x-reverse">
-          <button type="button" (click)="openFileTextDialog()"
-            class="w-[56px] h-[56px] text-gray-500 bg-white rounded-lg border border-gray-200 hover:text-gray-900 dark:border-gray-600 shadow-xs dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-2 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
-            <svg class="w-4 h-4 mx-auto mb-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-              height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M18 5V4a1 1 0 0 0-1-1H8.914a1 1 0 0 0-.707.293L4.293 7.207A1 1 0 0 0 4 7.914V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5M9 3v4a1 1 0 0 1-1 1H4m11.383.772 2.745 2.746m1.215-3.906a2.089 2.089 0 0 1 0 2.953l-6.65 6.646L9 17.95l.739-3.692 6.646-6.646a2.087 2.087 0 0 1 2.958 0Z" />
-            </svg>
-            <span class="block mb-px text-xs font-medium">Texte</span>
-          </button>
-          <button type="button" (click)="openFileImage()"
-            class="w-[56px] h-[56px] text-gray-500 bg-white rounded-lg border border-gray-200 hover:text-gray-900 dark:border-gray-600 shadow-xs dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-2 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
-            <svg class="w-4 h-4 mx-auto mb-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-              height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m3 16 5-7 6 6.5m6.5 2.5L16 13l-4.286 6M14 10h.01M4 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z" />
-            </svg>
-            <span class="block mb-px text-xs font-medium">Image</span>
-          </button>
-          <button type="button" (click)="openFileVideo()"
-            class="w-[56px] h-[56px] text-gray-500 bg-white rounded-lg border border-gray-200 hover:text-gray-900 dark:border-gray-600 shadow-xs dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-2 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
-            <svg class="w-4 h-4 mx-auto mb-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-              height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
-                d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1ZM9 12h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Zm5.697 2.395v-.733l1.269-1.219v2.984l-1.268-1.032Z" />
-            </svg>
-            <span class="block mb-px text-xs font-medium">Video</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex flex-row justify-end gap-2">
-      <button type="button" (click)="previousState()" [disabled]="isSaving()"
-        class="px-6 py-3.5 text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800 disabled:cursor-not-allowed">
-        Annuler
-      </button>
-
-      <button type="submit" [disabled]="postForm.invalid || isSaving()"
-        class="px-6 py-3.5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 disabled:cursor-not-allowed">
-        <svg *ngIf="isSaving()" aria-hidden="true" role="status" class="inline w-4 h-4 me-3 animate-spin"
-          viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-            fill="#E5E7EB" />
-          <path
-            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-            fill="currentColor" />
-        </svg>
-        Sauvegarder
-      </button>
-    </div>
-  </form>
-</div> -->
-
-
-<div class="flex flex-col gap-4 box-border w-full p-4">
-  <div class="flex items-center justify-between gap-2 max-h-12 w-full">
-    <div class="flex items-center gap-2">
-      <div class="inline-flex">
-        @if (account().avatar) {
-        <img [src]="account().avatar" alt="Account avatar" class="rounded-full max-w-none w-12 h-12" />
-        } @else {
-        <div
-          class="flex items-center justify-center rounded-full max-w-none w-12 h-12 text-6xl uppercase text-black bg-gray-50 dark:bg-gray-300]">
-          {{account().name.at(0)}}
-        </div>
-        }
-      </div>
-      <div class="flex space-x-2">
-        <div class="inline-block text-md font-medium text-gray-900 dark:text-white">{{account().name
-          }}</div>
-        <svg class="w-5 h-5 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-          fill="currentColor" viewBox="0 0 24 24">
-          <path fill-rule="evenodd"
-            d="M12 2c-.791 0-1.55.314-2.11.874l-.893.893a.985.985 0 0 1-.696.288H7.04A2.984 2.984 0 0 0 4.055 7.04v1.262a.986.986 0 0 1-.288.696l-.893.893a2.984 2.984 0 0 0 0 4.22l.893.893a.985.985 0 0 1 .288.696v1.262a2.984 2.984 0 0 0 2.984 2.984h1.262c.261 0 .512.104.696.288l.893.893a2.984 2.984 0 0 0 4.22 0l.893-.893a.985.985 0 0 1 .696-.288h1.262a2.984 2.984 0 0 0 2.984-2.984V15.7c0-.261.104-.512.288-.696l.893-.893a2.984 2.984 0 0 0 0-4.22l-.893-.893a.985.985 0 0 1-.288-.696V7.04a2.984 2.984 0 0 0-2.984-2.984h-1.262a.985.985 0 0 1-.696-.288l-.893-.893A2.984 2.984 0 0 0 12 2Zm3.683 7.73a1 1 0 1 0-1.414-1.413l-4.253 4.253-1.277-1.277a1 1 0 0 0-1.415 1.414l1.985 1.984a1 1 0 0 0 1.414 0l4.96-4.96Z"
-            clip-rule="evenodd" />
-        </svg>
-      </div>
-    </div>
-    <!-- Close dialog -->
-    <button type="button" [disabled]="isSaving()"
-      class="ms-auto text-gray-500 rounded-lg p-1.5 inline-flex items-center justify-center h-10 w-h-10 dark:text-gray-300 dark:hover:text-white top-2 right-2"
-      data-dismiss-target="#alert-5" aria-label="Close">
-      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-      </svg>
-    </button>
-  </div>
-
-  <!-- Input text -->
+<div
+  class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
+>
+  <!-- <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
+    <label for="content" class="sr-only">Your content</label>
+    <textarea id="content" rows="4"
+      class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+      placeholder="Write a content..." required></textarea>
+  </div> -->
   <!-- <div class="inline-flex items-center w-full min-h-12 max-h-24 overflow-y-auto
-           text-gray-900 text-sm rounded-lg dark:placeholder-blue-400 dark:text-white py-4">
+         text-gray-900 text-sm rounded-lg dark:placeholder-blue-400 dark:text-white py-4">
     <p class="nk-editor w-full p-2 outline-none break-words rounded-sm placeholder relative resize-none m-0"
       contenteditable="true" data-placeholder="Commentaire...">
     </p>
   </div> -->
 
-
-  <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-    <!-- <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
-      <label for="comment" class="sr-only">Your comment</label>
-      <textarea id="comment" rows="4"
-        class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-        placeholder="Write a comment..." required></textarea>
-    </div> -->
-    <div class="inline-flex items-center w-full min-h-12 max-h-24 overflow-y-auto
-           text-gray-900 text-sm rounded-lg dark:placeholder-blue-400 dark:text-white py-4">
-      <p class="nk-editor w-full p-2 outline-none break-words rounded-sm placeholder relative resize-none m-0"
-        contenteditable="true" data-placeholder="Commentaire...">
-      </p>
-    </div>
-
-
-    <div class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600 border-gray-200">
-      <button type="submit"
-        class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-        Post comment
-      </button>
-      <div class="flex ps-0 space-x-1 rtl:space-x-reverse sm:ps-2">
-        <button type="button"
-          class="inline-flex justify-center items-center p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-          <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 20">
-            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
-              d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6" />
-          </svg>
-          <span class="sr-only">Attach file</span>
-        </button>
-        <button type="button"
-          class="inline-flex justify-center items-center p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-          <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-            viewBox="0 0 16 20">
-            <path
-              d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
-          </svg>
-          <span class="sr-only">Set location</span>
-        </button>
-        <button type="button"
-          class="inline-flex justify-center items-center p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-          <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-            viewBox="0 0 20 18">
-            <path
-              d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
-          </svg>
-          <span class="sr-only">Upload image</span>
-        </button>
-      </div>
-    </div>
+  <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
+    <label for="content" class="sr-only">Write your message</label>
+    <textarea
+      id="content"
+      rows="5"
+      class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+      placeholder="Write your message"
+      required
+    ></textarea>
   </div>
 
+  <div
+    class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600 border-gray-200"
+  >
+    <button
+      type="button"
+      class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 focus:outline-2 focus:outline-dashed focus:outline-blue-500 focus:outline-offset-4"
+    >
+      Publier
+    </button>
+    <div class="flex ps-0 space-x-1 rtl:space-x-reverse sm:ps-2">
+      <button
+        type="button"
+        class="inline-flex justify-center items-center p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+      >
+        <svg
+          class="w-4 h-4"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 12 20"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"
+          />
+        </svg>
+        <span class="sr-only">Attach file</span>
+      </button>
+      <button
+        type="button"
+        class="inline-flex justify-center items-center p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+      >
+        <svg
+          class="w-4 h-4"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 20 18"
+        >
+          <path
+            d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"
+          />
+        </svg>
+        <span class="sr-only">Upload image</span>
+      </button>
+    </div>
+  </div>
 </div>

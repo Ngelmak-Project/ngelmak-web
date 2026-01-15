@@ -31,7 +31,7 @@ export class NkAccountUpdateComponent implements OnInit {
   configurationsCollection: IConfig[] = [];
   usersSharedCollection: IUser[] = [];
 
-  protected nkAccountService = inject(AccountService);
+  protected accountService = inject(AccountService);
   protected configService = inject(ConfigService);
   protected activatedRoute = inject(ActivatedRoute);
   protected fb = inject(FormBuilder);
@@ -51,6 +51,7 @@ export class NkAccountUpdateComponent implements OnInit {
   // compareConfig = (o1: IConfig | null, o2: IConfig | null): boolean => this.configService.compareConfig(o1, o2);
 
   ngOnInit(): void {
+    alert("Hello");
     this.activatedRoute.data.subscribe(({ nkAccount }) => {
       this.nkAccount = nkAccount;
       if (nkAccount) {
@@ -73,9 +74,9 @@ export class NkAccountUpdateComponent implements OnInit {
       createdAt: dayjs(rawNkAccount.createdAt, DATE_TIME_FORMAT),
     }
     if (nkAccount.id !== null) {
-      this.subscribeToSaveResponse(this.nkAccountService.update(nkAccount));
+      this.subscribeToSaveResponse(this.accountService.update(nkAccount));
     } else {
-      this.subscribeToSaveResponse(this.nkAccountService.create(nkAccount));
+      this.subscribeToSaveResponse(this.accountService.create(nkAccount));
     }
   }
 

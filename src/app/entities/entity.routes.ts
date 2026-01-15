@@ -7,7 +7,7 @@ const entityRoutes: Routes = [
     loadChildren: () => import('./admin/authority/authority.routes'),
   },
   {
-    path: 'nk-account',
+    path: 'account',
     title: 'ngelmakprojectApp.nkAccount.home.title',
     loadChildren: () => import('./nk-account/nk-account.routes'),
   },

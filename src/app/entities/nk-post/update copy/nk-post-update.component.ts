@@ -80,12 +80,10 @@ export class PostUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading.set(true);
     this.activatedRoute.data.subscribe(({ post }) => {
-      if (post) {
-        this.post.set(post);
-        this.postForm.patchValue(this.post());
-        this.keywords = this.post()?.keywords.split(",") || [];
-        this.updatedFiles = this.post().files;
-      }
+      this.post.set(post);
+      this.postForm.patchValue(this.post());
+      this.keywords = this.post()?.keywords.split(",") || [];
+      this.updatedFiles = this.post().files;
     });
   }
 

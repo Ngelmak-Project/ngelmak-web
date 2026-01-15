@@ -10,13 +10,14 @@ import FooterComponent from '../footer/footer.component';
 import NavbarComponent from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import MainComponent from './main.component';
+import HomeComponent from 'app/home/home.component';
 
 const routes: Routes = [
   {
     path: '',
     component: MainComponent,
     children: [
-      { path: '', title: 'Posts', component: PostComponent },
+      { path: '', title: 'Ngelmak Project', component: HomeComponent },
       { path: 'search', title: 'Posts', component: PostComponent },
       {
         path: 'ngelmak-administration',
