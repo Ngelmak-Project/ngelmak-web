@@ -1,4 +1,4 @@
-export enum AttachmentCategory {
+export enum AttachmentType {
   TEXT = 'TEXT',
 
   DOCUMENT = 'DOCUMENT',

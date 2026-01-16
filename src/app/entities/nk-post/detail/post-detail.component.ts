@@ -50,7 +50,6 @@ export class PostDetailComponent implements OnInit {
   ngOnInit(): void {
     this.post = this.route.snapshot.data["post"];
     this.comments.set(this.post.comments);
-    this.attachments.set(this.post.attachments);
     this.nkAccountService.currentAccount().subscribe();
     // this.loadAllComments();
   }

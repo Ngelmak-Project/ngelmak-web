@@ -35,8 +35,8 @@ export class FileVideoComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.file()) {
-      this.fileForm.patchValue(this.file());
-      this.videoURL.set(this.file().url);
+      // this.fileForm.patchValue(this.file());
+      // this.videoURL.set(this.file().url);
     }
   }
 

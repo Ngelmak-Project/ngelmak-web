@@ -1,44 +1,30 @@
-import { HttpResponse } from "@angular/common/http";
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  ViewEncapsulation,
-} from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { IPost } from "app/entities/models/nk-post.model";
-import { Observable } from "rxjs";
-import { finalize } from "rxjs/operators";
-import { PostService } from "./../nk-post.service";
+import { HttpResponse } from '@angular/common/http';
+import { Component, inject, OnInit, signal, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { IPost } from 'app/entities/models/nk-post.model';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { IFile } from './../../models/nk-file.model';
+import { PostService } from './../nk-post.service';
 
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from "@angular/forms";
-import SharedModule from "app/shared/shared.module";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import SharedModule from 'app/shared/shared.module';
 
-import { Status } from "app/entities/enumerations/status.model";
-import { Visibility } from "app/entities/enumerations/visibility.model";
-import { IFile } from "app/entities/models/nk-file.model";
-import { AccountService } from "app/entities/nk-account/nk-account.service";
-import { AlertService } from "app/shared/alert/alert.service";
-import { fadeInUp400ms } from "app/shared/animations/fade-in-up.animation";
-import { scaleInOut400ms } from "app/shared/animations/scale-in-out.animation";
-import { scaleInOutAnimation150ms } from "app/shared/animations/stagger.animation";
+import { Field, form, max, required } from '@angular/forms/signals';
+import { AttachmentType } from 'app/entities/enumerations/attachment-type.model';
+import { Status } from 'app/entities/enumerations/status.model';
+import { Visibility } from 'app/entities/enumerations/visibility.model';
+import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { AlertService } from 'app/shared/alert/alert.service';
+import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
+import { scaleInOut400ms } from 'app/shared/animations/scale-in-out.animation';
+import { scaleInOutAnimation150ms } from 'app/shared/animations/stagger.animation';
 
 @Component({
   standalone: true,
-  selector: "app-post-update",
-  templateUrl: "./nk-post-update.component.html",
-  imports: [
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
+  selector: 'app-post-update',
+  templateUrl: './nk-post-update.component.html',
+  imports: [SharedModule, FormsModule, ReactiveFormsModule, Field],
   animations: [fadeInUp400ms, scaleInOut400ms, scaleInOutAnimation150ms],
 
   encapsulation: ViewEncapsulation.None, // Disable encapsulation
@@ -56,89 +42,77 @@ export class PostUpdateComponent implements OnInit {
   protected visibilityValues = Object.keys(Visibility);
   protected statusValues = Object.keys(Status);
   protected keywords: string[] = [];
+  protected files: IFile[] = [];
   account = inject(AccountService).trackCurrentAccount();
 
   expandedIndexes: Set<number> = new Set<number>();
 
-  postForm = new FormGroup({
-    id: new FormControl(null),
-    title: new FormControl(null, [Validators.required]),
-    subtitle: new FormControl(null),
-    keywords: new FormControl(null),
-    subject: new FormControl(null, [Validators.required]),
-    at: new FormControl(null),
-    lastUpdate: new FormControl(null),
-    visibility: new FormControl(null),
-    content: new FormControl(null, [
-      Validators.required,
-      Validators.maxLength(1000),
-    ]),
-    status: new FormControl(null),
-    account: new FormControl(null),
+  protected postModel = signal<IPost>({
+    content: '',
+    visibility: Visibility.PUBLIC,
+  });
+
+  protected postForm = form(this.postModel, (p) => {
+    required(p.content, { message: 'Username is required' });
+    max(p.content, 1000);
   });
 
   ngOnInit(): void {
     this.isLoading.set(true);
     this.activatedRoute.data.subscribe(({ post }) => {
       if (post) {
-        this.post.set(post);
-        this.postForm.patchValue(this.post());
-        this.keywords = this.post()?.keywords.split(",") || [];
-        this.updatedFiles = this.post().files;
+        // this.post.set(post);
+        // this.postForm().(this.post());
+        // this.keywords = this.post()?.keywords.split(',') || [];
+        // this.updatedFiles = this.post().files;
       }
     });
   }
 
   save(): void {
     this.isSaving.set(true);
-    const keywords = this.keywords.reduce(
-      (prev: string, curr: string) => `${prev},${curr}`
-    );
-    const post: IPost = { ...this.postForm.value, keywords };
+    const keywords = this.keywords.reduce((prev: string, curr: string) => `${prev},${curr}`);
+    const post: IPost = { ...this.postForm().value, keywords };
     const newFiles = this.updatedFiles.filter((el) => {
-      if (el.id) {
-        const find = this.post().files.find((item) => item.id == el.id);
-        return find.position != el.position || find.dirty;
-      }
+      // if (el.id) {
+      //   const find = this.post().files.find((item) => item.id == el.id);
+      //   return find.position != el.position || find.dirty;
+      // }
       return true;
     });
     if (post.id !== null) {
       const deletedFiles = this.deletedFiles.map((el) => ({
         id: el.id,
         url: el.url,
-        posterUrl: el.posterUrl,
+        // posterUrl: el.posterUrl,
       }));
-      this.subscribeToSaveResponse(
-        this.postService.update(post, newFiles, deletedFiles)
-      );
+      this.subscribeToSaveResponse(this.postService.update(post, newFiles, deletedFiles));
     } else {
       this.subscribeToSaveResponse(this.postService.create(post, newFiles));
     }
   }
 
-  private subscribeToSaveResponse(
-    result: Observable<HttpResponse<IPost>>
-  ): void {
+  private subscribeToSaveResponse(result: Observable<HttpResponse<IPost>>): void {
     result.pipe(finalize(() => this.isSaving.set(false))).subscribe({
       next: () => {
         this.alertService.addAlert({
-          type: "success",
-          message: "Enregistrer avec succès!",
+          type: 'success',
+          message: 'Enregistrer avec succès!',
         });
         this.previousState();
       },
       error: () =>
         this.alertService.addAlert({
-          type: "error",
+          type: 'error',
           message: "Une erreur s'est produite lors de l'enregistrement.",
         }),
     });
   }
 
   protected addkeyword(event) {
-    const keyword = (event.value || "").trim();
+    const keyword = (event.value || '').trim();
     if (keyword.length > 0) {
-      this.keywords.push("#" + keyword);
+      this.keywords.push('#' + keyword);
     }
   }
 
@@ -173,7 +147,6 @@ export class PostUpdateComponent implements OnInit {
     //   enterAnimationDuration: "300ms",
     //   exitAnimationDuration: "150ms",
     // });
-
     // dialogRef
     //   .afterClosed()
     //   .subscribe((file: IFile) => this.afterClosed(position, file));
@@ -218,89 +191,9 @@ export class PostUpdateComponent implements OnInit {
     //   enterAnimationDuration: "300ms",
     //   exitAnimationDuration: "150ms",
     // });
-
     // dialogRef
     //   .afterClosed()
     //   .subscribe((file: IFile) => this.afterClosed(position, file));
-  }
-
-  private afterClosed(position?: number, file?: IFile) {
-    if (file) {
-      if (position) {
-        this.replace(position, file);
-      } else {
-        this.append(file);
-      }
-    }
-  }
-
-  remove(file: IFile) {
-    if (file.id) {
-      this.deletedFiles.push(file);
-    }
-    this.updatedFiles = this.updatedFiles.filter(
-      (e) => e.position != file.position
-    );
-  }
-
-  /**
-   * Add a new File to the list.
-   *
-   * @param file
-   * @param file video, image or ducument file.
-   * @param poster is used for an file type video.
-   */
-  append(file: IFile) {
-    const positions = this.updatedFiles.map((e) => e.position);
-    file.position = Math.max(...positions, 1) + 1;
-    this.updatedFiles.push(file);
-  }
-
-  /**
-   * Replace an existing file with the given on.
-   *
-   * @param position
-   * @param file
-   * @param file
-   * @param poster
-   */
-  replace(position: number, file: IFile) {
-    const idx = this.updatedFiles.findIndex((e) => e.position == position);
-    const existsAttachement = this.updatedFiles[idx];
-    if (existsAttachement.id) {
-      this.deletedFiles.push(existsAttachement);
-    }
-    file.position = position; // update file's position.
-    this.updatedFiles[idx] = file; // now replace the former file with the new one.
-    this.updatedFiles[idx].dirty = true;
-  }
-
-  protected moveup(file: IFile) {
-    this.updatedFiles = this.updatedFiles.sort((e) => e.position);
-    const idx = this.updatedFiles.findIndex((e) => e.position == file.position);
-    const switch_with_idx: number =
-      idx > 0 ? idx - 1 : this.updatedFiles.length - 1;
-    const tmp: IFile = this.updatedFiles[idx];
-    this.updatedFiles[idx] = this.updatedFiles[switch_with_idx];
-    this.updatedFiles[switch_with_idx] = tmp;
-    this.updatedFiles = this.updatedFiles.map((element, i) => {
-      element.position = i + 1;
-      return element;
-    });
-  }
-
-  protected movedown(file: IFile) {
-    this.updatedFiles = this.updatedFiles.sort((e) => e.position);
-    const idx = this.updatedFiles.findIndex((e) => e.position == file.position);
-    const switch_with_idx: number =
-      idx < this.updatedFiles.length - 1 ? idx + 1 : 0;
-    const tmp: IFile = this.updatedFiles[idx];
-    this.updatedFiles[idx] = this.updatedFiles[switch_with_idx];
-    this.updatedFiles[switch_with_idx] = tmp;
-    this.updatedFiles = this.updatedFiles.map((element, i) => {
-      element.position = i + 1;
-      return element;
-    });
   }
 
   toggleExpand(idx: number) {
@@ -315,8 +208,53 @@ export class PostUpdateComponent implements OnInit {
     return this.expandedIndexes.has(idx);
   }
 
-  filterFile(files: IFile[], type: string = ""): IFile[] {
+  isImage(file: IFile): boolean {
+    return file.type.startsWith('image/');
+  }
+
+  isVideo(file: IFile): boolean {
+    return file.type.startsWith('video/');
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
+
+    const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const index = Math.floor(Math.log(bytes) / Math.log(1024));
+    const size = bytes / Math.pow(1024, index);
+
+    return `${size.toFixed(2)} ${units[index]}`;
+  }
+
+  extention(file: IFile): string {
+    return file.type.split("/").pop()?.toUpperCase();
+  }
+
+  filterFile(files: IFile[], type: string = ''): IFile[] {
     return files.filter((e) => e.type === type);
+  }
+
+  handleFile(event) {
+    const obj: File = event.target.files[0];
+    if (obj) {
+      const file: IFile = { filename: obj.name, size: obj.size, type: obj.type, data: obj };
+      if (this.isImage(file)) {
+        file.url = URL.createObjectURL(obj);
+      } else if (this.isVideo(file)) {
+      }
+      this.files.push(file);
+    }
+  }
+
+  remove(idx: number) {
+    const file = this.files[idx];
+    if (file.type == AttachmentType.IMAGE) {
+      URL.revokeObjectURL(file.url);
+    }
+    this.files.splice(idx, 1);
+    if (file.id) {
+      this.deletedFiles.push(file);
+    }
   }
 
   previousState(): void {

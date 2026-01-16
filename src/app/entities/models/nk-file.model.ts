@@ -1,17 +1,13 @@
-import { IPost } from 'app/entities/models/nk-post.model';
+import { AttachmentType } from 'app/entities/enumerations/attachment-type.model';
 
 export interface IFile {
   id?: number;
-  position?: number;
-  type?: string;
-  textContent?: string;
-  caption?: string | null;
   filename?: string;
+  size?: number;
   duration?: number;
-  url?: string | null;
-  posterUrl?: string | null;
-  size?: number | null;
-  dirty?: boolean;
-  blob?: Blob;
-  posterBlob?: Blob;
+  url?: string;
+  data?: any;
+  type?: string | AttachmentType;
+  deletedAt?: Date;
+  cover?: IFile;
 }

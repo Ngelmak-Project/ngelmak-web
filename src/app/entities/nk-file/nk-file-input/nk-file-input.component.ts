@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
-import { AttachmentCategory } from "app/entities/enumerations/attachment-type.model";
+import { AttachmentType } from "app/entities/enumerations/attachment-type.model";
 import { IFile } from "app/entities/models/nk-file.model";
 
 @Component({
@@ -45,7 +45,7 @@ export class FileInputComponent {
           today.getMonth() + 1
         }${today.getDay()}-${today.getHours()}${today.getMinutes()}${today.getSeconds()}_{file.name}.mp3`,
         caption: this.fileForm.getRawValue().caption,
-        category: AttachmentCategory.DOCUMENT,
+        category: AttachmentType.DOCUMENT,
       } as IFile);
     }
   }

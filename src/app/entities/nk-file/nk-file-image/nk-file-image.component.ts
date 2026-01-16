@@ -31,8 +31,8 @@ export class FileImageComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.file()) {
-      this.fileForm.patchValue(this.file());
-      this.imageURL.set(this.file().url);
+      // this.fileForm.patchValue(this.file());
+      // this.imageURL.set(this.file().url);
     }
   }
 

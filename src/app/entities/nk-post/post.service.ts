@@ -25,20 +25,20 @@ export class PostService {
     files: IFile[],
   ): Observable<EntityResponseType> {
     const data: FormData = new FormData();
-    files.forEach(el => {
-      data.append("files", el.blob);
-      data.append("posters", el.posterBlob);
-      if (el.url) {
-        URL.revokeObjectURL(el.url);
-        el.url = null;
-      }
-      if (el.posterUrl) {
-        URL.revokeObjectURL(el.posterUrl);
-        el.posterUrl = null;
-      }
-      el.blob = null;
-      el.posterBlob = null;
-    });
+    // files.forEach(el => {
+    //   data.append("files", el.blob);
+    //   data.append("posters", el.posterBlob);
+    //   if (el.url) {
+    //     URL.revokeObjectURL(el.url);
+    //     el.url = null;
+    //   }
+    //   if (el.posterUrl) {
+    //     URL.revokeObjectURL(el.posterUrl);
+    //     el.posterUrl = null;
+    //   }
+    //   el.blob = null;
+    //   el.posterBlob = null;
+    // });
     data.append(
       "post",
       new Blob([JSON.stringify(post)], { type: "application/json" })
@@ -58,20 +58,20 @@ export class PostService {
     deletedAttachments: IFile[],
   ): Observable<EntityResponseType> {
     const data: FormData = new FormData();
-    files.forEach(el => {
-      data.append("files", el.blob);
-      data.append("posters", el.posterBlob);
-      if (el.url) {
-        URL.revokeObjectURL(el.url);
-        el.url = null;
-      }
-      if (el.posterUrl) {
-        URL.revokeObjectURL(el.posterUrl);
-        el.posterUrl = null;
-      }
-      el.blob = null;
-      el.posterBlob = null;
-    });
+    // files.forEach(el => {
+    //   data.append("files", el.blob);
+    //   data.append("posters", el.posterBlob);
+    //   if (el.url) {
+    //     URL.revokeObjectURL(el.url);
+    //     el.url = null;
+    //   }
+    //   if (el.posterUrl) {
+    //     URL.revokeObjectURL(el.posterUrl);
+    //     el.posterUrl = null;
+    //   }
+    //   el.blob = null;
+    //   el.posterBlob = null;
+    // });
     data.append(
       "post",
       new Blob([JSON.stringify(post)], { type: "application/json" })

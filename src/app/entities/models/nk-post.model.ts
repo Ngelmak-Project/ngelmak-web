@@ -16,5 +16,4 @@ export interface IPost {
   account?: IAccount | null;
   files?: IFile[];
   comments?: IComment[];
-  attachments?: IAttachment[];
 }
