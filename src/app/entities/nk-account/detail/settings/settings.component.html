@@ -2,13 +2,13 @@
   <h2 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">
     Les détails de mon compte
   </h2>
-  <form name="nkAccountForm" class="flex flex-col gap-6" novalidate (ngSubmit)="save()" [formGroup]="nkAccountForm">
+  <form name="accountForm" class="flex flex-col gap-6" novalidate (ngSubmit)="save()" [formGroup]="accountForm">
     <div class="flex flex-col gap-6">
       <mat-form-field class="col-span-full">
         <mat-label>Identifiant</mat-label>
         <input matInput type="text" formControlName="identifier" class="!border-2 !border-red-500" />
-        <mat-hint align="start" *ngIf="nkAccountForm.get('identifier')?.errors?.['required'] && (nkAccountForm.get('identifier')!.dirty
-        || nkAccountForm.get('identifier')!.touched)" class="text-sm text-red-800">
+        <mat-hint align="start" *ngIf="accountForm.get('identifier')?.errors?.['required'] && (accountForm.get('identifier')!.dirty
+        || accountForm.get('identifier')!.touched)" class="text-sm text-red-800">
           Ce champ est obligatoire.
         </mat-hint>
       </mat-form-field>
@@ -16,8 +16,8 @@
       <mat-form-field class="col-span-full">
         <mat-label>Nom</mat-label>
         <input matInput type="text" formControlName="name" class="!border-2 !border-red-500" />
-        <mat-hint align="start" *ngIf="nkAccountForm.get('name')?.errors?.['required'] && (nkAccountForm.get('name')!.dirty
-        || nkAccountForm.get('name')!.touched)" class="text-sm text-red-800">
+        <mat-hint align="start" *ngIf="accountForm.get('name')?.errors?.['required'] && (accountForm.get('name')!.dirty
+        || accountForm.get('name')!.touched)" class="text-sm text-red-800">
           Ce champ est obligatoire.
         </mat-hint>
       </mat-form-field>
@@ -28,15 +28,15 @@
         <mat-hint align="end" class="text-black dark:text-gray-200">
           Décrivez sommairement votre compte.
         </mat-hint>
-        <mat-error align="start" *ngIf="nkAccountForm.get('description')?.errors?.['required'] && (nkAccountForm.get('description')!.dirty
-        || nkAccountForm.get('description')!.touched)" class="text-sm text-red-800">
+        <mat-error align="start" *ngIf="accountForm.get('description')?.errors?.['required'] && (accountForm.get('description')!.dirty
+        || accountForm.get('description')!.touched)" class="text-sm text-red-800">
           Ce champ est obligatoire.
         </mat-error>
       </mat-form-field>
     </div>
 
     <div class="flex flex-row justify-end gap-2">
-      <button type="submit" [disabled]="nkAccountForm.invalid || isSaving()"
+      <button type="submit" [disabled]="accountForm.invalid || isSaving()"
         class="px-6 py-2 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 disabled:cursor-not-allowed">
         <svg *ngIf="isSaving()" aria-hidden="true" role="status" class="inline w-4 h-4 me-3 animate-spin"
           viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

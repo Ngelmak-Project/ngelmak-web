@@ -12,10 +12,10 @@ import { AccountService } from "../nk-account.service";
   templateUrl: "./nk-account-detail.component.html",
   imports: [CommonModule, RouterModule],
 })
-export class NkAccountDetailComponent {
+export class AccountDetailComponent {
   alertService = inject(AlertService);
-  nkAccountService = inject(AccountService);
-  nkAccount = inject(AccountService).trackCurrentAccount();
+  accountService = inject(AccountService);
+  account = inject(AccountService).trackCurrentAccount();
   isUploading = signal(false);
   editAvatar = signal(false);
   imageSrc = signal(null);
@@ -24,12 +24,12 @@ export class NkAccountDetailComponent {
   uploadAvatar() {
     this.isUploading.set(true);
     if (this.file) {
-      this.nkAccountService
+      this.accountService
         .updateAvatar(this.file)
         .pipe(finalize(() => this.isUploading.set(false)))
         .subscribe({
           next: (res) => {
-            this.nkAccountService.setNkAccount(res.body);
+            this.accountService.setAccount(res.body);
             this.editAvatar.set(false);
             this.imageSrc.set(null);
           },

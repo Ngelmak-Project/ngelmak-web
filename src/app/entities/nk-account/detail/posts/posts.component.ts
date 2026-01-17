@@ -14,17 +14,17 @@ import { finalize, switchMap } from "rxjs";
   imports: [CommonModule, RouterModule, DurationPipe],
 })
 export class PostsComponent implements OnInit {
-  nkAccountService = inject(AccountService);
+  accountService = inject(AccountService);
   postService = inject(PostService);
   posts = signal<IPost[]>([]);
   isLoading = signal(false);
 
   ngOnInit(): void {
     this.isLoading.set(true);
-    this.nkAccountService
+    this.accountService
       .currentAccount()
       .pipe(
-        switchMap((account) => this.postService.findByNkAccount(account.id))
+        switchMap((account) => this.postService.findByAccount(account.id))
       )
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe((res) => (this.posts.set(res.body.content)));

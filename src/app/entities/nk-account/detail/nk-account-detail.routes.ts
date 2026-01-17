@@ -2,7 +2,7 @@ import { Routes } from "@angular/router";
 import { PostsComponent } from "./posts/posts.component";
 import SettingsComponent from "./settings/settings.component";
 
-const nkAccountDetailRoute: Routes = [
+const accountDetailRoute: Routes = [
   {
     path: "",
     component: SettingsComponent,
@@ -13,4 +13,4 @@ const nkAccountDetailRoute: Routes = [
   },
 ];
 
-export default nkAccountDetailRoute;
+export default accountDetailRoute;

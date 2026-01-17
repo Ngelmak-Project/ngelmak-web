@@ -1,6 +1,6 @@
 <div>
-  <h2 id="page-heading" data-cy="NkAccountHeading">
-    <span >NkAccounts</span>
+  <h2 id="page-heading" data-cy="AccountHeading">
+    <span >Accounts</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
@@ -20,13 +20,13 @@
     </div>
   </h2>
 
-  @if (nkAccounts?.length === 0) {
+  @if (accounts?.length === 0) {
     <div class="alert alert-warning" id="no-result">
       <span >Aucun Ngelmak Account trouvé</span>
     </div>
   }
 
-  @if (nkAccounts && nkAccounts.length > 0) {
+  @if (accounts && accounts.length > 0) {
     <div class="table-responsive table-entities" >
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
@@ -89,36 +89,36 @@
           </tr>
         </thead>
         <tbody>
-          @for (nkAccount of nkAccounts; track nkAccount) {
+          @for (account of accounts; track account) {
             <tr data-cy="entityTable">
               <td>
-                <a [routerLink]="['/nk-account', nkAccount.id, 'view']">{{ nkAccount.id }}</a>
+                <a [routerLink]="['/nk-account', account.id, 'view']">{{ account.id }}</a>
               </td>
-              <td>{{ nkAccount.name }}</td>
-              <td>{{ nkAccount.avatar }}</td>
-              <td>{{ nkAccount.banner }}</td>
+              <td>{{ account.name }}</td>
+              <td>{{ account.avatar }}</td>
+              <td>{{ account.banner }}</td>
               <td >
                 {{
                   { null: '', DEFAULT: 'DEFAULT', PUBLIC: 'PUBLIC', PRIVATE: 'PRIVATE', AUTHORITY: 'AUTHORITY', JURNALIST: 'JURNALIST' }[
-                    nkAccount.visibility ?? 'null'
+                    account.visibility ?? 'null'
                   ]
                 }}
               </td>
-              <td>{{ nkAccount.createdAt | formatMediumDatetime }}</td>
+              <td>{{ account.createdAt | formatMediumDatetime }}</td>
               <td>
-                @if (nkAccount.configuration) {
+                @if (account.configuration) {
                   <div>
-                    <a [routerLink]="['/config', nkAccount.configuration.id, 'view']">{{ nkAccount.configuration.id }}</a>
+                    <a [routerLink]="['/config', account.configuration.id, 'view']">{{ account.configuration.id }}</a>
                   </div>
                 }
               </td>
               <td>
-                {{ nkAccount.user?.id }}
+                {{ account.user?.id }}
               </td>
               <td class="text-end">
                 <div class="btn-group">
                   <a
-                    [routerLink]="['/nk-account', nkAccount.id, 'view']"
+                    [routerLink]="['/nk-account', account.id, 'view']"
                     class="btn btn-info btn-sm"
                     data-cy="entityDetailsButton"
                   >
@@ -127,7 +127,7 @@
                   </a>
 
                   <a
-                    [routerLink]="['/nk-account', nkAccount.id, 'edit']"
+                    [routerLink]="['/nk-account', account.id, 'edit']"
                     class="btn btn-primary btn-sm"
                     data-cy="entityEditButton"
                   >
@@ -135,7 +135,7 @@
                     <span class="d-none d-md-inline" >Editer</span>
                   </a>
 
-                  <button type="submit" (click)="delete(nkAccount)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                  <button type="submit" (click)="delete(account)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                     <span class="times"></span>
                     <span class="d-none d-md-inline" >Supprimer</span>
                   </button>
@@ -147,7 +147,7 @@
       </table>
     </div>
   }
-  @if (nkAccounts && nkAccounts.length > 0) {
+  @if (accounts && accounts.length > 0) {
     <div>
       <div class="d-flex justify-content-center">
         <!-- <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count> -->

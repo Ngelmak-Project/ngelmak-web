@@ -23,9 +23,9 @@ import { AccountService } from '../nk-account.service';
   templateUrl: './nk-account-update.component.html',
   imports: [SharedModule, FormsModule, ReactiveFormsModule],
 })
-export class NkAccountUpdateComponent implements OnInit {
+export class AccountUpdateComponent implements OnInit {
   isSaving = false;
-  nkAccount: IAccount | null = null;
+  account: IAccount | null = null;
   accessibilityValues = Object.keys(Accessibility);
 
   configurationsCollection: IConfig[] = [];
@@ -52,10 +52,10 @@ export class NkAccountUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     alert("Hello");
-    this.activatedRoute.data.subscribe(({ nkAccount }) => {
-      this.nkAccount = nkAccount;
-      if (nkAccount) {
-        this.updateForm(nkAccount);
+    this.activatedRoute.data.subscribe(({ account }) => {
+      this.account = account;
+      if (account) {
+        this.updateForm(account);
       }
 
       this.loadRelationshipsOptions();
@@ -68,15 +68,15 @@ export class NkAccountUpdateComponent implements OnInit {
 
   save(): void {
     // this.isSaving = true;
-    const rawNkAccount = this.editForm.getRawValue();
-    const nkAccount: IAccount = {
-      ...rawNkAccount,
-      createdAt: dayjs(rawNkAccount.createdAt, DATE_TIME_FORMAT),
+    const rawAccount = this.editForm.getRawValue();
+    const account: IAccount = {
+      ...rawAccount,
+      createdAt: dayjs(rawAccount.createdAt, DATE_TIME_FORMAT),
     }
-    if (nkAccount.id !== null) {
-      this.subscribeToSaveResponse(this.accountService.update(nkAccount));
+    if (account.id !== null) {
+      this.subscribeToSaveResponse(this.accountService.update(account));
     } else {
-      this.subscribeToSaveResponse(this.accountService.create(nkAccount));
+      this.subscribeToSaveResponse(this.accountService.create(account));
     }
   }
 
@@ -99,14 +99,14 @@ export class NkAccountUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  protected updateForm(nkAccount: IAccount): void {
-    this.nkAccount = nkAccount;
-    // this.editForm.reset({...nkAccount});
+  protected updateForm(account: IAccount): void {
+    this.account = account;
+    // this.editForm.reset({...account});
 
-    // this.nkAccountFormService.resetForm(this.editForm, nkAccount);
+    // this.accountFormService.resetForm(this.editForm, account);
     // this.configurationsCollection = this.configService.addConfigToCollectionIfMissing<IConfig>(
     //   this.configurationsCollection,
-    //   nkAccount.configuration,
+    //   account.configuration,
     // );
   }
 
@@ -116,7 +116,7 @@ export class NkAccountUpdateComponent implements OnInit {
     //   .pipe(map((res: HttpResponse<IConfig[]>) => res.body ?? []))
     //   .pipe(
     //     map((configs: IConfig[]) =>
-    //       this.configService.addConfigToCollectionIfMissing<IConfig>(configs, this.nkAccount?.configuration),
+    //       this.configService.addConfigToCollectionIfMissing<IConfig>(configs, this.account?.configuration),
     //     ),
     //   )
     //   .subscribe((configs: IConfig[]) => (this.configurationsCollection = configs));

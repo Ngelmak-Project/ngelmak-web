@@ -1,48 +1,50 @@
-import { HttpClient, HttpResponse } from "@angular/common/http";
-import { inject, Injectable, signal, Signal } from "@angular/core";
-import { catchError, Observable, of, tap } from "rxjs";
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { inject, Injectable, signal, Signal } from '@angular/core';
+import { catchError, Observable, of, tap } from 'rxjs';
 
-import { ApplicationConfigService } from "app/core/config/application-config.service";
-import { createRequestOption } from "app/core/request/request-util";
-import { IAccount } from "app/entities/models/nk-account.model";
-import { IHttpRestApiService } from "../entity.service";
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { createRequestOption } from 'app/core/request/request-util';
+import { IAccount } from 'app/entities/models/nk-account.model';
+import { IHttpRestApiService } from '../entity.service';
 
 export type EntityResponseType = HttpResponse<IAccount>;
 export type EntityArrayResponseType = HttpResponse<IAccount[]>;
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class AccountService implements IHttpRestApiService<IAccount> {
-  private nkAccount = signal<IAccount | null>(null);
-  private nkAccountCache$?: Observable<IAccount> | null;
+  private account = signal<IAccount | null>(null);
+  private accountCache$?: Observable<IAccount> | null;
 
   private http = inject(HttpClient);
   private applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl =
-    this.applicationConfigService.getEndpointFor("core/accounts");
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('core/accounts');
 
   trackCurrentAccount(): Signal<IAccount | null> {
-    return this.nkAccount.asReadonly();
+    if (this.account() == null && !this.accountCache$) {
+      this.currentAccount().subscribe();
+    }
+    return this.account.asReadonly();
   }
 
   currentAccount(force?: boolean): Observable<IAccount | null> {
-    if (!this.nkAccountCache$ || force) {
-      this.nkAccountCache$ = this.findByCurrentUser().pipe(
-        tap((nkAccount: IAccount) => {
-          this.nkAccount.set(nkAccount);
-          if (!nkAccount) {
-            this.nkAccountCache$ = null;
+    if (!this.accountCache$ || force) {
+      this.accountCache$ = this.findByCurrentUser().pipe(
+        tap((account: IAccount) => {
+          this.account.set(account);
+          if (!account) {
+            this.accountCache$ = null;
           }
         })
       );
     }
-    return this.nkAccountCache$.pipe(catchError(() => of(null)));
+    return this.accountCache$.pipe(catchError(() => of(null)));
   }
 
-  setNkAccount(nkAccount: IAccount): void {
-    this.nkAccount.set(nkAccount);
-    if (!nkAccount) {
-      this.nkAccountCache$ = null;
+  setAccount(account: IAccount): void {
+    this.account.set(account);
+    if (!account) {
+      this.accountCache$ = null;
     }
   }
 
@@ -50,59 +52,49 @@ export class AccountService implements IHttpRestApiService<IAccount> {
     return this.http.get<IAccount>(`${this.resourceUrl}/me`);
   }
 
-  create(nkAccount: IAccount): Observable<EntityResponseType> {
-    return this.http.post<IAccount>(this.resourceUrl, nkAccount, {
-      observe: "response",
+  create(account: IAccount): Observable<EntityResponseType> {
+    return this.http.post<IAccount>(this.resourceUrl, account, {
+      observe: 'response',
     });
   }
 
-  update(nkAccount: IAccount): Observable<EntityResponseType> {
-    return this.http.put<IAccount>(this.resourceUrl, nkAccount, {
-      observe: "response",
+  update(account: IAccount): Observable<EntityResponseType> {
+    return this.http.put<IAccount>(this.resourceUrl, account, {
+      observe: 'response',
     });
   }
 
   updateAvatar(file: File): Observable<EntityResponseType> {
     const data: FormData = new FormData();
-    data.append("file", file);
-    return this.http.put<IAccount>(
-      `${this.resourceUrl}/upload-avatar`,
-      data,
-      {
-        observe: "response",
-      }
-    );
+    data.append('file', file);
+    return this.http.put<IAccount>(`${this.resourceUrl}/upload-avatar`, data, {
+      observe: 'response',
+    });
   }
 
   updateBanner(file: File): Observable<EntityResponseType> {
     const data: FormData = new FormData();
-    data.append("file", file);
-    return this.http.put<IAccount>(
-      `${this.resourceUrl}/upload-banner`,
-      data,
-      {
-        observe: "response",
-      }
-    );
+    data.append('file', file);
+    return this.http.put<IAccount>(`${this.resourceUrl}/upload-banner`, data, {
+      observe: 'response',
+    });
   }
 
-  partialUpdate(nkAccount: IAccount): Observable<EntityResponseType> {
-    return this.http.patch<IAccount>(
-      `${this.resourceUrl}/${nkAccount.id}`,
-      nkAccount,
-      { observe: "response" }
-    );
+  partialUpdate(account: IAccount): Observable<EntityResponseType> {
+    return this.http.patch<IAccount>(`${this.resourceUrl}/${account.id}`, account, {
+      observe: 'response',
+    });
   }
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IAccount>(`${this.resourceUrl}/${id}`, {
-      observe: "response",
+      observe: 'response',
     });
   }
 
   findByUser(id: number): Observable<EntityResponseType> {
     return this.http.get<IAccount>(`${this.resourceUrl}/user/${id}`, {
-      observe: "response",
+      observe: 'response',
     });
   }
 
@@ -110,13 +102,13 @@ export class AccountService implements IHttpRestApiService<IAccount> {
     const options = createRequestOption(req);
     return this.http.get<IAccount[]>(this.resourceUrl, {
       params: options,
-      observe: "response",
+      observe: 'response',
     });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, {
-      observe: "response",
+      observe: 'response',
     });
   }
 }

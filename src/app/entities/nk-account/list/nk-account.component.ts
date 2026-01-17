@@ -26,9 +26,9 @@ import { AccountService, EntityArrayResponseType } from '../nk-account.service';
     FormatMediumDatetimePipe,
   ],
 })
-export class NkAccountComponent implements OnInit {
+export class AccountComponent implements OnInit {
   subscription: Subscription | null = null;
-  nkAccounts?: IAccount[];
+  accounts?: IAccount[];
   isLoading = false;
 
   sortState = sortStateSignal({});
@@ -38,13 +38,13 @@ export class NkAccountComponent implements OnInit {
   page = 1;
 
   public router = inject(Router);
-  protected nkAccountService = inject(AccountService);
+  protected accountService = inject(AccountService);
   protected activatedRoute = inject(ActivatedRoute);
   protected sortService = inject(SortService);
 
   protected ngZone = inject(NgZone);
 
-  // trackId = (_index: number, item: IAccount): number => this.nkAccountService.getNkAccountIdentifier(item);
+  // trackId = (_index: number, item: IAccount): number => this.accountService.getAccountIdentifier(item);
 
   ngOnInit(): void {
     this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
@@ -55,9 +55,9 @@ export class NkAccountComponent implements OnInit {
       .subscribe();
   }
 
-  delete(nkAccount: IAccount): void {
-    // const modalRef = this.modalService.open(NkAccountDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    // modalRef.componentInstance.nkAccount = nkAccount;
+  delete(account: IAccount): void {
+    // const modalRef = this.modalService.open(AccountDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    // modalRef.componentInstance.account = account;
     // // unsubscribe not needed because closed completes on modal close
     // modalRef.closed
     //   .pipe(
@@ -92,7 +92,7 @@ export class NkAccountComponent implements OnInit {
   protected onResponseSuccess(response: EntityArrayResponseType): void {
     this.fillComponentAttributesFromResponseHeader(response.headers);
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
-    this.nkAccounts = dataFromBody;
+    this.accounts = dataFromBody;
   }
 
   protected fillComponentAttributesFromResponseBody(data: IAccount[] | null): IAccount[] {
@@ -113,7 +113,7 @@ export class NkAccountComponent implements OnInit {
       size: this.itemsPerPage,
       sort: this.sortService.buildSortParam(this.sortState()),
     };
-    return this.nkAccountService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+    return this.accountService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 
   protected handleNavigation(page: number, sortState: SortState): void {

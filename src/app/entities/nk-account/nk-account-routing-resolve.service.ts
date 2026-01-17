@@ -7,15 +7,15 @@ import { mergeMap } from 'rxjs/operators';
 import { IAccount } from 'app/entities/models/nk-account.model';
 import { AccountService } from './nk-account.service';
 
-const nkAccountResolve = (route: ActivatedRouteSnapshot): Observable<null | IAccount> => {
+const accountResolve = (route: ActivatedRouteSnapshot): Observable<null | IAccount> => {
   const id: number = Number(route.params['id'].split('-')[0]);
   if (id) {
     return inject(AccountService)
       .find(id)
       .pipe(
-        mergeMap((nkAccount: HttpResponse<IAccount>) => {
-          if (nkAccount.body) {
-            return of(nkAccount.body);
+        mergeMap((account: HttpResponse<IAccount>) => {
+          if (account.body) {
+            return of(account.body);
           } else {
             inject(Router).navigate(['404']);
             return EMPTY;
@@ -26,4 +26,4 @@ const nkAccountResolve = (route: ActivatedRouteSnapshot): Observable<null | IAcc
   return of(null);
 };
 
-export default nkAccountResolve;
+export default accountResolve;

@@ -25,12 +25,12 @@ import { Router } from "@angular/router";
 })
 export default class SettingsComponent implements OnInit {
   private router = inject(Router);
-  nkAccountService = inject(AccountService);
+  accountService = inject(AccountService);
   alertService = inject(AlertService);
-  nkAccount = inject(AccountService).trackCurrentAccount();
+  account = inject(AccountService).trackCurrentAccount();
   isSaving = signal(false);
 
-  nkAccountForm = new FormGroup({
+  accountForm = new FormGroup({
     identifier: new FormControl(null, {
       validators: [
         Validators.required,
@@ -52,28 +52,28 @@ export default class SettingsComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.nkAccountService.currentAccount().subscribe();
-    this.nkAccountForm.patchValue(this.nkAccount());
+    this.accountService.currentAccount().subscribe();
+    this.accountForm.patchValue(this.account());
   }
 
   save(): void {
     this.isSaving.set(false);
-    const account = { ...this.nkAccount(), ...this.nkAccountForm.value };
+    const account = { ...this.account(), ...this.accountForm.value };
     const identifierChanged =
-      this.nkAccount().identifier != this.nkAccountForm.value["identifier"];
-    this.nkAccountService
+      this.account().identifier != this.accountForm.value["identifier"];
+    this.accountService
       .partialUpdate(account)
       .pipe(finalize(() => this.isSaving.set(false)))
       .subscribe({
         next: (result) => {
-          this.nkAccountService.setNkAccount(result.body);
+          this.accountService.setAccount(result.body);
           this.alertService.addAlert({
             type: "success",
             message:
               "Les informations du compte ont été mises à jour avec succès.",
           });
           if (identifierChanged) {
-            this.router.navigate(["nk-account", this.nkAccount().identifier]);
+            this.router.navigate(["nk-account", this.account().identifier]);
           }
         },
         error: () => {

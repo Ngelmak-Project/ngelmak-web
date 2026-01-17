@@ -3,16 +3,16 @@ import { Routes } from '@angular/router';
 import { Authority } from 'app/config/authority.constants';
 import { ASC } from 'app/config/navigation.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
-import { NkAccountComponent } from './list/nk-account.component';
-import NkAccountResolve from './nk-account-routing-resolve.service';
-import { NkAccountUpdateComponent } from './update/nk-account-update.component';
-import { NkAccountDetailComponent } from './detail/nk-account-detail.component';
-import { NkAccountViewComponent } from './view/nk-account-view.component';
+import { AccountComponent } from './list/nk-account.component';
+import AccountResolve from './nk-account-routing-resolve.service';
+import { AccountUpdateComponent } from './update/nk-account-update.component';
+import { AccountDetailComponent } from './detail/nk-account-detail.component';
+import { AccountViewComponent } from './view/nk-account-view.component';
 
-const nkAccountRoute: Routes = [
+const accountRoute: Routes = [
   {
     path: '',
-    component: NkAccountComponent,
+    component: AccountComponent,
     data: {
       defaultSort: 'id,' + ASC,
     },
@@ -24,30 +24,30 @@ const nkAccountRoute: Routes = [
     data: {
       authorities: [Authority.USER],
     },
-    component: NkAccountDetailComponent,
+    component: AccountDetailComponent,
     loadChildren: () => import('app/entities/nk-account/detail/nk-account-detail.routes'),
   },
   {
     path: ':id/view',
-    component: NkAccountViewComponent,
+    component: AccountViewComponent,
     resolve: {
-      nkAccount: NkAccountResolve,
+      account: AccountResolve,
     },
     canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',
-    component: NkAccountUpdateComponent,
+    component: AccountUpdateComponent,
     canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/edit',
-    component: NkAccountUpdateComponent,
+    component: AccountUpdateComponent,
     resolve: {
-      nkAccount: NkAccountResolve,
+      account: AccountResolve,
     },
     canActivate: [UserRouteAccessService],
   },
 ];
 
-export default nkAccountRoute;
+export default accountRoute;

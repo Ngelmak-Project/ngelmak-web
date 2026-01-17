@@ -12,10 +12,10 @@ import { AccountService } from '../nk-account.service';
   templateUrl: './nk-account-delete-dialog.component.html',
   imports: [SharedModule, FormsModule],
 })
-export class NkAccountDeleteDialogComponent {
-  nkAccount?: IAccount;
+export class AccountDeleteDialogComponent {
+  account?: IAccount;
 
-  protected nkAccountService = inject(AccountService);
+  protected accountService = inject(AccountService);
 
 
   cancel(): void {
@@ -23,7 +23,7 @@ export class NkAccountDeleteDialogComponent {
   }
 
   confirmDelete(id: number): void {
-    this.nkAccountService.delete(id).subscribe(() => {
+    this.accountService.delete(id).subscribe(() => {
 
     });
   }

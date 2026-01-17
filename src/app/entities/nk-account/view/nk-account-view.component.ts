@@ -1,36 +1,53 @@
-import { Component, inject, OnInit, signal } from "@angular/core";
+import { Component, inject, signal } from '@angular/core';
 
-import { CommonModule } from "@angular/common";
-import { ActivatedRoute, RouterModule } from "@angular/router";
-import { IPost } from "app/entities/models/nk-post.model";
-import { PostService } from "app/entities/nk-post/nk-post.service";
-import { finalize } from "rxjs";
-import { DurationPipe } from "app/shared/date";
+import { CommonModule } from '@angular/common';
+import { form, max, required, Field } from '@angular/forms/signals';
+import { RouterModule } from '@angular/router';
+import { IAccount } from 'app/entities/models/nk-account.model';
+import { AccountService } from '../nk-account.service';
+import { finalize } from 'rxjs';
+import { AlertService } from 'app/shared/alert/alert.service';
 
 @Component({
   standalone: true,
-  selector: "app-nk-account-view",
-  templateUrl: "./nk-account-view.component.html",
-  imports: [CommonModule, DurationPipe, RouterModule],
+  selector: 'app-account-view',
+  templateUrl: './nk-account-view.component.html',
+  imports: [CommonModule, RouterModule, Field],
 })
-export class NkAccountViewComponent implements OnInit {
-  nkAccount = signal(null);
-  route = inject(ActivatedRoute);
-
-  postService = inject(PostService);
-  posts = signal<IPost[]>([]);
+export class AccountViewComponent {
   isLoading = signal(false);
+  isSaving = signal(false);
+  account = inject(AccountService).trackCurrentAccount();
+  accountService = inject(AccountService);
+  alertService = inject(AlertService);
 
-  ngOnInit(): void {
-    this.nkAccount.set(this.route.snapshot.data["nkAccount"]);
-    this.isLoading.set(true);
-    this.postService
-      .findByNkAccount(this.route.snapshot.data["nkAccount"].id)
-      .pipe(finalize(() => this.isLoading.set(false)))
-      .subscribe((res) => this.posts.set(res.body.content));
-  }
+  protected accountModel = signal<IAccount>({
+    name: '',
+  });
 
-  previousState(): void {
-    window.history.back();
+  protected accountForm = form(this.accountModel, (p) => {
+    required(p.name, { message: 'Le nom de la chaine est obligatoire.' }),
+      max(p.name, 100, { message: 'Le nom ne doit pas dépasser 100 caractères.' });
+  });
+
+  save(): void {
+    const account = this.accountForm().value();
+    this.accountService
+      .create(account)
+      .pipe(finalize(() => this.isSaving.set(false)))
+      .subscribe({
+        next: (res) => {
+          this.alertService.addAlert({
+            type: 'success',
+            message: 'Chaine créée avec succès!',
+          });
+          this.accountService.setAccount(res.body);
+        },
+        error: () =>
+          this.alertService.addAlert({
+            type: 'error',
+            message: 'Une erreur lors de la création.',
+          }),
+      });
   }
 }
