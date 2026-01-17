@@ -55,13 +55,13 @@
             data-cy="account"
             name="account"
             formControlName="account"
-            [compareWith]="compareNkAccount"
+            [compareWith]="compareAccount"
           >
             @if (editForm.get(['account'])!.value == null) {
               <option [ngValue]="null" selected></option>
             }
-            @for (nkAccountOption of nkAccountsSharedCollection; track $index) {
-              <option [ngValue]="nkAccountOption">{{ nkAccountOption.id }}</option>
+            @for (accountOption of accountsSharedCollection; track $index) {
+              <option [ngValue]="accountOption">{{ accountOption.id }}</option>
             }
           </select>
         </div>
@@ -81,13 +81,13 @@
             data-cy="subscriber"
             name="subscriber"
             formControlName="subscriber"
-            [compareWith]="compareNkAccount"
+            [compareWith]="compareAccount"
           >
             @if (editForm.get(['subscriber'])!.value == null) {
               <option [ngValue]="null" selected></option>
             }
-            @for (nkAccountOption of nkAccountsSharedCollection; track $index) {
-              <option [ngValue]="nkAccountOption">{{ nkAccountOption.id }}</option>
+            @for (accountOption of accountsSharedCollection; track $index) {
+              <option [ngValue]="accountOption">{{ accountOption.id }}</option>
             }
           </select>
         </div>

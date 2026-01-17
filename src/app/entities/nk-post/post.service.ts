@@ -103,7 +103,7 @@ export class PostService {
     });
   }
 
-  findByNkAccount(id: number, req?: any): Observable<HttpResponse<IPage<IPost>>> {
+  findByAccount(id: number, req?: any): Observable<HttpResponse<IPage<IPost>>> {
     const options = createRequestOption(req);
     return this.http.get<IPage<IPost>>(`${this.resourceUrl}/nk-account/${id}`, {
       params: options,

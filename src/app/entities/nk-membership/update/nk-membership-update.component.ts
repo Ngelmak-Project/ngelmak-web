@@ -23,11 +23,11 @@ export class MembershipUpdateComponent implements OnInit {
   isSaving = false;
   membership: IMembership | null = null;
 
-  nkAccountsSharedCollection: IAccount[] = [];
+  accountsSharedCollection: IAccount[] = [];
 
   protected membershipService = inject(MembershipService);
   protected membershipFormService = inject(MembershipFormService);
-  protected nkAccountService = inject(AccountService);
+  protected accountService = inject(AccountService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -82,26 +82,26 @@ export class MembershipUpdateComponent implements OnInit {
     // this.membership = membership;
     // this.membershipFormService.resetForm(this.editForm, membership);
 
-    // this.nkAccountsSharedCollection = this.nkAccountService.addNkAccountToCollectionIfMissing<IAccount>(
-    //   this.nkAccountsSharedCollection,
+    // this.accountsSharedCollection = this.accountService.addAccountToCollectionIfMissing<IAccount>(
+    //   this.accountsSharedCollection,
     //   membership.account,
     //   membership.subscriber,
     // );
   }
 
   protected loadRelationshipsOptions(): void {
-    // this.nkAccountService
+    // this.accountService
     //   .query()
     //   .pipe(map((res: HttpResponse<IAccount[]>) => res.body ?? []))
     //   .pipe(
-    //     map((nkAccounts: IAccount[]) =>
-    //       this.nkAccountService.addNkAccountToCollectionIfMissing<IAccount>(
-    //         nkAccounts,
+    //     map((accounts: IAccount[]) =>
+    //       this.accountService.addAccountToCollectionIfMissing<IAccount>(
+    //         accounts,
     //         this.membership?.account,
     //         this.membership?.subscriber,
     //       ),
     //     ),
     //   )
-    //   .subscribe((nkAccounts: IAccount[]) => (this.nkAccountsSharedCollection = nkAccounts));
+    //   .subscribe((accounts: IAccount[]) => (this.accountsSharedCollection = accounts));
   }
 }

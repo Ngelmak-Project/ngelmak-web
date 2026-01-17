@@ -27,7 +27,7 @@ export class FeedService {
     });
   }
 
-  findByNkAccount(
+  findByAccount(
     id: number,
     req?: any
   ): Observable<HttpResponse<IPage<IFeed>>> {

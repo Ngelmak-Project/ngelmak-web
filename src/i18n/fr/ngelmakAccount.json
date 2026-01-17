@@ -1,8 +1,8 @@
 {
   "ngelmakprojectApp": {
-    "nkAccount": {
+    "account": {
       "home": {
-        "title": "NkAccounts",
+        "title": "Accounts",
         "refreshListLabel": "Actualiser la liste",
         "createLabel": "Créer un nouveau Ngelmak Account",
         "createOrEditLabel": "Créer ou éditer un Ngelmak Account",

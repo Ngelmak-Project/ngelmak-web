@@ -40,8 +40,8 @@ export class PostDetailComponent implements OnInit {
   post: IPost | null = null;
   comments = signal<IComment[]>([]);
   attachments = signal<IAttachment[]>([]);
-  nkAccountService = inject(AccountService);
-  nkAccount = inject(AccountService).trackCurrentAccount();
+  accountService = inject(AccountService);
+  account = inject(AccountService).trackCurrentAccount();
   commentService = inject(CommentService);
   route = inject(ActivatedRoute);
 
@@ -50,7 +50,7 @@ export class PostDetailComponent implements OnInit {
   ngOnInit(): void {
     this.post = this.route.snapshot.data["post"];
     this.comments.set(this.post.comments);
-    this.nkAccountService.currentAccount().subscribe();
+    this.accountService.currentAccount().subscribe();
     // this.loadAllComments();
   }
 

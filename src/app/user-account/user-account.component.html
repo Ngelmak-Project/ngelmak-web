@@ -59,8 +59,8 @@
       @if (imageSrc()) {
       <img class="mb-4 rounded-full w-28 h-28 sm:mb-0 xl:mb-4 2xl:mb-0" [src]="imageSrc()" alt="Uploaded image" />
       }
-      @else if (account().imageUrl) {
-      <img class="mb-4 rounded-full w-28 h-28 sm:mb-0 xl:mb-4 2xl:mb-0" [src]="account().imageUrl"
+      @else if (user().imageUrl) {
+      <img class="mb-4 rounded-full w-28 h-28 sm:mb-0 xl:mb-4 2xl:mb-0" [src]="user().imageUrl"
         alt="Image profile" />
       }
       @else {
@@ -71,8 +71,8 @@
           clip-rule="evenodd" />
       </svg>
       }
-      <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ account().firstName }} {{
-        account().lastName }}</h5>
+      <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ user().firstName }} {{
+        user().lastName }}</h5>
       <span class="text-sm text-gray-500 dark:text-gray-400">JPG, GIF ou PNG. Taille maximale de 800K.</span>
 
       <div class="flex gap-1 md:gap-2 mt-4 md:mt-6">
@@ -125,7 +125,7 @@
           </svg>
           Supprimer
         </button>
-        @if (account().certificationStatus != 'CERTIFIED') {
+        @if (user().certificationStatus != 'CERTIFIED') {
         <button (click)="certificationRequest()" type="button"
           class="inline-flex items-center py-2 px-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 mr-2 -ml-1">

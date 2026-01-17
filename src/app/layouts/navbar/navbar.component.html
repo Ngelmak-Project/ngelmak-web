@@ -671,7 +671,7 @@
         <button
           type="button"
           class="flex text-sm bg-gray-800 rounded-full focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600"
-          (click)="showUserSettings.set(!showUserSettings)"
+          (click)="showUserSettings.set(!showUserSettings())"
           matTooltip="Menu d'utilisateur"
         >
           @if (user()?.imageUrl) {
@@ -703,7 +703,7 @@
           (onClickOutside)="showUserSettings.set(!showUserSettings)"
           class="flex flex-col p-4 mt-4 text-base bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-800 dark:divide-gray-600 top-12 right-2 absolute z-50"
         >
-          @if (account()) {
+          @if (user()) {
           <div class="px-4 py-3">
             <span class="block text-sm text-gray-900 dark:text-white"
               >{{ user()?.firstName }} {{ user()?.lastName }}</span
@@ -714,7 +714,7 @@
           </div>
           }
           <ul class="py-1">
-            @if (account()) {
+            @if (user()) {
             <li *nkHasAnyAuthority="'ROLE_ADMIN'">
               <a
                 routerLink="/account-management"
@@ -803,7 +803,7 @@
                   />
                 </svg>
 
-                <span class="flex-1 ms-3 whitespace-nowrap text-start">Céer un compte</span>
+                <span class="flex-1 ms-3 whitespace-nowrap text-start">Créer une chaine</span>
               </a>
             </li>
             }

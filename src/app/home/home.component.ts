@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, inject, Input, Output, signal, ViewChild } from '@angular/core';
 import { IComment } from 'app/entities/models/nk-comment.model';
 import { IPost } from 'app/entities/models/nk-post.model';
+import { AccountViewComponent } from 'app/entities/nk-account/view/nk-account-view.component';
 import { CommentService } from 'app/entities/nk-comment/nk-comment.service';
 import { FeedComponent } from 'app/entities/nk-feed/list/nk-feed.component';
 import { PostUpdateComponent } from 'app/entities/nk-post/update/nk-post-update.component';
@@ -10,7 +11,7 @@ import { AlertService } from 'app/shared/alert/alert.service';
   standalone: true,
   selector: 'app-home',
   templateUrl: './home.component.html',
-  imports: [PostUpdateComponent, FeedComponent]
+  imports: [PostUpdateComponent, FeedComponent, AccountViewComponent]
 })
 export default class HomeComponent {
     /**

@@ -1,6 +1,6 @@
 {
   "ngelmakprojectApp": {
-    "nkAccount": {
+    "account": {
       "home": {
         "title": "Ngelmak Accounts",
         "refreshListLabel": "Refresh list",

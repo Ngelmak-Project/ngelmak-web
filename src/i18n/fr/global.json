@@ -8,7 +8,7 @@
       "entities": {
         "main": "Entités",
         "ngelmakpster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
-        "nkAccount": "Ngelmak Account",
+        "account": "Ngelmak Account",
         "config": "Config",
         "post": "Post",
         "attachment": "Attachment",

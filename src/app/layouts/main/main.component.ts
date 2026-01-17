@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from "app/core/auth/auth.service";;
+import { AuthenticationService } from 'app/core/auth/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -12,7 +12,7 @@ export default class MainComponent implements OnInit {
   // private renderer: Renderer2;
 
   private router = inject(Router);
-  private accountService = inject(AuthenticationService);
+  private authService = inject(AuthenticationService);
   // private rootRenderer = inject(RendererFactory2);
 
   constructor() {
@@ -22,7 +22,6 @@ export default class MainComponent implements OnInit {
   ngOnInit(): void {
     // try to log in automatically
     // this.accountService.identity().subscribe();
-
     // this.translateService.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => {
     //   this.appPageTitleStrategy.updateTitle(this.router.routerState.snapshot);
     //   this.renderer.setAttribute(document.querySelector('html'), 'lang', langChangeEvent.lang);

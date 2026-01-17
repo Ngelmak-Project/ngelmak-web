@@ -1,20 +1,28 @@
 import { inject, isDevMode } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivateFn,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { map } from 'rxjs/operators';
 
-import { AuthenticationService } from "app/core/auth/auth.service";;
+import { AuthenticationService } from 'app/core/auth/auth.service';
 import { StateStorageService } from './state-storage.service';
 
-export const UserRouteAccessService: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-  const accountService = inject(AuthenticationService);
+export const UserRouteAccessService: CanActivateFn = (
+  next: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
+  const authService = inject(AuthenticationService);
   const router = inject(Router);
   const stateStorageService = inject(StateStorageService);
-  return accountService.identity().pipe(
-    map(account => {
+  return authService.identity().pipe(
+    map((account) => {
       if (account) {
         const authorities = next.data['authorities'];
 
-        if (!authorities || authorities.length === 0 || accountService.hasAnyAuthority(authorities)) {
+        if (!authorities || authorities.length === 0 || authService.hasAnyAuthority(authorities)) {
           return true;
         }
 
@@ -28,6 +36,6 @@ export const UserRouteAccessService: CanActivateFn = (next: ActivatedRouteSnapsh
       stateStorageService.storeUrl(state.url);
       router.navigate(['/sign-in']);
       return false;
-    }),
+    })
   );
 };

@@ -1,28 +1,20 @@
-import { CommonModule } from "@angular/common";
-import { Component, inject, signal } from "@angular/core";
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from "@angular/forms";
-import { AuthenticationService } from "app/core/auth/auth.service";
-import { IPrivilege } from "app/entities/models/nk-privilege.model";
-import { AlertService } from "app/shared/alert/alert.service";
+import { CommonModule } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthenticationService } from 'app/core/auth/auth.service';
+import { IPrivilege } from 'app/entities/models/nk-privilege.model';
+import { AlertService } from 'app/shared/alert/alert.service';
 
 @Component({
   standalone: true,
-  selector: "app-account-certification-request",
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-  ],
-  templateUrl: "./account-certification-request.component.html",
+  selector: 'app-account-certification-request',
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './account-certification-request.component.html',
 })
 export class AccountCertificationRequest {
   // readonly dialogRef = inject(MatDialogRef<AccountCertificationRequest>);
 
-  private accountService = inject(AuthenticationService);
+  private authService = inject(AuthenticationService);
   private alertService = inject(AlertService);
 
   privilegeForm = new FormGroup({
@@ -30,7 +22,7 @@ export class AccountCertificationRequest {
       nonNullable: true,
       validators: Validators.required,
     }),
-    officialDocIdentification: new FormControl("", {
+    officialDocIdentification: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.maxLength(20)],
     }),
@@ -43,19 +35,19 @@ export class AccountCertificationRequest {
   save() {
     this.isSaving.set(true);
     const request = this.privilegeForm.getRawValue();
-    this.accountService.requestCertification(request).subscribe({
+    this.authService.requestCertification(request).subscribe({
       next: (account) => {
-        this.accountService.authenticate(account);
+        this.authService.authenticate(account);
         this.alertService.addAlert({
-          type: "info",
-          message: "Votre requête pour idenfication est prise en compte.",
+          type: 'info',
+          message: 'Votre requête pour idenfication est prise en compte.',
         });
         // this.dialogRef.close(true);
         this.isSaving.set(false);
       },
       error: () => {
         this.alertService.addAlert({
-          type: "error",
+          type: 'error',
           message: "Une erreur s'est produite.",
         });
         this.isSaving.set(false);

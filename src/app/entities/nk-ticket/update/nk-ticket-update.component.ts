@@ -112,8 +112,8 @@ export class TicketUpdateComponent implements OnInit {
     //   this.commentsSharedCollection,
     //   ticket.commentRelated,
     // );
-    // this.nkAccountsSharedCollection = this.nkAccountService.addNkAccountToCollectionIfMissing<IAccount>(
-    //   this.nkAccountsSharedCollection,
+    // this.accountsSharedCollection = this.accountService.addAccountToCollectionIfMissing<IAccount>(
+    //   this.accountsSharedCollection,
     //   ticket.accountRelated,
     //   ticket.issuedby,
     // );
@@ -134,18 +134,18 @@ export class TicketUpdateComponent implements OnInit {
     //   )
     //   .subscribe((comments: IComment[]) => (this.commentsSharedCollection = comments));
 
-    // this.nkAccountService
+    // this.accountService
     //   .query()
     //   .pipe(map((res: HttpResponse<IAccount[]>) => res.body ?? []))
     //   .pipe(
-    //     map((nkAccounts: IAccount[]) =>
-    //       this.nkAccountService.addNkAccountToCollectionIfMissing<IAccount>(
-    //         nkAccounts,
+    //     map((accounts: IAccount[]) =>
+    //       this.accountService.addAccountToCollectionIfMissing<IAccount>(
+    //         accounts,
     //         this.ticket?.accountRelated,
     //         this.ticket?.issuedby,
     //       ),
     //     ),
     //   )
-    //   .subscribe((nkAccounts: IAccount[]) => (this.nkAccountsSharedCollection = nkAccounts));
+    //   .subscribe((accounts: IAccount[]) => (this.accountsSharedCollection = accounts));
   }
 }

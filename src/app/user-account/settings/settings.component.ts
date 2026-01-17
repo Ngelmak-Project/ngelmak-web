@@ -1,12 +1,16 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 import { LANGUAGES } from 'app/config/language.constants';
 import { Authentication } from 'app/core/auth/auth.model';
-import { AuthenticationService } from "app/core/auth/auth.service";
+import { AuthenticationService } from 'app/core/auth/auth.service';
 import SharedModule from 'app/shared/shared.module';
-;
-
 const initialAuth: Authentication = {} as Authentication;
 
 @Component({
@@ -30,7 +34,12 @@ export default class SettingsComponent implements OnInit {
     }),
     email: new FormControl(initialAuth.email, {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email],
+      validators: [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(254),
+        Validators.email,
+      ],
     }),
     langKey: new FormControl(initialAuth.langKey, { nonNullable: true }),
 
@@ -40,10 +49,10 @@ export default class SettingsComponent implements OnInit {
     login: new FormControl(initialAuth.login, { nonNullable: true }),
   });
 
-  private accountService: AuthenticationService = inject(AuthenticationService);
+  private authService = inject(AuthenticationService);
 
   ngOnInit(): void {
-    this.accountService.identity().subscribe(account => {
+    this.authService.identity().subscribe((account) => {
       if (account) {
         this.settingsForm.patchValue(account);
       }
@@ -54,10 +63,10 @@ export default class SettingsComponent implements OnInit {
     this.success.set(false);
 
     const account = this.settingsForm.getRawValue();
-    this.accountService.save(account).subscribe(() => {
+    this.authService.save(account).subscribe(() => {
       this.success.set(true);
 
-      this.accountService.authenticate(account);
+      this.authService.authenticate(account);
     });
   }
 }

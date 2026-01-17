@@ -140,11 +140,11 @@
             data-cy="accountRelated"
             name="accountRelated"
             formControlName="accountRelated"
-            [compareWith]="compareNkAccount"
+            [compareWith]="compareAccount"
           >
             <option [ngValue]="null"></option>
-            @for (nkAccountOption of nkAccountsSharedCollection; track $index) {
-              <option [ngValue]="nkAccountOption">{{ nkAccountOption.id }}</option>
+            @for (accountOption of accountsSharedCollection; track $index) {
+              <option [ngValue]="accountOption">{{ accountOption.id }}</option>
             }
           </select>
         </div>
@@ -157,13 +157,13 @@
             data-cy="issuedby"
             name="issuedby"
             formControlName="issuedby"
-            [compareWith]="compareNkAccount"
+            [compareWith]="compareAccount"
           >
             @if (editForm.get(['issuedby'])!.value == null) {
               <option [ngValue]="null" selected></option>
             }
-            @for (nkAccountOption of nkAccountsSharedCollection; track $index) {
-              <option [ngValue]="nkAccountOption">{{ nkAccountOption.id }}</option>
+            @for (accountOption of accountsSharedCollection; track $index) {
+              <option [ngValue]="accountOption">{{ accountOption.id }}</option>
             }
           </select>
         </div>

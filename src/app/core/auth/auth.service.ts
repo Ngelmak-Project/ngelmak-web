@@ -42,6 +42,11 @@ export class AuthenticationService {
   }
 
   trackCurrentAuthentication(): Signal<Authentication | null> {
+    // If the signal is still null AND no request is in progress, trigger identity()
+    if (this.userIdentity() === null && !this.authCache$) {
+      this.identity().subscribe();
+    }
+
     return this.userIdentity.asReadonly();
   }
 
@@ -84,9 +89,7 @@ export class AuthenticationService {
   }
 
   private fetchUserAuthentication(): Observable<Authentication> {
-    return this.http.get<Authentication>(
-      this.applicationConfigService.getEndpointFor('auth/me')
-    );
+    return this.http.get<Authentication>(this.applicationConfigService.getEndpointFor('auth/me'));
   }
 
   private navigateToStoredUrl(): void {

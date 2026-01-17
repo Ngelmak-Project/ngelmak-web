@@ -12,7 +12,6 @@ import SharedModule from 'app/shared/shared.module';
 
 import { Field, form, max, required } from '@angular/forms/signals';
 import { AttachmentType } from 'app/entities/enumerations/attachment-type.model';
-import { Status } from 'app/entities/enumerations/status.model';
 import { Visibility } from 'app/entities/enumerations/visibility.model';
 import { AccountService } from 'app/entities/nk-account/nk-account.service';
 import { AlertService } from 'app/shared/alert/alert.service';
@@ -37,19 +36,17 @@ export class PostUpdateComponent implements OnInit {
   protected post = signal<IPost>(null);
   protected isSaving = signal(false);
   protected isLoading = signal(false);
-  protected updatedFiles: IFile[] = [];
   protected deletedFiles: IFile[] = [];
-  protected visibilityValues = Object.keys(Visibility);
-  protected statusValues = Object.keys(Status);
-  protected keywords: string[] = [];
-  protected files: IFile[] = [];
+  // protected files: IFile[] = [];
   account = inject(AccountService).trackCurrentAccount();
 
   expandedIndexes: Set<number> = new Set<number>();
 
   protected postModel = signal<IPost>({
+    id: null,
     content: '',
     visibility: Visibility.PUBLIC,
+    files: [],
   });
 
   protected postForm = form(this.postModel, (p) => {
@@ -71,24 +68,20 @@ export class PostUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving.set(true);
-    const keywords = this.keywords.reduce((prev: string, curr: string) => `${prev},${curr}`);
-    const post: IPost = { ...this.postForm().value, keywords };
-    const newFiles = this.updatedFiles.filter((el) => {
-      // if (el.id) {
-      //   const find = this.post().files.find((item) => item.id == el.id);
-      //   return find.position != el.position || find.dirty;
-      // }
-      return true;
-    });
+    const post: IPost = this.postForm().value();
+    const newMedias = post.files.filter((file) => file.id == null);
+    post.files = [];
+    const covers: IFile[] = []; // [TODO] handle cover images for videos.
     if (post.id !== null) {
-      const deletedFiles = this.deletedFiles.map((el) => ({
-        id: el.id,
-        url: el.url,
-        // posterUrl: el.posterUrl,
+      const deletedFiles = this.deletedFiles.map((file) => ({
+        id: file.id,
+        url: file.url,
       }));
-      this.subscribeToSaveResponse(this.postService.update(post, newFiles, deletedFiles));
+      this.subscribeToSaveResponse(
+        this.postService.update(post, deletedFiles, newMedias, deletedFiles)
+      );
     } else {
-      this.subscribeToSaveResponse(this.postService.create(post, newFiles));
+      this.subscribeToSaveResponse(this.postService.create(post, newMedias, covers));
     }
   }
 
@@ -109,49 +102,6 @@ export class PostUpdateComponent implements OnInit {
     });
   }
 
-  protected addkeyword(event) {
-    const keyword = (event.value || '').trim();
-    if (keyword.length > 0) {
-      this.keywords.push('#' + keyword);
-    }
-  }
-
-  protected removekeyword(i: number) {
-    this.keywords = this.keywords.filter((value, idx) => idx != i);
-  }
-
-  openFileTextDialog(position?: number): void {
-    // const dialogRef = this.dialog.open(FileTextDialogComponent, {
-    //   disableClose: true,
-    //   width: "90vw",
-    //   maxWidth: "100vw",
-    //   maxHeight: "90vw",
-    //   enterAnimationDuration: "300ms",
-    //   exitAnimationDuration: "150ms",
-    // });
-    // const idx = this.updatedFiles.findIndex((e) => e.position == position);
-    // if (idx > -1) {
-    //   dialogRef.componentInstance.textContent =
-    //     this.updatedFiles[idx].textContent;
-    // }
-    // dialogRef
-    //   .afterClosed()
-    //   .subscribe((file: IFile) => this.afterClosed(position, file));
-  }
-
-  openFileVoiceRecoder(position?: number): void {
-    // const dialogRef = this.dialog.open(FileVoiceRecoderComponent, {
-    //   disableClose: true,
-    //   width: "500px",
-    //   height: "350px",
-    //   enterAnimationDuration: "300ms",
-    //   exitAnimationDuration: "150ms",
-    // });
-    // dialogRef
-    //   .afterClosed()
-    //   .subscribe((file: IFile) => this.afterClosed(position, file));
-  }
-
   openFileVideo(position?: number): void {
     // const dialogRef = this.dialog.open(FileVideoComponent, {
     //   disableClose: true,
@@ -166,46 +116,6 @@ export class PostUpdateComponent implements OnInit {
     // dialogRef
     //   .afterClosed()
     //   .subscribe((file) => this.afterClosed(position, file));
-  }
-
-  openFileImage(position?: number): void {
-    // const dialogRef = this.dialog.open(FileImageComponent, {
-    //   disableClose: true,
-    //   width: "500px",
-    //   enterAnimationDuration: "300ms",
-    //   exitAnimationDuration: "150ms",
-    // });
-    // const idx = this.updatedFiles.findIndex((e) => e.position == position);
-    // if (idx > -1) {
-    //   dialogRef.componentInstance.file.set(this.updatedFiles[idx]);
-    // }
-    // dialogRef
-    //   .afterClosed()
-    //   .subscribe((file) => this.afterClosed(position, file));
-  }
-
-  openFileFileInput(position?: number): void {
-    // const dialogRef = this.dialog.open(FileInputComponent, {
-    //   disableClose: true,
-    //   width: "500px",
-    //   enterAnimationDuration: "300ms",
-    //   exitAnimationDuration: "150ms",
-    // });
-    // dialogRef
-    //   .afterClosed()
-    //   .subscribe((file: IFile) => this.afterClosed(position, file));
-  }
-
-  toggleExpand(idx: number) {
-    if (this.expandedIndexes.has(idx)) {
-      this.expandedIndexes.delete(idx);
-    } else {
-      this.expandedIndexes.add(idx);
-    }
-  }
-
-  isExpanded(idx: number): boolean {
-    return this.expandedIndexes.has(idx);
   }
 
   isImage(file: IFile): boolean {
@@ -227,7 +137,7 @@ export class PostUpdateComponent implements OnInit {
   }
 
   extention(file: IFile): string {
-    return file.type.split("/").pop()?.toUpperCase();
+    return file.type.split('/').pop()?.toUpperCase();
   }
 
   filterFile(files: IFile[], type: string = ''): IFile[] {
@@ -242,16 +152,17 @@ export class PostUpdateComponent implements OnInit {
         file.url = URL.createObjectURL(obj);
       } else if (this.isVideo(file)) {
       }
-      this.files.push(file);
+      this.postModel().files.push(file);
+      // this.files.push(file);
     }
   }
 
   remove(idx: number) {
-    const file = this.files[idx];
+    const file = this.postModel().files[idx];
     if (file.type == AttachmentType.IMAGE) {
       URL.revokeObjectURL(file.url);
     }
-    this.files.splice(idx, 1);
+    this.postModel().files.splice(idx, 1);
     if (file.id) {
       this.deletedFiles.push(file);
     }

@@ -115,7 +115,7 @@
             </svg>
             <span class="hidden sm:inline-flex">Répondre</span>
           </button>
-          @if (comment.account.id==nkAccount().id) {
+          @if (comment.account.id==account().id) {
           @if (!updatingComment()) {
           <button (click)="updatingComment.set(comment)" type="button"
             class="flex items-center text-sm text-gray-500 dark:text-gray-400 font-medium">

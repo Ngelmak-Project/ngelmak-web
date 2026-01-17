@@ -8,9 +8,8 @@ import { AlertService } from "./../shared/alert/alert.service";
 import { AuthenticationService } from "app/core/auth/auth.service";
 import { ApplicationConfigService } from "app/core/config/application-config.service";
 import { IAccount } from "app/entities/models/nk-account.model";
-import { AccountService as NkAccountService } from "app/entities/nk-account/nk-account.service";
+import { AccountService } from "app/entities/nk-account/nk-account.service";
 import { finalize } from "rxjs";
-import { AccountCertificationRequest } from "./account-certification-request/account-certification-request.component";
 import { UserUpdateComponent } from "./user-update/user-update.component";
 
 @Component({
@@ -30,21 +29,21 @@ export default class UserAccountComponent implements OnInit {
   private applicationConfigService = inject(ApplicationConfigService);
   // readonly dialog = inject(MatDialog);
   private router = inject(Router);
-  private accountService = inject(AuthenticationService);
+  private authService = inject(AuthenticationService);
   private alertService = inject(AlertService);
   // private rootRenderer = inject(RendererFactory2);
   imageSrc = signal(null);
   file: File = null;
 
   private fb = inject(FormBuilder);
-  private nkAccountService = inject(NkAccountService);
-  account = inject(AuthenticationService).trackCurrentAuthentication();
-  nkAccount = inject(NkAccountService).trackCurrentAccount();
+  private accountService = inject(AccountService);
+  user = inject(AuthenticationService).trackCurrentAuthentication();
+  account = inject(AccountService).trackCurrentAccount();
   isSaving = signal(false);
   isUploading = signal(false);
   flashBoxShadowState = null; // set to null to avoid flash box-shadow animation to first when the DOM starts.
 
-  nkAccountForm = this.fb.group({
+  accountForm = this.fb.group({
     id: [null],
     name: ["", [Validators.required, Validators.minLength(2)]],
     description: [
@@ -54,15 +53,15 @@ export default class UserAccountComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.nkAccountForm.patchValue(this.nkAccount());
+    this.accountForm.patchValue(this.account());
   }
 
   save() {
     this.isSaving.set(true);
     this.flashBoxShadowState = true;
-    const nkAccount: IAccount = this.nkAccountForm.value as IAccount;
-    this.nkAccountService
-      .update(nkAccount)
+    const account: IAccount = this.accountForm.value as IAccount;
+    this.accountService
+      .update(account)
       .pipe(finalize(() => this.isSaving.set(false)))
       .subscribe();
   }
@@ -81,7 +80,7 @@ export default class UserAccountComponent implements OnInit {
       .pipe(finalize(() => this.isUploading.set(false)))
       .subscribe({
         next: (result) => {
-          this.accountService.authenticate(result);
+          this.authService.authenticate(result);
           this.imageSrc.set(null);
         },
         error: () =>

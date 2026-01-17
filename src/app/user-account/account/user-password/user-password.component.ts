@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Authentication } from 'app/core/auth/auth.model';
-import { AuthenticationService } from "app/core/auth/auth.service";
+import { AuthenticationService } from 'app/core/auth/auth.service';
 import { flashBoxShadow2000ms } from 'app/shared/animations/flash.animation';
 import SharedModule from 'app/shared/shared.module';
 import { PasswordService } from 'app/user-account/password/password.service';
@@ -26,7 +26,7 @@ export class UserPasswordComponent {
   account$?: Observable<Authentication | null>;
 
   private passwordService = inject(PasswordService);
-  private accountService = inject(AuthenticationService);
+  private authService = inject(AuthenticationService);
 
   passwordForm = this.fb.group({
     currentPassword: [null, Validators.required],
@@ -35,7 +35,7 @@ export class UserPasswordComponent {
   });
 
   ngOnInit(): void {
-    this.account$ = this.accountService.identity();
+    this.account$ = this.authService.identity();
   }
 
   changePassword(): void {

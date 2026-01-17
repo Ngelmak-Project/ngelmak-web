@@ -94,8 +94,8 @@
             @if (editForm.get(['account'])!.value == null) {
               <option [ngValue]="null" selected></option>
             }
-            @for (nkAccountOption of nkAccountsSharedCollection; track $index) {
-              <option [ngValue]="nkAccountOption">{{ nkAccountOption.id }}</option>
+            @for (accountOption of accountsSharedCollection; track $index) {
+              <option [ngValue]="accountOption">{{ accountOption.id }}</option>
             }
           </select>
         </div>

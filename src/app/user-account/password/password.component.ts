@@ -33,10 +33,10 @@ export default class PasswordComponent implements OnInit {
   });
 
   private passwordService = inject(PasswordService);
-  private accountService = inject(AuthenticationService);
+  private authService = inject(AuthenticationService);
 
   ngOnInit(): void {
-    this.account$ = this.accountService.identity();
+    this.account$ = this.authService.identity();
   }
 
   changePassword(): void {

@@ -8,19 +8,19 @@
   <h3 class="mb-4 text-xl uppercase font-semibold dark:text-white">
     Information sur le compte
   </h3>
-  <form (ngSubmit)="save()" [formGroup]="nkAccountForm" novalidate>
+  <form (ngSubmit)="save()" [formGroup]="accountForm" novalidate>
     <div class="flex flex-col gap-6">
       <mat-form-field class="col-span-6 sm:col-span-3">
         <mat-label>Nom du compte</mat-label>
         <input matInput type="text" formControlName="name" />
         <mat-hint
-          *ngIf="nkAccountForm.get('name')!.dirty && nkAccountForm.get('name')?.errors?.['required']"
+          *ngIf="accountForm.get('name')!.dirty && accountForm.get('name')?.errors?.['required']"
           class="form-text text-danger"
         >
           Le nom du compte est obligatoire.
         </mat-hint>
         <mat-hint
-          *ngIf="nkAccountForm.get('name')!.dirty && nkAccountForm.get('name')?.errors?.['minlength']"
+          *ngIf="accountForm.get('name')!.dirty && accountForm.get('name')?.errors?.['minlength']"
           class="form-text text-danger"
           >Le nom du compte doit contenir plus d'un caractère.
         </mat-hint>
@@ -29,19 +29,19 @@
         <mat-label>Description</mat-label>
         <textarea matInput type="text" formControlName="description"></textarea>
         <mat-hint
-          *ngIf="nkAccountForm.get('description')!.dirty && nkAccountForm.get('description')?.errors?.['required']"
+          *ngIf="accountForm.get('description')!.dirty && accountForm.get('description')?.errors?.['required']"
           class="form-text text-danger"
         >
           La description est obligatoire.
         </mat-hint>
         <mat-hint
-          *ngIf="nkAccountForm.get('description')!.dirty && nkAccountForm.get('description')?.errors?.['minlength']"
+          *ngIf="accountForm.get('description')!.dirty && accountForm.get('description')?.errors?.['minlength']"
           class="form-text text-danger"
         >
           Le description doit contenir plus d'un caractère.
         </mat-hint>
         <mat-hint
-          *ngIf="nkAccountForm.get('description')!.dirty && nkAccountForm.get('description')?.errors?.['maxlength']"
+          *ngIf="accountForm.get('description')!.dirty && accountForm.get('description')?.errors?.['maxlength']"
           class="form-text text-danger"
         >
           La descritption ne peut pas contenir plus de 500 caractères.
@@ -49,7 +49,7 @@
       </mat-form-field>
       <div class="col-span-6 sm:col-full">
         <button
-          [disabled]="nkAccountForm.invalid || isSaving()"
+          [disabled]="accountForm.invalid || isSaving()"
           class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-2 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 disabled:cursor-not-allowed"
           type="submit"
         >
