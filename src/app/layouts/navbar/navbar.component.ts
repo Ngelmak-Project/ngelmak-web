@@ -73,14 +73,14 @@ export default class NavbarComponent implements OnInit {
   }
 
   toggleDarkMode() {
-    if (!this.isDarkMode()) {
-      document.documentElement.classList.remove('light'); // Add .light class to <html>
-      document.documentElement.classList.add('dark'); // Add .dark class to <html>
-      this.isDarkMode.set(true);
-    } else {
-      document.documentElement.classList.remove('dark'); // Remove .dark class
-      document.documentElement.classList.add('light'); // Add .light class to <html>
+    const html = document.documentElement;
+
+    if (html.classList.contains('dark')) {
+      html.classList.remove('dark');
       this.isDarkMode.set(false);
+    } else {
+      html.classList.add('dark');
+      this.isDarkMode.set(true);
     }
   }
 
