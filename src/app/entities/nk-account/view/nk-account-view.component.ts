@@ -26,8 +26,8 @@ export class AccountViewComponent {
   });
 
   protected accountForm = form(this.accountModel, (p) => {
-    required(p.name, { message: 'Le nom de la chaine est obligatoire.' }),
-      max(p.name, 100, { message: 'Le nom ne doit pas dépasser 100 caractères.' });
+    required(p.name, { message: 'Le nom de la chaine est obligatoire.' });
+    max(p.name, 100, { message: 'Le nom ne doit pas dépasser 100 caractères.' });
   });
 
   save(): void {

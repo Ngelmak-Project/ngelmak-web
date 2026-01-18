@@ -5,6 +5,7 @@ import { SignInService } from 'app/authentication/sign-in/sign-in.service';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import SharedModule from 'app/shared/shared.module';
 import { Field, form, required } from '@angular/forms/signals';
+import { finalize } from 'rxjs';
 
 interface LoginForm {
   username: string;
@@ -24,7 +25,7 @@ export class SignInComponent implements OnInit {
   private authService = inject(AuthenticationService);
   private router = inject(Router);
   private alertService = inject(AlertService);
-
+  protected isLoging = signal(false);
   protected loginModel = signal<LoginForm>({
     username: 'user',
     password: 'user',
@@ -48,8 +49,9 @@ export class SignInComponent implements OnInit {
   }
 
   signIn(): void {
+    this.isLoging.set(true);
     const credentials = this.loginForm().value();
-    this.signInService.signIn(credentials).subscribe({
+    this.signInService.signIn(credentials).pipe(finalize(() => this.isLoging.set(false))).subscribe({
       next: () => {
         // There were no routing during signIn (eg from navigationToStoredUrl)
         if (!this.router.currentNavigation()) {

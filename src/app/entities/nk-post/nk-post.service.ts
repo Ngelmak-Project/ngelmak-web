@@ -22,30 +22,16 @@ export class PostService {
 
   create(post: IPost, medias: IFile[], covers: IFile[]): Observable<EntityResponseType> {
     const data: FormData = new FormData();
-    // medias.forEach((el) => {
-    //   data.append("files", el.blob);
-    //   data.append("posters", el.posterBlob);
-    //   if (el.url) {
-    //     URL.revokeObjectURL(el.url);
-    //     el.url = null;
-    //   }
-    //   if (el.posterUrl) {
-    //     URL.revokeObjectURL(el.posterUrl);
-    //     el.posterUrl = null;
-    //   }
-    //   el.blob = null;
-    //   el.posterBlob = null;
-    // });
     post.files = [];
     data.append('post', new Blob([JSON.stringify(post)], { type: 'application/json' }));
-    data.append(
-      'medias',
-      new Blob([JSON.stringify(medias.map((e) => e.data))], { type: 'application/json' })
-    );
-    data.append(
-      'covers',
-      new Blob([JSON.stringify(covers.map((e) => e.data))], { type: 'application/json' })
-    );
+    const mediaBlob = new Blob([JSON.stringify(medias.map((e) => e.data))], {
+      type: 'application/json',
+    });
+    data.append('medias', mediaBlob);
+    const coverBlob = new Blob([JSON.stringify(covers.map((e) => e.data))], {
+      type: 'application/json',
+    });
+    data.append('covers', coverBlob);
     return this.http.post<IPost>(this.resourceUrl, data, {
       observe: 'response',
     });
@@ -55,22 +41,22 @@ export class PostService {
     post: IPost,
     deletedFiles: IFile[],
     medias: IFile[],
-    covers: IFile[]
+    covers: IFile[],
   ): Observable<EntityResponseType> {
     const data: FormData = new FormData();
     post.files = [];
     data.append('post', new Blob([JSON.stringify(post)], { type: 'application/json' }));
     data.append(
       'deletedFiles',
-      new Blob([JSON.stringify(deletedFiles)], { type: 'application/json' })
+      new Blob([JSON.stringify(deletedFiles)], { type: 'application/json' }),
     );
     data.append(
       'medias',
-      new Blob([JSON.stringify(medias.map((e) => e.data))], { type: 'application/json' })
+      new Blob([JSON.stringify(medias.map((e) => e.data))], { type: 'application/json' }),
     );
     data.append(
       'covers',
-      new Blob([JSON.stringify(covers.map((e) => e.data))], { type: 'application/json' })
+      new Blob([JSON.stringify(covers.map((e) => e.data))], { type: 'application/json' }),
     );
     return this.http.put<IPost>(this.resourceUrl, data, {
       observe: 'response',

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, signal } from "@angular/core";
 
 export type AlertType = "success" | "error" | "warning" | "info";
 
@@ -18,65 +18,71 @@ export interface IAlert {
   providedIn: "root",
 })
 export class AlertService {
-  private timeout = 5000;
-  private showIcon = true;
-  private showCloseButton = true;
-  private autoclose = true;
-  // unique id for each alert. Starts from 0.
+  /* Default timeout for alerts (ms) */
+  private readonly defaultTimeout = 5000;
+
+  /* Default UI behavior flags */
+  private readonly defaultShowIcon = true;
+  private readonly defaultShowCloseButton = true;
+  private readonly defaultAutoclose = true;
+
+  /* Internal incremental ID for alerts */
   private alertId = 0;
-  private alerts: IAlert[] = [];
 
+  /* Reactive list of alerts */
+  private readonly _alerts = signal<IAlert[]>([]);
+
+  /* Public readonly signal exposing alerts */
+  readonly alerts = this._alerts.asReadonly();
+
+  /**
+   * Removes all alerts.
+   */
   clear(): void {
-    this.alerts = [];
-  }
-
-  get(): IAlert[] {
-    return this.alerts;
+    this._alerts.set([]);
   }
 
   /**
-   * Adds alert to alerts array and returns added alert.
-   * @param alert      Alert to add. If `timeout`, `toast` or `position` is missing then applying default value.
-   *                   If `translateKey` is available then it's translation else `message` is used for showing.
-   * @param extAlerts  If missing then adding `alert` to `AlertService` internal array and alerts can be retrieved by `get()`.
-   *                   Else adding `alert` to `extAlerts`.
-   * @returns  Added alert
+   * Adds a new alert to the list.
+   *
+   * Automatically assigns:
+   * - a unique ID
+   * - default timeout
+   * - default UI flags
+   *
+   * Also schedules auto‑close if enabled.
+   *
+   * @param alert Partial alert definition
+   * @returns The fully resolved alert object
    */
   addAlert(alert: IAlert): IAlert {
-    alert.id = this.alertId++;
+    const resolved: IAlert = {
+      ...alert,
+      id: this.alertId++,
+      message: alert.message ?? "",
+      timeout: alert.timeout ?? this.defaultTimeout,
+      showIcon: alert.showIcon ?? this.defaultShowIcon,
+      showCloseButton: alert.showCloseButton ?? this.defaultShowCloseButton,
+      autoclose: alert.autoclose ?? this.defaultAutoclose,
+    };
 
-    // if (alert.translationKey) {
-    //   const translatedMessage = this.translateService.instant(alert.translationKey, alert.translationParams);
-    //   // if translation key exists
-    //   if (translatedMessage !== `${translationNotFoundMessage}[${alert.translationKey}]`) {
-    //     alert.message = translatedMessage;
-    //   } else if (!alert.message) {
-    //     alert.message = alert.translationKey;
-    //   }
-    // }
+    // Add alert to the signal list
+    this._alerts.update(list => [...list, resolved]);
 
-    alert.message = alert.message ?? "";
-    alert.timeout = alert.timeout ?? this.timeout;
-    alert.showIcon = alert.showIcon ?? this.showIcon;
-    alert.showCloseButton = alert.showCloseButton ?? this.showCloseButton;
-    alert.autoclose = alert.autoclose ?? this.autoclose;
-
-    this.alerts.push(alert);
-
-    if (alert.timeout > 0) {
-      setTimeout(() => {
-        this.closeAlert(alert.id!);
-      }, alert.timeout);
+    // Auto‑close if enabled
+    if (resolved.autoclose && resolved.timeout! > 0) {
+      setTimeout(() => this.closeAlert(resolved.id!), resolved.timeout);
     }
 
-    return alert;
+    return resolved;
   }
 
+  /**
+   * Removes an alert by its ID.
+   *
+   * @param alertId ID of the alert to remove
+   */
   closeAlert(alertId: number): void {
-    const alertIndex = this.alerts.map((alert) => alert.id).indexOf(alertId);
-    // if found alert then remove
-    if (alertIndex >= 0) {
-      this.alerts.splice(alertIndex, 1);
-    }
+    this._alerts.update(list => list.filter(a => a.id !== alertId));
   }
 }

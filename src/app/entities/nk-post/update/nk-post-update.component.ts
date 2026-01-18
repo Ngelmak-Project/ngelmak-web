@@ -1,10 +1,10 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, inject, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IFile } from 'app/entities/models/nk-file.model';
 import { IPost } from 'app/entities/models/nk-post.model';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { IFile } from './../../models/nk-file.model';
 import { PostService } from './../nk-post.service';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,6 +18,13 @@ import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { scaleInOut400ms } from 'app/shared/animations/scale-in-out.animation';
 import { scaleInOutAnimation150ms } from 'app/shared/animations/stagger.animation';
+
+const initPost: IPost = {
+  id: null,
+  content: '',
+  visibility: Visibility.PUBLIC,
+  files: [],
+};
 
 @Component({
   standalone: true,
@@ -42,15 +49,10 @@ export class PostUpdateComponent implements OnInit {
 
   expandedIndexes: Set<number> = new Set<number>();
 
-  protected postModel = signal<IPost>({
-    id: null,
-    content: '',
-    visibility: Visibility.PUBLIC,
-    files: [],
-  });
+  protected postModel = signal<IPost>(initPost);
 
   protected postForm = form(this.postModel, (p) => {
-    required(p.content, { message: 'Username is required' });
+    required(p.content, { message: 'Le contenu de la publication est obligatoire.' });
     max(p.content, 1000);
   });
 
@@ -68,7 +70,7 @@ export class PostUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving.set(true);
-    const post: IPost = this.postForm().value();
+    const post: IPost = this.postModel();
     const newMedias = post.files.filter((file) => file.id == null);
     post.files = [];
     const covers: IFile[] = []; // [TODO] handle cover images for videos.
@@ -78,7 +80,7 @@ export class PostUpdateComponent implements OnInit {
         url: file.url,
       }));
       this.subscribeToSaveResponse(
-        this.postService.update(post, deletedFiles, newMedias, deletedFiles)
+        this.postService.update(post, deletedFiles, newMedias, deletedFiles),
       );
     } else {
       this.subscribeToSaveResponse(this.postService.create(post, newMedias, covers));
@@ -92,7 +94,7 @@ export class PostUpdateComponent implements OnInit {
           type: 'success',
           message: 'Enregistrer avec succès!',
         });
-        this.previousState();
+        this.postForm().reset(initPost); // reset post values.
       },
       error: () =>
         this.alertService.addAlert({
@@ -166,9 +168,5 @@ export class PostUpdateComponent implements OnInit {
     if (file.id) {
       this.deletedFiles.push(file);
     }
-  }
-
-  previousState(): void {
-    window.history.back();
   }
 }
