@@ -11,3 +11,12 @@ export interface IFile {
   deletedAt?: Date;
   cover?: IFile;
 }
+
+export interface IFileDTO {
+  id?: number;
+  size?: number;
+  url?: string;
+  type?: string;
+  filename?: string;
+  duration?: number;
+}

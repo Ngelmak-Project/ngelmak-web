@@ -10,7 +10,7 @@ import { PostService } from './../nk-post.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import SharedModule from 'app/shared/shared.module';
 
-import { Field, form, max, required } from '@angular/forms/signals';
+import { Field, form, maxLength, required } from '@angular/forms/signals';
 import { AttachmentType } from 'app/entities/enumerations/attachment-type.model';
 import { Visibility } from 'app/entities/enumerations/visibility.model';
 import { AccountService } from 'app/entities/nk-account/nk-account.service';
@@ -46,14 +46,13 @@ export class PostUpdateComponent implements OnInit {
   protected deletedFiles: IFile[] = [];
   // protected files: IFile[] = [];
   account = inject(AccountService).trackCurrentAccount();
-
   expandedIndexes: Set<number> = new Set<number>();
 
   protected postModel = signal<IPost>(initPost);
 
   protected postForm = form(this.postModel, (p) => {
     required(p.content, { message: 'Le contenu de la publication est obligatoire.' });
-    max(p.content, 1000);
+    maxLength(p.content, 3000, { message: 'Le contenu ne doit pas dépasser 1000 caractères.' });
   });
 
   ngOnInit(): void {
@@ -71,9 +70,10 @@ export class PostUpdateComponent implements OnInit {
   save(): void {
     this.isSaving.set(true);
     const post: IPost = this.postModel();
+    post.content = post.content.trim();
     const newMedias = post.files.filter((file) => file.id == null);
     post.files = [];
-    const covers: IFile[] = []; // [TODO] handle cover images for videos.
+    const covers = newMedias.map((media) => media.cover);
     if (post.id !== null) {
       const deletedFiles = this.deletedFiles.map((file) => ({
         id: file.id,
@@ -94,7 +94,7 @@ export class PostUpdateComponent implements OnInit {
           type: 'success',
           message: 'Enregistrer avec succès!',
         });
-        this.postForm().reset(initPost); // reset post values.
+        this.postForm().reset({ ...initPost, files: [] }); // reset post values.
       },
       error: () =>
         this.alertService.addAlert({
@@ -155,7 +155,6 @@ export class PostUpdateComponent implements OnInit {
       } else if (this.isVideo(file)) {
       }
       this.postModel().files.push(file);
-      // this.files.push(file);
     }
   }
 

@@ -24,14 +24,25 @@ export class PostService {
     const data: FormData = new FormData();
     post.files = [];
     data.append('post', new Blob([JSON.stringify(post)], { type: 'application/json' }));
-    const mediaBlob = new Blob([JSON.stringify(medias.map((e) => e.data))], {
-      type: 'application/json',
+
+    medias.forEach((m) => {
+      data.append('_medias', m.data);
     });
-    data.append('medias', mediaBlob);
-    const coverBlob = new Blob([JSON.stringify(covers.map((e) => e.data))], {
-      type: 'application/json',
+
+    const emptyFile = new File([''], 'empty', { type: 'application/octet-stream' });
+    covers.forEach((c) => {
+      data.append('_covers', c?.data ?? emptyFile);
     });
-    data.append('covers', coverBlob);
+
+    // const mediaBlob = new Blob([JSON.stringify(medias.map((e) => e.data))], {
+    //   type: 'application/json',
+    // });
+    // data.append('_medias', mediaBlob);
+    // const coverBlob = new Blob([JSON.stringify(covers.map((e) => e?.data))], {
+    //   type: 'application/json',
+    // });
+    // data.append('_covers', coverBlob);
+
     return this.http.post<IPost>(this.resourceUrl, data, {
       observe: 'response',
     });

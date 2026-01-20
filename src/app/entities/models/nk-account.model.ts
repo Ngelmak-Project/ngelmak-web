@@ -15,3 +15,11 @@ export interface IAccount {
   configuration?: IConfig;
   user?: IUser;
 }
+
+export interface IAccountDTO {
+  id?: number;
+  identifier?: string;
+  name?: string;
+  avatar?: string;
+  userId?: number;
+}

@@ -1,46 +1,52 @@
-import { Component, inject, NgZone, OnInit, signal } from "@angular/core";
-import { ActivatedRoute, Router, RouterModule } from "@angular/router";
-import { combineLatest, Subscription, tap } from "rxjs";
+import { Component, inject, NgZone, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { combineLatest, Subscription, tap } from 'rxjs';
 
-import { FormsModule } from "@angular/forms";
-import { ITEMS_PER_PAGE, PAGE_HEADER } from "app/config/pagination.constants";
-import { DataUtils } from "app/core/util/data-util.service";
-import { IFeed } from "app/entities/models/nk-feed.model";
-import SharedModule from "app/shared/shared.module";
-import { SortService, sortStateSignal, type SortState } from "app/shared/sort";
+import { FormsModule } from '@angular/forms';
+import { ITEMS_PER_PAGE, PAGE_HEADER } from 'app/config/pagination.constants';
+import { DataUtils } from 'app/core/util/data-util.service';
+import { IFeedDTO } from 'app/entities/models/nk-feed.model';
+import SharedModule from 'app/shared/shared.module';
+import { SortService, sortStateSignal, type SortState } from 'app/shared/sort';
 
-import { HttpResponse } from "@angular/common/http";
-import { AuthenticationService } from "app/core/auth/auth.service";
-import { AccountService } from "app/entities/nk-account/nk-account.service";
-import { DurationPipe } from "app/shared/date";
-import { IPage } from "app/shared/pagination/pagination.model";
-import { FeedService } from "../nk-feed.service";
+import { HttpResponse } from '@angular/common/http';
+import { AuthenticationService } from 'app/core/auth/auth.service';
+import { IFile } from 'app/entities/models/nk-file.model';
+import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { IPostReaction, ReactionDialogComponent } from 'app/entities/nk-reaction/dialog/nk-reaction-dialog.component';
+import { DurationPipe } from 'app/shared/date';
+import { IPage } from 'app/shared/pagination/pagination.model';
+import { FeedService } from '../nk-feed.service';
 
 @Component({
   standalone: true,
-  selector: "app-feed",
-  templateUrl: "./nk-feed.component.html",
-  imports: [
-    RouterModule,
-    FormsModule,
-    SharedModule,
-    DurationPipe,
-  ],
+  selector: 'app-feed',
+  templateUrl: './nk-feed.component.html',
+  imports: [RouterModule, FormsModule, SharedModule, DurationPipe, ReactionDialogComponent],
   // providers: [provideNativeDateAdapter()],
 })
 export class FeedComponent implements OnInit {
   subscription: Subscription | null = null;
-  feeds = signal<IFeed[]>(null);
+  feeds = signal<IFeedDTO[]>(null);
   hasPrevious = signal(false);
   hasNext = signal(false);
   isLoading = signal(false);
+
+  reactions: IPostReaction[] = [
+    // ['👍', '❤️', '😂', '😮', '😢', '😡'];
+    {postId: 0, accountId: 3, emoji: '😂'},
+    {postId: 0, accountId: 4, emoji: '😢'},
+    {postId: 0, accountId: 2, emoji: '👍'},
+    {postId: 0, accountId: 5, emoji: '😡'},
+    {postId: 0, accountId: 7, emoji: '👍'},
+  ]
 
   sortState = sortStateSignal({});
 
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
-  query = "";
+  query = '';
 
   public router = inject(Router);
   protected feedService = inject(FeedService);
@@ -58,11 +64,11 @@ export class FeedComponent implements OnInit {
     this.subscription = combineLatest([this.activatedRoute.queryParamMap])
       .pipe(
         tap(([params]) => {
-          this.query = params.get("q");
+          this.query = params.get('q');
           const page = params.get(PAGE_HEADER);
           this.page = +(page ?? 1);
         }),
-        tap(() => this.loadAll())
+        tap(() => this.loadAll()),
       )
       .subscribe();
     this.open();
@@ -78,7 +84,7 @@ export class FeedComponent implements OnInit {
       q: query,
     };
     this.feedService.query(req).subscribe({
-      next: (res: HttpResponse<IPage<IFeed>>) => {
+      next: (res: HttpResponse<IPage<IFeedDTO>>) => {
         this.onResponseSuccess(res);
       },
       complete: () => this.isLoading.set(false),
@@ -94,7 +100,6 @@ export class FeedComponent implements OnInit {
     //   maxWidth: "100vw",
     //   maxHeight: "80vw",
     // });
-
     // dialogRef
     //   .afterClosed()
     //   .subscribe((res) => res && this.loadAll());
@@ -114,18 +119,47 @@ export class FeedComponent implements OnInit {
     this.handleNavigation(page, this.query);
   }
 
-  protected onResponseSuccess(response: HttpResponse<IPage<IFeed>>): void {
+  extention(file: IFile): string {
+    return file.type.split('/').pop()?.toUpperCase();
+  }
+
+  isImage(file: IFile): boolean {
+    return file.type.startsWith('image/');
+  }
+
+  isVideo(file: IFile): boolean {
+    return file.type.startsWith('video/');
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
+
+    const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const index = Math.floor(Math.log(bytes) / Math.log(1024));
+    const size = bytes / Math.pow(1024, index);
+
+    return `${size.toFixed(2)} ${units[index]}`;
+  }
+
+  onReact(emoji)
+  {
+    console.log(emoji);
+  }
+
+  protected onResponseSuccess(response: HttpResponse<IPage<IFeedDTO>>): void {
     const { body } = response;
     this.hasNext.set(body.hasNext);
     this.hasPrevious.set(body.hasPrevious);
     this.totalItems = body.totalElements;
+    console.log(body.content[0]);
+
     this.feeds.set(body.content ?? []);
   }
 
   protected handleNavigation(page: number, query?: string): void {
     const queryParamsObj = { q: query, page, size: this.itemsPerPage };
     this.ngZone.run(() => {
-      this.router.navigate(["/", query.length > 0 ? "search" : ""], {
+      this.router.navigate(['/', query.length > 0 ? 'search' : ''], {
         relativeTo: this.activatedRoute,
         queryParams: queryParamsObj,
       });
