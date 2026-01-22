@@ -80,7 +80,7 @@
   <!-- Comments -->
   <div class="flex flex-col gap-4 p-5 mt-14">
     <!-- Write a comment -->
-    <app-comment-update [post]="post" (onSaveSuccess)="onSaveSuccess($event)"></app-comment-update>
+    <!-- <app-comment-update [post]="post" (onSaveSuccess)="onSaveSuccess($event)"></app-comment-update> -->
 
     @if (comments()) {
     <ol class="relative border-s border-gray-200 dark:border-gray-700">
@@ -91,15 +91,15 @@
         </span>
         @if (updatingComment() && updatingComment().id==comment.id) {
         <!-- Replay comment -->
-        <app-comment-update [post]="post" [comment]="updatingComment()"
-          (onSaveSuccess)="onSaveSuccess($event)"></app-comment-update>
+        <!-- <app-comment-update [post]="post" [comment]="updatingComment()"
+          (onSaveSuccess)="onSaveSuccess($event)"></app-comment-update> -->
         } @else {
         <div
           class="flex items-start justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
           <div class="flex flex-col gap-2">
             <div class="text-sm font-normal text-gray-500 dark:text-gray-300" [innerHTML]="comment.content"></div>
-            <div class="inline-flex max-h-48" *ngIf="comment.url">
-              <img class="h-auto rounded-lg shadow-xl dark:shadow-gray-800" [src]="comment.url" alt="Imported image">
+            <div class="inline-flex max-h-48" *ngIf="comment.file">
+              <img class="h-auto rounded-lg shadow-xl dark:shadow-gray-800" [src]="comment.file.url" alt="Imported image">
             </div>
           </div>
           <div class="flex-shrink-0 text-xs font-normal text-gray-400">{{comment.at | duration}}</div>

@@ -1,15 +1,30 @@
-import { Opinion } from 'app/entities/enumerations/opinion.model';
-import { IAccount } from 'app/entities/models/nk-account.model';
-import { IPost } from 'app/entities/models/nk-post.model';
+import { IAccount, IAccountDTO } from 'app/entities/models/nk-account.model';
+import { IFile, IFileDTO } from './nk-file.model';
+import { IPost, IPostDTO } from './nk-post.model';
+import { IReactionSummaryDTO } from './nk-reaction.model';
 
 export interface IComment {
   id: number | null;
-  opinion?: keyof typeof Opinion | null;
   at?: Date | null;
+  replyCount?: number;
   lastUpdate?: Date | null;
   content?: string | null;
-  url?: string | null;
   post?: IPost | null;
-  replayto?: IComment | null;
+  file?: IFile | null;
   account?: IAccount | null;
+  replyTo?: IComment | null;
+  comments?: IComment[];
 }
+
+export interface ICommentDTO {
+  id?: number;
+  at?: Date;
+  replyCount?: number;
+  content?: String;
+  post?: IPostDTO;
+  file?: IFileDTO;
+  account?: IAccountDTO;
+  replyTo?: ICommentDTO;
+  reactions?: IReactionSummaryDTO;
+}
+

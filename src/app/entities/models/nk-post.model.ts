@@ -21,15 +21,15 @@ export interface IPost {
 }
 
 export interface IPostDTO {
- id?: number;
- content?: String;
- at?: Date;
- lastUpdate?: Date;
- visibility?: Visibility;
- status?: Status;
- account?: IAccountDTO,
- files?: IFileDTO[],
- reactions?: IReactionSummaryDTO,
-commentCount?: number,
-replyToId?: number;
+  id?: number;
+  content?: String;
+  at?: Date;
+  lastUpdate?: Date;
+  visibility?: Visibility;
+  status?: Status;
+  account?: IAccountDTO;
+  files?: IFileDTO[];
+  reactions?: IReactionSummaryDTO;
+  commentCount?: number;
+  replyToId?: number;
 }

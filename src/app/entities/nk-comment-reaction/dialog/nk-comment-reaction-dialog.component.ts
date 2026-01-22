@@ -12,22 +12,21 @@ import { AlertService } from 'app/shared/alert/alert.service';
 
 import { HttpResponse } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IPostDTO } from 'app/entities/models/nk-post.model';
-import { IReaction } from 'app/entities/models/nk-reaction.model';
+import { ICommentReaction } from 'app/entities/models/nk-comment-reaction.model';
+import { ICommentDTO } from 'app/entities/models/nk-comment.model';
 import { AccountService } from 'app/entities/nk-account/nk-account.service';
 import SharedModule from 'app/shared/shared.module';
 import { finalize, Observable } from 'rxjs';
-import { ReactionService } from '../nk-reaction.service';
-
+import { ReactionService } from '../nk-comment-reaction.service';
 
 @Component({
   standalone: true,
-  selector: 'app-reaction-dialog',
-  templateUrl: './nk-reaction-dialog.component.html',
+  selector: 'app-comment-reaction-dialog',
+  templateUrl: './nk-comment-reaction-dialog.component.html',
   imports: [SharedModule, FormsModule, ReactiveFormsModule],
 })
-export class ReactionDialogComponent implements OnInit {
-  @Input() post: IPostDTO;
+export class CommentReactionDialogComponent implements OnInit {
+  @Input() comment: ICommentDTO;
 
   account = inject(AccountService).trackCurrentAccount();
   alertService = inject(AlertService);
@@ -45,7 +44,7 @@ export class ReactionDialogComponent implements OnInit {
   constructor(private el: ElementRef) {}
 
   ngOnInit(): void {
-    this.update();
+    // this.update();
   }
 
   toggle() {
@@ -53,17 +52,17 @@ export class ReactionDialogComponent implements OnInit {
   }
 
   update() {
-    const value = Object.values(this.post.reactions.counts).reduce((acc, val) => acc + val, 0);
+    const value = Object.values(this.comment.reactions.counts).reduce((acc, val) => acc + val, 0);
     this.totalReactions.set(value);
-    const emojis = Object.keys(this.post.reactions.counts);
+    const emojis = Object.keys(this.comment.reactions.counts);
     this.emojiReactions.set(emojis);
-    this.reactedByCurrentUser.set(this.post.reactions.reactedByCurrentUser);
+    this.reactedByCurrentUser.set(this.comment.reactions.reactedByCurrentUser);
   }
 
   select(emoji: string) {
     this.isOpen.set(false);
     const currentEmoji = this.reactedByCurrentUser();
-    const reactionId = this.post.reactions.reactionId;
+    const reactionId = this.comment.reactions.reactionId;
 
     // Case 1: user clicks the same emoji → delete reaction
     if (emoji === currentEmoji) {
@@ -75,10 +74,10 @@ export class ReactionDialogComponent implements OnInit {
     }
 
     // Case 2: user changes or adds a reaction
-    const reaction: IReaction = {
+    const reaction: ICommentReaction = {
       id: reactionId ?? undefined,
       account: this.account(),
-      post: { id: this.post.id },
+      comment: { id: this.comment.id },
       emoji,
     };
 
@@ -91,33 +90,33 @@ export class ReactionDialogComponent implements OnInit {
     this.subscribeToSaveResponse(request$, callback.bind(this));
   }
 
-  private onCreate(reaction: IReaction) {
+  private onCreate(reaction: ICommentReaction) {
     this.incrementEmoji(reaction.emoji);
-    this.post.reactions.reactedByCurrentUser = reaction.emoji;
-    this.post.reactions.reactionId = reaction.id;
+    this.comment.reactions.reactedByCurrentUser = reaction.emoji;
+    this.comment.reactions.reactionId = reaction.id;
   }
 
-  private onUpdate(reaction: IReaction) {
-    const oldEmoji = this.post.reactions.reactedByCurrentUser;
+  private onUpdate(reaction: ICommentReaction) {
+    const oldEmoji = this.comment.reactions.reactedByCurrentUser;
     this.decrementEmoji(oldEmoji);
     this.incrementEmoji(reaction.emoji);
-    this.post.reactions.reactedByCurrentUser = reaction.emoji;
+    this.comment.reactions.reactedByCurrentUser = reaction.emoji;
   }
 
-  private onDelete(_: IReaction) {
-    const oldEmoji = this.post.reactions.reactedByCurrentUser;
+  private onDelete(_: ICommentReaction) {
+    const oldEmoji = this.comment.reactions.reactedByCurrentUser;
     this.decrementEmoji(oldEmoji);
-    this.post.reactions.reactedByCurrentUser = null;
-    this.post.reactions.reactionId = null;
+    this.comment.reactions.reactedByCurrentUser = null;
+    this.comment.reactions.reactionId = null;
   }
 
   private incrementEmoji(emoji: string) {
-    const counts = this.post.reactions.counts;
+    const counts = this.comment.reactions.counts;
     counts[emoji] = (counts[emoji] ?? 0) + 1;
   }
 
   private decrementEmoji(emoji: string) {
-    const counts = this.post.reactions.counts;
+    const counts = this.comment.reactions.counts;
     if (!counts[emoji]) return;
     counts[emoji]--;
     if (counts[emoji] === 0) {
@@ -126,8 +125,8 @@ export class ReactionDialogComponent implements OnInit {
   }
 
   private subscribeToSaveResponse(
-    result: Observable<HttpResponse<IReaction>>,
-    callback: (reaction: IReaction) => void,
+    result: Observable<HttpResponse<ICommentReaction>>,
+    callback: (reaction: ICommentReaction) => void,
   ): void {
     result.pipe(finalize(() => this.isSaving.set(false))).subscribe({
       next: ({ body }) => {

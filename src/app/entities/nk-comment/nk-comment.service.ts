@@ -1,10 +1,11 @@
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { IComment } from "app/entities/models/nk-comment.model";
+import { IComment, ICommentDTO } from "app/entities/models/nk-comment.model";
 import { Observable } from "rxjs";
 
 import { ApplicationConfigService } from "app/core/config/application-config.service";
 import { createRequestOption } from "app/core/request/request-util";
+import { IPage } from "app/shared/pagination/pagination.model";
 
 export type PartialUpdateComment = Partial<IComment> & Pick<IComment, "id">;
 
@@ -25,8 +26,8 @@ export class CommentService {
   protected http = inject(HttpClient);
   protected applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl =
-    this.applicationConfigService.getEndpointFor("core/comments");
+  protected resourceUrl = this.applicationConfigService.getEndpointFor("core/comments");
+  protected publicResourceUrl = this.applicationConfigService.getEndpointFor("core/r/comments");
 
   create(comment: IComment, file): Observable<EntityResponseType> {
     const data: FormData = new FormData();
@@ -70,8 +71,10 @@ export class CommentService {
     });
   }
 
-  findByPost(id: number): Observable<EntityArrayResponseType> {
-    return this.http.get<IComment[]>(`${this.resourceUrl}/nk-post/${id}`, {
+  findByPost(id: number, req?: any): Observable<HttpResponse<IPage<ICommentDTO>>> {
+    const options = createRequestOption(req);
+    return this.http.get<IPage<ICommentDTO>>(`${this.publicResourceUrl}/post/${id}`, {
+      params: options,
       observe: "response",
     });
   }

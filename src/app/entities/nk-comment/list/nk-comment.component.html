@@ -1,0 +1,115 @@
+<div class="flex flex-col gap-2 w-full mx-auto bg-white dark:bg-gray-800 rounded-xl">
+  <app-comment-update [post]="post"></app-comment-update>
+
+  <div class="relative flex flex-col gap-0 rounded-md">
+    <!-- Replay 0 -->
+    @for (comment of comments(); track $index) {
+      <div class="flex flex-row gap-1 md:gap-2">
+        <!-- Avatar column -->
+        @if (comment.account?.avatar) {
+          <img
+            [src]="comment.account.avatar"
+            alt="User avatar"
+            class="w-8 h-8 rounded-full border-2 ring-2 ring-default border-gray-300 dark:border-gray-600"
+          />
+        } @else {
+          <svg
+            class="w-8 h-8 text-gray-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+            />
+          </svg>
+        }
+
+        <!-- Content column -->
+        <div class="flex flex-col gap-2 rounded-xl w-full">
+          <p class="text-gray-900 dark:text-white" [innerHTML]="comment.content"></p>
+
+          <div class="flex items-center flex-wrap gap-2 w-full">
+            <!-- <div class="flex items-center justify-center flex-wrap gap-2">
+            </div> -->
+            <!-- Comments -->
+            <button
+              class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-gray-400 border border-gray-500 divide-y divide-red-400"
+            >
+              Répondre
+              @if (comment.replyCount > 0) {
+                <span class="font-medium text-gray-500 dark:text-gray-400">
+                  {{ comment.replyCount }}
+                </span>
+              }
+            </button>
+            <!-- Reactions -->
+            <app-comment-reaction-dialog [comment]="comment"></app-comment-reaction-dialog>
+            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{
+              comment.at | duration
+            }}</span>
+          </div>
+
+          <!-- Reply 1 -->
+          <div class="flex flex-row gap-1 md:gap-2">
+            <!-- Avatar column -->
+            <img
+              src="assets/images/car-rapide.jpeg"
+              alt="User avatar"
+              class="w-8 h-8 rounded-full border-2 border-gray-300 dark:border-gray-600"
+            />
+
+            <!-- Content column -->
+            <div class="flex flex-col gap-2 rounded-xl w-full">
+              <div class="flex flex-col gap-1 animate-pulse">
+                <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div>
+                <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
+                <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px]"></div>
+              </div>
+
+              <div class="flex gap-2 w-full">
+                <span>Like</span>
+                <span>Replay</span>
+                <span>4d</span>
+              </div>
+
+              <!-- Reply 1 -->
+              <div class="flex flex-row gap-1 md:gap-2">
+                <!-- Avatar column -->
+                <img
+                  src="assets/images/car-rapide.jpeg"
+                  alt="User avatar"
+                  class="w-8 h-8 rounded-full border-2 border-gray-300 dark:border-gray-600"
+                />
+
+                <!-- Content column -->
+                <div class="flex flex-col gap-2 rounded-xl w-full">
+                  <div class="flex flex-col gap-1 animate-pulse">
+                    <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48"></div>
+                    <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
+                    <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                    <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px]"></div>
+                  </div>
+
+                  <div class="flex gap-2 w-full">
+                    <span>Like</span>
+                    <span>Replay</span>
+                    <span>4d</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

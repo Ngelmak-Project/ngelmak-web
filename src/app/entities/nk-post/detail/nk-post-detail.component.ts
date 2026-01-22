@@ -13,7 +13,6 @@ import { IFile } from "app/entities/models/nk-file.model";
 import { IPost } from "app/entities/models/nk-post.model";
 import { AccountService } from "app/entities/nk-account/nk-account.service";
 import { CommentService } from "app/entities/nk-comment/nk-comment.service";
-import { CommentUpdateComponent } from "app/entities/nk-comment/update/nk-comment-update.component";
 import { fadeInUp400ms } from "app/shared/animations/fade-in-up.animation";
 import { scaleInOut400ms } from "app/shared/animations/scale-in-out.animation";
 import { scaleInOutAnimation150ms } from "app/shared/animations/stagger.animation";
@@ -28,7 +27,6 @@ import SharedModule from "app/shared/shared.module";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    CommentUpdateComponent,
     DurationPipe,
     SharedModule,
     RouterModule,
@@ -74,9 +72,9 @@ export class PostDetailComponent implements OnInit {
   }
 
   loadAllComments() {
-    this.commentService
-      .findByPost(this.post.id)
-      .subscribe((res) => this.comments.set(res.body));
+    // this.commentService
+    //   .findByPost(this.post.id)
+    //   .subscribe((res) => this.comments.set(res.body));
   }
 
   deleteComment(id: number) {
