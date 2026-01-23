@@ -1,7 +1,7 @@
 import { Component, inject, NgZone, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { combineLatest, Subscription, tap } from 'rxjs';
-import { FeedItem } from './../nk-feed-item/nk-feed-item';
+import { FeedItem } from './item/nk-feed-item';
 
 import { FormsModule } from '@angular/forms';
 import { ITEMS_PER_PAGE, PAGE_HEADER } from 'app/config/pagination.constants';

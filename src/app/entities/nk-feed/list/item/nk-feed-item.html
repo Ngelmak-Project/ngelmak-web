@@ -15,11 +15,11 @@
               <img
                 [src]="feed.post.account.avatar"
                 alt="Account avatar"
-                class="rounded-full max-w-none w-5 h-5"
+                class="rounded-full max-w-none w-10 h-10"
               />
             } @else {
               <div
-                class="flex items-center justify-center rounded-full max-w-none w-8 h-8 text-xl uppercase text-black bg-gray-50 dark:bg-gray-300]"
+                class="flex items-center justify-center rounded-full max-w-none w-10 h-10 text-xl uppercase text-black bg-gray-50 dark:bg-gray-300]"
               >
                 {{ feed.post.account.name.at(0) }}
               </div>
@@ -132,8 +132,14 @@
   <div class="mb-3 text-gray-900 dark:text-white" [innerHTML]="feed.post.content"></div>
 
   <!-- Attachments -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    @for (file of feed.post.files; track file; let idx = $index) {
+  <div
+    class="grid gap-4"
+    [ngClass]="{
+      'grid-cols-1': feed.post.files.length === 1,
+      'grid-cols-1 md:grid-cols-2': feed.post.files.length > 1,
+    }"
+  >
+    <!-- @for (file of feed.post.files; track file; let idx = $index) {
       @if (isImage(file)) {
         <div class="flex max-h-48">
           <img
@@ -197,6 +203,20 @@
             </button>
           </div>
         </div>
+      }
+    } -->
+    @for (file of feed.post.files; track file; let idx = $index) {
+      @if (isImage(file)) {
+        <img
+          class="h-auto rounded-lg shadow-xl dark:shadow-gray-800"
+          [src]="file.url"
+          alt="Imported image"
+        />
+      } @else if (isVideo(file)) {
+        <!-- your video block -->
+      } @else {
+        <!-- Non-image files always span full width -->
+        <div class="col-span-full flex items-center gap-2 py-3 px-2 border rounded-lg">...</div>
       }
     }
   </div>

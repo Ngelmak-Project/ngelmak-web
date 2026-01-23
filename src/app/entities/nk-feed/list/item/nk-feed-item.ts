@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IFeedDTO } from 'app/entities/models/nk-feed.model';
@@ -9,7 +10,7 @@ import { DurationPipe } from 'app/shared/date';
 @Component({
   standalone: true,
   selector: 'app-feed-item',
-  imports: [RouterModule, DurationPipe, ReactionDialogComponent, CommentComponent],
+  imports: [CommonModule, RouterModule, DurationPipe, ReactionDialogComponent, CommentComponent],
   templateUrl: './nk-feed-item.html',
 })
 export class FeedItem {

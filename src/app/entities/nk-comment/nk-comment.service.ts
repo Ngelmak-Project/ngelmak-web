@@ -7,19 +7,6 @@ import { ApplicationConfigService } from "app/core/config/application-config.ser
 import { createRequestOption } from "app/core/request/request-util";
 import { IPage } from "app/shared/pagination/pagination.model";
 
-export type PartialUpdateComment = Partial<IComment> & Pick<IComment, "id">;
-
-type RestOf<T extends IComment | IComment> = Omit<T, "at" | "lastUpdate"> & {
-  at?: string | null;
-  lastUpdate?: string | null;
-};
-
-export type NewIComment = RestOf<IComment>;
-
-export type PartialUpdateIComment = RestOf<PartialUpdateComment>;
-
-export type EntityResponseType = HttpResponse<IComment>;
-export type EntityArrayResponseType = HttpResponse<IComment[]>;
 
 @Injectable({ providedIn: "root" })
 export class CommentService {
@@ -29,7 +16,7 @@ export class CommentService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor("core/comments");
   protected publicResourceUrl = this.applicationConfigService.getEndpointFor("core/r/comments");
 
-  create(comment: IComment, file): Observable<EntityResponseType> {
+  create(comment: IComment, file): Observable<HttpResponse<ICommentDTO>> {
     const data: FormData = new FormData();
     if (file) {
       data.append("file", file);
@@ -38,12 +25,12 @@ export class CommentService {
       "comment",
       new Blob([JSON.stringify(comment)], { type: "application/json" })
     );
-    return this.http.post<IComment>(this.resourceUrl, data, {
+    return this.http.post<ICommentDTO>(this.resourceUrl, data, {
       observe: "response",
     });
   }
 
-  update(comment: IComment, file): Observable<EntityResponseType> {
+  update(comment: IComment, file): Observable<HttpResponse<ICommentDTO>> {
     const data: FormData = new FormData();
     if (file) {
       data.append("file", file);
@@ -52,20 +39,12 @@ export class CommentService {
       "comment",
       new Blob([JSON.stringify(comment)], { type: "application/json" })
     );
-    return this.http.put<IComment>(this.resourceUrl, data, {
+    return this.http.put<ICommentDTO>(this.resourceUrl, data, {
       observe: "response",
     });
   }
 
-  partialUpdate(comment: PartialUpdateComment): Observable<EntityResponseType> {
-    return this.http.patch<IComment>(
-      `${this.resourceUrl}/${comment.id}`,
-      comment,
-      { observe: "response" }
-    );
-  }
-
-  find(id: number): Observable<EntityResponseType> {
+  find(id: number): Observable<HttpResponse<IComment>> {
     return this.http.get<IComment>(`${this.resourceUrl}/${id}`, {
       observe: "response",
     });
@@ -79,10 +58,8 @@ export class CommentService {
     });
   }
 
-  query(req?: any): Observable<EntityArrayResponseType> {
-    const options = createRequestOption(req);
-    return this.http.get<IComment[]>(this.resourceUrl, {
-      params: options,
+  findRepliesByComment(id: number): Observable<HttpResponse<ICommentDTO[]>> {
+    return this.http.get<ICommentDTO[]>(`${this.publicResourceUrl}/reply/${id}`, {
       observe: "response",
     });
   }

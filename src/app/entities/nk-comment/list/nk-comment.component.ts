@@ -1,34 +1,28 @@
-import { Component, inject, Input, NgZone, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Component, inject, Input, OnInit, signal } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CommentService } from 'app/entities/nk-comment/nk-comment.service';
 import { CommentUpdateComponent } from 'app/entities/nk-comment/update/nk-comment-update.component';
-import { Subscription } from 'rxjs';
 
 import { FormsModule } from '@angular/forms';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
-import { DataUtils } from 'app/core/util/data-util.service';
 import { ICommentDTO } from 'app/entities/models/nk-comment.model';
 import SharedModule from 'app/shared/shared.module';
-import { SortService } from 'app/shared/sort';
 
 import { HttpResponse } from '@angular/common/http';
-import { AuthenticationService } from 'app/core/auth/auth.service';
 import { IPostDTO } from 'app/entities/models/nk-post.model';
-import { AccountService } from 'app/entities/nk-account/nk-account.service';
-import { CommentReactionDialogComponent } from 'app/entities/nk-comment-reaction/dialog/nk-comment-reaction-dialog.component';
-import { DurationPipe } from 'app/shared/date';
 import { IPage } from 'app/shared/pagination/pagination.model';
+import { CommentItemComponent } from './item/nk-comment-item.component';
 
 @Component({
   standalone: true,
   selector: 'app-comment',
   templateUrl: './nk-comment.component.html',
-  imports: [RouterModule, FormsModule, SharedModule, DurationPipe, CommentUpdateComponent, CommentReactionDialogComponent],
+  imports: [RouterModule, FormsModule, SharedModule, CommentUpdateComponent, CommentItemComponent],
 })
 export class CommentComponent implements OnInit {
   @Input() post: IPostDTO;
+  @Input() comment: ICommentDTO;
 
-  subscription: Subscription | null = null;
   comments = signal<ICommentDTO[]>(null);
   hasPrevious = signal(false);
   hasNext = signal(false);
@@ -37,16 +31,7 @@ export class CommentComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   pageToLoad = 1;
 
-  public router = inject(Router);
   protected commentService = inject(CommentService);
-  protected activatedRoute = inject(ActivatedRoute);
-  protected sortService = inject(SortService);
-  protected dataUtils = inject(DataUtils);
-  protected authService = inject(AuthenticationService);
-  // readonly dialog = inject(MatDialog);
-  account = inject(AccountService).trackCurrentAccount();
-
-  protected ngZone = inject(NgZone);
 
   ngOnInit(): void {
     this.loadAll();
@@ -94,19 +79,9 @@ export class CommentComponent implements OnInit {
 
   protected onResponseSuccess(response: HttpResponse<IPage<ICommentDTO>>): void {
     const { body } = response;
-    console.log(body);
     this.hasNext.set(body.hasNext);
     this.hasPrevious.set(body.hasPrevious);
     this.comments.set(body.content ?? []);
   }
 
-  protected handleNavigation(page: number, query?: string): void {
-    const queryParamsObj = { q: query, page, size: this.itemsPerPage };
-    this.ngZone.run(() => {
-      this.router.navigate(['/', query.length > 0 ? 'search' : ''], {
-        relativeTo: this.activatedRoute,
-        queryParams: queryParamsObj,
-      });
-    });
-  }
 }

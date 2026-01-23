@@ -1,134 +1,91 @@
-import { CommonModule } from "@angular/common";
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  EventEmitter,
-  inject,
-  Input,
-  Output,
-  signal,
-  ViewChild,
-} from "@angular/core";
-import { IComment } from "app/entities/models/nk-comment.model";
-import { IPost, IPostDTO } from "app/entities/models/nk-post.model";
-import { AlertService } from "app/shared/alert/alert.service";
-import { finalize, Observable } from "rxjs";
-import { CommentService, EntityResponseType } from "../nk-comment.service";
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
+import { Field, form, maxLength, required } from '@angular/forms/signals';
+import { IComment, ICommentDTO } from 'app/entities/models/nk-comment.model';
+import { IFile } from 'app/entities/models/nk-file.model';
+import { IPostDTO } from 'app/entities/models/nk-post.model';
+import { AlertService } from 'app/shared/alert/alert.service';
+import { finalize, Observable } from 'rxjs';
+import { CommentService } from '../nk-comment.service';
+
+const initComment: IComment = {
+  id: null,
+  content: '',
+  file: null,
+};
 
 @Component({
-  selector: "app-comment-update",
+  selector: 'app-comment-update',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: "./nk-comment-update.component.html",
-  styleUrl: "./nk-comment-update.component.scss",
+  imports: [CommonModule, Field],
+  templateUrl: './nk-comment-update.component.html',
 })
-export class CommentUpdateComponent implements AfterViewInit {
-  /**
-   * *bold*
-   * _underline_
-   * ~italics~
-   * -delete-
-   * @param text
-   * @returns
-   */
-  format(text: string): string {
-    return text
-      .replace(/\*(.*?)\*/g, "<b>$1</b>") // -> bold
-      .replace(/_(.*?)_/g, "<u>$1</u>") // -> underline
-      .replace(/~(.*?)~/g, "<i>$1</i>") // -> italic
-      .replace(/-(.*?)-/g, "<del>$1</del>"); // -> delete
-  }
-
-  @ViewChild("nkeditor", { static: false }) nkeditor: ElementRef<HTMLElement>;
+export class CommentUpdateComponent {
   commentService = inject(CommentService);
   alertService = inject(AlertService);
 
+  commentModel = signal<IComment>(initComment);
+
+  commentForm = form(this.commentModel, (p) => {
+    required(p.content, { message: 'Le contenu de votre commentaire est requis.' });
+    maxLength(p.content, 1000, { message: 'Nombre maximum de caractères est 1000.' });
+  });
+
+  @Input() withAttach: boolean = true;
   @Input() comment: IComment = null;
-  @Input() post: IPostDTO;
-  @Output() onSaveSuccess = new EventEmitter<IComment>();
+  @Input() replyTo: IComment | ICommentDTO = null;
+  @Input() post: IPostDTO = null;
+  @Output() onSaveSuccess = new EventEmitter<ICommentDTO>();
 
-  file: File = null;
   isSaving = signal(false);
-  isEmpty = signal(true);
-  imageSrc = signal(null);
-  editor: HTMLElement = null;
-
-  ngAfterViewInit(): void {
-    this.editor = this.nkeditor.nativeElement.querySelector(".nk-editor");
-    if (this.comment) {
-      this.editor.innerHTML = this.comment.content;
-      this.updateEditorView();
-    }
-    // Function to check if the editor is empty
-    this.editor.addEventListener("input", () => this.updateEditorView());
-  }
-
-  private updateEditorView() {
-    const content = this.editor.textContent.trim(); // Trim spaces and line breaks
-    if (content == "") {
-      this.isEmpty.set(true);
-      // If the content is empty, add the 'placeholder' class
-      this.editor.classList.add("placeholder");
-    } else {
-      this.isEmpty.set(false);
-      // If the content is not empty, remove the 'placeholder' class
-      this.editor.classList.remove("placeholder");
-    }
-  }
 
   save() {
     this.isSaving.set(true);
     const comment = {
-      ...this.comment,
-      post: { id: this.post?.id },
-      content: this.editor.innerHTML,
+      ...this.commentModel(),
+      post: (this.post != null) ? { id: this.post.id } : null,
+      replyTo: (this.replyTo != null) ? { id: this.replyTo.id } : null,
     };
-    console.log(comment);
-
+    comment.content = comment.content.trim();
+    comment.file = null; // [TODO] handle file selection
     if (comment.id) {
-      this.subscribeToSaveResponse(
-        this.commentService.update(comment, this.file)
-      );
+      this.subscribeToSaveResponse(this.commentService.update(comment, null));
     } else {
-      this.subscribeToSaveResponse(
-        this.commentService.create(comment, this.file)
-      );
+      this.subscribeToSaveResponse(this.commentService.create(comment, null));
     }
   }
 
-  protected subscribeToSaveResponse(
-    result: Observable<EntityResponseType>
-  ): void {
+  protected subscribeToSaveResponse(result): void {
     result.pipe(finalize(() => this.isSaving.set(false))).subscribe({
       next: ({ body }) => {
         this.onSaveSuccess.emit(body);
-        this.editor.innerHTML = ""; // reset the editor.
         this.remove();
+        this.commentForm().reset({ ...initComment, file: null }); // reset post values.
       },
       error: () =>
         this.alertService.addAlert({
-          type: "error",
+          type: 'error',
           message: "Une error s'est produit lors de la sauvegarde.",
         }),
     });
   }
 
-  handleImage(event) {
-    this.file = event.target.files[0];
-    if (this.file) {
-      this.imageSrc.set(URL.createObjectURL(this.file));
-      // const reader = new FileReader();
-      // reader.onload = (e) => {
-      //   this.imageSrc.set(reader.result);
-      //   console.log(reader.result);
-      // };
-      // reader.readAsDataURL(this.file);
+  handleFile(event) {
+    const obj: File = event.target.files[0];
+    if (obj) {
+      if (obj.type.startsWith('image/')) {
+        const file: IFile = { filename: obj.name, size: obj.size, type: obj.type, data: obj };
+        file.url = URL.createObjectURL(obj);
+      } else {
+        this.alertService.addAlert({
+          type: 'warning',
+          message: 'Seulement les images sont prises en charge.',
+        });
+      }
     }
   }
 
   remove() {
-    this.file = null;
-    this.imageSrc.set(null);
+    this.commentModel().file = null;
   }
 }

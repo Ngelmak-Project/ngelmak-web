@@ -4,7 +4,7 @@ import { IPost, IPostDTO } from './nk-post.model';
 import { IReactionSummaryDTO } from './nk-reaction.model';
 
 export interface IComment {
-  id: number | null;
+  id?: number | null;
   at?: Date | null;
   replyCount?: number;
   lastUpdate?: Date | null;
@@ -20,7 +20,7 @@ export interface ICommentDTO {
   id?: number;
   at?: Date;
   replyCount?: number;
-  content?: String;
+  content?: string;
   post?: IPostDTO;
   file?: IFileDTO;
   account?: IAccountDTO;
