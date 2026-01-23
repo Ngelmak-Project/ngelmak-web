@@ -84,4 +84,8 @@ export class CommentComponent implements OnInit {
     this.comments.set(body.content ?? []);
   }
 
+  onComment(newComment: ICommentDTO) {
+    this.post.commentCount++;
+    this.comments().push(newComment);
+  }
 }
