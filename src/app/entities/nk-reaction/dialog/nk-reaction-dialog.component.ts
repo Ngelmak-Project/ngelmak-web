@@ -1,13 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  inject,
-  Input,
-  OnInit,
-  signal,
-  ViewChild
-} from '@angular/core';
+import { Component, inject, Input, OnInit, signal } from '@angular/core';
 import { AlertService } from 'app/shared/alert/alert.service';
 
 import { HttpResponse } from '@angular/common/http';
@@ -15,16 +6,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IPostDTO } from 'app/entities/models/nk-post.model';
 import { IReaction } from 'app/entities/models/nk-reaction.model';
 import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import SharedModule from 'app/shared/shared.module';
 import { finalize, Observable } from 'rxjs';
 import { ReactionService } from '../nk-reaction.service';
-
 
 @Component({
   standalone: true,
   selector: 'app-reaction-dialog',
   templateUrl: './nk-reaction-dialog.component.html',
-  imports: [SharedModule, FormsModule, ReactiveFormsModule],
+  imports: [SharedModule, FormsModule, ReactiveFormsModule, ClickOutsideDirective],
 })
 export class ReactionDialogComponent implements OnInit {
   @Input() post: IPostDTO;
@@ -33,7 +24,6 @@ export class ReactionDialogComponent implements OnInit {
   alertService = inject(AlertService);
   reactionService = inject(ReactionService);
 
-  @ViewChild('buttonRef') buttonRef!: ElementRef;
   isOpen = signal(false);
   isSaving = signal(false);
   totalReactions = signal(0);
@@ -41,8 +31,6 @@ export class ReactionDialogComponent implements OnInit {
   reactedByCurrentUser = signal('');
   selected = '';
   emojis = ['👍', '❤️', '😂', '😮', '😡', '🤔'];
-
-  constructor(private el: ElementRef) {}
 
   ngOnInit(): void {
     this.update();
@@ -140,13 +128,5 @@ export class ReactionDialogComponent implements OnInit {
           message: 'Une erreur est survenue lors de la sauvegarde.',
         }),
     });
-  }
-
-  // Close when clicking outside
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: Event) {
-    if (!this.el.nativeElement.contains(event.target)) {
-      this.isOpen.set(false);
-    }
   }
 }

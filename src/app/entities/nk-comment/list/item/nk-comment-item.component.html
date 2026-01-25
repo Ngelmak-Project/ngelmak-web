@@ -1,26 +1,26 @@
 <div
-  class="relative flex flex-col gap-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 rounded-bl-lg"
+  class="relative flex flex-col gap-2 rounded-bl-lg"
   [ngClass]="{
-    'pl-1': level === 0,
-    'pl-3': level === 1,
-    'pl-5': level >= 2,
+    'pl-1': level() === 0,
+    'pl-3': level() === 1,
+    'pl-5': level() >= 2,
     'border-l border-gray-300 dark:border-gray-700': replies().length > 0,
   }"
 >
   <div class="flex flex-row gap-2">
-    @if (level < 2) {
+    @if (level() < 2) {
       <div class="shrink-0">
         <!-- Avatar -->
         <a
           [routerLink]="[
             'nk-account',
-            comment.account?.id + '-' + comment.account?.identifier,
+            commentSig().account?.id + '-' + commentSig().account?.identifier,
             'view',
           ]"
         >
-          @if (comment.account?.avatar) {
+          @if (commentSig().account?.avatar) {
             <img
-              [src]="comment.account?.avatar"
+              [src]="commentSig().account?.avatar"
               alt="Account avatar"
               class="rounded-full max-w-none w-6 h-6"
             />
@@ -28,40 +28,189 @@
             <div
               class="flex items-center justify-center rounded-full max-w-none w-6 h-6 text-xl uppercase text-black bg-gray-50 dark:bg-gray-300]"
             >
-              {{ comment.account?.name.at(0) }}
+              {{ commentSig().account?.name.at(0) }}
             </div>
           }
         </a>
       </div>
     }
 
-    <div class="flex flex-col w-full gap-2">
+    <div class="flex flex-col w-full gap-1">
       <!-- Account info -->
-      <div class="flex items-center gap-2">
-        <span class="text-xs text-gray-500">@{{ comment.account?.name }}</span>
+      <div class="flex flex-col w-full gap-2">
+        <!-- Account info -->
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-gray-500">@{{ commentSig().account?.name }}</span>
+
+          <!-- Dropdown wrapper -->
+          <div class="relative ml-auto" clickOutside (onClickOutside)="openMenu.set(false)">
+            <!-- Trigger button -->
+            <button
+              class="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+              (click)="openMenu.set(!openMenu())"
+            >
+              <svg
+                class="w-5 h-5 text-gray-800 dark:text-gray-200"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-width="2"
+                  d="M6 12h.01m6 0h.01m5.99 0h.01"
+                />
+              </svg>
+            </button>
+
+            <!-- Dropdown menu -->
+            @if (openMenu()) {
+              <ul
+                class="absolute right-0 mt-1 w-32 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 shadow-lg py-1 text-xs text-gray-700 dark:text-gray-200 animate-fadeIn p-1 z-10"
+              >
+                <li>
+                  <button
+                    class="w-full inline-flex items-center justify-between text-left px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                  >
+                    Report
+
+                    <svg
+                      class="w-4 h-4"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z"
+                      />
+                    </svg>
+                  </button>
+                </li>
+
+                @if (commentSig().account?.id == account()?.id) {
+                  <li>
+                    <button
+                      (click)="isUpdating.set(true)"
+                      class="w-full inline-flex items-center justify-between text-left px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                    >
+                      Update
+
+                      <svg
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"
+                        />
+                      </svg>
+                    </button>
+                  </li>
+
+                  <li>
+                    <button
+                      (click)="confirmDeleteOpen.set(true)"
+                      class="w-full inline-flex items-center justify-between text-left px-3 py-2 rounded-md text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition"
+                    >
+                      Delete
+
+                      @if (isDeleting()) {
+                        <svg
+                          aria-hidden="true"
+                          class="inline w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
+                          viewBox="0 0 100 101"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                            fill="currentColor"
+                          />
+                          <path
+                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                            fill="currentFill"
+                          />
+                        </svg>
+                      } @else {
+                        <svg
+                          class="w-4 h-4"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                          />
+                        </svg>
+                      }
+                    </button>
+                    @if (confirmDeleteOpen()) {
+                      <app-confirm-dialog
+                        message="Are you sure you want to delete this comment?"
+                        (confirm)="handleDeleteConfirm($event)"
+                      >
+                      </app-confirm-dialog>
+                    }
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </div>
       </div>
 
       <!-- Content -->
-      <p class="text-gray-900 dark:text-white">
-        <!-- @if (level > 0) {
+      <div class="text-gray-900 dark:text-white">
+        @if (level() > 0 && replyTo) {
           <span class="text-blue-600 dark:text-blue-400 font-medium">
-            @{{ comment.replyTo?.account?.name }}
+            @{{ replyTo()?.account?.name }}
           </span>
-        } -->
-        <span [innerHTML]="comment.content"></span>
-      </p>
+        }
+        @if (!isUpdating()) {
+          <div
+            class="mb-3 text-gray-900 dark:text-white whitespace-pre-line"
+            [innerHTML]="commentSig().content"
+          ></div>
+        } @else {
+          <app-comment-update [comment]="commentSig()"></app-comment-update>
+        }
+      </div>
 
       <!-- Actions -->
       <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
-        <app-comment-reaction-dialog [comment]="comment"></app-comment-reaction-dialog>
+        <app-comment-reaction-dialog [comment]="commentSig()"></app-comment-reaction-dialog>
 
         <button class="font-medium hover:underline" (click)="isReplying.set(!isReplying())">
           Répondre
         </button>
 
-        <span>{{ comment.at | duration }}</span>
+        <span>{{ commentSig().at | duration }}</span>
 
-        @if (comment.replyCount > 0) {
+        @if (commentSig().replyCount > 0) {
           <button
             (click)="toggleReplies()"
             [disabled]="isLoading()"
@@ -84,22 +233,27 @@
                 />
               </svg>
             }
-            {{ comment.replyCount }} replies
+            {{ commentSig().replyCount }} replies
           </button>
         }
       </div>
 
       @if (isReplying()) {
         <app-comment-update
-          [replyTo]="comment"
-          (onSaveSuccess)="onReply($event)"
+          [replyTo]="commentSig()"
+          (onSaveSuccess)="handleReplyOrUpdate($event)"
         ></app-comment-update>
       }
 
       @if (showReplies()) {
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2 mt-5">
           @for (replyComment of replies(); track $index) {
-            <app-comment-item [comment]="replyComment" [level]="level + 1"></app-comment-item>
+            <app-comment-item
+              [comment]="replyComment"
+              [replyTo]="commentSig()"
+              [level]="level() + 1"
+              (onDeleted)="onDeletedReply($event)"
+            ></app-comment-item>
           }
         </div>
       }

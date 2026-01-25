@@ -7,13 +7,13 @@
           <a
             [routerLink]="[
               'nk-account',
-              feed.post.account.id + '-' + feed.post.account.identifier,
+              feed().post.account.id + '-' + feed().post.account.identifier,
               'view',
             ]"
           >
-            @if (feed.post.account.avatar) {
+            @if (feed().post.account.avatar) {
               <img
-                [src]="feed.post.account.avatar"
+                [src]="feed().post.account.avatar"
                 alt="Account avatar"
                 class="rounded-full max-w-none w-10 h-10"
               />
@@ -21,7 +21,7 @@
               <div
                 class="flex items-center justify-center rounded-full max-w-none w-10 h-10 text-xl uppercase text-black bg-gray-50 dark:bg-gray-300]"
               >
-                {{ feed.post.account.name.at(0) }}
+                {{ feed().post.account.name.at(0) }}
               </div>
             }
           </a>
@@ -31,10 +31,10 @@
               class="inline-block text-xs md:text-sm font-medium text-gray-900 dark:text-white"
               [routerLink]="[
                 'nk-account',
-                feed.post.account.id + '-' + feed.post.account.identifier,
+                feed().post.account.id + '-' + feed().post.account.identifier,
                 'view',
               ]"
-              >{{ feed.post.account.name }}</a
+              >{{ feed().post.account.name }}</a
             >
             <!-- <svg
                     class="w-3 h-3 md:w-5 md:h-5 text-blue-800"
@@ -74,7 +74,7 @@
             d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"
           />
         </svg>
-        <time>{{ feed.post.at | duration }}</time>
+        <time>{{ feed().post.at | duration }}</time>
       </p>
     </div>
     <button
@@ -129,17 +129,20 @@
   </header>
 
   <!-- Content -->
-  <div class="mb-3 text-gray-900 dark:text-white" [innerHTML]="feed.post.content"></div>
+  <div
+    class="mb-3 text-gray-900 dark:text-white whitespace-pre-line"
+    [innerHTML]="feed().post.content"
+  ></div>
 
   <!-- Attachments -->
   <div
     class="grid gap-4"
     [ngClass]="{
-      'grid-cols-1': feed.post.files.length === 1,
-      'grid-cols-1 md:grid-cols-2': feed.post.files.length > 1,
+      'grid-cols-1': feed().post.files.length === 1,
+      'grid-cols-1 md:grid-cols-2': feed().post.files.length > 1,
     }"
   >
-    <!-- @for (file of feed.post.files; track file; let idx = $index) {
+    <!-- @for (file of feed().post.files; track file; let idx = $index) {
       @if (isImage(file)) {
         <div class="flex max-h-48">
           <img
@@ -205,7 +208,7 @@
         </div>
       }
     } -->
-    @for (file of feed.post.files; track file; let idx = $index) {
+    @for (file of feed().post.files; track file; let idx = $index) {
       @if (isImage(file)) {
         <img
           class="h-auto rounded-lg shadow-xl dark:shadow-gray-800"
@@ -226,8 +229,8 @@
     <!-- Comments -->
     <button
       type="button"
-      (click)="toggleComment()"
-      class="h-9 py-1.5 px-3 inline-flex items-center rounded-lg bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600 dark:bg-gray-700"
+      (click)="isCommentOpened.set(!isCommentOpened())"
+      class="h-9 py-1.5 px-3 inline-flex items-center gap-1 rounded-lg bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600 dark:bg-gray-700"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -243,20 +246,20 @@
           d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
         />
       </svg>
-      @if (feed.post.commentCount > 0) {
+      @if (feed().post.commentCount > 0) {
         <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
-          {{ feed.post.commentCount }}
+          {{ feed().post.commentCount }}
         </span>
       }
     </button>
     <!-- Reactions -->
     <div class="h-9">
-      <app-reaction-dialog [post]="feed.post"></app-reaction-dialog>
+      <app-reaction-dialog [post]="feed().post"></app-reaction-dialog>
     </div>
   </div>
 
   <!-- Comments -->
   @if (isCommentOpened()) {
-    <app-comment [post]="feed.post"></app-comment>
+    <app-comment [feed]="feed()"></app-comment>
   }
 </article>

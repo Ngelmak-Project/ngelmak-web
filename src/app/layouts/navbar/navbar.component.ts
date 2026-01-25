@@ -51,7 +51,7 @@ export default class NavbarComponent implements OnInit {
   showUserSettings = signal(false);
 
   ngOnInit(): void {
-    this.updateSideView(); // Detect the initial size of the window.
+    // this.updateSideView(); // Detect the initial size of the window.
     // this.accountService.identity().subscribe(); // update user account from the cache.
 
     // this.accountService.currentAccount().subscribe(); // get nk-account from the cache.

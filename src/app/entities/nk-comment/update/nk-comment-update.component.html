@@ -135,7 +135,11 @@
           />
         </svg>
       }
-      <span>Publier mon commentaire</span>
+      @if (comment()?.id) {
+        <span>Modifier mon commentaire</span>
+      } @else {
+        <span>Publier mon commentaire</span>
+      }
     </button>
   </div>
 </div>

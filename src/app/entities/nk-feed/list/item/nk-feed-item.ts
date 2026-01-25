@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, signal } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IFeedDTO } from 'app/entities/models/nk-feed.model';
 import { IFile } from 'app/entities/models/nk-file.model';
@@ -14,7 +14,8 @@ import { DurationPipe } from 'app/shared/date';
   templateUrl: './nk-feed-item.html',
 })
 export class FeedItem {
-  @Input() feed: IFeedDTO;
+  feed = input.required<IFeedDTO>();
+
   isOpen = signal(false);
   isCommentOpened = signal(false);
 
@@ -38,9 +39,5 @@ export class FeedItem {
     const size = bytes / Math.pow(1024, index);
 
     return `${size.toFixed(2)} ${units[index]}`;
-  }
-
-  toggleComment() {
-    this.isCommentOpened.set(!this.isCommentOpened());
   }
 }
