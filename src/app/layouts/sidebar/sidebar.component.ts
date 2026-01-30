@@ -1,13 +1,15 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { NavbarService } from '../navbar/navbar.component';
-import { Subscription } from 'rxjs';
+import { RouterModule } from '@angular/router';
 import { fadeInOutRight400ms } from 'app/shared/animations/fade-in-out-right.animation';
+import { Subscription } from 'rxjs';
+import { NavbarService } from '../navbar/navbar.component';
 
 @Component({
   standalone: true,
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   animations: [fadeInOutRight400ms],
+  imports: [RouterModule],
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   private sidebarBehavior = inject(NavbarService);

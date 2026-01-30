@@ -706,7 +706,7 @@
           >
             @if (user()) {
               <div class="px-4 py-3">
-                <span class="block text-sm text-gray-900 dark:text-white"
+                <span class="block text-base text-gray-900 dark:text-white"
                   >{{ user()?.firstName }} {{ user()?.lastName }}</span
                 >
                 <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{
@@ -714,9 +714,9 @@
                 }}</span>
               </div>
             }
-            <ul class="py-1">
+            <ul class="flex flex-col py-1">
               @if (user()) {
-                <li *nkHasAnyAuthority="'ROLE_ADMIN'">
+                <li *hasAnyAuthority="'ROLE_ADMIN'">
                   <a
                     routerLink="/account-management"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
@@ -734,7 +734,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap text-start">Admin</span>
                   </a>
                 </li>
-                <li *nkHasAnyAuthority="'ROLE_ADMIN'">
+                <li *hasAnyAuthority="'ROLE_ADMIN'">
                   <a
                     routerLink="/ngelmak-administration"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
@@ -762,7 +762,7 @@
                 @if (account()) {
                   <li>
                     <a
-                      [routerLink]="['/account', account().identifier]"
+                      routerLink="/account/my-account"
                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
                     >
                       <svg

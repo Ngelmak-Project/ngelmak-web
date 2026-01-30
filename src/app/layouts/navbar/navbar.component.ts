@@ -34,8 +34,8 @@ export default class NavbarComponent implements OnInit {
   private sidebarBehavior = inject(NavbarService);
   private signInService = inject(SignInService);
   private router = inject(Router);
-  user = inject(AuthenticationService).trackCurrentAuthentication();
-  account = inject(AccountService).trackCurrentAccount();
+  user = inject(AuthenticationService).authentication;
+  account = inject(AccountService).account;
   accountService = inject(AccountService);
 
   resize$ = fromEvent(window, 'resize');

@@ -4,13 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { Authority } from 'app/config/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import entityRoutes from 'app/entities/entity.routes';
-import { PostComponent } from 'app/entities/nk-post/list/nk-post.component';
+import HomeComponent from 'app/home/home.component';
 import UserAccountComponent from 'app/user-account/user-account.component';
 import FooterComponent from '../footer/footer.component';
 import NavbarComponent from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import MainComponent from './main.component';
-import HomeComponent from 'app/home/home.component';
+
 
 const routes: Routes = [
   {
@@ -18,7 +18,7 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       { path: '', title: 'Ngelmak Project', component: HomeComponent },
-      { path: 'search', title: 'Posts', component: PostComponent },
+      // { path: 'search', title: 'Posts', component: PostComponent },
       {
         path: 'ngelmak-administration',
         data: {
@@ -48,7 +48,7 @@ const routes: Routes = [
     NavbarComponent,
     SidebarComponent,
     FooterComponent,
-  ],
+],
   exports: [RouterModule],
 })
 export class MainModule {}
