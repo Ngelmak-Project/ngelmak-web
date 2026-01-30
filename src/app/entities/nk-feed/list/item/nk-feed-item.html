@@ -260,6 +260,6 @@
 
   <!-- Comments -->
   @if (isCommentOpened()) {
-    <app-comment [feed]="feed()"></app-comment>
+    <app-comment [post]="feed().post"></app-comment>
   }
 </article>

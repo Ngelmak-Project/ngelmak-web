@@ -9,7 +9,6 @@ import { ICommentDTO } from 'app/entities/models/nk-comment.model';
 import SharedModule from 'app/shared/shared.module';
 
 import { HttpResponse } from '@angular/common/http';
-import { IFeedDTO } from 'app/entities/models/nk-feed.model';
 import { IPostDTO } from 'app/entities/models/nk-post.model';
 import { IPage } from 'app/shared/pagination/pagination.model';
 import { CommentItemComponent } from './item/nk-comment-item.component';
@@ -21,12 +20,8 @@ import { CommentItemComponent } from './item/nk-comment-item.component';
   imports: [RouterModule, FormsModule, SharedModule, CommentUpdateComponent, CommentItemComponent],
 })
 export class CommentComponent implements OnInit {
-  feed = input.required<IFeedDTO>();
+  post = input.required<IPostDTO>();
   postSig = signal<IPostDTO>(null);
-  // comment = input<ICommentDTO>();
-
-  // onCreate = output<ICommentDTO>();
-  // onDelete = output<ICommentDTO>();
 
   comments = signal<ICommentDTO[]>([]);
   hasNext = signal(false);
@@ -37,25 +32,9 @@ export class CommentComponent implements OnInit {
   pageToLoad = 1;
 
   ngOnInit(): void {
-    this.postSig.set(this.feed().post);
+    this.postSig.set(this.post());
 
     this.loadAll();
-    // this.commentService.findByPost(this.post.id).subscribe({
-    //   next: (res: HttpResponse<IPage<ICommentDTO>>) => {
-    //     this.onResponseSuccess(res);
-    //   },
-    // });
-    // this.subscription = combineLatest([this.activatedRoute.queryParamMap])
-    //   .pipe(
-    //     tap(([params]) => {
-    //       this.query = params.get('q');
-    //       const page = params.get(PAGE_HEADER);
-    //       this.page = +(page ?? 1);
-    //     }),
-    //     tap(() => this.loadAll()),
-    //   )
-    //   .subscribe();
-    // this.open();
   }
 
   loadAll(): void {
@@ -72,16 +51,6 @@ export class CommentComponent implements OnInit {
       },
       complete: () => this.isLoading.set(false),
     });
-  }
-
-  formatFileSize(bytes: number): string {
-    if (bytes === 0) return '0 Bytes';
-
-    const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    const index = Math.floor(Math.log(bytes) / Math.log(1024));
-    const size = bytes / Math.pow(1024, index);
-
-    return `${size.toFixed(2)} ${units[index]}`;
   }
 
   /**

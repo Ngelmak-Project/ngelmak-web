@@ -20,7 +20,7 @@ import { ReactionService } from '../nk-reaction.service';
 export class ReactionDialogComponent implements OnInit {
   @Input() post: IPostDTO;
 
-  account = inject(AccountService).trackCurrentAccount();
+  account = inject(AccountService).account;
   alertService = inject(AlertService);
   reactionService = inject(ReactionService);
 

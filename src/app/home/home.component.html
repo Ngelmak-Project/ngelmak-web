@@ -1,34 +1,25 @@
-<div class="grid grid-cols-1 md:grid-cols-4 items-start md:gap-4 px-4 pt-4
-            bg-gray-100 dark:bg-gray-900 min-h-screen">
-
-  <!-- LEFT SIDEBAR -->
+<div
+  class="grid grid-cols-1 md:grid-cols-4 items-start gap-2 lg:gap-4 px-4 py-2 lg:pt-4 bg-gray-100 dark:bg-gray-900 min-h-screen"
+>
+  <!-- LEFT SIDEBAR (sticky) -->
   <div
-    class="flex-col gap-4 p-4
-           bg-white dark:bg-gray-800
-           rounded md:rounded-lg shadow-sm sm:p-6
-           divide-y divide-gray-200 dark:divide-gray-700 hidden md:flex"
+    class="hidden md:flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded md:rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 sticky top-2 overflow-y-auto"
   >
     <app-account-view></app-account-view>
   </div>
 
-  <!-- MAIN FEED -->
+  <!-- MAIN FEED (scrolls normally) -->
   <div
-    class="col-span-2 flex flex-col gap-4 p-4
-           bg-white dark:bg-gray-800
-           rounded md:rounded-lg shadow-sm sm:p-6
-           divide-y divide-gray-200 dark:divide-gray-700"
+    class="col-span-2 flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded md:rounded-lg shadow-sm"
   >
     <app-post-update></app-post-update>
     <app-feed></app-feed>
   </div>
 
-  <!-- RIGHT SIDEBAR -->
+  <!-- RIGHT SIDEBAR (sticky) -->
   <div
-    class="flex flex-col gap-4 p-4
-           bg-white dark:bg-gray-800
-           rounded md:rounded-lg shadow-sm sm:p-6
-           divide-y divide-gray-200 dark:divide-gray-700"
+    class="flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded md:rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 sticky top-2 overflow-y-auto"
   >
+    <!-- Widgets -->
   </div>
-
 </div>

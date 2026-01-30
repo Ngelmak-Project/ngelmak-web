@@ -28,7 +28,7 @@ import { ReactionService } from '../nk-comment-reaction.service';
 export class CommentReactionDialogComponent implements OnInit {
   @Input() comment: ICommentDTO;
 
-  account = inject(AccountService).trackCurrentAccount();
+  account = inject(AccountService).account;
   alertService = inject(AlertService);
   reactionService = inject(ReactionService);
 

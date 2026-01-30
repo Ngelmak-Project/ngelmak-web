@@ -1,7 +1,6 @@
-import { Component, inject, NgZone, OnInit, signal } from '@angular/core';
+import { Component, inject, NgZone, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { combineLatest, Subscription, tap } from 'rxjs';
-import { FeedItem } from './item/nk-feed-item';
+import { Subscription, tap } from 'rxjs';
 
 import { FormsModule } from '@angular/forms';
 import { ITEMS_PER_PAGE, PAGE_HEADER } from 'app/config/pagination.constants';
@@ -13,21 +12,24 @@ import { SortService, sortStateSignal } from 'app/shared/sort';
 import { HttpResponse } from '@angular/common/http';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { PostDetailComponent } from 'app/entities/nk-post/detail/nk-post-detail.component';
+import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { IPage } from 'app/shared/pagination/pagination.model';
+import { ScrollService } from 'app/shared/services/scroll.service';
 import { FeedService } from '../nk-feed.service';
 
 @Component({
   standalone: true,
   selector: 'app-feed',
   templateUrl: './nk-feed.component.html',
-  imports: [RouterModule, FormsModule, SharedModule, FeedItem],
-  // providers: [provideNativeDateAdapter()],
+  imports: [RouterModule, FormsModule, SharedModule, PostDetailComponent],
+  animations: [fadeInUp400ms]
 })
-export class FeedComponent implements OnInit {
-  subscription: Subscription | null = null;
-  feeds = signal<IFeedDTO[]>(null);
-  hasPrevious = signal(false);
-  hasNext = signal(false);
+export class FeedComponent implements OnInit, OnDestroy {
+  private subs = new Subscription();
+
+  feeds = signal<IFeedDTO[]>([]);
+  hasNext = signal(true);
   isLoading = signal(false);
 
   sortState = sortStateSignal({});
@@ -36,87 +38,116 @@ export class FeedComponent implements OnInit {
   page = 1;
   query = '';
 
+  // Track last known scrollHeight to avoid reloading when height doesn't change
+  private lastHeight = 0;
+
   public router = inject(Router);
   protected feedService = inject(FeedService);
   protected activatedRoute = inject(ActivatedRoute);
   protected sortService = inject(SortService);
   protected dataUtils = inject(DataUtils);
   protected authService = inject(AuthenticationService);
-  // readonly dialog = inject(MatDialog);
-  account = inject(AccountService).trackCurrentAccount();
+  protected scroll = inject(ScrollService);
+  account = inject(AccountService).account;
 
   protected ngZone = inject(NgZone);
 
   ngOnInit(): void {
-    this.subscription = combineLatest([this.activatedRoute.queryParamMap])
-      .pipe(
-        tap(([params]) => {
-          this.query = params.get('q');
-          const page = params.get(PAGE_HEADER);
-          this.page = +(page ?? 1);
-        }),
-        tap(() => this.loadAll()),
-      )
-      .subscribe();
-    this.open();
+    // Listen to scroll end events
+    this.subs.add(
+      this.scroll.endReached$.subscribe((height) => {
+        this.handleScrollEnd(height);
+      }),
+    );
+
+    // Initial load
+    this.subs.add(
+      this.activatedRoute.queryParamMap
+        .pipe(
+          tap((params) => {
+            this.query = params.get('q') ?? '';
+            const page = params.get(PAGE_HEADER);
+            this.page = +(page ?? 1);
+          }),
+          tap(() => this.loadAll(true)), // reset feeds
+        )
+        .subscribe(),
+    );
   }
 
-  loadAll(): void {
-    const { page, query } = this;
+  ngOnDestroy(): void {
+    this.subs.unsubscribe(); // unsubscribes ALL at once
+  }
+
+  loadNext(): void {
+    this.page++;
+    this.loadAll();
+  }
+
+  /**
+   * Called when scroll reaches the bottom.
+   * Loads more only if:
+   * - not already loading
+   * - there is more data (hasNext)
+   * - the scrollHeight increased since last load
+   */
+  private handleScrollEnd(height: number): void {
+    // 1. Avoid duplicate loads while API is busy
+    if (this.isLoading()) {
+      return;
+    }
+
+    // 2. No more pages available
+    if (!this.hasNext()) {
+      return;
+    }
+
+    // 3. Height did not change → nothing new was added → avoid infinite loop
+    if (height <= this.lastHeight) {
+      return;
+    }
+
+    // Update last known height
+    this.lastHeight = height;
+
+    // Load next page
+    this.loadNext();
+  }
+
+  loadAll(reset = false): void {
     this.isLoading.set(true);
-    const pageToLoad: number = page;
+
     const req = {
-      page: pageToLoad - 1,
+      page: this.page - 1,
       size: this.itemsPerPage,
-      q: query,
+      q: this.query,
     };
+
     this.feedService.query(req).subscribe({
       next: (res: HttpResponse<IPage<IFeedDTO>>) => {
-        this.onResponseSuccess(res);
+        const { body } = res;
+        this.hasNext.set(body.content.length == this.itemsPerPage);
+        if (reset) {
+          this.feeds.set(body.content ?? []);
+        } else {
+          this.feeds.update((e) => [...e, ...body.content]);
+        }
       },
-      complete: () => this.isLoading.set(false),
+      complete: () => {
+        this.isLoading.set(false);
+      },
     });
   }
 
-  open() {
-    // const dialogRef = this.dialog.open(FeedUpdateComponent, {
-    //   enterAnimationDuration: "300ms",
-    //   exitAnimationDuration: "150ms",
-    //   disableClose: true,
-    //   width: "80vw",
-    //   maxWidth: "100vw",
-    //   maxHeight: "80vw",
-    // });
-    // dialogRef
-    //   .afterClosed()
-    //   .subscribe((res) => res && this.loadAll());
-  }
-
   search(query: string): void {
-    this.handleNavigation(this.page, query);
-  }
-
-  formatFileSize(bytes: number): string {
-    if (bytes === 0) return '0 Bytes';
-
-    const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    const index = Math.floor(Math.log(bytes) / Math.log(1024));
-    const size = bytes / Math.pow(1024, index);
-
-    return `${size.toFixed(2)} ${units[index]}`;
-  }
-
-  protected onResponseSuccess(response: HttpResponse<IPage<IFeedDTO>>): void {
-    const { body } = response;
-    this.hasNext.set(body.hasNext);
-    this.hasPrevious.set(body.hasPrevious);
-    this.feeds.set(body.content ?? []);
+    this.handleNavigation(1, query);
   }
 
   protected handleNavigation(page: number, query?: string): void {
     const queryParamsObj = { q: query, page, size: this.itemsPerPage };
+
     this.ngZone.run(() => {
-      this.router.navigate(['/', query.length > 0 ? 'search' : ''], {
+      this.router.navigate(['/', query?.length ? 'search' : ''], {
         relativeTo: this.activatedRoute,
         queryParams: queryParamsObj,
       });

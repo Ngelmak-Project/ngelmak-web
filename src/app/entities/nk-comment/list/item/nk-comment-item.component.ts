@@ -37,7 +37,7 @@ export class CommentItemComponent implements OnInit {
 
   protected commentService = inject(CommentService);
   protected alertService = inject(AlertService);
-  account = inject(AccountService).trackCurrentAccount();
+  account = inject(AccountService).account;
 
   replies = signal<ICommentDTO[]>([]);
   isLoading = signal(false);
