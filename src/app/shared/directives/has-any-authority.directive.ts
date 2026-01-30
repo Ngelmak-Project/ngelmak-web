@@ -16,18 +16,18 @@ import { AuthenticationService } from 'app/core/auth/auth.service';
  *
  * @howToUse
  * ```
- *     <some-element *nkHasAnyAuthority="'ROLE_ADMIN'">...</some-element>
+ *     <some-element *hasAnyAuthority="'ROLE_ADMIN'">...</some-element>
  *
- *     <some-element *nkHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']">...</some-element>
+ *     <some-element *hasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']">...</some-element>
  * ```
  */
 @Directive({
   standalone: true,
-  selector: '[nkHasAnyAuthority]',
+  selector: '[hasAnyAuthority]',
 })
 export default class HasAnyAuthorityDirective {
   public authorities = input<string | string[]>([], {
-    alias: 'nkHasAnyAuthority',
+    alias: 'hasAnyAuthority',
   });
 
   private templateRef = inject(TemplateRef<any>);
@@ -35,7 +35,7 @@ export default class HasAnyAuthorityDirective {
 
   constructor() {
     const authService = inject(AuthenticationService);
-    const currentAccount = authService.trackCurrentAuthentication();
+    const currentAccount = authService.authentication;
     const hasPermission = computed(
       () => currentAccount()?.authorities && authService.hasAnyAuthority(this.authorities())
     );
