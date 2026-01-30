@@ -15,9 +15,6 @@ import { AttachmentType } from 'app/entities/enumerations/attachment-type.model'
 import { Visibility } from 'app/entities/enumerations/visibility.model';
 import { AccountService } from 'app/entities/nk-account/nk-account.service';
 import { AlertService } from 'app/shared/alert/alert.service';
-import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
-import { scaleInOut400ms } from 'app/shared/animations/scale-in-out.animation';
-import { scaleInOutAnimation150ms } from 'app/shared/animations/stagger.animation';
 
 const initPost: IPost = {
   id: null,
@@ -31,7 +28,6 @@ const initPost: IPost = {
   selector: 'app-post-update',
   templateUrl: './nk-post-update.component.html',
   imports: [SharedModule, FormsModule, ReactiveFormsModule, Field],
-  animations: [fadeInUp400ms, scaleInOut400ms, scaleInOutAnimation150ms],
 
   encapsulation: ViewEncapsulation.None, // Disable encapsulation
 })
@@ -45,7 +41,7 @@ export class PostUpdateComponent implements OnInit {
   protected isLoading = signal(false);
   protected deletedFiles: IFile[] = [];
   // protected files: IFile[] = [];
-  account = inject(AccountService).trackCurrentAccount();
+  account = inject(AccountService).account;
   expandedIndexes: Set<number> = new Set<number>();
 
   protected postModel = signal<IPost>(initPost);

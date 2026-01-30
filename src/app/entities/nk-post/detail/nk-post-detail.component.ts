@@ -1,89 +1,100 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal
-} from "@angular/core";
-import { ActivatedRoute, RouterModule } from "@angular/router";
+import { Component, inject, input, OnInit, output, signal } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
-import { CommonModule } from "@angular/common";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { IComment } from "app/entities/models/nk-comment.model";
-import { IFile } from "app/entities/models/nk-file.model";
-import { IPost } from "app/entities/models/nk-post.model";
-import { AccountService } from "app/entities/nk-account/nk-account.service";
-import { CommentService } from "app/entities/nk-comment/nk-comment.service";
-import { fadeInUp400ms } from "app/shared/animations/fade-in-up.animation";
-import { scaleInOut400ms } from "app/shared/animations/scale-in-out.animation";
-import { scaleInOutAnimation150ms } from "app/shared/animations/stagger.animation";
-import { DurationPipe } from "app/shared/date";
-import SharedModule from "app/shared/shared.module";
+import { FormsModule } from '@angular/forms';
+import { IPostDTO } from 'app/entities/models/nk-post.model';
+import SharedModule from 'app/shared/shared.module';
+
+import { IFile } from 'app/entities/models/nk-file.model';
+import { CommentComponent } from 'app/entities/nk-comment/list/nk-comment.component';
+import { ReactionDialogComponent } from 'app/entities/nk-reaction/dialog/nk-reaction-dialog.component';
+import { DurationPipe } from 'app/shared/date';
+import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { ConfirmDialogComponent } from 'app/shared/confirm-dialog/confirm-dialog.component';
+import { PostService } from '../nk-post.service';
+import { finalize } from 'rxjs';
+import { AlertService } from 'app/shared/alert/alert.service';
+import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 
 @Component({
   standalone: true,
-  selector: "app-post-detail",
-  templateUrl: "./nk-post-detail.component.html",
+  selector: 'app-post-detail',
+  templateUrl: './nk-post-detail.component.html',
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    DurationPipe,
-    SharedModule,
     RouterModule,
+    FormsModule,
+    SharedModule,
+    DurationPipe,
+    ClickOutsideDirective,
+    ReactionDialogComponent,
+    CommentComponent,
+    ConfirmDialogComponent,
   ],
-
-  animations: [fadeInUp400ms, scaleInOut400ms, scaleInOutAnimation150ms],
 })
 export class PostDetailComponent implements OnInit {
-  post: IPost | null = null;
-  comments = signal<IComment[]>([]);
-  files = signal<IFile[]>([]);
-  accountService = inject(AccountService);
-  account = inject(AccountService).trackCurrentAccount();
-  commentService = inject(CommentService);
-  route = inject(ActivatedRoute);
+  post = input.required<IPostDTO>();
+  onDeleted = output<IPostDTO>();
+  postSig = signal<IPostDTO>(null);
 
-  updatingComment = signal(null);
+  openMenu = signal(false);
+  confirmDeleteOpen = signal(false);
+  isDeleting = signal(false);
+  isUpdating = signal(false);
+  isCommentOpened = signal(false);
 
-  ngOnInit(): void {
-    this.post = this.route.snapshot.data["post"];
-    this.comments.set(this.post.comments);
-    this.files.set(this.post.files);
-    this.accountService.currentAccount().subscribe();
-    // this.loadAllComments();
+  alertService = inject(AlertService);
+  protected postService = inject(PostService);
+
+  account = inject(AccountService).account;
+
+  ngOnInit() {
+    this.postSig.set(this.post());
   }
 
-  sortReverse(comments: IComment[]): IComment[] {
-    return comments.sort(
-      (a, b) => new Date(b.at).getTime() - new Date(a.at).getTime()
-    );
+  isImage(file: IFile): boolean {
+    return file.type.startsWith('image/');
   }
 
-  onSaveSuccess(comment: IComment) {
-    const comments = this.comments();
-    const idx = comments.findIndex((item) => item.id == comment.id);
-    if (idx >= 0) {
-      comments[idx] = comment;
-    } else {
-      comments.push(comment);
+  isVideo(file: IFile): boolean {
+    return file.type.startsWith('video/');
+  }
+
+  extention(file: IFile): string {
+    return file.type.split('/').pop()?.toUpperCase();
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
+
+    const units = ['Bytes', 'KB', 'MB', 'GB'];
+    const index = Math.floor(Math.log(bytes) / Math.log(1024));
+    const size = bytes / Math.pow(1024, index);
+
+    return `${size.toFixed(2)} ${units[index]}`;
+  }
+
+  handleDeleteConfirm(result: boolean) {
+    this.confirmDeleteOpen.set(false);
+    if (result) {
+      this.isDeleting.set(true);
+      this.postService
+        .delete(this.postSig().id)
+        .pipe(
+          finalize(() => {
+            this.isDeleting.set(false);
+            this.openMenu.set(false);
+          }),
+        )
+        .subscribe({
+          next: () => {
+            this.onDeleted.emit(this.postSig());
+          },
+          error: () =>
+            this.alertService.addAlert({
+              type: 'error',
+              message: "Une error s'est produit lors de la suppression.",
+            }),
+        });
     }
-    this.updatingComment.set(null); // reset the updating.
-    this.comments.set(comments);
-  }
-
-  loadAllComments() {
-    // this.commentService
-    //   .findByPost(this.post.id)
-    //   .subscribe((res) => this.comments.set(res.body));
-  }
-
-  deleteComment(id: number) {
-    this.commentService.delete(id).subscribe(() => {
-      this.comments.set(this.comments().filter((e) => e.id != id));
-    });
-  }
-
-  previousState(): void {
-    window.history.back();
   }
 }

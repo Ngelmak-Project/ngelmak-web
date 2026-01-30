@@ -11,6 +11,7 @@ export interface IPost {
   id?: number | null;
   keywords?: string | null;
   at?: Date | null;
+  commentCount?: number;
   lastUpdate?: Date | null;
   visibility?: keyof typeof Visibility | null;
   content?: string | null;

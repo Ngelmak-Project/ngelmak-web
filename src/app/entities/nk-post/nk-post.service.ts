@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IPost } from 'app/entities/models/nk-post.model';
+import { IPost, IPostDTO } from 'app/entities/models/nk-post.model';
 import { IPage } from 'app/shared/pagination/pagination.model';
 import { IFile } from '../models/nk-file.model';
 
@@ -88,7 +88,15 @@ export class PostService {
 
   findByAccount(id: number, req?: any): Observable<HttpResponse<IPage<IPost>>> {
     const options = createRequestOption(req);
-    return this.http.get<IPage<IPost>>(`${this.resourceUrl}/me/${id}`, {
+    return this.http.get<IPage<IPost>>(`${this.resourceUrl}/account/${id}`, {
+      params: options,
+      observe: 'response',
+    });
+  }
+
+  findByAuthenticatedUser(req?: any): Observable<HttpResponse<IPage<IPostDTO>>> {
+    const options = createRequestOption(req);
+    return this.http.get<IPage<IPostDTO>>(`${this.resourceUrl}/me`, {
       params: options,
       observe: 'response',
     });
