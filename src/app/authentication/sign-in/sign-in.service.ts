@@ -1,18 +1,24 @@
 import { inject, Injectable } from '@angular/core';
-import { Authentication } from 'app/core/auth/auth.model';
-import { AuthenticationService } from 'app/core/auth/auth.service';
 import { AuthServerProvider } from 'app/core/auth/auth-jwt.service';
-import { mergeMap, Observable } from 'rxjs';
+import { AuthenticationService } from 'app/core/auth/auth.service';
+import { map, Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SignInService {
   private authService = inject(AuthenticationService);
   private authServerProvider = inject(AuthServerProvider);
 
-  signIn(credentials): Observable<Authentication> {
-    return this.authServerProvider
-      .signIn(credentials)
-      .pipe(mergeMap(() => this.authService.identity(true)));
+  /**
+   * After login, refresh authentication
+   *
+   * @param credentials
+   * @returns
+   */
+  signIn(credentials): Observable<void> {
+    return this.authServerProvider.signIn(credentials).pipe(
+      tap(() => this.authService.loadAuthentication()),
+      map(() => void 0),
+    );
   }
 
   signOut(): void {

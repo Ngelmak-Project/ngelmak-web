@@ -1,46 +1,50 @@
-import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
-import { SignInModel } from "app/authentication/sign-in/sign-in.model";
-import { ApplicationConfigService } from "app/core/config/application-config.service";
-import { StateStorageService } from "./state-storage.service";
+import { SignInModel } from 'app/authentication/sign-in/sign-in.model';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { StateStorageService } from './state-storage.service';
 
 type JwtToken = {
   id_token: string;
 };
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class AuthServerProvider {
   private http = inject(HttpClient);
-  private stateStorageService = inject(StateStorageService);
-  private applicationConfigService = inject(ApplicationConfigService);
+  private storage = inject(StateStorageService);
+  private config = inject(ApplicationConfigService);
 
+  /**
+   * Returns the stored JWT token or an empty string if none exists.
+   */
   getToken(): string {
-    return this.stateStorageService.getAuthenticationToken() ?? "";
+    return this.storage.getAuthenticationToken() ?? '';
   }
 
+  /**
+   * Authenticates the user with the backend.
+   * Stores the JWT token on success.
+   */
   signIn(credentials: SignInModel): Observable<void> {
     return this.http
-      .post<JwtToken>(
-        this.applicationConfigService.getEndpointFor("auth/authenticate"),
-        credentials
-      )
+      .post<JwtToken>(this.config.getEndpointFor('auth/authenticate'), credentials)
       .pipe(
-        map(({ id_token }) => {
-          this.stateStorageService.storeAuthenticationToken(
-            id_token,
-            credentials.rememberMe
-          );
-        })
+        tap(({ id_token }) =>
+          this.storage.storeAuthenticationToken(id_token, credentials.rememberMe),
+        ),
+        map(() => void 0),
       );
   }
 
+  /**
+   * Clears the authentication token.
+   * Returns an observable for guard compatibility.
+   */
   signOut(): Observable<void> {
-    return new Observable((observer) => {
-      this.stateStorageService.clearAuthenticationToken();
-      observer.complete();
-    });
+    this.storage.clearAuthenticationToken();
+    return of(void 0);
   }
 }

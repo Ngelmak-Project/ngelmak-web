@@ -4,7 +4,6 @@ import { inject } from '@angular/core';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { ApplicationConfigService } from '../config/application-config.service';
 
-
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const stateStorageService = inject(StateStorageService);
   const applicationConfigService = inject(ApplicationConfigService);
@@ -13,8 +12,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   // Skip if URL is external or empty
   if (
     !req.url ||
-    (req.url.startsWith('http') &&
-      !(serverApiUrl && req.url.startsWith(serverApiUrl)))
+    (req.url.startsWith('http') && !(serverApiUrl && req.url.startsWith(serverApiUrl)))
   ) {
     return next(req);
   }
@@ -31,4 +29,3 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req);
 };
-

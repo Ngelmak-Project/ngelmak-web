@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, Signal, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of, ReplaySubject } from 'rxjs';
-import { catchError, shareReplay, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { Authentication } from 'app/core/auth/auth.model';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
@@ -10,94 +9,94 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private userIdentity = signal<Authentication | null>(null);
-  private authenticationState = new ReplaySubject<Authentication | null>(1);
-  private authCache$?: Observable<Authentication> | null;
+  /**
+   * Holds the current authenticated user.
+   * Null means "not authenticated".
+   */
+  private readonly _auth = signal<Authentication | null>(null);
+
+  /**
+   * Public readonly signal for components.
+   * Components should never mutate authentication directly.
+   */
+  readonly authentication = this._auth.asReadonly();
 
   private http = inject(HttpClient);
   private router = inject(Router);
-  private stateStorageService = inject(StateStorageService);
+  private stateStorage = inject(StateStorageService);
   private applicationConfigService = inject(ApplicationConfigService);
 
+  constructor() {
+    // Automatically load authentication on startup
+    this.loadAuthentication();
+  }
+
+  /**
+   * Saves a new user registration.
+   */
   save(auth: Authentication): Observable<{}> {
     return this.http.post(this.applicationConfigService.getEndpointFor('auth/register'), auth);
   }
 
-  requestCertification(request: { officialDocType; officialDocIdentification }): Observable<{}> {
-    return this.http.put(
-      this.applicationConfigService.getEndpointFor('auth/certifications/request'),
-      request,
-      {
-        observe: 'response',
-      }
-    );
+  /**
+   * Requests official certification for the current user.
+   */
+  requestCertification(request: {
+    officialDocType: string;
+    officialDocIdentification: string;
+  }): Observable<{}> {
+    return this.http.put(this.applicationConfigService.getEndpointFor('auth/certifications/request'), request, {
+      observe: 'response',
+    });
   }
 
-  authenticate(identity: Authentication | null): void {
-    this.userIdentity.set(identity);
-    this.authenticationState.next(this.userIdentity());
-    if (!identity) {
-      this.authCache$ = null;
-    }
+  /**
+   * Updates the current authentication state.
+   * Passing null logs the user out.
+   */
+  authenticate(auth: Authentication | null): void {
+    this._auth.set(auth);
   }
 
-  trackCurrentAuthentication(): Signal<Authentication | null> {
-    // If the signal is still null AND no request is in progress, trigger identity()
-    if (this.userIdentity() === null && !this.authCache$) {
-      this.identity().subscribe();
-    }
-
-    return this.userIdentity.asReadonly();
+  /**
+   * Loads the authenticated user from the backend.
+   * This is automatically called on service creation.
+   */
+  loadAuthentication(): void {
+    this.http.get<Authentication>(this.applicationConfigService.getEndpointFor('auth/me')).subscribe({
+      next: (auth) => {
+        this._auth.set(auth);
+        this.navigateToStoredUrl();
+      },
+      error: () => this._auth.set(null),
+    });
   }
 
-  hasAnyAuthority(authorities: string[] | string): boolean {
-    const userIdentity = this.userIdentity();
-    if (!userIdentity) {
-      return false;
-    }
-    if (!Array.isArray(authorities)) {
-      authorities = [authorities];
-    }
-    return userIdentity.authorities.some((authority: string) => authorities.includes(authority));
-  }
-
-  identity(force?: boolean): Observable<Authentication | null> {
-    if (!this.authCache$ || force) {
-      this.authCache$ = this.fetchUserAuthentication().pipe(
-        tap((auth: Authentication) => {
-          this.authenticate(auth);
-          // After retrieve the auth info, the language will be changed to
-          // the user's preferred language configured in the auth setting
-          // unless user have choosed other language in the current session
-          // if (!this.stateStorageService.getLocale()) {
-          //   this.translateService.use(auth.langKey);
-          // }
-          this.navigateToStoredUrl();
-        }),
-        shareReplay()
-      );
-    }
-    return this.authCache$.pipe(catchError(() => of(null)));
-  }
-
+  /**
+   * Returns true if a user is authenticated.
+   */
   isAuthenticated(): boolean {
-    return this.userIdentity() !== null;
+    return this._auth() !== null;
   }
 
-  getAuthenticationState(): Observable<Authentication | null> {
-    return this.authenticationState.asObservable();
+  /**
+   * Checks if the user has at least one of the given authorities.
+   */
+  hasAnyAuthority(authorities: string[] | string): boolean {
+    const auth = this._auth();
+    if (!auth) return false;
+
+    const required = Array.isArray(authorities) ? authorities : [authorities];
+    return auth.authorities.some((a) => required.includes(a));
   }
 
-  private fetchUserAuthentication(): Observable<Authentication> {
-    return this.http.get<Authentication>(this.applicationConfigService.getEndpointFor('auth/me'));
-  }
-
+  /**
+   * Navigates to the URL stored before authentication.
+   */
   private navigateToStoredUrl(): void {
-    // previousState can be set in the authExpiredInterceptor and in the userRouteAccessService
-    // if login is successful, go to stored previousState and clear previousState
-    const previousUrl = this.stateStorageService.getUrl();
+    const previousUrl = this.stateStorage.getUrl();
     if (previousUrl) {
-      this.stateStorageService.clearUrl();
+      this.stateStorage.clearUrl();
       this.router.navigateByUrl(previousUrl);
     }
   }

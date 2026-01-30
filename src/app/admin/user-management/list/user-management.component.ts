@@ -26,7 +26,7 @@ import { UserManagementService } from "../service/user-management.service";
   imports: [RouterModule, SharedModule],
 })
 export default class UserManagementComponent implements OnInit {
-  currentUser = inject(AuthenticationService).trackCurrentAuthentication();
+  currentUser = inject(AuthenticationService).authentication;
   private router = inject(Router);
   private userService = inject(UserManagementService);
   private sortService = inject(SortService);

@@ -5,37 +5,40 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { map } from 'rxjs/operators';
 
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { StateStorageService } from './state-storage.service';
 
 export const UserRouteAccessService: CanActivateFn = (
   next: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
+  state: RouterStateSnapshot,
 ) => {
   const authService = inject(AuthenticationService);
   const router = inject(Router);
   const stateStorageService = inject(StateStorageService);
-  return authService.identity().pipe(
-    map((account) => {
-      if (account) {
-        const authorities = next.data['authorities'];
 
-        if (!authorities || authorities.length === 0 || authService.hasAnyAuthority(authorities)) {
-          return true;
-        }
+  return (() => {
+    const auth = authService.authentication(); // read the signal synchronously
 
-        if (isDevMode()) {
-          console.error('User does not have any of the required authorities:', authorities);
-        }
-        router.navigate(['accessdenied']);
-        return false;
+    if (auth) {
+      const authorities = next.data['authorities'];
+
+      const allowed =
+        !authorities || authorities.length === 0 || authService.hasAnyAuthority(authorities);
+
+      if (allowed) {
+        return true;
       }
 
-      stateStorageService.storeUrl(state.url);
-      router.navigate(['/sign-in']);
-      return false;
-    })
-  );
+      if (isDevMode()) {
+        console.error('User does not have required authorities:', authorities);
+      }
+
+      return router.parseUrl('/accessdenied');
+    }
+
+    // Not authenticated
+    stateStorageService.storeUrl(state.url);
+    return router.parseUrl('/sign-in');
+  })();
 };
