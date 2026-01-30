@@ -11,6 +11,7 @@ import { LANGUAGES } from 'app/config/language.constants';
 import { Authentication } from 'app/core/auth/auth.model';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import SharedModule from 'app/shared/shared.module';
+
 const initialAuth: Authentication = {} as Authentication;
 
 @Component({
@@ -51,12 +52,12 @@ export default class SettingsComponent implements OnInit {
 
   private authService = inject(AuthenticationService);
 
+  account = inject(AuthenticationService).authentication;
+
   ngOnInit(): void {
-    this.authService.identity().subscribe((account) => {
-      if (account) {
-        this.settingsForm.patchValue(account);
+      if (this.account()) {
+        this.settingsForm.patchValue(this.account());
       }
-    });
   }
 
   save(): void {

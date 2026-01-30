@@ -1,15 +1,19 @@
-import { Routes } from "@angular/router";
-import { PostsComponent } from "./posts/posts.component";
-import SettingsComponent from "./settings/settings.component";
+import { Routes } from '@angular/router';
+import SettingsComponent from './account-setting/account-setting.component';
+import { AccountPostComponent } from './account-post/account-post.component';
 
 const accountDetailRoute: Routes = [
   {
-    path: "",
+    path: 'posts',
+    component: AccountPostComponent,
+  },
+  {
+    path: 'settings',
     component: SettingsComponent,
   },
   {
-    path: "posts",
-    component: PostsComponent,
+    path: '**',
+    redirectTo: 'posts',
   },
 ];
 

@@ -14,8 +14,8 @@ import SharedModule from 'app/shared/shared.module';
 })
 export class AccountConfigComponent {
   private accountService = inject(AccountService);
-  user = inject(AuthenticationService).trackCurrentAuthentication();
-  account = inject(AccountService).trackCurrentAccount();
+  user = inject(AuthenticationService).authentication;
+  account = inject(AccountService).account;
   isSaving = signal(false);
   flashBoxShadowState = null; // set to null to avoid flash box-shadow animation to first when the DOM starts.
 
@@ -35,8 +35,8 @@ export class AccountConfigComponent {
     this.isSaving.set(true);
     this.flashBoxShadowState = true;
     const conifg: IConfig = this.conifgForm.value as IConfig;
-    this.accountService
-      .partialUpdate(conifg)
-      .subscribe({ complete: () => this.isSaving.set(false) });
+    // this.accountService
+    //   .update(conifg)
+    //   .subscribe({ complete: () => this.isSaving.set(false) });
   }
 }

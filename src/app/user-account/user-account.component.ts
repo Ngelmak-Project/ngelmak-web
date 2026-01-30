@@ -37,8 +37,8 @@ export default class UserAccountComponent implements OnInit {
 
   private fb = inject(FormBuilder);
   private accountService = inject(AccountService);
-  user = inject(AuthenticationService).trackCurrentAuthentication();
-  account = inject(AccountService).trackCurrentAccount();
+  user = inject(AuthenticationService).authentication;
+  account = inject(AccountService).account;
   isSaving = signal(false);
   isUploading = signal(false);
   flashBoxShadowState = null; // set to null to avoid flash box-shadow animation to first when the DOM starts.

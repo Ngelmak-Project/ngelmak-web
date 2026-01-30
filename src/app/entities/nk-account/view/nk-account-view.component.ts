@@ -17,7 +17,7 @@ import { AlertService } from 'app/shared/alert/alert.service';
 export class AccountViewComponent {
   isLoading = signal(false);
   isSaving = signal(false);
-  account = inject(AccountService).trackCurrentAccount();
+  account = inject(AccountService).account;
   accountService = inject(AccountService);
   alertService = inject(AlertService);
 
@@ -41,7 +41,7 @@ export class AccountViewComponent {
             type: 'success',
             message: 'Chaine créée avec succès!',
           });
-          this.accountService.setAccount(res.body);
+          this.accountService.updateLocalAccount(res.body);
         },
         error: () =>
           this.alertService.addAlert({

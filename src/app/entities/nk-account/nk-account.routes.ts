@@ -19,20 +19,8 @@ const accountRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':id',
-    canActivate: [UserRouteAccessService],
-    data: {
-      authorities: [Authority.USER],
-    },
-    component: AccountDetailComponent,
-    loadChildren: () => import('app/entities/nk-account/detail/nk-account-detail.routes'),
-  },
-  {
     path: ':id/view',
     component: AccountViewComponent,
-    resolve: {
-      account: AccountResolve,
-    },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -41,11 +29,17 @@ const accountRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
+    path: 'my-account',
+    canActivate: [UserRouteAccessService],
+    data: {
+      authorities: [Authority.USER],
+    },
+    component: AccountDetailComponent,
+    loadChildren: () => import('app/entities/nk-account/detail/nk-account-detail.routes'),
+  },
+  {
     path: ':id/edit',
     component: AccountUpdateComponent,
-    resolve: {
-      account: AccountResolve,
-    },
     canActivate: [UserRouteAccessService],
   },
 ];

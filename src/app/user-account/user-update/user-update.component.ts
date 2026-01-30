@@ -4,6 +4,7 @@ import { Authentication } from 'app/core/auth/auth.model';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { flashBoxShadow2000ms } from 'app/shared/animations/flash.animation';
 import SharedModule from 'app/shared/shared.module';
+
 @Component({
   selector: 'app-user-update',
   standalone: true,
@@ -28,7 +29,7 @@ export class UserUpdateComponent implements OnInit {
         Validators.minLength(1),
         Validators.maxLength(50),
         Validators.pattern(
-          '^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'
+          '^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$',
         ),
       ],
     ],
@@ -38,8 +39,10 @@ export class UserUpdateComponent implements OnInit {
     ],
   });
 
+  account = inject(AuthenticationService).authentication;
+
   ngOnInit(): void {
-    this.authService.identity().subscribe((account) => this.accountForm.patchValue(account));
+    this.accountForm.patchValue(this.account());
   }
 
   save(): void {

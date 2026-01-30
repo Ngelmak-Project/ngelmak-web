@@ -15,7 +15,7 @@ import { AccountService } from "../nk-account.service";
 export class AccountDetailComponent {
   alertService = inject(AlertService);
   accountService = inject(AccountService);
-  account = inject(AccountService).trackCurrentAccount();
+  account = inject(AccountService).account;
   isUploading = signal(false);
   editAvatar = signal(false);
   imageSrc = signal(null);
@@ -29,7 +29,7 @@ export class AccountDetailComponent {
         .pipe(finalize(() => this.isUploading.set(false)))
         .subscribe({
           next: (res) => {
-            this.accountService.setAccount(res.body);
+            this.accountService.updateLocalAccount(res.body);
             this.editAvatar.set(false);
             this.imageSrc.set(null);
           },

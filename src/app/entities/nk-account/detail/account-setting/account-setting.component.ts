@@ -15,19 +15,19 @@ import { Router } from "@angular/router";
 
 @Component({
   standalone: true,
-  selector: "app-settings",
+  selector: "app-account-setting",
   imports: [
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
   ],
-  templateUrl: "./settings.component.html",
+  templateUrl: "./account-setting.component.html",
 })
-export default class SettingsComponent implements OnInit {
+export default class AccountSettingComponent implements OnInit {
   private router = inject(Router);
   accountService = inject(AccountService);
   alertService = inject(AlertService);
-  account = inject(AccountService).trackCurrentAccount();
+  account = inject(AccountService).account;
   isSaving = signal(false);
 
   accountForm = new FormGroup({
@@ -52,7 +52,6 @@ export default class SettingsComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.accountService.currentAccount().subscribe();
     this.accountForm.patchValue(this.account());
   }
 
@@ -62,11 +61,11 @@ export default class SettingsComponent implements OnInit {
     const identifierChanged =
       this.account().identifier != this.accountForm.value["identifier"];
     this.accountService
-      .partialUpdate(account)
+      .update(account)
       .pipe(finalize(() => this.isSaving.set(false)))
       .subscribe({
         next: (result) => {
-          this.accountService.setAccount(result.body);
+          this.accountService.updateLocalAccount(result.body);
           this.alertService.addAlert({
             type: "success",
             message:

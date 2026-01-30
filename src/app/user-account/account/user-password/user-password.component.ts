@@ -6,8 +6,6 @@ import { flashBoxShadow2000ms } from 'app/shared/animations/flash.animation';
 import SharedModule from 'app/shared/shared.module';
 import { PasswordService } from 'app/user-account/password/password.service';
 import { Observable } from 'rxjs';
-;
-
 @Component({
   selector: 'app-user-password',
   standalone: true,
@@ -31,12 +29,11 @@ export class UserPasswordComponent {
   passwordForm = this.fb.group({
     currentPassword: [null, Validators.required],
     newPassword: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
-    confirmPassword: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+    confirmPassword: [
+      null,
+      [Validators.required, Validators.minLength(4), Validators.maxLength(50)],
+    ],
   });
-
-  ngOnInit(): void {
-    this.account$ = this.authService.identity();
-  }
 
   changePassword(): void {
     this.isSaving.set(true);
@@ -47,7 +44,9 @@ export class UserPasswordComponent {
       this.doNotMatch.set(true);
       setTimeout(() => this.doNotMatch.set(false), 3000);
     } else {
-      this.passwordService.save(newPassword, currentPassword).subscribe({ complete: () => (this.isSaving.set(false)) });
+      this.passwordService
+        .save(newPassword, currentPassword)
+        .subscribe({ complete: () => this.isSaving.set(false) });
     }
   }
 }

@@ -18,18 +18,11 @@ import { UserPasswordComponent } from './user-password/user-password.component';
   templateUrl: './account.component.html',
   styleUrl: './account.component.scss',
 })
-export class AccountComponent implements OnInit {
-  account: Authentication;
+export class AccountComponent {
+  account = inject(AuthenticationService).authentication;
 
   // readonly dialog = inject(MatDialog);
   private authService = inject(AuthenticationService);
-
-  ngOnInit(): void {
-    this.authService.identity().subscribe((account) => {
-      this.account = account;
-      console.log(account);
-    });
-  }
 
   certificationRequest() {
     // const dialogRef = this.dialog.open(AccountCertificationRequest, {

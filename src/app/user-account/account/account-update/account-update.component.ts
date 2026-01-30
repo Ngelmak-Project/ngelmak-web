@@ -18,8 +18,8 @@ import { finalize } from 'rxjs';
 export class AccountUpdateComponent implements OnInit {
   private fb = inject(FormBuilder);
   private accountService = inject(AccountService);
-  user = inject(AuthenticationService).trackCurrentAuthentication();
-  account = inject(AccountService).trackCurrentAccount();
+  user = inject(AuthenticationService).authentication;
+  account = inject(AccountService).account;
   isSaving = signal(false);
   flashBoxShadowState = null; // set to null to avoid flash box-shadow animation to first when the DOM starts.
 

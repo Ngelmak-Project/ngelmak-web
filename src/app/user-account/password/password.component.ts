@@ -15,7 +15,7 @@ import { PasswordService } from './password.service';
   imports: [SharedModule, FormsModule, ReactiveFormsModule, PasswordStrengthBarComponent],
   templateUrl: './password.component.html',
 })
-export default class PasswordComponent implements OnInit {
+export default class PasswordComponent {
   doNotMatch = signal(false);
   error = signal(false);
   success = signal(false);
@@ -34,10 +34,6 @@ export default class PasswordComponent implements OnInit {
 
   private passwordService = inject(PasswordService);
   private authService = inject(AuthenticationService);
-
-  ngOnInit(): void {
-    this.account$ = this.authService.identity();
-  }
 
   changePassword(): void {
     this.error.set(false);
