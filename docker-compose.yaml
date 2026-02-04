@@ -1,11 +1,12 @@
 services:
-  # --- Angular Frontend ---
+  # --- Ngelmak Web (Frontend) ---
   ngelmak-web:
     build: .
     ports:
-      - "4200:80"
+      - "80:80"
     networks:
       - ngelmak-net
+    restart: unless-stopped
 
 networks:
   ngelmak-net:

@@ -1,24 +1,36 @@
-# --- Build Stage ---
-FROM node:18 AS builder
+# -------------------------------------------------------
+# 🏗️ Build Stage — Compile Angular App
+# -------------------------------------------------------
+# Using a lightweight Node image reduces build time and image size
+FROM node:22-alpine AS builder
 
+# Set working directory inside the container
 WORKDIR /app
 
-# Copy package files and install dependencies
+# Copy only package files first to leverage Docker cache
+# This ensures "npm ci" is only re-run when dependencies change
 COPY package*.json ./
-RUN npm install
 
-# Copy source code and build Angular app
+# Install dependencies using npm ci for reproducible builds
+RUN npm ci
+
+# Copy the rest of the Angular project
 COPY . .
+
+# Build Angular app in production mode
 RUN npm run build --prod
 
-# --- Runtime Stage ---
+
+# -------------------------------------------------------
+# 🚀 Runtime Stage — Serve with Nginx
+# -------------------------------------------------------
 FROM nginx:alpine AS runner
 
-# Copy built Angular app to Nginx
-COPY --from=builder /app/dist/ngelmak-web /usr/share/nginx/html
+# Copy built Angular files from the builder stage to Nginx's public folder
+COPY --from=builder /app/dist/ngelmak-web/browser /usr/share/nginx/html
 
-# Expose frontend port
-EXPOSE 4200
+# Expose port 80 (Nginx default)
+EXPOSE 80
 
-# Start Nginx
+# Start Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
