@@ -18,7 +18,7 @@ RUN npm ci
 COPY . .
 
 # Build Angular app in production mode
-RUN npm run build --configuration production
+RUN npm run build --prod
 
 
 # -------------------------------------------------------
