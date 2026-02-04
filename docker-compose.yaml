@@ -10,3 +10,4 @@ services:
 
 networks:
   ngelmak-net:
+    external: true
