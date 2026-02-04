@@ -23,6 +23,7 @@ export class AccountViewComponent {
 
   protected accountModel = signal<IAccount>({
     name: '',
+    description: '',
   });
 
   protected accountForm = form(this.accountModel, (p) => {

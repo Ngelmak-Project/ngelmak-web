@@ -79,7 +79,7 @@ export class CommentComponent implements OnInit {
   onComment(newComment: ICommentDTO) {
     // Increase the total number of comments on the post
     this.postSig.update((p) => ({ ...p, commentCount: p.commentCount + 1 }));
-    // Append the new comment to the current list
+    // end the new comment to the current list
     this.comments.update((list) => [...list, newComment]);
   }
 }

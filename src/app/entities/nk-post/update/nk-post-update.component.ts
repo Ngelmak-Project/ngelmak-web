@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { PostService } from './../nk-post.service';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import SharedModule from 'app/shared/shared.module';
 
 import { Field, form, maxLength, required } from '@angular/forms/signals';
@@ -27,7 +26,7 @@ const initPost: IPost = {
   standalone: true,
   selector: 'app-post-update',
   templateUrl: './nk-post-update.component.html',
-  imports: [SharedModule, FormsModule, ReactiveFormsModule, Field],
+  imports: [SharedModule, Field],
 
   encapsulation: ViewEncapsulation.None, // Disable encapsulation
 })

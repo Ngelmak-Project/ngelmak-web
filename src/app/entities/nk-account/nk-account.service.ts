@@ -10,6 +10,9 @@ import { AuthenticationService } from 'app/core/auth/auth.service';
 export type EntityResponseType = HttpResponse<IAccount>;
 export type EntityArrayResponseType = HttpResponse<IAccount[]>;
 
+
+// [TODO] Make sure the account of the current user is saved locally to avoid back and forth fetch from the server.
+
 @Injectable({ providedIn: 'root' })
 export class AccountService {
   /**
@@ -73,6 +76,8 @@ export class AccountService {
   }
 
   update(account: IAccount): Observable<EntityResponseType> {
+    console.log(account);
+
     return this.http.put<IAccount>(this.resourceUrl, account, {
       observe: 'response',
     });

@@ -5,12 +5,14 @@ import { Authority } from 'app/config/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import entityRoutes from 'app/entities/entity.routes';
 import HomeComponent from 'app/home/home.component';
-import UserAccountComponent from 'app/user-account/user-account.component';
+import pageRoutes from 'app/pages/page.routes';
+import { SecurityComponent } from 'app/user-account/security/security-component';
+import { SettingsComponent } from 'app/user-account/settings/settings.component';
+import { errorRoute } from '../error/error.route';
 import FooterComponent from '../footer/footer.component';
 import NavbarComponent from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import MainComponent from './main.component';
-
 
 const routes: Routes = [
   {
@@ -20,7 +22,7 @@ const routes: Routes = [
       { path: '', title: 'Ngelmak Project', component: HomeComponent },
       // { path: 'search', title: 'Posts', component: PostComponent },
       {
-        path: 'ngelmak-administration',
+        path: 'admin',
         data: {
           authorities: [Authority.ADMIN],
         },
@@ -33,9 +35,27 @@ const routes: Routes = [
           authorities: [Authority.USER],
         },
         canActivate: [UserRouteAccessService],
-        component: UserAccountComponent,
+        loadChildren: () => import('app/user-account/account/account-page.routes'),
       },
-      ...entityRoutes, // entities routes
+      {
+        path: 'security',
+        data: {
+          authorities: [Authority.USER],
+        },
+        canActivate: [UserRouteAccessService],
+        component: SecurityComponent,
+      },
+      {
+        path: 'settings',
+        data: {
+          authorities: [Authority.USER],
+        },
+        canActivate: [UserRouteAccessService],
+        component: SettingsComponent,
+      },
+      ...entityRoutes, // Entity routes.
+      ...pageRoutes, // Page routes.
+      ...errorRoute, // Error routes.
     ],
   },
 ];
@@ -48,7 +68,7 @@ const routes: Routes = [
     NavbarComponent,
     SidebarComponent,
     FooterComponent,
-],
+  ],
   exports: [RouterModule],
 })
 export class MainModule {}

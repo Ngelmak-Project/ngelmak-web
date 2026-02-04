@@ -1,78 +1,50 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import SharedModule from 'app/shared/shared.module';
 
-import { DATE_TIME_FORMAT } from 'app/config/input.constants';
-import { Accessibility } from 'app/entities/enumerations/accessibility.model';
-import { Visibility } from 'app/entities/enumerations/visibility.model';
+import { Field, form, maxLength, required } from '@angular/forms/signals';
 import { IAccount } from 'app/entities/models/nk-account.model';
-import { IConfig } from 'app/entities/models/nk-config.model';
-import { ConfigService } from 'app/entities/nk-config/service/nk-config.service';
-import { IUser } from 'app/entities/user/user.model';
-import dayjs from 'dayjs/esm';
+import { AlertService } from 'app/shared/alert/alert.service';
 import { AccountService } from '../nk-account.service';
 
 @Component({
   standalone: true,
-  selector: 'app-nk-account-update',
+  selector: 'app-account-update',
   templateUrl: './nk-account-update.component.html',
-  imports: [SharedModule, FormsModule, ReactiveFormsModule],
+  imports: [SharedModule, Field],
 })
 export class AccountUpdateComponent implements OnInit {
-  isSaving = false;
-  account: IAccount | null = null;
-  accessibilityValues = Object.keys(Accessibility);
-
-  configurationsCollection: IConfig[] = [];
-  usersSharedCollection: IUser[] = [];
+  account = input<IAccount>(null);
+  onComplete = output<IAccount>();
 
   protected accountService = inject(AccountService);
-  protected configService = inject(ConfigService);
-  protected activatedRoute = inject(ActivatedRoute);
-  protected fb = inject(FormBuilder);
+  protected alertService = inject(AlertService);
+  isSaving = signal(false);
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  editForm = this.fb.group({
-    id: [null],
-    name: [null, [Validators.required, Validators.minLength(3)]],
-    avatar: [null],
-    banner: [null],
-    visibility: [Visibility.PRIVATE],
-    createdAt: [null],
-    configuration: [null],
-    user: [null],
-  })
+  accountModel = signal<IAccount>({
+    name: '',
+    description: '',
+  });
 
-  // compareConfig = (o1: IConfig | null, o2: IConfig | null): boolean => this.configService.compareConfig(o1, o2);
+  accountForm = form(this.accountModel, (p) => {
+    required(p.name, { message: 'Le nom du compte est requis.' });
+    maxLength(p.name, 100, { message: 'Le nombre maximum de caractères est 100.' });
+    maxLength(p.description, 1000, { message: 'Le nombre maximum de caractères est 1000.' });
+  });
 
   ngOnInit(): void {
-    alert("Hello");
-    this.activatedRoute.data.subscribe(({ account }) => {
-      this.account = account;
-      if (account) {
-        this.updateForm(account);
-      }
-
-      this.loadRelationshipsOptions();
-    });
-  }
-
-  previousState(): void {
-    window.history.back();
+    if (this.account()) {
+      this.accountModel.set(this.account());
+    }
   }
 
   save(): void {
-    // this.isSaving = true;
-    const rawAccount = this.editForm.getRawValue();
-    const account: IAccount = {
-      ...rawAccount,
-      createdAt: dayjs(rawAccount.createdAt, DATE_TIME_FORMAT),
-    }
+    this.isSaving.set(true);
+    const account: IAccount = this.accountModel();
+    account.configuration = null;
     if (account.id !== null) {
       this.subscribeToSaveResponse(this.accountService.update(account));
     } else {
@@ -80,45 +52,17 @@ export class AccountUpdateComponent implements OnInit {
     }
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IAccount>>): void {
-    result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
-      error: () => this.onSaveError(),
+  private subscribeToSaveResponse(result: Observable<HttpResponse<IAccount>>): void {
+    result.pipe(finalize(() => this.isSaving.set(false))).subscribe({
+      next: (res) => {
+        this.accountService.updateLocalAccount(res.body);
+        this.onComplete.emit(res.body);
+      },
+      error: () =>
+        this.alertService.addAlert({
+          type: 'error',
+          message: "Une erreur s'est produite.",
+        }),
     });
-  }
-
-  protected onSaveSuccess(): void {
-    this.previousState();
-  }
-
-  protected onSaveError(): void {
-    // Api for inheritance.
-  }
-
-  protected onSaveFinalize(): void {
-    this.isSaving = false;
-  }
-
-  protected updateForm(account: IAccount): void {
-    this.account = account;
-    // this.editForm.reset({...account});
-
-    // this.accountFormService.resetForm(this.editForm, account);
-    // this.configurationsCollection = this.configService.addConfigToCollectionIfMissing<IConfig>(
-    //   this.configurationsCollection,
-    //   account.configuration,
-    // );
-  }
-
-  protected loadRelationshipsOptions(): void {
-    // this.configService
-    //   .query({ filter: 'ngelmakaccount-is-null' })
-    //   .pipe(map((res: HttpResponse<IConfig[]>) => res.body ?? []))
-    //   .pipe(
-    //     map((configs: IConfig[]) =>
-    //       this.configService.addConfigToCollectionIfMissing<IConfig>(configs, this.account?.configuration),
-    //     ),
-    //   )
-    //   .subscribe((configs: IConfig[]) => (this.configurationsCollection = configs));
   }
 }

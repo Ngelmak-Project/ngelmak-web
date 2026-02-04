@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import HasAnyAuthorityDirective from './directives/has-any-authority.directive';
 
 /**
- * Application wide Module
+ * lication wide Module
  */
 @NgModule({
   imports: [CommonModule, HasAnyAuthorityDirective],

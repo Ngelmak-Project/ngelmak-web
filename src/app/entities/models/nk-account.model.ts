@@ -1,7 +1,6 @@
-import dayjs from 'dayjs/esm';
 import { Accessibility } from 'app/entities/enumerations/accessibility.model';
-import { IConfig } from './nk-config.model';
 import { IUser } from '../user/user.model';
+import { IConfig } from './nk-config.model';
 
 export interface IAccount {
   id?: number | null;
@@ -11,7 +10,7 @@ export interface IAccount {
   avatar?: string | null;
   banner?: string | null;
   visibility?: keyof typeof Accessibility | null;
-  createdAt?: dayjs.Dayjs | null;
+  createdAt?: Date | null;
   configuration?: IConfig;
   user?: IUser;
 }

@@ -25,10 +25,10 @@ import {
  * @returns An Angular animation trigger named `"stagger"`.
  *
  * @example
- * // Apply a 150ms stagger between child animations
+ * // ly a 150ms stagger between child animations
  * export const stagger150ms = staggerAnimation(150);
  *
- * // Apply a faster 200ms stagger
+ * // ly a faster 200ms stagger
  * export const stagger200ms = staggerAnimation(200);
  *
  * // Usage in a component:

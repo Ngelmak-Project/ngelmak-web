@@ -3,13 +3,14 @@ import { Router, RouterModule } from '@angular/router';
 
 import { SignInService } from 'app/authentication/sign-in/sign-in.service';
 import { LANGUAGES } from 'app/config/language.constants';
+import { AuthenticationService } from 'app/core/auth/auth.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { scaleInOut400ms } from 'app/shared/animations/scale-in-out.animation';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import SharedModule from 'app/shared/shared.module';
 import { BehaviorSubject, fromEvent } from 'rxjs';
-import { AccountService } from 'app/entities/nk-account/nk-account.service';
-import { AuthenticationService } from 'app/core/auth/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class NavbarService {
@@ -27,7 +28,7 @@ export class NavbarService {
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
   imports: [RouterModule, SharedModule, ClickOutsideDirective],
-  animations: [scaleInOut400ms],
+  animations: [fadeInUp400ms],
 })
 export default class NavbarComponent implements OnInit {
   private stateStorageService = inject(StateStorageService);
@@ -96,10 +97,6 @@ export default class NavbarComponent implements OnInit {
 
   collapseNavbar(): void {
     this.isNavbarCollapsed.set(true);
-  }
-
-  login(): void {
-    this.router.navigate(['/sign-in']);
   }
 
   logout(): void {

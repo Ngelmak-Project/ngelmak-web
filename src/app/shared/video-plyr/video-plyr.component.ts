@@ -378,7 +378,7 @@ export class VideoPlyrComponent implements AfterViewInit {
     try {
       if (this.video !== document.pictureInPictureElement) {
         this.pipButton.disabled = true;
-        // The Picture-in-Picture (PiP) API allows users to watch videos in a floating window (always on top of other windows) so they can keep an eye on what they’re watching while interacting with other sites, or applications.
+        // The Picture-in-Picture (PiP) API allows users to watch videos in a floating window (always on top of other windows) so they can keep an eye on what they're watching while interacting with other sites, or applications.
         await this.video.requestPictureInPicture();
       } else {
         await document.exitPictureInPicture();
