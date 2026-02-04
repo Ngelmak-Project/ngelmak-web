@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://acemagic:4000/api',
+  apiUrl: 'https://ngelmak.org:4000/api',
 };
