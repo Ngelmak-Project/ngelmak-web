@@ -30,6 +30,9 @@ FROM nginx:alpine AS runner
 # Angular 17+ outputs to dist/<project>/browser
 COPY --from=builder /app/dist/ngelmak-web/browser /usr/share/nginx/html
 
+# Copy custom nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Expose port 80 (Nginx default)
 EXPOSE 80
 
