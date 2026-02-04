@@ -18,7 +18,7 @@ RUN npm ci
 COPY . .
 
 # Build Angular app in production mode
-RUN npm run build --prod
+RUN npm run build --configuration production
 
 
 # -------------------------------------------------------
@@ -27,6 +27,7 @@ RUN npm run build --prod
 FROM nginx:alpine AS runner
 
 # Copy built Angular files from the builder stage to Nginx's public folder
+# Angular 17+ outputs to dist/<project>/browser
 COPY --from=builder /app/dist/ngelmak-web/browser /usr/share/nginx/html
 
 # Expose port 80 (Nginx default)
