@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.ngelmak.org'
+  apiUrl: 'https://api.ngelmak.org/api'
 };
