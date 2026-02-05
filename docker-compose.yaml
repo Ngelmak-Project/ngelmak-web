@@ -1,9 +1,13 @@
 services:
   # --- Ngelmak Web (Frontend) ---
-  ngelmak-web:
+  nginx:
     build: .
+    image: ngelmak-nginx
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/nginx/certs:/etc/nginx/ssl:ro
     networks:
       - ngelmak-net
     restart: unless-stopped

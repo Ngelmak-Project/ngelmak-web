@@ -33,8 +33,8 @@ COPY --from=builder /app/dist/ngelmak-web/browser /usr/share/nginx/html
 # Copy custom nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 80 (Nginx default)
-EXPOSE 80
+# Expose ports
+EXPOSE 80 443
 
 # Start Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
