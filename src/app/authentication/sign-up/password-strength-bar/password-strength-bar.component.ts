@@ -1,77 +1,40 @@
-import { Component, ElementRef, inject, Input, Renderer2 } from '@angular/core';
-
-import SharedModule from 'app/shared/shared.module';
+import { CommonModule } from '@angular/common';
+import { Component, input, computed, signal, effect } from '@angular/core';
 
 @Component({
-  standalone: true,
   selector: 'app-password-strength-bar',
-  imports: [SharedModule],
   templateUrl: './password-strength-bar.component.html',
-  styleUrl: './password-strength-bar.component.scss',
+  imports: [CommonModule],
 })
-export default class PasswordStrengthBarComponent {
-  colors = ['#F00', '#F90', '#FF0', '#9F0', '#0F0'];
+export class PasswordStrengthBarComponent {
+  password = input<string>('');
+  minLength = input<number>(8);
+  strongLength = input<number>(12);
 
-  private renderer = inject(Renderer2);
-  private elementRef = inject(ElementRef);
+  withSymbol = signal(false);
+  withLongerPassword = signal(false);
+  withUpperLowerCaseLetters = signal(false);
 
-  measureStrength(p: string): number {
-    let force = 0;
-    const regex = /[$-/:-?{-~!"^_`[\]]/g; // "
-    const lowerLetters = /[a-z]+/.test(p);
-    const upperLetters = /[A-Z]+/.test(p);
-    const numbers = /\d+/.test(p);
-    const symbols = regex.test(p);
+  constructor() {
+    // Effect to update other signals
+    effect(() => {
+      const p = this.password() ?? '';
 
-    const flags = [lowerLetters, upperLetters, numbers, symbols];
-    const passedMatches = flags.filter((isMatchedFlag: boolean) => isMatchedFlag === true).length;
-
-    force += 2 * p.length + (p.length >= 10 ? 1 : 0);
-    force += passedMatches * 10;
-
-    // penalty (short password)
-    force = p.length <= 6 ? Math.min(force, 10) : force;
-
-    // penalty (poor variety of characters)
-    force = passedMatches === 1 ? Math.min(force, 10) : force;
-    force = passedMatches === 2 ? Math.min(force, 20) : force;
-    force = passedMatches === 3 ? Math.min(force, 40) : force;
-
-    return force;
+      this.withLongerPassword.set(p.length >= this.strongLength());
+      this.withUpperLowerCaseLetters.set(/[A-Z]/.test(p) && /[a-z]/.test(p));
+      this.withSymbol.set(/[#$&!@?*%]/.test(p));
+    });
   }
 
-  getColor(s: number): { idx: number; color: string } {
-    let idx = 0;
-    if (s > 10) {
-      if (s <= 20) {
-        idx = 1;
-      } else if (s <= 30) {
-        idx = 2;
-      } else if (s <= 40) {
-        idx = 3;
-      } else {
-        idx = 4;
-      }
-    }
-    return { idx: idx + 1, color: this.colors[idx] };
-  }
+  strength = computed(() => {
+    const p = this.password() ?? '';
+    let score = 0;
 
-  @Input()
-  set passwordToCheck(password: string) {
-    if (password) {
-      const c = this.getColor(this.measureStrength(password));
-      const element = this.elementRef.nativeElement;
-      if (element.className) {
-        this.renderer.removeClass(element, element.className);
-      }
-      const lis = element.getElementsByTagName('li');
-      for (let i = 0; i < lis.length; i++) {
-        if (i < c.idx) {
-          this.renderer.setStyle(lis[i], 'backgroundColor', c.color);
-        } else {
-          this.renderer.setStyle(lis[i], 'backgroundColor', '#DDD');
-        }
-      }
-    }
-  }
+    if (p.length >= this.minLength()) score++;
+    if (p.length >= this.strongLength()) score++;
+    if (/[A-Z]/.test(p) && /[a-z]/.test(p)) score++;
+    if (/[#$&!@?*%]/.test(p)) score++;
+
+    return Math.min(Math.max(score, 0), 4);
+  });
 }

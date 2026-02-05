@@ -1,7 +1,5 @@
-export class SignInModel {
-  constructor(
-    public username: string,
-    public password: string,
-    public rememberMe: boolean,
-  ) {}
+export interface SignInModel {
+  login: string;
+  password: string;
+  rememberMe: boolean;
 }

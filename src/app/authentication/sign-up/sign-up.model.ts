@@ -1,10 +1,9 @@
-export class SignupModel {
-  constructor(
-    public firstName: string,
-    public lastName: string,
-    public login: string,
-    public email: string,
-    public password: string,
-    public langKey: string,
-  ) {}
+export interface SignupModel {
+  firstname?: string;
+  lastname?: string;
+  login?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+  langKey?: string;
 }

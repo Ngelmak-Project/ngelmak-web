@@ -3,9 +3,9 @@ import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { SignInModel } from 'app/authentication/sign-in/sign-in.model';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { StateStorageService } from './state-storage.service';
+import { SignInModel } from 'app/authentication/sign-in/sign-in.model';
 
 type JwtToken = {
   id_token: string;
@@ -30,7 +30,7 @@ export class AuthServerProvider {
    */
   signIn(credentials: SignInModel): Observable<void> {
     return this.http
-      .post<JwtToken>(this.config.getEndpointFor('auth/authenticate'), credentials)
+      .post<JwtToken>(this.config.getEndpointFor('auth/public/auth/authenticate'), credentials)
       .pipe(
         tap(({ id_token }) =>
           this.storage.storeAuthenticationToken(id_token, credentials.rememberMe),

@@ -1,3 +1,4 @@
+import { SignInModel } from 'app/authentication/sign-in/sign-in.model';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AlertService } from 'app/shared/alert/alert.service';
@@ -7,11 +8,6 @@ import SharedModule from 'app/shared/shared.module';
 import { Field, form, required } from '@angular/forms/signals';
 import { finalize } from 'rxjs';
 
-interface LoginForm {
-  username: string;
-  password: string;
-  rememberMe: boolean;
-}
 
 @Component({
   standalone: true,
@@ -26,18 +22,18 @@ export class SignInComponent implements OnInit {
   private router = inject(Router);
   private alertService = inject(AlertService);
   protected isLoging = signal(false);
-  protected loginModel = signal<LoginForm>({
-    username: 'user',
-    password: 'user',
+  hide = signal(true);
+
+  protected loginModel = signal<SignInModel>({
+    login: '',
+    password: '',
     rememberMe: false,
   });
 
   protected loginForm = form(this.loginModel, (schemaPath) => {
-    required(schemaPath.username, { message: 'Username is required' });
+    required(schemaPath.login, { message: 'Username is required' });
     required(schemaPath.password, { message: 'Password is required' });
   });
-
-  hide = true;
 
   ngOnInit(): void {
     // if already authenticated then navigate to home page

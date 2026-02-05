@@ -1,117 +1,246 @@
-<!-- <div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900">
-  <a href="" class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
-    <img src="assets/images/logo.svg" class="mr-4 h-11" alt="FlowBite Logo" />
-    <span>Ngelmak</span>
-  </a>
-  <div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
-    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-      Créer un compte gratuitement
-    </h2>
-    <form class="flex flex-col gap-4" (ngSubmit)="register()" [formGroup]="registerForm">
-      <div class="grid grid-cols-1 sm:grid-cols-2 items-start gap-4 mt-8">
-        <mat-form-field>
-          <mat-label>Prénom</mat-label>
-          <input matInput formControlName="firstName" />
-          <mat-error *ngIf="registerForm.get('firstName')!.dirty &&
-          registerForm.get('firstName')?.errors?.['required']">Votre prénom est obligatoire.</mat-error>
-          <mat-error *ngIf="registerForm.get('firstName')!.dirty &&
-          registerForm.get('firstName')?.errors?.['minlength']">Votre prénom doit contenir plus d'un
-            caractère.</mat-error>
-          <mat-error *ngIf="registerForm.get('firstName')!.dirty &&
-          registerForm.get('firstName')?.errors?.['maxlength']">Votre prénom ne peut pas contenir plus de 50
-            caractères.</mat-error>
-          <mat-error *ngIf="registerForm.get('firstName')!.dirty &&
-          registerForm.get('firstName')?.errors?.['pattern']">Votre prénom est invalide.</mat-error>
-        </mat-form-field>
+<section class="bg-gray-50 dark:bg-gray-900 h-full">
+  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+    <a
+      routerLink="/"
+      class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+    >
+      <img class="w-8 h-8 mr-2" src="assets/images/ngelmak-logo-light.svg" alt="logo" />
+      Ngelmak
+    </a>
+    <div
+      class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <h1
+          class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+        >
+          Créer mon compte
+        </h1>
+        <div class="space-y-4 md:space-y-6">
+          <div class="relative">
+            <input
+              type="text"
+              id="login"
+              [field]="signupForm.login"
+              class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              [ngClass]="{ 'border-red-500 dark:border-red-500': errorUserExists() }"
+              placeholder=" "
+            />
+            <label
+              for="login"
+              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+              [ngClass]="{ 'text-red-500 dark:text-red-500': errorUserExists() }"
+              >Nom d'utilisateur</label
+            >
+            @if (signupForm.login().dirty()) {
+              @for (error of signupForm.login().errors(); track error) {
+                <p class="text-sm text-red-600 dark:text-red-500">
+                  <span class="font-medium">{{ error.message }}</span>
+                </p>
+              }
+              @if (errorUserExists()) {
+                <p class="text-sm text-red-600 dark:text-red-500">
+                  <span class="font-medium">Nom d'autilisateur déjà utilisé.</span>
+                </p>
+              }
+            }
+          </div>
+          <div class="relative">
+            <input
+              type="email"
+              id="email"
+              [field]="signupForm.email"
+              class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              [ngClass]="{ 'border-red-500 dark:border-red-500': errorEmailExists() }"
+              placeholder=" "
+            />
+            <label
+              for="email"
+              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+              [ngClass]="{ 'text-red-500 dark:text-red-500': errorEmailExists() }"
+              >Email</label
+            >
+            @if (signupForm.email().dirty()) {
+              @for (error of signupForm.email().errors(); track error) {
+                <p class="text-sm text-red-600 dark:text-red-500">
+                  <span class="font-medium">{{ error.message }}</span>
+                </p>
+              }
+              @if (errorEmailExists()) {
+                <p class="text-sm text-red-600 dark:text-red-500">
+                  <span class="font-medium">Email déjà utilisé.</span>
+                </p>
+              }
+            }
+          </div>
+          <div class="relative">
+            <input
+              [type]="showPassword() ? 'text' : 'password'"
+              id="password"
+              [field]="signupForm.password"
+              class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+            />
+            <label
+              for="password"
+              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+              >Nouveau mot de passe</label
+            >
 
-        <mat-form-field>
-          <mat-label>Nom</mat-label>
-          <input matInput formControlName="lastName" />
-          <mat-error *ngIf="registerForm.get('lastName')!.dirty &&
-          registerForm.get('lastName')?.errors?.['required']">Votre nom est obligatoire.</mat-error>
-          <mat-error *ngIf="registerForm.get('lastName')!.dirty &&
-          registerForm.get('lastName')?.errors?.['minlength']">Votre nom doit contenir plus d'un
-            caractère.</mat-error>
-          <mat-error *ngIf="registerForm.get('lastName')!.dirty &&
-          registerForm.get('lastName')?.errors?.['maxlength']">Votre nom ne peut pas contenir plus de 50
-            caractères.</mat-error>
-          <mat-error *ngIf="registerForm.get('lastName')!.dirty &&
-          registerForm.get('lastName')?.errors?.['pattern']">Votre nom est invalide.</mat-error>
-        </mat-form-field>
+            <!-- Eye icon -->
+            <button
+              (click)="showPassword.set(!showPassword())"
+              type="button"
+              class="absolute inset-y-0 right-2 flex items-center text-gray-500 dark:text-gray-400"
+            >
+              @if (!showPassword()) {
+                <svg
+                  class="w-6 h-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-width="2"
+                    d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
+                  />
+                  <path
+                    stroke="currentColor"
+                    stroke-width="2"
+                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                  />
+                </svg>
+              } @else {
+                <svg
+                  class="w-6 h-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                  />
+                </svg>
+              }
+            </button>
+            @if (signupForm.password().dirty()) {
+              @for (error of signupForm.password().errors(); track error) {
+                <p class="text-sm text-red-600 dark:text-red-500">
+                  <span class="font-medium">{{ error.message }}</span>
+                </p>
+              }
+            }
+          </div>
+          <div class="relative">
+            <input
+              [type]="showPassword() ? 'text' : 'password'"
+              id="confirmPassword"
+              [field]="signupForm.confirmPassword"
+              class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              [ngClass]="{ 'border-red-500 dark:border-red-500': doNotMatch() }"
+            />
 
-        <mat-form-field>
-          <mat-label>Nom d'utilisateur</mat-label>
-          <input matInput formControlName="login" />
-          <mat-error *ngIf="registerForm.get('login')!.dirty &&
-          registerForm.get('login')?.errors?.['required']">Votre nom d'utilisateur est obligatoire.</mat-error>
-          <mat-error *ngIf="registerForm.get('login')!.dirty &&
-          registerForm.get('login')?.errors?.['minlength']">Votre nom d'utilisateur doit contenir plus d'un
-            caractère.</mat-error>
-          <mat-error *ngIf="registerForm.get('login')!.dirty &&
-          registerForm.get('login')?.errors?.['maxlength']">Votre nom d'utilisateur ne peut pas contenir plus de 50
-            caractères.</mat-error>
-          <mat-error *ngIf="registerForm.get('login')!.dirty &&
-          registerForm.get('login')?.errors?.['pattern']">Votre nom d'utilisateur est invalide.</mat-error>
-        </mat-form-field>
+            <label
+              for="confirmPassword"
+              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+              [ngClass]="{ 'text-red-500 dark:text-red-500': doNotMatch() }"
+            >
+              Confirmer le mot de passe
+            </label>
 
-        <mat-form-field>
-          <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email" />
-          <mat-error *ngIf="registerForm.get('email')!.dirty &&
-          registerForm.get('email')?.errors?.['required']">Votre email est requis.</mat-error>
-          <mat-error *ngIf="registerForm.get('email')!.dirty &&
-          registerForm.get('email')?.errors?.['invalid']">Votre email n'est pas valide.</mat-error>
-          <mat-error *ngIf="registerForm.get('email')!.dirty &&
-          registerForm.get('email')?.errors?.['minlength']">Votre email doit comporter au moins 5
-            caractères.</mat-error>
-          <mat-error *ngIf="registerForm.get('email')!.dirty &&
-          registerForm.get('email')?.errors?.['maxlength']">Votre email ne doit pas comporter plus de 50
-            caractères.</mat-error>
-        </mat-form-field>
+            <!-- Eye icon -->
+            <button
+              (click)="showPassword.set(!showPassword())"
+              type="button"
+              class="absolute inset-y-0 right-2 flex items-center text-gray-500 dark:text-gray-400"
+            >
+              @if (!showPassword()) {
+                <svg
+                  class="w-6 h-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-width="2"
+                    d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
+                  />
+                  <path
+                    stroke="currentColor"
+                    stroke-width="2"
+                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                  />
+                </svg>
+              } @else {
+                <svg
+                  class="w-6 h-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                  />
+                </svg>
+              }
+            </button>
 
-        <mat-form-field>
-          <mat-label>Nouveau mot de passe</mat-label>
-          <input matInput type="password" formControlName="password" />
-          <mat-error *ngIf="registerForm.get('password')!.dirty &&
-          registerForm.get('password')?.errors?.['required']">Votre mot de passe est requis.</mat-error>
-          <mat-error *ngIf="registerForm.get('password')!.dirty &&
-          registerForm.get('password')?.errors?.['minlength']">
-            Votre mot de passe doit comporter au moins 4 caractères.
-          </mat-error>
-          <mat-error *ngIf="registerForm.get('password')!.dirty &&
-          registerForm.get('password')?.errors?.['maxlength']">
-            Votre mot de passe ne doit pas comporter plus de 50 caractères.
-          </mat-error>
-        </mat-form-field>
+            @if (signupForm.confirmPassword().dirty()) {
+              @for (error of signupForm.confirmPassword().errors(); track error) {
+                <p class="text-sm text-red-600 dark:text-red-500">
+                  <span class="font-medium">{{ error.message }}</span>
+                </p>
+              }
+              @if (doNotMatch()) {
+                <p class="text-sm text-red-600 dark:text-red-500">
+                  <span class="font-medium">Les deux mots de passes ne correspondent pas.</span>
+                </p>
+              }
+            }
+          </div>
 
-        <mat-form-field>
-          <mat-label>Confirmation du nouveau mot de passe</mat-label>
-          <input matInput required type="password" formControlName="confirmPassword" />
-          <mat-error *ngIf="registerForm.get('confirmPassword')!.dirty &&
-          registerForm.get('confirmPassword')?.errors?.['required']">Votre confirmation du mot de passe est
-            requise.</mat-error>
-          <mat-error *ngIf="registerForm.get('confirmPassword')!.dirty &&
-          registerForm.get('confirmPassword')?.errors?.['minlength']">
-            Votre confirmation du mot de passe doit comporter au moins 4
-            caractères.
-          </mat-error>
-          <mat-error *ngIf="registerForm.get('confirmPassword')!.dirty &&
-          registerForm.get('confirmPassword')?.errors?.['maxlength']">Votre confirmation du mot de passe ne doit pas
-            comporter plus de 50
-            caractères.
-          </mat-error>
-        </mat-form-field>
+          <app-password-strength-bar
+            [password]="signupModel().password"
+          ></app-password-strength-bar>
 
-        <app-password-strength-bar [passwordToCheck]="registerForm.get('password')!.value"></app-password-strength-bar>
+          <button
+            (click)="register()"
+            [disabled]="signupForm().invalid() || doNotMatch() || isRegistering()"
+            type="button"
+            class="flex gap-2 items-center justify-center hover:text-white text-center dark:hover:text-white text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 focus:outline-2 focus:outline-dashed focus:outline-gray-500 focus:outline-offset-4 w-full disabled:cursor-not-allowed"
+          >
+            @if (isRegistering()) {
+              <svg
+                class="inline w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
+                viewBox="0 0 100 101"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="currentFill"
+                />
+              </svg>
+            }
+            <span>Créer mon compte</span>
+          </button>
+        </div>
       </div>
-      <button type="submit"
-        class="col-span-full px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-2 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-        Enregistrement
-      </button>
-    </form>
-    <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
-      Vous avez déjà un compte ?
-      <a routerLink="/sign-in" class="text-primary-700 hover:underline dark:text-primary-500">Connectez-vous ici</a>
     </div>
   </div>
-</div> -->
+</section>

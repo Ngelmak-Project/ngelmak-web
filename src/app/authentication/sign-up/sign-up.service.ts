@@ -11,6 +11,6 @@ export class SignUpService {
   private applicationConfigService = inject(ApplicationConfigService);
 
   save(signup: SignupModel): Observable<void> {
-    return this.http.post<void>(this.applicationConfigService.getEndpointFor('api/register'), signup);
+    return this.http.post<void>(this.applicationConfigService.getEndpointFor('auth/public/auth/register'), signup);
   }
 }
