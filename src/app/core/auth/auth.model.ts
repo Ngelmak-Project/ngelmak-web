@@ -8,13 +8,12 @@ export enum CertificationStatus {
 
 export enum DocType {
   NATIONAL_ID_CARD = "NATIONAL_ID_CARD",
-  
+
   PASSPORT = "PASSPORT",
 }
 
 export class Authentication {
   constructor(
-    public id?: number,
     public login?: string,
     public firstName?: string,
     public lastName?: string,
@@ -27,6 +26,5 @@ export class Authentication {
     public certificationStatus?: CertificationStatus,
     public lastModifiedDate?: Date,
     public authorities?: string[],
-    public privileges?: string[]
   ) {}
 }

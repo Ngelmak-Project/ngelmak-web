@@ -572,6 +572,14 @@
                 <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{
                   user()?.email
                 }}</span>
+                @if (!user()?.email) {
+                  <a
+                    routerLink="/security"
+                    class="mt-2 inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-full hover:bg-gray-200 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+                  >
+                    ⚠️ Mettre à jour mes informations
+                  </a>
+                }
               </div>
             }
             <ul class="flex flex-col py-1">

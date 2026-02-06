@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { SecurityProfileComponent } from './app-security-profile/app-security-profile.component';
 
 @Component({
   selector: 'app-security-component',
-  imports: [],
+  imports: [SecurityProfileComponent],
   templateUrl: './security-component.html',
 })
 export class SecurityComponent {}

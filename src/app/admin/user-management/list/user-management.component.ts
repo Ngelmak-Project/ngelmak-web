@@ -49,10 +49,6 @@ export default class UserManagementComponent implements OnInit {
       .subscribe(() => this.loadAll());
   }
 
-  trackIdentity(_index: number, item: Authentication): number {
-    return item.id!;
-  }
-
   loadAll(): void {
     this.isLoading.set(true);
     this.userService

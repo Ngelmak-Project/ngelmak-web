@@ -32,25 +32,6 @@ export class AuthenticationService {
   }
 
   /**
-   * Saves a new user registration.
-   */
-  save(auth: Authentication): Observable<{}> {
-    return this.http.post(this.applicationConfigService.getEndpointFor('auth/register'), auth);
-  }
-
-  /**
-   * Requests official certification for the current user.
-   */
-  requestCertification(request: {
-    officialDocType: string;
-    officialDocIdentification: string;
-  }): Observable<{}> {
-    return this.http.put(this.applicationConfigService.getEndpointFor('auth/certifications/request'), request, {
-      observe: 'response',
-    });
-  }
-
-  /**
    * Updates the current authentication state.
    * Passing null logs the user out.
    */
@@ -60,16 +41,21 @@ export class AuthenticationService {
 
   /**
    * Loads the authenticated user from the backend.
+   *
    * This is automatically called on service creation.
    */
   loadAuthentication(): void {
-    this.http.get<Authentication>(this.applicationConfigService.getEndpointFor('auth/me')).subscribe({
-      next: (auth) => {
-        this._auth.set(auth);
-        this.navigateToStoredUrl();
-      },
-      error: () => this._auth.set(null),
-    });
+    this.http
+      .get<Authentication>(this.applicationConfigService.getEndpointFor('auth/user/profile'), {
+        observe: 'response',
+      })
+      .subscribe({
+        next: ({ body }) => {
+          this._auth.set(body);
+          this.navigateToStoredUrl();
+        },
+        error: () => this._auth.set(null),
+      });
   }
 
   /**

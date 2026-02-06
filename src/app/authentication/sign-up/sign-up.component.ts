@@ -36,8 +36,6 @@ export class SignUpComponent {
   isRegistering = signal(false);
 
   signupModel = signal<SignupModel>({
-    firstname: '',
-    lastname: '',
     login: '',
     email: '',
     password: '',

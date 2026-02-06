@@ -1,5 +1,4 @@
 import { Accessibility } from 'app/entities/enumerations/accessibility.model';
-import { IUser } from '../user/user.model';
 import { IConfig } from './nk-config.model';
 
 export interface IAccount {
@@ -12,7 +11,7 @@ export interface IAccount {
   visibility?: keyof typeof Accessibility | null;
   createdAt?: Date | null;
   configuration?: IConfig;
-  user?: IUser;
+  user?: number;
 }
 
 export interface IAccountDTO {
