@@ -6,8 +6,7 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
 import entityRoutes from 'app/entities/entity.routes';
 import HomeComponent from 'app/home/home.component';
 import pageRoutes from 'app/pages/page.routes';
-import { SecurityComponent } from 'app/user-account/security/security-component';
-import { SettingsComponent } from 'app/user-account/settings/settings.component';
+import userAccountRoutes from 'app/user-account/user-account.routes';
 import { errorRoute } from '../error/error.route';
 import FooterComponent from '../footer/footer.component';
 import NavbarComponent from '../navbar/navbar.component';
@@ -29,30 +28,7 @@ const routes: Routes = [
         canActivate: [UserRouteAccessService],
         loadChildren: () => import('app/admin/admin.routes'),
       },
-      {
-        path: 'account',
-        data: {
-          authorities: [Authority.USER],
-        },
-        canActivate: [UserRouteAccessService],
-        loadChildren: () => import('app/user-account/account/account-page.routes'),
-      },
-      {
-        path: 'security',
-        data: {
-          authorities: [Authority.USER],
-        },
-        canActivate: [UserRouteAccessService],
-        component: SecurityComponent,
-      },
-      {
-        path: 'settings',
-        data: {
-          authorities: [Authority.USER],
-        },
-        canActivate: [UserRouteAccessService],
-        component: SettingsComponent,
-      },
+      ...userAccountRoutes, // default user page management
       ...entityRoutes, // Entity routes.
       ...pageRoutes, // Page routes.
       ...errorRoute, // Error routes.

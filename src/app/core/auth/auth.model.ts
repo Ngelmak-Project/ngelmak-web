@@ -13,20 +13,19 @@ export enum DocType {
 }
 
 export class Authentication {
-  constructor(
-    public login?: string,
-    public firstName?: string,
-    public lastName?: string,
-    public email?: string,
-    public activated?: boolean,
-    public imageUrl?: string,
-    public langKey?: string,
-    public createdDate?: Date,
-    public lastModifiedBy?: string,
-    public certificationStatus?: CertificationStatus,
-    public lastModifiedDate?: Date,
-    public authorities?: string[],
-  ) {}
+  login?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  activated?: boolean;
+  imageUrl?: string;
+  langKey?: string;
+  darkModeEnabled?: boolean;
+  createdDate?: Date;
+  lastModifiedBy?: string;
+  certificationStatus?: CertificationStatus;
+  lastModifiedDate?: Date;
+  authorities?: string[];
 }
 
 export interface ApiError {

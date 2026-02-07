@@ -31,6 +31,7 @@ export class SecurityProfileComponent {
     firstName: '',
     lastName: '',
     langKey: 'fr',
+    darkModeEnabled: null,
   });
 
   userForm = form(this.userModel, (p) => {

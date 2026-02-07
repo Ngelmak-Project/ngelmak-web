@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
 import { Authentication } from 'app/core/auth/auth.model';
 import { StateStorageService } from 'app/core/auth/state-storage.service';

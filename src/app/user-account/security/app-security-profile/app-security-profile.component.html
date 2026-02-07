@@ -151,6 +151,16 @@
               <p class="text-base italic text-red-500 dark:text-red-400">Langue non définie</p>
             }
           </div>
+
+          <!-- Theme -->
+          <div>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Thème</p>
+            @if (user().langKey) {
+              <p class="text-xl text-gray-900 dark:text-white uppercase">{{ user().darkModeEnabled ? 'Sombre' : 'Clair' }}</p>
+            } @else {
+              <p class="text-base italic text-red-500 dark:text-red-400">Thème non définie</p>
+            }
+          </div>
         </div>
       } @else {
         <div @fadeInOutRight class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-5">

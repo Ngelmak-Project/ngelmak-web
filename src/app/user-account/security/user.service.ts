@@ -66,6 +66,13 @@ export class UserService {
   }
 
   /**
+   * Delete connected user account.
+   */
+  delete(): Observable<any> {
+    return this.http.delete(`${this.resourceUrl}/delete`);
+  }
+
+  /**
    * Uploads and updates the user's profile avatar/profile image.
    *
    * @param file image file selected for upload
