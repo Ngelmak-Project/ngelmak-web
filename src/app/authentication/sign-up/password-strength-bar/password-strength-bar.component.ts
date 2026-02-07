@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, computed, signal, effect } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 
 @Component({
   selector: 'app-password-strength-bar',
@@ -11,30 +11,23 @@ export class PasswordStrengthBarComponent {
   minLength = input<number>(8);
   strongLength = input<number>(12);
 
-  withSymbol = signal(false);
-  withLongerPassword = signal(false);
-  withUpperLowerCaseLetters = signal(false);
-
-  constructor() {
-    // Effect to update other signals
-    effect(() => {
-      const p = this.password() ?? '';
-
-      this.withLongerPassword.set(p.length >= this.strongLength());
-      this.withUpperLowerCaseLetters.set(/[A-Z]/.test(p) && /[a-z]/.test(p));
-      this.withSymbol.set(/[#$&!@?*%]/.test(p));
-    });
-  }
-
   strength = computed(() => {
     const p = this.password() ?? '';
-    let score = 0;
 
-    if (p.length >= this.minLength()) score++;
-    if (p.length >= this.strongLength()) score++;
-    if (/[A-Z]/.test(p) && /[a-z]/.test(p)) score++;
-    if (/[#$&!@?*%]/.test(p)) score++;
+    const hasMinLength = p.length >= this.minLength();
+    const hasStrongLength = p.length >= this.strongLength();
+    const hasUpperLowerLetters = /[A-Z]/.test(p) && /[a-z]/.test(p);
+    const hasSymbol = /[#$&!@?*%]/.test(p);
 
-    return Math.min(Math.max(score, 0), 4);
+    return {
+      score:
+        (hasMinLength ? 1 : 0) +
+        (hasStrongLength ? 1 : 0) +
+        (hasUpperLowerLetters ? 1 : 0) +
+        (hasSymbol ? 1 : 0),
+      hasStrongLength,
+      hasUpperLowerLetters,
+      hasSymbol,
+    };
   });
 }
