@@ -1,16 +1,17 @@
 <div
-  class="grid grid-cols-1 md:grid-cols-4 items-start gap-2 lg:gap-4 px-4 py-2 lg:pt-4 bg-gray-100 dark:bg-gray-900 min-h-screen"
+  class="flex justify-center items-start gap-2 lg:gap-4 px-4 py-2 lg:pt-4 bg-gray-100 dark:bg-gray-900 min-h-screen mx-auto"
 >
   <!-- LEFT SIDEBAR (sticky) -->
   <div
-    class="hidden md:flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded md:rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 sticky top-2 overflow-y-auto"
+    class="hidden md:flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded md:rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 sticky top-2 overflow-y-auto w-1/4"
   >
-    <app-account-view></app-account-view>
+    <app-account-view *hasAnyAuthority="'ROLE_USER'"></app-account-view>
+    <div class="w-full"></div>
   </div>
 
   <!-- MAIN FEED (scrolls normally) -->
   <div
-    class="col-span-2 flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded md:rounded-lg shadow-sm"
+    class="flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded md:rounded-lg shadow-sm w-2/4"
   >
     <app-post-update></app-post-update>
     <app-feed></app-feed>
@@ -18,7 +19,7 @@
 
   <!-- RIGHT SIDEBAR (sticky) -->
   <div
-    class="flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded md:rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 sticky top-2 overflow-y-auto"
+    class="hidden md:flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded md:rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 sticky top-2 overflow-y-auto w-1/4"
   >
     <!-- Widgets -->
   </div>
