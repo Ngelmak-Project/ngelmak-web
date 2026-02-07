@@ -1,0 +1,151 @@
+<section class="w-full dark:bg-gray-900">
+  <div
+    class="p-6 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+  >
+    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+      Adresse email du compte
+    </h2>
+
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 leading-relaxed">
+      Votre adresse email est utilisée <strong>uniquement</strong> pour la récupération de compte
+      (mot de passe oublié, vérification d'identité). Elle n'est <strong>jamais</strong> utilisée
+      pour des notifications intrusives, ni partagée avec des tiers.
+    </p>
+
+    @if (!editEmail()) {
+      <div class="flex items-center flex-wrap gap-2">
+        @if (user().email) {
+          <div class="flex items-center gap-2">
+            <p class="text-lg text-gray-900 dark:text-white">
+              {{ user().email }}
+            </p>
+
+            @if (user().activated) {
+              <span
+                class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 rounded-full"
+              >
+                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24">
+                  <path
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                Vérifié
+              </span>
+            } @else {
+              <span
+                class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300 rounded-full"
+              >
+                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24">
+                  <path
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 9v4m0 4h.01M12 3a9 9 0 110 18 9 9 0 010-18z"
+                  />
+                </svg>
+                Non vérifié
+              </span>
+            }
+          </div>
+        } @else {
+          <p class="text-base italic text-red-500 dark:text-red-400">
+            Aucune adresse email renseignée
+          </p>
+        }
+
+        <button (click)="editEmail.set(true)" class="self-start mt-1 text-sm text-blue-600 hover:underline dark:text-blue-400">
+          Modifier l'adresse email
+        </button>
+      </div>
+    } @else {
+      <div class="flex flex-col gap-2">
+        <!-- Email -->
+        <div class="relative">
+          <input
+            type="email"
+            id="email"
+            [field]="emailForm.email"
+            class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            [ngClass]="{ 'border-red-500 dark:border-red-500': errorEmailExists() }"
+            placeholder=" "
+          />
+          <label
+            for="email"
+            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+            [ngClass]="{ 'text-red-500 dark:text-red-500': errorEmailExists() }"
+            >Email</label
+          >
+          @if (emailForm.email().dirty()) {
+            @for (error of emailForm.email().errors(); track error) {
+              <p class="text-sm text-red-600 dark:text-red-500">
+                <span class="font-medium">{{ error.message }}</span>
+              </p>
+            }
+            @if (errorEmailExists()) {
+              <p class="text-sm text-red-600 dark:text-red-500">
+                <span class="font-medium">Email déjà utilisé.</span>
+              </p>
+            }
+          }
+        </div>
+
+        <div class="inline-flex items-center gap-2 flex-wrap">
+          <button
+            (click)="editEmail.set(false)"
+            [disabled]="isUpdating()"
+            class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
+          >
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18 17.94 6M18 18 6.06 6"
+              />
+            </svg>
+
+            Annuler
+          </button>
+          <button
+            (click)="updateEmail()"
+            [disabled]="emailForm().invalid() || isUpdating()"
+            class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600 disabled:cursor-not-allowed"
+          >
+            @if (isUpdating()) {
+              <svg
+                class="inline w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
+                viewBox="0 0 100 101"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="currentFill"
+                />
+              </svg>
+            }
+            Enregister
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</section>

@@ -17,6 +17,7 @@
           Créer mon compte
         </h1>
         <div class="space-y-4 md:space-y-6">
+          <!-- Login -->
           <div class="relative">
             <input
               type="text"
@@ -45,6 +46,8 @@
               }
             }
           </div>
+
+          <!-- Email -->
           <div class="relative">
             <input
               type="email"
@@ -73,6 +76,8 @@
               }
             }
           </div>
+
+          <!-- New Password -->
           <div class="relative">
             <input
               [type]="showPassword() ? 'text' : 'password'"
@@ -136,6 +141,8 @@
               }
             }
           </div>
+
+          <!-- Confirm Password -->
           <div class="relative">
             <input
               [type]="showPassword() ? 'text' : 'password'"

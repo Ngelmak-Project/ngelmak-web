@@ -104,7 +104,7 @@ export class SecurityProfileComponent {
     this.isUploading.set(true);
 
     this.userService
-      .updateImage(preview.data)
+      .uploadImage(preview.data)
       .pipe(
         finalize(() => {
           this.isUploading.set(false);

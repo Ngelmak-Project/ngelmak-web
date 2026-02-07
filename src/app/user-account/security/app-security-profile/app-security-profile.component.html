@@ -1,83 +1,60 @@
 <section class="w-full dark:bg-gray-900">
-  <div class="max-w-4xl mx-auto flex flex-col gap-10 py-6">
-    <!-- PERSONAL INFO CARD -->
-    <div
-      class="p-6 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
-    >
-      <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
-        Informations personnelles
-      </h2>
+  <!-- PERSONAL INFO CARD -->
+  <div
+    class="p-6 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+  >
+    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+      Informations personnelles
+    </h2>
 
-      <div class="flex flex-col sm:flex-row gap-6 mb-6">
-        <!-- AVATAR -->
-        <div class="relative w-full h-auto mx-auto sm:w-40 sm:h-40">
-          @if (user().imageUrl) {
-            <img
-              [src]="user().imageUrl"
-              class="w-full h-full object-cover rounded-2xl shadow-lg border-4 border-white dark:border-gray-800"
-            />
-          } @else if (filePreview()) {
-            <img
-              [src]="filePreview().url"
-              alt="Loaded imageUrl"
-              class="w-full h-full object-cover rounded-2xl shadow-lg border-4 border-white dark:border-gray-800"
-            />
-          } @else {
-            <div
-              class="w-full h-40 flex items-center justify-center rounded-2xl bg-gray-300 dark:bg-gray-700 text-5xl font-bold text-gray-800 dark:text-gray-200 shadow-lg border-4 border-white dark:border-gray-800"
+    <div class="flex flex-col sm:flex-row gap-6 mb-6">
+      <!-- AVATAR -->
+      <div class="relative w-full h-auto mx-auto sm:w-40 sm:h-40">
+        @if (user().imageUrl) {
+          <img
+            [src]="user().imageUrl"
+            class="w-full h-full object-cover rounded-2xl shadow-lg border-4 border-white dark:border-gray-800"
+          />
+        } @else if (filePreview()) {
+          <img
+            [src]="filePreview().url"
+            alt="Loaded imageUrl"
+            class="w-full h-full object-cover rounded-2xl shadow-lg border-4 border-white dark:border-gray-800"
+          />
+        } @else {
+          <div
+            class="w-full h-40 flex items-center justify-center rounded-2xl bg-gray-300 dark:bg-gray-700 text-5xl font-bold text-gray-800 dark:text-gray-200 shadow-lg border-4 border-white dark:border-gray-800"
+          >
+            {{ user()?.firstName ? user()?.firstName.at(0) : '?' }}
+          </div>
+        }
+
+        <!-- Edit imageUrl actions -->
+        <div class="absolute bottom-2 flex justify-end gap-2 w-full px-2">
+          @if (filePreview()) {
+            <!-- Validate (only if preview exists) -->
+            <button
+              (click)="upload()"
+              [disabled]="isUploading()"
+              class="bg-black/50 text-green-500 text-xs font-semibold p-2 rounded-full hover:bg-black/70"
             >
-              {{ user()?.firstName ? user()?.firstName.at(0) : '?' }}
-            </div>
-          }
-
-          <!-- Edit imageUrl actions -->
-          <div class="absolute bottom-2 flex justify-end gap-2 w-full px-2">
-            @if (filePreview()) {
-              <!-- Validate (only if preview exists) -->
-              <button
-                (click)="upload()"
-                [disabled]="isUploading()"
-                class="bg-black/50 text-green-500 text-xs font-semibold p-2 rounded-full hover:bg-black/70"
-              >
-                @if (isUploading()) {
-                  <svg
-                    class="inline w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentFill"
-                    />
-                  </svg>
-                } @else {
-                  <svg
-                    class="w-5 h-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M15 17h3a3 3 0 0 0 0-6h-.025a5.56 5.56 0 0 0 .025-.5A5.5 5.5 0 0 0 7.207 9.021C7.137 9.017 7.071 9 7 9a4 4 0 1 0 0 8h2.167M12 19v-9m0 0-2 2m2-2 2 2"
-                    />
-                  </svg>
-                }
-              </button>
-              <!-- Cancel (only if preview exists) -->
-              <button
-                (click)="cancelEdit()"
-                [disabled]="isUploading()"
-                class="bg-black/50 text-orange-600 text-xs font-semibold p-2 rounded-full hover:bg-black/70"
-              >
+              @if (isUploading()) {
+                <svg
+                  class="inline w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
+                  viewBox="0 0 100 101"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                    fill="currentFill"
+                  />
+                </svg>
+              } @else {
                 <svg
                   class="w-5 h-5"
                   xmlns="http://www.w3.org/2000/svg"
@@ -89,286 +66,262 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    d="M15 17h3a3 3 0 0 0 0-6h-.025a5.56 5.56 0 0 0 .025-.5A5.5 5.5 0 0 0 7.207 9.021C7.137 9.017 7.071 9 7 9a4 4 0 1 0 0 8h2.167M12 19v-9m0 0-2 2m2-2 2 2"
                   />
                 </svg>
-              </button>
-            }
-            <!-- Load imageUrl -->
+              }
+            </button>
+            <!-- Cancel (only if preview exists) -->
             <button
-              (click)="imageUrlUpload.click()"
+              (click)="cancelEdit()"
               [disabled]="isUploading()"
-              class="bg-black/50 text-white p-2 rounded-full hover:bg-black/70"
+              class="bg-black/50 text-orange-600 text-xs font-semibold p-2 rounded-full hover:bg-black/70"
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
                 class="w-5 h-5"
+                xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
               >
                 <path
+                  stroke="currentColor"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm0 0v6m0 0H9m3 0h3"
+                  d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                 />
               </svg>
             </button>
-
-            <input type="file" class="hidden" #imageUrlUpload (change)="handleImage($event)" />
-          </div>
-        </div>
-
-        <!-- TEXT FIELDS -->
-        @if (!editPersonalInfo()) {
-          <div @fadeInOutRight class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <!-- First Name -->
-            <div>
-              <p class="text-sm text-gray-500 dark:text-gray-400">Prénom</p>
-              @if (user().firstName) {
-                <p class="text-xl text-gray-900 dark:text-white">{{ user().firstName }}</p>
-              } @else {
-                <p class="text-base italic text-red-500 dark:text-red-400">Prénom non renseigné</p>
-              }
-            </div>
-
-            <!-- Last Name -->
-            <div>
-              <p class="text-sm text-gray-500 dark:text-gray-400">Nom</p>
-              @if (user().lastName) {
-                <p class="text-xl text-gray-900 dark:text-white">{{ user().lastName }}</p>
-              } @else {
-                <p class="text-base italic text-red-500 dark:text-red-400">Nom non renseigné</p>
-              }
-            </div>
-
-            <!-- Language -->
-            <div>
-              <p class="text-sm text-gray-500 dark:text-gray-400">Langue préférée</p>
-              @if (user().langKey) {
-                <p class="text-xl text-gray-900 dark:text-white uppercase">{{ user().langKey }}</p>
-              } @else {
-                <p class="text-base italic text-red-500 dark:text-red-400">Langue non définie</p>
-              }
-            </div>
-          </div>
-        } @else {
-          <div @fadeInOutRight class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <!-- First Name -->
-            <div class="relative">
-              <input
-                type="text"
-                id="firstName"
-                [field]="userForm.firstName"
-                class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-              />
-              <label
-                for="firstName"
-                class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-                >Nom d'utilisateur</label
-              >
-              @if (userForm.firstName().dirty()) {
-                @for (error of userForm.firstName().errors(); track error) {
-                  <p class="text-sm text-red-600 dark:text-red-500">
-                    <span class="font-medium">{{ error.message }}</span>
-                  </p>
-                }
-              }
-            </div>
-
-            <!-- Last Name -->
-            <div class="relative">
-              <input
-                type="text"
-                id="lastName"
-                [field]="userForm.lastName"
-                class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-              />
-              <label
-                for="lastName"
-                class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-                >Nom d'utilisateur</label
-              >
-              @if (userForm.lastName().dirty()) {
-                @for (error of userForm.lastName().errors(); track error) {
-                  <p class="text-sm text-red-600 dark:text-red-500">
-                    <span class="font-medium">{{ error.message }}</span>
-                  </p>
-                }
-              }
-            </div>
-
-            <!-- Language -->
-            <div class="relative">
-              <button
-                (click)="hideLangKeyOptions.set(!hideLangKeyOptions())"
-                type="button"
-                class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 dark:focus:border-blue-500 peer text-left"
-              >
-                {{ userModel().langKey || 'Sélectionner une langue' }}
-              </button>
-
-              <label
-                for="langKey"
-                class="absolute flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
-              >
-                <svg
-                  class="w-5 h-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m13 19 3.5-9 3.5 9m-6.125-2h5.25M3 7h7m0 0h2m-2 0c0 1.63-.793 3.926-2.239 5.655M7.5 6.818V5m.261 7.655C6.79 13.82 5.521 14.725 4 15m3.761-2.345L5 10m2.761 2.655L10.2 15"
-                  />
-                </svg>
-                Langue préférée
-              </label>
-
-              @if (!hideLangKeyOptions()) {
-                <div
-                  class="absolute top-14 left-0 z-10 w-full bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600"
-                >
-                  <ul class="p-2 text-sm text-gray-700 dark:text-gray-200">
-                    <li>
-                      <button
-                        type="button"
-                        (click)="selectLang('fr')"
-                        class="inline-flex w-full rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >
-                        <div class="inline-flex items-center gap-2">Français</div>
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        type="button"
-                        (click)="selectLang('en')"
-                        class="inline-flex w-full rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >
-                        <div class="inline-flex items-center gap-2">English</div>
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              }
-            </div>
-          </div>
-        }
-      </div>
-
-      <!-- Edit button -->
-      @if (editPersonalInfo()) {
-        <div class="inline-flex items-center gap-2">
+          }
+          <!-- Load imageUrl -->
           <button
-            (click)="editPersonalInfo.set(false)"
-            [disabled]="isUpdatingProfil()"
-            class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
+            (click)="imageUrlUpload.click()"
+            [disabled]="isUploading()"
+            class="bg-black/50 text-white p-2 rounded-full hover:bg-black/70"
           >
             <svg
-              class="w-5 h-5"
-              aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              class="w-5 h-5"
               fill="none"
               viewBox="0 0 24 24"
+              stroke="currentColor"
             >
               <path
-                stroke="currentColor"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M6 18 17.94 6M18 18 6.06 6"
+                d="M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm0 0v6m0 0H9m3 0h3"
               />
             </svg>
+          </button>
 
-            Annuler
-          </button>
-          <button
-          (click)="updateProfile()"
-            [disabled]="userForm().invalid() || isUpdatingProfil()"
-            class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600 disabled:cursor-not-allowed"
-          >
-            @if (isUpdatingProfil()) {
-              <svg
-                class="inline w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
-                viewBox="0 0 100 101"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                  fill="currentColor"
-                />
-                <path
-                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                  fill="currentFill"
-                />
-              </svg>
+          <input type="file" class="hidden" #imageUrlUpload (change)="handleImage($event)" />
+        </div>
+      </div>
+
+      <!-- TEXT FIELDS -->
+      @if (!editPersonalInfo()) {
+        <div @fadeInOutRight class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <!-- First Name -->
+          <div>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Prénom</p>
+            @if (user().firstName) {
+              <p class="text-xl text-gray-900 dark:text-white">{{ user().firstName }}</p>
+            } @else {
+              <p class="text-base italic text-red-500 dark:text-red-400">Prénom non renseigné</p>
             }
-            Enregister
-          </button>
+          </div>
+
+          <!-- Last Name -->
+          <div>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Nom</p>
+            @if (user().lastName) {
+              <p class="text-xl text-gray-900 dark:text-white">{{ user().lastName }}</p>
+            } @else {
+              <p class="text-base italic text-red-500 dark:text-red-400">Nom non renseigné</p>
+            }
+          </div>
+
+          <!-- Language -->
+          <div>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Langue préférée</p>
+            @if (user().langKey) {
+              <p class="text-xl text-gray-900 dark:text-white uppercase">{{ user().langKey }}</p>
+            } @else {
+              <p class="text-base italic text-red-500 dark:text-red-400">Langue non définie</p>
+            }
+          </div>
         </div>
       } @else {
-        <button
-          (click)="editPersonalInfo.set(true)"
-          class="inline-flex items-center px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
-        >
-          Modifier mes informations
-        </button>
+        <div @fadeInOutRight class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <!-- First Name -->
+          <div class="relative">
+            <input
+              type="text"
+              id="firstName"
+              [field]="userForm.firstName"
+              class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+            />
+            <label
+              for="firstName"
+              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+              >Nom d'utilisateur</label
+            >
+            @if (userForm.firstName().dirty()) {
+              @for (error of userForm.firstName().errors(); track error) {
+                <p class="text-sm text-red-600 dark:text-red-500">
+                  <span class="font-medium">{{ error.message }}</span>
+                </p>
+              }
+            }
+          </div>
+
+          <!-- Last Name -->
+          <div class="relative">
+            <input
+              type="text"
+              id="lastName"
+              [field]="userForm.lastName"
+              class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+            />
+            <label
+              for="lastName"
+              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+              >Nom d'utilisateur</label
+            >
+            @if (userForm.lastName().dirty()) {
+              @for (error of userForm.lastName().errors(); track error) {
+                <p class="text-sm text-red-600 dark:text-red-500">
+                  <span class="font-medium">{{ error.message }}</span>
+                </p>
+              }
+            }
+          </div>
+
+          <!-- Language -->
+          <div class="relative">
+            <button
+              (click)="hideLangKeyOptions.set(!hideLangKeyOptions())"
+              type="button"
+              class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 dark:focus:border-blue-500 peer text-left"
+            >
+              {{ userModel().langKey || 'Sélectionner une langue' }}
+            </button>
+
+            <label
+              for="langKey"
+              class="absolute flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+            >
+              <svg
+                class="w-5 h-5"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m13 19 3.5-9 3.5 9m-6.125-2h5.25M3 7h7m0 0h2m-2 0c0 1.63-.793 3.926-2.239 5.655M7.5 6.818V5m.261 7.655C6.79 13.82 5.521 14.725 4 15m3.761-2.345L5 10m2.761 2.655L10.2 15"
+                />
+              </svg>
+              Langue préférée
+            </label>
+
+            @if (!hideLangKeyOptions()) {
+              <div
+                class="absolute top-14 left-0 z-10 w-full bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600"
+              >
+                <ul class="p-2 text-sm text-gray-700 dark:text-gray-200">
+                  <li>
+                    <button
+                      type="button"
+                      (click)="selectLang('fr')"
+                      class="inline-flex w-full rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      <div class="inline-flex items-center gap-2">Français</div>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      (click)="selectLang('en')"
+                      class="inline-flex w-full rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      <div class="inline-flex items-center gap-2">English</div>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            }
+          </div>
+        </div>
       }
     </div>
 
-    <!-- ACCOUNT IDENTIFIERS -->
-    <div
-      class="p-6 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
-    >
-      <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
-        Identifiants du compte
-      </h2>
-
-      <div class="flex flex-col gap-6">
-        <!-- Email -->
-        <div>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Adresse email</p>
-          @if (user().email) {
-            <p class="text-lg text-gray-900 dark:text-white">{{ user().email }}</p>
-          } @else {
-            <p class="text-base italic text-red-500 dark:text-red-400">
-              Aucune adresse email renseignée
-            </p>
-          }
-          <button
-            routerLink="/security/email"
-            class="mt-1 text-sm text-blue-600 hover:underline dark:text-blue-400"
+    <!-- Edit button -->
+    @if (editPersonalInfo()) {
+      <div class="inline-flex items-center gap-2">
+        <button
+          (click)="editPersonalInfo.set(false)"
+          [disabled]="isUpdatingProfil()"
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
+        >
+          <svg
+            class="w-5 h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
           >
-            Modifier l’email
-          </button>
-        </div>
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18 17.94 6M18 18 6.06 6"
+            />
+          </svg>
 
-        <!-- Login -->
-        <div>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Identifiant</p>
-          @if (user().firstName) {
-            <p class="text-lg text-gray-900 dark:text-white">{{ user().firstName }}</p>
-          } @else {
-            <p class="text-base italic text-red-500 dark:text-red-400">Identifiant non renseigné</p>
+          Annuler
+        </button>
+        <button
+        (click)="updateProfile()"
+          [disabled]="userForm().invalid() || isUpdatingProfil()"
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600 disabled:cursor-not-allowed"
+        >
+          @if (isUpdatingProfil()) {
+            <svg
+              class="inline w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
+              viewBox="0 0 100 101"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                fill="currentColor"
+              />
+              <path
+                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                fill="currentFill"
+              />
+            </svg>
           }
-          <button
-            routerLink="/security/firstName"
-            class="mt-1 text-sm text-blue-600 hover:underline dark:text-blue-400"
-          >
-            Modifier l’identifiant
-          </button>
-        </div>
+          Enregister
+        </button>
       </div>
-    </div>
+    } @else {
+      <button
+        (click)="editPersonalInfo.set(true)"
+        class="inline-flex items-center px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
+      >
+        Modifier mes informations
+      </button>
+    }
   </div>
 </section>

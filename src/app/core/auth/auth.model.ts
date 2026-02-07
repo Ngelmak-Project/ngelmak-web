@@ -1,15 +1,15 @@
 export enum CertificationStatus {
-  REJECTED = "REJECTED",
+  REJECTED = 'REJECTED',
 
-  REQUESTED = "REQUESTED",
+  REQUESTED = 'REQUESTED',
 
-  CERTIFIED = "CERTIFIED",
+  CERTIFIED = 'CERTIFIED',
 }
 
 export enum DocType {
-  NATIONAL_ID_CARD = "NATIONAL_ID_CARD",
+  NATIONAL_ID_CARD = 'NATIONAL_ID_CARD',
 
-  PASSPORT = "PASSPORT",
+  PASSPORT = 'PASSPORT',
 }
 
 export class Authentication {
@@ -27,4 +27,13 @@ export class Authentication {
     public lastModifiedDate?: Date,
     public authorities?: string[],
   ) {}
+}
+
+export interface ApiError {
+  timestamp: string;
+  status: number;
+  error: string;
+  message: string;
+  entity: string;
+  errorKey: string;
 }
