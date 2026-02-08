@@ -1,6 +1,4 @@
 <div class="flex flex-col gap-2 w-full mx-auto bg-white dark:bg-gray-800 rounded-xl">
-  <app-contact-message-update [post]="postSig()" (onSaveSuccess)="onContactMessage($event)"></app-contact-message-update>
-
   <div class="flex flex-col gap-4">
     @for (contactMessage of contactMessages(); track $index) {
       <app-contact-message-item [contactMessage]="contactMessage" [level]="0" (onDeleted)="onDeleted($event)"></app-contact-message-item>
