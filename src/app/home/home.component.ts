@@ -3,6 +3,7 @@ import {
   inject,
   signal
 } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { AccountViewComponent } from 'app/entities/nk-account/view/nk-account-view.component';
 import { ContactMessageUpdateComponent } from 'app/entities/nk-contact-message/update/nk-contact-message-update.component';
@@ -14,7 +15,7 @@ import SharedModule from 'app/shared/shared.module';
   standalone: true,
   selector: 'app-home',
   templateUrl: './home.component.html',
-  imports: [SharedModule, PostUpdateComponent, FeedComponent, AccountViewComponent, ContactMessageUpdateComponent],
+  imports: [SharedModule, RouterModule, PostUpdateComponent, FeedComponent, AccountViewComponent, ContactMessageUpdateComponent],
 })
 export default class HomeComponent {
   user = inject(AuthenticationService).authentication;

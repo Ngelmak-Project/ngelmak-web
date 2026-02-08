@@ -5,8 +5,38 @@
   <div
     class="hidden md:flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded md:rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 sticky top-2 overflow-y-auto w-1/4"
   >
-    <app-account-view *hasAnyAuthority="'ROLE_USER'"></app-account-view>
-    <div class="w-full"></div>
+    @if (user()) {
+      <!-- AUTHENTICATED USER -->
+      <app-account-view></app-account-view>
+    } @else {
+      <!-- GUEST VIEW -->
+      <div class="pt-4">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+          Rejoignez la discussion
+        </h3>
+
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+          Créer un compte ne prend que quelques instants. Rejoignez la communauté et commencez à
+          partager vos idées, réagir aux publications et suivre les sujets qui vous inspirent.
+        </p>
+
+        <div class="flex flex-col gap-2">
+          <button
+            routerLink="/sign-in"
+            class="inline-flex items-center justify-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
+          >
+            Se connecter
+          </button>
+
+          <button
+            routerLink="/sign-up"
+            class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
+          >
+            Créer un compte
+          </button>
+        </div>
+      </div>
+    }
   </div>
 
   <!-- MAIN FEED (scrolls normally) -->
@@ -28,24 +58,22 @@
 
           <button
             (click)="showContactForm.set(false)"
-            class=" text-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
+            class="text-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
           >
             Annuler
           </button>
         </div>
       } @else {
-        <div class="bg-gray-50 dark:bg-gray-800 mx-auto">
-          <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-            Une question ou un problème ?
-          </h2>
+        <div class="pt-4">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Besoin d’aide ?</h3>
 
-          <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
-            Vous pouvez nous envoyer un message à tout moment.
+          <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+            Une question, un problème ou une suggestion. Notre équipe est là pour vous accompagner.
           </p>
 
           <button
             (click)="showContactForm.set(true)"
-            class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
+            class="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
           >
             Contacter le support
           </button>
