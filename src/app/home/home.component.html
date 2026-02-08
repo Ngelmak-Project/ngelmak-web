@@ -21,6 +21,36 @@
   <div
     class="hidden md:flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded md:rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 sticky top-2 overflow-y-auto w-1/4"
   >
-    <!-- Widgets -->
+    <div>
+      @if (showContactForm()) {
+        <div class="flex flex-col gap-2">
+          <app-contact-message-update></app-contact-message-update>
+
+          <button
+            (click)="showContactForm.set(false)"
+            class=" text-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
+          >
+            Annuler
+          </button>
+        </div>
+      } @else {
+        <div class="bg-gray-50 dark:bg-gray-800 mx-auto">
+          <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            Une question ou un problème ?
+          </h2>
+
+          <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+            Vous pouvez nous envoyer un message à tout moment.
+          </p>
+
+          <button
+            (click)="showContactForm.set(true)"
+            class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
+          >
+            Contacter le support
+          </button>
+        </div>
+      }
+    </div>
   </div>
 </div>
