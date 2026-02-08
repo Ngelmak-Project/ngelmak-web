@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, output, signal } from '@angular/core';
-import { Field, form } from '@angular/forms/signals';
+import { Component, inject, signal } from '@angular/core';
+import { email, Field, form, maxLength, required } from '@angular/forms/signals';
 import { IContactMessage, IContactMessageDTO } from 'app/entities/models/nk-contact-message.model';
-import { IPostDTO } from 'app/entities/models/nk-post.model';
 import { AlertService } from 'app/shared/alert/alert.service';
+import { finalize } from 'rxjs';
 import { ContactMessageService } from '../nk-contact-message.service';
 
 const initContact: IContactMessageDTO = {
@@ -19,35 +19,35 @@ const initContact: IContactMessageDTO = {
   templateUrl: './nk-contact-message-update.component.html',
 })
 export class ContactMessageUpdateComponent {
-  withAttach = input(true);
-  contactMessage = input<IContactMessage | IContactMessageDTO>(null);
-  replyTo = input<IContactMessage | IContactMessageDTO>(null);
-  post = input<IPostDTO>(null);
-  onSaveSuccess = output<IContactMessageDTO>();
+  protected contactService = inject(ContactMessageService);
+  protected alertService = inject(AlertService);
 
-  contactMessageService = inject(ContactMessageService);
-  alertService = inject(AlertService);
+  contactModel = signal<IContactMessage | IContactMessageDTO>(initContact);
 
-  private contactService = inject(ContactMessageService);
+  contactForm = form(this.contactModel, (p) => {
+    email(p.email, { message: "L'email est invalide." });
+    required(p.subject, { message: 'Le sujet est requis.' });
+    maxLength(p.subject, 255, { message: 'Nombre maximum de caractères est 255.' });
+    required(p.message, { message: 'Le contenu de votre message est requis.' });
+    maxLength(p.message, 1000, { message: 'Nombre maximum de caractères est 1000.' });
+  });
 
   isSaving = signal(false);
 
-  contactModel = signal<IContactMessage | IContactMessageDTO>(initContact);
-  contactForm = form(this.contactModel, (p) => {});
-
   submit() {
     this.isSaving.set(true);
-
     const payload = this.contactModel();
-
-    this.contactService.create(payload).subscribe({
-      next: () => {
-        this.isSaving.set(false);
-        this.contactForm().reset(initContact);
-      },
-      error: () => {
-        this.isSaving.set(false);
-      },
-    });
+    this.contactService
+      .create(payload)
+      .pipe(finalize(() => this.isSaving.set(false)))
+      .subscribe({
+        next: () => {
+          this.contactForm().reset(initContact);
+          this.alertService.addAlert({ type: 'success', message: 'Merci pour votre message.' });
+        },
+        error: () => {
+          this.alertService.addAlert({ type: 'error', message: "Une error s'est produite." });
+        },
+      });
   }
 }

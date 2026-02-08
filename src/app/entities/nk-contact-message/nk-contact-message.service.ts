@@ -29,7 +29,7 @@ export class ContactMessageService {
 
   findUntreatedContactMessage(req?: any): Observable<HttpResponse<IPage<IContactMessageDTO>>> {
     const options = createRequestOption(req);
-    return this.http.get<IPage<IContactMessageDTO>>(this.publicResourceUrl, {
+    return this.http.get<IPage<IContactMessageDTO>>(this.resourceUrl, {
       params: options,
       observe: 'response',
     });
