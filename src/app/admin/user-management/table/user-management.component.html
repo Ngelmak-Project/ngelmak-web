@@ -3,299 +3,483 @@
 >
   <div class="w-full mb-1">
     <div class="mb-4">
-      <nav class="flex mb-5" aria-label="Breadcrumb">
-        <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
-          <li class="inline-flex items-center">
-            <a
-              href="#"
-              class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white"
-            >
-              <svg
-                class="w-5 h-5 mr-2.5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
-                ></path>
-              </svg>
-              Home
-            </a>
-          </li>
-          <li>
-            <div class="flex items-center">
-              <svg
-                class="w-6 h-6 text-gray-400"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              <a
-                href="#"
-                class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white"
-                >Users</a
-              >
-            </div>
-          </li>
-          <li>
-            <div class="flex items-center">
-              <svg
-                class="w-6 h-6 text-gray-400"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page"
-                >List</span
-              >
-            </div>
-          </li>
-        </ol>
-      </nav>
-      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All users</h1>
+      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Liste des utilisateurs</h1>
     </div>
-    <div class="sm:flex">
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <div
-        class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700"
+        class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4"
       >
-        <form class="lg:pr-3" action="#" method="GET">
-          <div class="relative mt-1 lg:w-64 xl:w-96">
-            <input
-              type="text"
-              name="email"
-              id="users-search"
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Rechercher un utilisateur"
-            />
+        <div>
+          <button
+            id="dropdownRadioButton"
+            data-dropdown-toggle="dropdownRadio"
+            class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+            type="button"
+          >
+            <svg
+              class="w-3 h-3 text-gray-500 dark:text-gray-400 me-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"
+              />
+            </svg>
+            Last 30 days
+            <svg
+              class="w-2.5 h-2.5 ms-2.5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </button>
+          <!-- Dropdown menu -->
+          <div
+            id="dropdownRadio"
+            class="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700 dark:divide-gray-600"
+            style="
+              position: absolute;
+              inset: auto auto 0px 0px;
+              margin: 0px;
+              transform: translate3d(522.5px, 3847.5px, 0px);
+            "
+          >
+            <ul
+              class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="dropdownRadioButton"
+            >
+              <li>
+                <div
+                  class="flex items-center p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                >
+                  <input
+                    id="filter-radio-example-1"
+                    type="radio"
+                    value=""
+                    name="filter-radio"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    for="filter-radio-example-1"
+                    class="w-full ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300"
+                    >Last day</label
+                  >
+                </div>
+              </li>
+              <li>
+                <div
+                  class="flex items-center p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                >
+                  <input
+                    checked=""
+                    id="filter-radio-example-2"
+                    type="radio"
+                    value=""
+                    name="filter-radio"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    for="filter-radio-example-2"
+                    class="w-full ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300"
+                    >Last 7 days</label
+                  >
+                </div>
+              </li>
+              <li>
+                <div
+                  class="flex items-center p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                >
+                  <input
+                    id="filter-radio-example-3"
+                    type="radio"
+                    value=""
+                    name="filter-radio"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    for="filter-radio-example-3"
+                    class="w-full ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300"
+                    >Last 30 days</label
+                  >
+                </div>
+              </li>
+              <li>
+                <div
+                  class="flex items-center p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                >
+                  <input
+                    id="filter-radio-example-4"
+                    type="radio"
+                    value=""
+                    name="filter-radio"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    for="filter-radio-example-4"
+                    class="w-full ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300"
+                    >Last month</label
+                  >
+                </div>
+              </li>
+              <li>
+                <div
+                  class="flex items-center p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                >
+                  <input
+                    id="filter-radio-example-5"
+                    type="radio"
+                    value=""
+                    name="filter-radio"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    for="filter-radio-example-5"
+                    class="w-full ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300"
+                    >Last year</label
+                  >
+                </div>
+              </li>
+            </ul>
           </div>
-        </form>
-        <div class="flex pl-0 mt-3 space-x-1 sm:pl-2 sm:mt-0">
-          <a
-            href="#"
-            class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+        </div>
+        <label for="table-search" class="sr-only">Rechercher un utilisateur</label>
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none"
           >
             <svg
-              class="w-6 h-6"
+              class="w-5 h-5 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 fill-rule="evenodd"
-                d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
                 clip-rule="evenodd"
               ></path>
             </svg>
-          </a>
-          <a
-            href="#"
-            class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </a>
-          <a
-            href="#"
-            class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </a>
-          <a
-            href="#"
-            class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
-              ></path>
-            </svg>
-          </a>
+          </div>
+          <input
+            type="text"
+            id="table-search"
+            class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Rechercher un utilisateur"
+          />
         </div>
       </div>
+
+      <!-- USER TABLE -->
+      <table
+        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-md overflow-hidden shadow-md"
+      >
+        <thead
+          class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          <tr>
+            <th scope="col" class="px-6 py-3">Nom</th>
+            <th scope="col" class="px-6 py-3">Date création</th>
+            <th scope="col" class="px-6 py-3">Etat</th>
+            <th scope="col" class="px-6 py-3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of users(); track $index) {
+            <tr
+              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
+            >
+              <th
+                scope="row"
+                class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                <!-- <img
+                  class="w-10 h-10 rounded-full"
+                  src="/images/people/profile-picture-1.jpg"
+                  alt="Jese image"
+                /> -->
+                @if (user.imageUrl) {
+                  <img [src]="user.imageUrl" alt="User avatar" class="rounded-full w-10 h-10" />
+                } @else {
+                  <div
+                    class="flex items-center justify-center rounded-full w-10 h-10 text-xl uppercase text-black bg-gray-50 dark:bg-gray-300"
+                  >
+                    {{ user.firstName.charAt(0) }}
+                  </div>
+                }
+                <div class="ps-3">
+                  <div class="text-base font-semibold">
+                    {{ user.firstName }} {{ user.lastName }}
+                  </div>
+                  <div class="font-normal text-gray-500">{{ user.email }}</div>
+                </div>
+              </th>
+              <td class="px-6 py-4">{{ user.createdDate | formatMediumDatetime }}</td>
+              <td class="px-6 py-4">
+                <div class="flex items-center">
+                  @if (user.activated) {
+                    <span class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></span>
+                    <span class="hidden sm:visible">Activé</span>
+                  } @else {
+                    <span class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></span>
+                    <span class="hidden sm:visible">Désactivé</span>
+                  }
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <!-- Dropdown wrapper -->
+                <div class="relative ml-auto" clickOutside (onClickOutside)="openMenu.set(-1)">
+                  <!-- Trigger button -->
+                  <button
+                    class="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                    (click)="openMenu.set(openMenu() === $index ? -1 : $index)"
+                  >
+                    <svg
+                      class="w-6 h-6 text-gray-800 dark:text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-width="2"
+                        d="M12 6h.01M12 12h.01M12 18h.01"
+                      />
+                    </svg>
+                  </button>
+
+                  <!-- Dropdown menu -->
+                  @if (openMenu() === $index) {
+                    <ul
+                      class="absolute right-0 mt-1 w-32 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 shadow-lg py-1 text-xs text-gray-700 dark:text-gray-200 animate-fadeIn p-1 z-10"
+                    >
+                      <li>
+                        <button
+                          class="w-full inline-flex items-center justify-between text-left px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                        >
+                          Report
+
+                          <svg
+                            class="w-4 h-4"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z"
+                            />
+                          </svg>
+                        </button>
+                      </li>
+
+                      <li>
+                        <button
+                          class="w-full inline-flex items-center justify-between text-left px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                        >
+                          Update
+
+                          <svg
+                            class="w-4 h-4"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"
+                            />
+                          </svg>
+                        </button>
+                      </li>
+
+                      <li>
+                        <button
+                          class="w-full inline-flex items-center justify-between text-left px-3 py-2 rounded-md text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition"
+                        >
+                          Delete
+
+                          <svg
+                            class="w-4 h-4"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                            />
+                          </svg>
+                        </button>
+                      </li>
+                    </ul>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <!-- PAGINATION -->
+      <nav
+        class="w-full p-4 flex items-center justify-between border-t border-gray-200 dark:border-gray-700"
+      >
+        <form class="mx-auto flex items-center space-x-3">
+          <!-- Previous -->
+          <button
+            type="button"
+            class="flex items-center justify-center px-3 h-9 text-sm font-medium text-gray-300 bg-gray-800 border border-gray-700 rounded-lg hover:bg-gray-700 hover:text-white disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-500"
+            (click)="prevPage()"
+            [disabled]="currentPage() === 1"
+          >
+            <svg
+              class="w-3.5 h-3.5 me-2 rtl:rotate-180"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 5H1m0 0 4 4M1 5l4-4"
+              />
+            </svg>
+            Précédent
+          </button>
+
+          <!-- Page Size Selector -->
+          <div class="relative">
+            <button
+              (click)="hidePageSizeOptions.set(!hidePageSizeOptions())"
+              type="button"
+              id="pageSize"
+              class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-48 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 dark:focus:border-blue-500 peer text-left"
+            >
+              {{ pageSize() }} / page
+            </button>
+
+            <label
+              for="pageSize"
+              class="absolute flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+            >
+              Taille de page
+            </label>
+
+            @if (!hidePageSizeOptions()) {
+              <div
+                class="absolute bottom-14 left-0 z-10 w-full bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600"
+              >
+                <ul class="p-2 text-sm text-gray-700 dark:text-gray-200">
+                  <li>
+                    <button
+                      type="button"
+                      (click)="changePageSize(20)"
+                      class="inline-flex w-full rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      <div class="inline-flex items-center gap-2">20 / page</div>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      (click)="changePageSize(50)"
+                      class="inline-flex w-full rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      <div class="inline-flex items-center gap-2">50 / page</div>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      (click)="changePageSize(100)"
+                      class="inline-flex w-full rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      <div class="inline-flex items-center gap-2">100 / page</div>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            }
+          </div>
+
+          <!-- Current Page Input -->
+          <div class="relative">
+            <input
+              type="text"
+              id="page"
+              [value]="currentPage()"
+              (change)="goToPage(+$event.target.value)"
+              class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-20 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer"
+              placeholder=" "
+            />
+            <label
+              for="page"
+              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+              >Page</label
+            >
+          </div>
+
+          <!-- Next -->
+          <button
+            type="button"
+            class="flex items-center justify-center px-3 h-9 text-sm font-medium text-gray-300 bg-gray-800 border border-gray-700 rounded-lg hover:bg-gray-700 hover:text-white disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-500"
+            (click)="nextPage()"
+            [disabled]="!hasNextPage()"
+          >
+            Suivant
+            <svg
+              class="w-3.5 h-3.5 ms-2 rtl:rotate-180"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"
+              />
+            </svg>
+          </button>
+        </form>
+      </nav>
     </div>
   </div>
-</div>
-<div class="flex flex-col">
-  <div class="relative max-h-[40rem] overflow-auto shadow-md">
-    <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
-      <thead class="bg-gray-100 dark:bg-gray-700 sticky top-0">
-        <tr>
-          <th
-            scope="col"
-            class="p-4 text-xs font-medium text-left text-blue-500 uppercase dark:text-blue-400"
-          >
-            #ID
-          </th>
-          <th
-            scope="col"
-            class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
-          >
-            Identifiant
-          </th>
-          <th
-            scope="col"
-            class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
-          >
-            Statut
-          </th>
-          <th
-            scope="col"
-            class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
-          >
-            Certification
-          </th>
-          <th
-            scope="col"
-            class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
-          >
-            Droits
-          </th>
-          <th
-            scope="col"
-            class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
-          >
-            Créé le
-          </th>
-          <th scope="col" class="p-x-1 p-y-4"></th>
-        </tr>
-      </thead>
-      <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-        <tr *ngFor="let user of users()" class="hover:bg-gray-100 dark:hover:bg-gray-700">
-          <td class="w-4 p-4">
-            <a [routerLink]="['./', user.login, 'view']">{{ user }}</a>
-          </td>
-          <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-            <img
-              class="w-10 h-10 rounded-full"
-              src="assets/images/car-rapide.jpeg"
-              alt="user-image"
-            />
-            <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-              <div class="text-base font-semibold text-gray-900 dark:text-white">
-                {{ user.login }}
-              </div>
-              <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                {{ user.email }}
-              </div>
-            </div>
-          </td>
-          <td
-            class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400"
-          >
-            <div class="inline-flex items-center">
-              @if (user.activated) {
-                <div class="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div>
-                Activé
-              } @else {
-                <div class="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div>
-                Désactivé
-              }
-            </div>
-          </td>
-          <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            <div class="inline-flex items-center gap-1">
-              @if (user.certificationStatus == 'CERTIFIED') {
-                <svg
-                  class="w-5 h-5 text-blue-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m7.171 12.906-2.153 6.411 2.672-.89 1.568 2.34 1.825-5.183m5.73-2.678 2.154 6.411-2.673-.89-1.568 2.34-1.825-5.183M9.165 4.3c.58.068 1.153-.17 1.515-.628a1.681 1.681 0 0 1 2.64 0 1.68 1.68 0 0 0 1.515.628 1.681 1.681 0 0 1 1.866 1.866c-.068.58.17 1.154.628 1.516a1.681 1.681 0 0 1 0 2.639 1.682 1.682 0 0 0-.628 1.515 1.681 1.681 0 0 1-1.866 1.866 1.681 1.681 0 0 0-1.516.628 1.681 1.681 0 0 1-2.639 0 1.681 1.681 0 0 0-1.515-.628 1.681 1.681 0 0 1-1.867-1.866 1.681 1.681 0 0 0-.627-1.515 1.681 1.681 0 0 1 0-2.64c.458-.361.696-.935.627-1.515A1.681 1.681 0 0 1 9.165 4.3ZM14 9a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"
-                  />
-                </svg>
-                Certifié
-              } @else if (user.certificationStatus == 'REJECTED') {
-                <span class="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></span>Réjeté
-              } @else {
-                <span class="h-2.5 w-2.5 rounded-full bg-gray-500 mr-2"></span>Demandé
-              }
-            </div>
-          </td>
-          <td class="p-4 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            <div class="flex flex-col gap-1">
-              <span
-                *ngFor="let authority of user.authorities"
-                class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400"
-                >{{ authority }}</span
-              >
-            </div>
-          </td>
-          <td class="p-4 text-base font-normal text-gray-900 whitespace-nowrap dark:text-white">
-            {{ user.createdDate | date: 'dd/MM/yy HH:mm' }}
-          </td>
-          <td class="p-4 space-x-2 whitespace-nowrap">
-            <a matTooltip="Paramètrage" [routerLink]="['./', user.login, 'view']">
-              <svg
-                class="w-6 h-6 text-blue-500 dark:text-blue-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-width="2"
-                  d="M20 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6h-2m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4"
-                />
-              </svg>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <!-- <mat-paginator lastPageLabel="Dernière page" [length]="totalItems()" [pageIndex]="page-1" [pageSize]="size" [pageSizeOptions]="[5, 10, 25, 100]"
-    (page)="pageChange($event)" showFirstLastButtons aria-label="Select pagedfqs">
-  </mat-paginator> -->
 </div>

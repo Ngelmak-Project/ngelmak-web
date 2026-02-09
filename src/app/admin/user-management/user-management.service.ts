@@ -13,7 +13,7 @@ export class UserManagementService {
   private http = inject(HttpClient);
   private applicationConfigService = inject(ApplicationConfigService);
 
-  private resourceUrl = this.applicationConfigService.getEndpointFor('api/admin/users');
+  private resourceUrl = this.applicationConfigService.getEndpointFor('auth/admin/users');
 
   create(account: Authentication): Observable<Authentication> {
     return this.http.post<Authentication>(this.resourceUrl, account);
