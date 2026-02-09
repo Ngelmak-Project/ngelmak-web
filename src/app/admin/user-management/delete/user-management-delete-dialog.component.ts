@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 ;
 
 import SharedModule from 'app/shared/shared.module';
-import { UserManagementService } from '../service/user-management.service';
+import { UserManagementService } from '../user-management.service';
 import { Authentication } from 'app/core/auth/auth.model';
 
 @Component({

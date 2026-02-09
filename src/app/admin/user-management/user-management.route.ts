@@ -4,8 +4,8 @@ import { of } from "rxjs";
 
 import { Authentication } from "app/core/auth/auth.model";
 import UserManagementDetailComponent from "./detail/user-management-detail.component";
-import UserManagementComponent from "./list/user-management.component";
-import { UserManagementService } from "./service/user-management.service";
+import UserManagementComponent from "./table/user-management.component";
+import { UserManagementService } from "./user-management.service";
 import UserManagementUpdateComponent from "./update/user-management-update.component";
 
 export const UserManagementResolve: ResolveFn<Authentication | null> = (

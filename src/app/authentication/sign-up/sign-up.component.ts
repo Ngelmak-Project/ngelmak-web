@@ -1,5 +1,5 @@
-import { AlertService } from 'app/shared/alert/alert.service';
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, effect, inject, signal } from '@angular/core';
 import {
   email,
@@ -11,11 +11,12 @@ import {
   required,
 } from '@angular/forms/signals';
 import { Router, RouterModule } from '@angular/router';
+import { ApiError } from 'app/core/auth/auth.model';
+import { AlertService } from 'app/shared/alert/alert.service';
+import { finalize } from 'rxjs';
+import { PasswordStrengthBarComponent } from './password-strength-bar/password-strength-bar.component';
 import { SignupModel } from './sign-up.model';
 import { SignUpService } from './sign-up.service';
-import { PasswordStrengthBarComponent } from './password-strength-bar/password-strength-bar.component';
-import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/config/error.constants';
-import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
@@ -75,7 +76,6 @@ export class SignUpComponent {
 
   register(): void {
     this.isRegistering.set(true);
-    this.error.set(false);
     this.errorEmailExists.set(false);
     this.errorUserExists.set(false);
     const value = this.signupModel();
@@ -87,13 +87,25 @@ export class SignUpComponent {
           this.alertService.addAlert({ type: 'success', message: 'Bienvenue à Ngelmak !' });
           this.route.navigate(['']); // return to home
         },
-        error: (response) => {
-          if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
+        error: (err: HttpErrorResponse) => {
+          const apiError = err.error as ApiError;
+          if (apiError.errorKey === "loginExists") {
             this.errorUserExists.set(true);
-          } else if (response.status === 400 && response.error.type === EMAIL_ALREADY_USED_TYPE) {
+            this.alertService.addAlert({
+              type: 'error',
+              message: 'Ce nom d\'utilisateur est déjà utilisé',
+            });
+          } else if (apiError.errorKey === "emailExists") {
             this.errorEmailExists.set(true);
+            this.alertService.addAlert({
+              type: 'error',
+              message: 'Cette adresse email est déjà utilisée',
+            });
           } else {
-            this.error.set(true);
+            this.alertService.addAlert({
+              type: 'error',
+              message: 'Une erreur est survenue lors de linscription',
+            });
           }
         },
       });

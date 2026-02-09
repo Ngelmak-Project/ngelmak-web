@@ -12,6 +12,7 @@ import FooterComponent from '../footer/footer.component';
 import NavbarComponent from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import MainComponent from './main.component';
+import adminRoutes from 'app/admin/admin.routes';
 
 const routes: Routes = [
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
       ...userManagementRoutes, // default user page management
       ...entityRoutes, // Entity routes.
       ...pageRoutes, // Page routes.
+      ...adminRoutes, // Admin routes.
       ...errorRoute, // Error routes.
     ],
   },

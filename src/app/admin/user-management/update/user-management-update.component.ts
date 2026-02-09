@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LANGUAGES } from 'app/config/language.constants';
 import { Authentication } from 'app/core/auth/auth.model';
 import SharedModule from 'app/shared/shared.module';
-import { UserManagementService } from '../service/user-management.service';
+import { UserManagementService } from '../user-management.service';
 
 const userTemplate = {} as Authentication;
 

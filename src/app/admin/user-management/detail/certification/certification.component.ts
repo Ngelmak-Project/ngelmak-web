@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserManagementService } from 'app/admin/user-management/service/user-management.service';
+import { UserManagementService } from 'app/admin/user-management/user-management.service';
 import { IPrivilege } from 'app/entities/models/nk-privilege.model';
 import { AlertService } from 'app/shared/alert/alert.service';
 

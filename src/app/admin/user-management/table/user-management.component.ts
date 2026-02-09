@@ -17,7 +17,7 @@ import { AuthenticationService } from "app/core/auth/auth.service";
 import { IPage } from "app/shared/pagination/pagination.model";
 import SharedModule from "app/shared/shared.module";
 import { SortService, sortStateSignal } from "app/shared/sort";
-import { UserManagementService } from "../service/user-management.service";
+import { UserManagementService } from "../user-management.service";
 
 @Component({
   standalone: true,

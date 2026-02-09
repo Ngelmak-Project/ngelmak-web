@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { UserManagementService } from 'app/admin/user-management/service/user-management.service';
+import { UserManagementService } from 'app/admin/user-management/user-management.service';
 import { AlertService } from 'app/shared/alert/alert.service';
 
 @Component({

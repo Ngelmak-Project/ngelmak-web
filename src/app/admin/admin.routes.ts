@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 /* ngelmakpster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
-const routes: Routes = [
+const adminRoutes: Routes = [
   {
     path: 'user-management',
     loadChildren: () => import('./user-management/user-management.route'),
@@ -33,7 +33,7 @@ const routes: Routes = [
     title: 'metrics.title',
   },
   { path: '', redirectTo: 'user-management', pathMatch: 'full' }, // redirect to `user-management`
-  /* ngelmakpster-needle-add-admin-route - JHipster will add admin routes here */
+  /* ngelmakpster-needle-add-admin-route - JHipster will add admin adminRoutes here */
 ];
 
-export default routes;
+export default adminRoutes;
