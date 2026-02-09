@@ -7,20 +7,20 @@
       <div class="flex items-center gap-3">
         <!-- Avatar -->
         <a
-          [routerLink]="['nk-account', post().account.id + '-' + post().account.identifier, 'view']"
+          [routerLink]="['nk-channel', post().channel.id + '-' + post().channel.identifier, 'view']"
           class="shrink-0"
         >
-          @if (post().account.avatar) {
+          @if (post().channel.avatar) {
             <img
-              [src]="post().account.avatar"
-              alt="Account avatar"
+              [src]="post().channel.avatar"
+              alt="Channel avatar"
               class="rounded-full w-10 h-10"
             />
           } @else {
             <div
               class="flex items-center justify-center rounded-full w-10 h-10 text-xl uppercase text-black bg-gray-50 dark:bg-gray-300"
             >
-              {{ post().account.name.at(0) }}
+              {{ post().channel.name.at(0) }}
             </div>
           }
         </a>
@@ -30,12 +30,12 @@
           <a
             class="truncate text-sm font-medium text-gray-900 dark:text-white"
             [routerLink]="[
-              'nk-account',
-              post().account.id + '-' + post().account.identifier,
+              'nk-channel',
+              post().channel.id + '-' + post().channel.identifier,
               'view',
             ]"
           >
-            {{ post().account.name }}
+            {{ post().channel.name }}
           </a>
 
           <button
@@ -111,7 +111,7 @@
             </button>
           </li>
 
-          @if (postSig().account?.id == account()?.id) {
+          @if (postSig().channel?.id == channel()?.id) {
             <li>
               <button
                 (click)="isUpdating.set(true)"

@@ -9,7 +9,7 @@ import { IFile } from 'app/entities/models/nk-file.model';
 import { CommentComponent } from 'app/entities/nk-comment/list/nk-comment.component';
 import { ReactionDialogComponent } from 'app/entities/nk-reaction/dialog/nk-reaction-dialog.component';
 import { DurationPipe } from 'app/shared/date';
-import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { ConfirmDialogComponent } from 'app/shared/confirm-dialog/confirm-dialog.component';
 import { PostService } from '../nk-post.service';
 import { finalize } from 'rxjs';
@@ -45,7 +45,7 @@ export class PostDetailComponent implements OnInit {
   alertService = inject(AlertService);
   protected postService = inject(PostService);
 
-  account = inject(AccountService).account;
+  channel = inject(ChannelService).channel;
 
   ngOnInit() {
     this.postSig.set(this.post());

@@ -4,7 +4,7 @@ import { ContactMessageUpdateComponent } from 'app/entities/nk-contact-message/u
 
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { ConfirmDialogComponent } from 'app/shared/confirm-dialog/confirm-dialog.component';
 import { DurationPipe } from 'app/shared/date';
@@ -34,7 +34,7 @@ export class ContactMessageItemComponent implements OnInit {
 
   protected contactMessageService = inject(ContactMessageService);
   protected alertService = inject(AlertService);
-  account = inject(AccountService).account;
+  channel = inject(ChannelService).channel;
 
   replies = signal<IContactMessageDTO[]>([]);
   isLoading = signal(false);

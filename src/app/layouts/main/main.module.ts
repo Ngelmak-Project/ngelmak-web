@@ -6,7 +6,7 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
 import entityRoutes from 'app/entities/entity.routes';
 import HomeComponent from 'app/home/home.component';
 import pageRoutes from 'app/pages/page.routes';
-import userAccountRoutes from 'app/user-account/user-account.routes';
+import userManagementRoutes from 'app/user-management/user-management.routes';
 import { errorRoute } from '../error/error.route';
 import FooterComponent from '../footer/footer.component';
 import NavbarComponent from '../navbar/navbar.component';
@@ -28,7 +28,7 @@ const routes: Routes = [
         canActivate: [UserRouteAccessService],
         loadChildren: () => import('app/admin/admin.routes'),
       },
-      ...userAccountRoutes, // default user page management
+      ...userManagementRoutes, // default user page management
       ...entityRoutes, // Entity routes.
       ...pageRoutes, // Page routes.
       ...errorRoute, // Error routes.

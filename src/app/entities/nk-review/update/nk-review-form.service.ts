@@ -34,7 +34,7 @@ type ReviewFormGroupContent = {
   at: FormControl<ReviewFormRawValue['at']>;
   status: FormControl<ReviewFormRawValue['status']>;
   timeout: FormControl<ReviewFormRawValue['timeout']>;
-  account: FormControl<ReviewFormRawValue['account']>;
+  channel: FormControl<ReviewFormRawValue['channel']>;
   ticket: FormControl<ReviewFormRawValue['ticket']>;
   replyto: FormControl<ReviewFormRawValue['replyto']>;
 };
@@ -65,7 +65,7 @@ export class ReviewFormService {
       timeout: new FormControl(reviewRawValue.timeout, {
         validators: [Validators.required],
       }),
-      account: new FormControl(reviewRawValue.account, {
+      channel: new FormControl(reviewRawValue.channel, {
         validators: [Validators.required],
       }),
       ticket: new FormControl(reviewRawValue.ticket),

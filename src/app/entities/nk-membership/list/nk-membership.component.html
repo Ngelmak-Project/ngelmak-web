@@ -52,9 +52,9 @@
                 <span class="p-1" class="sort"></span>
               </div>
             </th>
-            <th scope="col" ngelmakSortBy="account.id">
+            <th scope="col" ngelmakSortBy="channel.id">
               <div class="d-flex">
-                <span >Account</span>
+                <span >Channel</span>
                 <span class="p-1" class="sort"></span>
               </div>
             </th>
@@ -76,16 +76,16 @@
               <td>{{ membership.at | formatMediumDatetime }}</td>
               <td>{{ membership.activateNotification }}</td>
               <td>
-                @if (membership.account) {
+                @if (membership.channel) {
                   <div>
-                    <a [routerLink]="['/nk-account', membership.account.id, 'view']">{{ membership.account.id }}</a>
+                    <a [routerLink]="['/nk-channel', membership.channel.id, 'view']">{{ membership.channel.id }}</a>
                   </div>
                 }
               </td>
               <td>
                 @if (membership.subscriber) {
                   <div>
-                    <a [routerLink]="['/nk-account', membership.subscriber.id, 'view']">{{ membership.subscriber.id }}</a>
+                    <a [routerLink]="['/nk-channel', membership.subscriber.id, 'view']">{{ membership.subscriber.id }}</a>
                   </div>
                 }
               </td>

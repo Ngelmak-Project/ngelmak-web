@@ -131,20 +131,20 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_accountRelated" id="ngelmakprojectApp.ticket.accountRelated"
-            >Account Related</label
+          <label class="form-label" for="field_channelRelated" id="ngelmakprojectApp.ticket.channelRelated"
+            >Channel Related</label
           >
           <select
             class="form-control"
-            id="field_accountRelated"
-            data-cy="accountRelated"
-            name="accountRelated"
-            formControlName="accountRelated"
-            [compareWith]="compareAccount"
+            id="field_channelRelated"
+            data-cy="channelRelated"
+            name="channelRelated"
+            formControlName="channelRelated"
+            [compareWith]="compareChannel"
           >
             <option [ngValue]="null"></option>
-            @for (accountOption of accountsSharedCollection; track $index) {
-              <option [ngValue]="accountOption">{{ accountOption.id }}</option>
+            @for (channelOption of channelsSharedCollection; track $index) {
+              <option [ngValue]="channelOption">{{ channelOption.id }}</option>
             }
           </select>
         </div>
@@ -157,13 +157,13 @@
             data-cy="issuedby"
             name="issuedby"
             formControlName="issuedby"
-            [compareWith]="compareAccount"
+            [compareWith]="compareChannel"
           >
             @if (editForm.get(['issuedby'])!.value == null) {
               <option [ngValue]="null" selected></option>
             }
-            @for (accountOption of accountsSharedCollection; track $index) {
-              <option [ngValue]="accountOption">{{ accountOption.id }}</option>
+            @for (channelOption of channelsSharedCollection; track $index) {
+              <option [ngValue]="channelOption">{{ channelOption.id }}</option>
             }
           </select>
         </div>

@@ -8,7 +8,7 @@ import { AlertService } from "./../shared/alert/alert.service";
 import { AuthenticationService } from "app/core/auth/auth.service";
 import { ApplicationConfigService } from "app/core/config/application-config.service";
 import { IAccount } from "app/entities/models/nk-account.model";
-import { AccountService } from "app/entities/nk-account/nk-account.service";
+import { ChannelService } from "app/entities/nk-account/nk-account.service";
 import { finalize } from "rxjs";
 import { UserUpdateComponent } from "./user-update/user-update.component";
 
@@ -36,9 +36,9 @@ export default class UserAccountComponent implements OnInit {
   file: File = null;
 
   private fb = inject(FormBuilder);
-  private accountService = inject(AccountService);
+  private accountService = inject(ChannelService);
   user = inject(AuthenticationService).authentication;
-  account = inject(AccountService).account;
+  account = inject(ChannelService).account;
   isSaving = signal(false);
   isUploading = signal(false);
   flashBoxShadowState = null; // set to null to avoid flash box-shadow animation to first when the DOM starts.

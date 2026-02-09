@@ -1,4 +1,4 @@
-import { Component, inject, input, model, OnInit, output, signal } from '@angular/core';
+import { Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { CommentService } from 'app/entities/nk-comment/nk-comment.service';
 import { CommentUpdateComponent } from 'app/entities/nk-comment/update/nk-comment-update.component';
 
@@ -6,7 +6,7 @@ import { ICommentDTO } from 'app/entities/models/nk-comment.model';
 
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { CommentReactionDialogComponent } from 'app/entities/nk-comment-reaction/dialog/nk-comment-reaction-dialog.component';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { ConfirmDialogComponent } from 'app/shared/confirm-dialog/confirm-dialog.component';
@@ -37,7 +37,7 @@ export class CommentItemComponent implements OnInit {
 
   protected commentService = inject(CommentService);
   protected alertService = inject(AlertService);
-  account = inject(AccountService).account;
+  channel = inject(ChannelService).channel;
 
   replies = signal<ICommentDTO[]>([]);
   isLoading = signal(false);

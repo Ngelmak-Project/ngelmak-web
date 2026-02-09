@@ -85,9 +85,9 @@ export class ReviewUpdateComponent implements OnInit {
     // this.reviewFormService.resetForm(this.editForm, review);
 
     // this.reviewsSharedCollection = this.reviewService.addReviewToCollectionIfMissing<IReview>(this.reviewsSharedCollection, review.replyto);
-    // this.accountsSharedCollection = this.accountService.addAccountToCollectionIfMissing<IAccount>(
-    //   this.accountsSharedCollection,
-    //   review.account,
+    // this.channelsSharedCollection = this.channelService.addChannelToCollectionIfMissing<IChannel>(
+    //   this.channelsSharedCollection,
+    //   review.channel,
     // );
     // this.ticketsSharedCollection = this.ticketService.addTicketToCollectionIfMissing<ITicket>(this.ticketsSharedCollection, review.ticket);
   }
@@ -99,15 +99,15 @@ export class ReviewUpdateComponent implements OnInit {
     //   .pipe(map((reviews: IReview[]) => this.reviewService.addReviewToCollectionIfMissing<IReview>(reviews, this.review?.replyto)))
     //   .subscribe((reviews: IReview[]) => (this.reviewsSharedCollection = reviews));
 
-    // this.accountService
+    // this.channelService
     //   .query()
-    //   .pipe(map((res: HttpResponse<IAccount[]>) => res.body ?? []))
+    //   .pipe(map((res: HttpResponse<IChannel[]>) => res.body ?? []))
     //   .pipe(
-    //     map((accounts: IAccount[]) =>
-    //       this.accountService.addAccountToCollectionIfMissing<IAccount>(accounts, this.review?.account),
+    //     map((channels: IChannel[]) =>
+    //       this.channelService.addChannelToCollectionIfMissing<IChannel>(channels, this.review?.channel),
     //     ),
     //   )
-    //   .subscribe((accounts: IAccount[]) => (this.accountsSharedCollection = accounts));
+    //   .subscribe((channels: IChannel[]) => (this.channelsSharedCollection = channels));
 
     // this.ticketService
     //   .query()

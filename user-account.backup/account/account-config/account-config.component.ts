@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { IConfig } from 'app/entities/models/nk-config.model';
-import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { ChannelService } from 'app/entities/nk-account/nk-account.service';
 import SharedModule from 'app/shared/shared.module';
 
 @Component({
@@ -13,9 +13,9 @@ import SharedModule from 'app/shared/shared.module';
   styleUrl: './account-config.component.scss',
 })
 export class AccountConfigComponent {
-  private accountService = inject(AccountService);
+  private accountService = inject(ChannelService);
   user = inject(AuthenticationService).authentication;
-  account = inject(AccountService).account;
+  account = inject(ChannelService).account;
   isSaving = signal(false);
   flashBoxShadowState = null; // set to null to avoid flash box-shadow animation to first when the DOM starts.
 

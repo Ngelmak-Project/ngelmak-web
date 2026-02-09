@@ -83,25 +83,25 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_account" >Account</label>
+          <label class="form-label" for="field_channel" >Channel</label>
           <select
             class="form-control"
-            id="field_account"
-            data-cy="account"
-            name="account"
-            formControlName="account"
+            id="field_channel"
+            data-cy="channel"
+            name="channel"
+            formControlName="channel"
           >
-            @if (editForm.get(['account'])!.value == null) {
+            @if (editForm.get(['channel'])!.value == null) {
               <option [ngValue]="null" selected></option>
             }
-            @for (accountOption of accountsSharedCollection; track $index) {
-              <option [ngValue]="accountOption">{{ accountOption.id }}</option>
+            @for (channelOption of channelsSharedCollection; track $index) {
+              <option [ngValue]="channelOption">{{ channelOption.id }}</option>
             }
           </select>
         </div>
-        @if (editForm.get(['account'])!.invalid && (editForm.get(['account'])!.dirty || editForm.get(['account'])!.touched)) {
+        @if (editForm.get(['channel'])!.invalid && (editForm.get(['channel'])!.dirty || editForm.get(['channel'])!.touched)) {
           <div>
-            @if (editForm.get(['account'])?.errors?.['required']) {
+            @if (editForm.get(['channel'])?.errors?.['required']) {
               <small class="form-text text-danger" >Ce champ est obligatoire.</small>
             }
           </div>

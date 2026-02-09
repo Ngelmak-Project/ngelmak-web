@@ -11,7 +11,7 @@ import { SortService, sortStateSignal } from 'app/shared/sort';
 
 import { HttpResponse } from '@angular/common/http';
 import { AuthenticationService } from 'app/core/auth/auth.service';
-import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { PostDetailComponent } from 'app/entities/nk-post/detail/nk-post-detail.component';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { IPage } from 'app/shared/pagination/pagination.model';
@@ -48,7 +48,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   protected dataUtils = inject(DataUtils);
   protected authService = inject(AuthenticationService);
   protected scroll = inject(ScrollService);
-  account = inject(AccountService).account;
+  channel = inject(ChannelService).channel;
 
   protected ngZone = inject(NgZone);
 

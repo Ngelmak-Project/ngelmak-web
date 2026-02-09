@@ -43,9 +43,9 @@ export class CommentService {
     });
   }
 
-  findByAccount(id: number, req?: any): Observable<HttpResponse<IPage<ICommentDTO>>> {
+  findByChannel(id: number, req?: any): Observable<HttpResponse<IPage<ICommentDTO>>> {
     const options = createRequestOption(req);
-    return this.http.get<IPage<ICommentDTO>>(`${this.publicResourceUrl}/account/${id}`, {
+    return this.http.get<IPage<ICommentDTO>>(`${this.publicResourceUrl}/channel/${id}`, {
       params: options,
       observe: 'response',
     });

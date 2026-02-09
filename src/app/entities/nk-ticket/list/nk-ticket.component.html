@@ -85,9 +85,9 @@
                 <span class="p-1" class="sort"></span>
               </div>
             </th>
-            <th scope="col" ngelmakSortBy="accountRelated.id">
+            <th scope="col" ngelmakSortBy="channelRelated.id">
               <div class="d-flex">
-                <span >Account Related</span>
+                <span >Channel Related</span>
                 <span class="p-1" class="sort"></span>
               </div>
             </th>
@@ -128,16 +128,16 @@
                 }
               </td>
               <td>
-                @if (ticket.accountRelated) {
+                @if (ticket.channelRelated) {
                   <div>
-                    <a [routerLink]="['/nk-account', ticket.accountRelated.id, 'view']">{{ ticket.accountRelated.id }}</a>
+                    <a [routerLink]="['/nk-channel', ticket.channelRelated.id, 'view']">{{ ticket.channelRelated.id }}</a>
                   </div>
                 }
               </td>
               <td>
                 @if (ticket.issuedby) {
                   <div>
-                    <a [routerLink]="['/nk-account', ticket.issuedby.id, 'view']">{{ ticket.issuedby.id }}</a>
+                    <a [routerLink]="['/nk-channel', ticket.issuedby.id, 'view']">{{ ticket.issuedby.id }}</a>
                   </div>
                 }
               </td>

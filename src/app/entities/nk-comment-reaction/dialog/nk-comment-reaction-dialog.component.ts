@@ -14,7 +14,7 @@ import { HttpResponse } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ICommentReaction } from 'app/entities/models/nk-comment-reaction.model';
 import { ICommentDTO } from 'app/entities/models/nk-comment.model';
-import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import SharedModule from 'app/shared/shared.module';
 import { finalize, Observable } from 'rxjs';
 import { ReactionService } from '../nk-comment-reaction.service';
@@ -28,7 +28,7 @@ import { ReactionService } from '../nk-comment-reaction.service';
 export class CommentReactionDialogComponent implements OnInit {
   @Input() comment: ICommentDTO;
 
-  account = inject(AccountService).account;
+  channel = inject(ChannelService).channel;
   alertService = inject(AlertService);
   reactionService = inject(ReactionService);
 
@@ -76,7 +76,7 @@ export class CommentReactionDialogComponent implements OnInit {
     // Case 2: user changes or adds a reaction
     const reaction: ICommentReaction = {
       id: reactionId ?? undefined,
-      account: this.account(),
+      channel: this.channel(),
       comment: { id: this.comment.id },
       emoji,
     };

@@ -24,7 +24,7 @@ export class FeedService {
     });
   }
 
-  findByAccount(id: number, req?: any): Observable<HttpResponse<IPage<IFeed>>> {
+  findByChannel(id: number, req?: any): Observable<HttpResponse<IPage<IFeed>>> {
     const options = createRequestOption(req);
     return this.http.get<IPage<IFeed>>(`${this.resourceUrl}/me/${id}`, {
       params: options,

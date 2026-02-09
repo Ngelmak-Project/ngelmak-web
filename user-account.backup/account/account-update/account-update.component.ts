@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { IAccount } from 'app/entities/models/nk-account.model';
-import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { ChannelService } from 'app/entities/nk-account/nk-account.service';
 import { flashBoxShadow2000ms } from 'app/shared/animations/flash.animation';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
@@ -17,9 +17,9 @@ import { finalize } from 'rxjs';
 })
 export class AccountUpdateComponent implements OnInit {
   private fb = inject(FormBuilder);
-  private accountService = inject(AccountService);
+  private accountService = inject(ChannelService);
   user = inject(AuthenticationService).authentication;
-  account = inject(AccountService).account;
+  account = inject(ChannelService).account;
   isSaving = signal(false);
   flashBoxShadowState = null; // set to null to avoid flash box-shadow animation to first when the DOM starts.
 

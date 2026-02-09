@@ -38,7 +38,7 @@ type TicketFormGroupContent = {
   content: FormControl<TicketFormRawValue['content']>;
   postRelated: FormControl<TicketFormRawValue['postRelated']>;
   commentRelated: FormControl<TicketFormRawValue['commentRelated']>;
-  accountRelated: FormControl<TicketFormRawValue['accountRelated']>;
+  channelRelated: FormControl<TicketFormRawValue['channelRelated']>;
   issuedby: FormControl<TicketFormRawValue['issuedby']>;
 };
 
@@ -72,7 +72,7 @@ export class TicketFormService {
       content: new FormControl(ticketRawValue.content),
       postRelated: new FormControl(ticketRawValue.postRelated),
       commentRelated: new FormControl(ticketRawValue.commentRelated),
-      accountRelated: new FormControl(ticketRawValue.accountRelated),
+      channelRelated: new FormControl(ticketRawValue.channelRelated),
       issuedby: new FormControl(ticketRawValue.issuedby, {
         validators: [Validators.required],
       }),

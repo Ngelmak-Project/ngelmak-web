@@ -5,7 +5,7 @@ import { HttpResponse } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IPostDTO } from 'app/entities/models/nk-post.model';
 import { IReaction } from 'app/entities/models/nk-reaction.model';
-import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import SharedModule from 'app/shared/shared.module';
 import { finalize, Observable } from 'rxjs';
@@ -20,7 +20,7 @@ import { ReactionService } from '../nk-reaction.service';
 export class ReactionDialogComponent implements OnInit {
   @Input() post: IPostDTO;
 
-  account = inject(AccountService).account;
+  channel = inject(ChannelService).channel;
   alertService = inject(AlertService);
   reactionService = inject(ReactionService);
 
@@ -65,7 +65,7 @@ export class ReactionDialogComponent implements OnInit {
     // Case 2: user changes or adds a reaction
     const reaction: IReaction = {
       id: reactionId ?? undefined,
-      account: this.account(),
+      channel: this.channel(),
       post: { id: this.post.id },
       emoji,
     };

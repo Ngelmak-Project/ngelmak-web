@@ -1,10 +1,10 @@
-import { IAccount } from './nk-account.model';
+import { IChannel } from './nk-channel.model';
 import { IPost } from './nk-post.model';
 
 export interface IReaction {
   id?: number;
   post?: IPost;
-  account?: IAccount;
+  channel?: IChannel;
   emoji?: string;
 }
 

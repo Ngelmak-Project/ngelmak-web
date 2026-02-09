@@ -53,11 +53,11 @@
               </div>
             }
           </dd>
-          <dt><span >Account Related</span></dt>
+          <dt><span >Channel Related</span></dt>
           <dd>
-            @if (ticket()!.accountRelated) {
+            @if (ticket()!.channelRelated) {
               <div>
-                <a [routerLink]="['/nk-account', ticket()!.accountRelated?.id, 'view']">{{ ticket()!.accountRelated?.id }}</a>
+                <a [routerLink]="['/nk-channel', ticket()!.channelRelated?.id, 'view']">{{ ticket()!.channelRelated?.id }}</a>
               </div>
             }
           </dd>
@@ -65,7 +65,7 @@
           <dd>
             @if (ticket()!.issuedby) {
               <div>
-                <a [routerLink]="['/nk-account', ticket()!.issuedby?.id, 'view']">{{ ticket()!.issuedby?.id }}</a>
+                <a [routerLink]="['/nk-channel', ticket()!.issuedby?.id, 'view']">{{ ticket()!.issuedby?.id }}</a>
               </div>
             }
           </dd>

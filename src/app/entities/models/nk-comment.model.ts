@@ -1,4 +1,4 @@
-import { IAccount, IAccountDTO } from 'app/entities/models/nk-account.model';
+import { IChannel, IChannelDTO } from 'app/entities/models/nk-channel.model';
 import { IFile, IFileDTO } from './nk-file.model';
 import { IPost, IPostDTO } from './nk-post.model';
 import { IReactionSummaryDTO } from './nk-reaction.model';
@@ -11,7 +11,7 @@ export interface IComment {
   content?: string | null;
   post?: IPost | null;
   file?: IFile | null;
-  account?: IAccount | null;
+  channel?: IChannel | null;
   replyTo?: IComment | null;
   comments?: IComment[];
 }
@@ -23,7 +23,7 @@ export interface ICommentDTO {
   content?: string;
   post?: IPostDTO;
   file?: IFileDTO;
-  account?: IAccountDTO;
+  channel?: IChannelDTO;
   replyTo?: ICommentDTO;
   reactions?: IReactionSummaryDTO;
 }

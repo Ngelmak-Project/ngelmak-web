@@ -112,9 +112,9 @@ export class TicketUpdateComponent implements OnInit {
     //   this.commentsSharedCollection,
     //   ticket.commentRelated,
     // );
-    // this.accountsSharedCollection = this.accountService.addAccountToCollectionIfMissing<IAccount>(
-    //   this.accountsSharedCollection,
-    //   ticket.accountRelated,
+    // this.channelsSharedCollection = this.channelService.addChannelToCollectionIfMissing<IChannel>(
+    //   this.channelsSharedCollection,
+    //   ticket.channelRelated,
     //   ticket.issuedby,
     // );
   }
@@ -134,18 +134,18 @@ export class TicketUpdateComponent implements OnInit {
     //   )
     //   .subscribe((comments: IComment[]) => (this.commentsSharedCollection = comments));
 
-    // this.accountService
+    // this.channelService
     //   .query()
-    //   .pipe(map((res: HttpResponse<IAccount[]>) => res.body ?? []))
+    //   .pipe(map((res: HttpResponse<IChannel[]>) => res.body ?? []))
     //   .pipe(
-    //     map((accounts: IAccount[]) =>
-    //       this.accountService.addAccountToCollectionIfMissing<IAccount>(
-    //         accounts,
-    //         this.ticket?.accountRelated,
+    //     map((channels: IChannel[]) =>
+    //       this.channelService.addChannelToCollectionIfMissing<IChannel>(
+    //         channels,
+    //         this.ticket?.channelRelated,
     //         this.ticket?.issuedby,
     //       ),
     //     ),
     //   )
-    //   .subscribe((accounts: IAccount[]) => (this.accountsSharedCollection = accounts));
+    //   .subscribe((channels: IChannel[]) => (this.channelsSharedCollection = channels));
   }
 }

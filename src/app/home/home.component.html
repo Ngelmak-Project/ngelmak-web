@@ -1,29 +1,25 @@
 <div
-  class="flex justify-center items-start gap-2 lg:gap-4 px-4 py-2 lg:pt-4 bg-gray-100 dark:bg-gray-900 min-h-screen mx-auto"
+  class="flex justify-center items-start gap-2 lg:gap-4 p-0 md:p-2 lg:pt-4 bg-gray-100 dark:bg-gray-900 min-h-screen mx-auto"
 >
-  <!-- LEFT SIDEBAR (sticky) -->
-  <div
-    class="hidden md:flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded md:rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 sticky top-2 overflow-y-auto w-1/4"
+  <!-- LEFT SIDEBAR (hidden on small screens) -->
+  <aside
+    class="hidden md:flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 sticky top-2 overflow-y-auto w-1/4"
   >
     @if (user()) {
-      <!-- AUTHENTICATED USER -->
-      <app-account-view></app-account-view>
+      <app-channel-view></app-channel-view>
     } @else {
-      <!-- GUEST VIEW -->
+      <!-- Guest view -->
       <div class="pt-4">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
           Rejoignez la discussion
         </h3>
-
         <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
-          Créer un compte ne prend que quelques instants. Rejoignez la communauté et commencez à
-          partager vos idées, réagir aux publications et suivre les sujets qui vous inspirent.
+          Créer un compte ne prend que quelques instants...
         </p>
-
         <div class="flex flex-col gap-2">
           <button
             routerLink="/sign-in"
-            class="inline-flex items-center justify-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
+            class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
           >
             Se connecter
           </button>
@@ -37,19 +33,19 @@
         </div>
       </div>
     }
-  </div>
+  </aside>
 
-  <!-- MAIN FEED (scrolls normally) -->
-  <div
-    class="flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded md:rounded-lg shadow-sm w-2/4"
+  <!-- MAIN FEED (always visible, full width on small screens) -->
+  <main
+    class="flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm w-full md:w-2/4"
   >
     <app-post-update></app-post-update>
     <app-feed></app-feed>
-  </div>
+  </main>
 
-  <!-- RIGHT SIDEBAR (sticky) -->
-  <div
-    class="hidden md:flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded md:rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 sticky top-2 overflow-y-auto w-1/4"
+  <!-- RIGHT SIDEBAR (hidden on small screens) -->
+  <aside
+    class="hidden md:flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 sticky top-2 overflow-y-auto w-1/4"
   >
     <div>
       @if (showContactForm()) {
@@ -80,5 +76,5 @@
         </div>
       }
     </div>
-  </div>
+  </aside>
 </div>

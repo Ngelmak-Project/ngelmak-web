@@ -33,7 +33,7 @@ type MembershipFormGroupContent = {
   id: FormControl<MembershipFormRawValue['id'] | IMembership['id']>;
   at: FormControl<MembershipFormRawValue['at']>;
   activateNotification: FormControl<MembershipFormRawValue['activateNotification']>;
-  account: FormControl<MembershipFormRawValue['account']>;
+  channel: FormControl<MembershipFormRawValue['channel']>;
   subscriber: FormControl<MembershipFormRawValue['subscriber']>;
 };
 
@@ -56,7 +56,7 @@ export class MembershipFormService {
       ),
       at: new FormControl(membershipRawValue.at),
       activateNotification: new FormControl(membershipRawValue.activateNotification),
-      account: new FormControl(membershipRawValue.account, {
+      channel: new FormControl(membershipRawValue.channel, {
         validators: [Validators.required],
       }),
       subscriber: new FormControl(membershipRawValue.subscriber, {

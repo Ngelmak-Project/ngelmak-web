@@ -19,11 +19,11 @@
           <dd>
             <span>{{ membership()!.activateNotification }}</span>
           </dd>
-          <dt><span >Account</span></dt>
+          <dt><span >Channel</span></dt>
           <dd>
-            @if (membership()!.account) {
+            @if (membership()!.channel) {
               <div>
-                <a [routerLink]="['/nk-account', membership()!.account?.id, 'view']">{{ membership()!.account?.id }}</a>
+                <a [routerLink]="['/nk-channel', membership()!.channel?.id, 'view']">{{ membership()!.channel?.id }}</a>
               </div>
             }
           </dd>
@@ -31,7 +31,7 @@
           <dd>
             @if (membership()!.subscriber) {
               <div>
-                <a [routerLink]="['/nk-account', membership()!.subscriber?.id, 'view']">{{ membership()!.subscriber?.id }}</a>
+                <a [routerLink]="['/nk-channel', membership()!.subscriber?.id, 'view']">{{ membership()!.subscriber?.id }}</a>
               </div>
             }
           </dd>

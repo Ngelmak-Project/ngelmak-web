@@ -586,7 +586,7 @@
               @if (user()) {
                 <li *hasAnyAuthority="'ROLE_ADMIN'">
                   <a
-                    routerLink="/account-management"
+                    routerLink="/channel-management"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
                   >
                     <svg
@@ -624,8 +624,8 @@
                     <span class="flex-1 ms-3 whitespace-nowrap text-start">Utilisateurs</span>
                   </a>
                 </li>
-                @if (account()) {
-                  <!-- My account :
+                @if (channel()) {
+                  <!-- My channel :
 (Everything related to the social media / information sharing service)
 Core items:
     Publications
@@ -636,7 +636,7 @@ Additional items you can add:
     Brouillons (draft posts)
     Favoris / Enregistrés
     Statistiques personnelles (views, likes, reach)
-    Paramètres de visibilité (public / private account)
+    Paramètres de visibilité (public / private channel)
     Gestion de la bannière
     Gestion de l’avatar
     Bio / description
@@ -650,7 +650,7 @@ Additional items you can add:
                   -->
                   <li>
                     <a
-                      routerLink="/account"
+                      routerLink="/channel"
                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
                     >
                       <svg
@@ -671,7 +671,7 @@ Additional items you can add:
                 } @else {
                   <li>
                     <a
-                      routerLink="/account/new"
+                      routerLink="/channel/new"
                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
                     >
                       <svg

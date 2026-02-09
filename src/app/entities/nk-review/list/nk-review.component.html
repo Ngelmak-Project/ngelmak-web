@@ -59,9 +59,9 @@
                 <span class="p-1" class="sort"></span>
               </div>
             </th>
-            <th scope="col" ngelmakSortBy="account.id">
+            <th scope="col" ngelmakSortBy="channel.id">
               <div class="d-flex">
-                <span >Account</span>
+                <span >Channel</span>
                 <span class="p-1" class="sort"></span>
               </div>
             </th>
@@ -102,9 +102,9 @@
               </td>
               <td>{{ review.timeout }}</td>
               <td>
-                @if (review.account) {
+                @if (review.channel) {
                   <div>
-                    <a [routerLink]="['/nk-account', review.account.id, 'view']">{{ review.account.id }}</a>
+                    <a [routerLink]="['/nk-channel', review.channel.id, 'view']">{{ review.channel.id }}</a>
                   </div>
                 }
               </td>

@@ -103,9 +103,9 @@ export class PostService {
     });
   }
 
-  findByAccount(id: number, req?: any): Observable<HttpResponse<IPage<IPost>>> {
+  findByChannel(id: number, req?: any): Observable<HttpResponse<IPage<IPost>>> {
     const options = createRequestOption(req);
-    return this.http.get<IPage<IPost>>(`${this.resourceUrl}/nk-account/${id}`, {
+    return this.http.get<IPage<IPost>>(`${this.resourceUrl}/nk-channel/${id}`, {
       params: options,
       observe: "response",
     });

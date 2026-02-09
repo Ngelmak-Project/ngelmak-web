@@ -12,7 +12,7 @@ import SharedModule from 'app/shared/shared.module';
 import { Field, form, maxLength, required } from '@angular/forms/signals';
 import { AttachmentType } from 'app/entities/enumerations/attachment-type.model';
 import { Visibility } from 'app/entities/enumerations/visibility.model';
-import { AccountService } from 'app/entities/nk-account/nk-account.service';
+import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { AlertService } from 'app/shared/alert/alert.service';
 
 const initPost: IPost = {
@@ -40,7 +40,7 @@ export class PostUpdateComponent implements OnInit {
   protected isLoading = signal(false);
   protected deletedFiles: IFile[] = [];
   // protected files: IFile[] = [];
-  account = inject(AccountService).account;
+  channel = inject(ChannelService).channel;
   expandedIndexes: Set<number> = new Set<number>();
 
   protected postModel = signal<IPost>(initPost);

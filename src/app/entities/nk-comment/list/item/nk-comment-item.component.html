@@ -13,22 +13,22 @@
         <!-- Avatar -->
         <a
           [routerLink]="[
-            'nk-account',
-            commentSig().account?.id + '-' + commentSig().account?.identifier,
+            'nk-channel',
+            commentSig().channel?.id + '-' + commentSig().channel?.identifier,
             'view',
           ]"
         >
-          @if (commentSig().account?.avatar) {
+          @if (commentSig().channel?.avatar) {
             <img
-              [src]="commentSig().account?.avatar"
-              alt="Account avatar"
+              [src]="commentSig().channel?.avatar"
+              alt="Channel avatar"
               class="rounded-full max-w-none w-6 h-6"
             />
           } @else {
             <div
               class="flex items-center justify-center rounded-full max-w-none w-6 h-6 text-xl uppercase text-black bg-gray-50 dark:bg-gray-300]"
             >
-              {{ commentSig().account?.name.at(0) }}
+              {{ commentSig().channel?.name.at(0) }}
             </div>
           }
         </a>
@@ -36,11 +36,11 @@
     }
 
     <div class="flex flex-col w-full gap-1">
-      <!-- Account info -->
+      <!-- Channel info -->
       <div class="flex flex-col w-full gap-2">
-        <!-- Account info -->
+        <!-- Channel info -->
         <div class="flex items-center gap-2">
-          <span class="text-xs text-gray-500">@{{ commentSig().account?.name }}</span>
+          <span class="text-xs text-gray-500">@{{ commentSig().channel?.name }}</span>
 
           <!-- Dropdown wrapper -->
           <div class="relative ml-auto" clickOutside (onClickOutside)="openMenu.set(false)">
@@ -96,7 +96,7 @@
                   </button>
                 </li>
 
-                @if (commentSig().account?.id == account()?.id) {
+                @if (commentSig().channel?.id == channel()?.id) {
                   <li>
                     <button
                       (click)="isUpdating.set(true)"
@@ -187,7 +187,7 @@
       <div class="text-gray-900 dark:text-white">
         @if (level() > 0 && replyTo) {
           <span class="text-blue-600 dark:text-blue-400 font-medium">
-            @{{ replyTo()?.account?.name }}
+            @{{ replyTo()?.channel?.name }}
           </span>
         }
         @if (!isUpdating()) {

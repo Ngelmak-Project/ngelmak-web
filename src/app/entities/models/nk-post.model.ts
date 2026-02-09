@@ -1,8 +1,8 @@
 import { IFileDTO } from './nk-file.model';
-import { IAccountDTO } from './nk-account.model';
+import { IChannelDTO } from './nk-channel.model';
 import { Status } from 'app/entities/enumerations/status.model';
 import { Visibility } from 'app/entities/enumerations/visibility.model';
-import { IAccount } from 'app/entities/models/nk-account.model';
+import { IChannel } from 'app/entities/models/nk-channel.model';
 import { IComment } from 'app/entities/models/nk-comment.model';
 import { IFile } from 'app/entities/models/nk-file.model';
 import { IReactionSummaryDTO } from './nk-reaction.model';
@@ -16,7 +16,7 @@ export interface IPost {
   visibility?: keyof typeof Visibility | null;
   content?: string | null;
   status?: keyof typeof Status | null;
-  account?: IAccount | null;
+  channel?: IChannel | null;
   files?: IFile[];
   comments?: IComment[];
 }
@@ -28,7 +28,7 @@ export interface IPostDTO {
   lastUpdate?: Date;
   visibility?: Visibility;
   status?: Status;
-  account?: IAccountDTO;
+  channel?: IChannelDTO;
   files?: IFileDTO[];
   reactions?: IReactionSummaryDTO;
   commentCount?: number;
