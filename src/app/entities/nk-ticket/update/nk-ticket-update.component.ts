@@ -17,7 +17,6 @@ import { CommentService } from 'app/entities/nk-comment/nk-comment.service';
 import { PostService } from 'app/entities/nk-post/nk-post.service';
 import { IAlert } from 'app/shared/alert/alert.service';
 import { TicketService } from '../service/nk-ticket.service';
-import { TicketFormGroup, TicketFormService } from './nk-ticket-form.service';
 
 @Component({
   standalone: true,
@@ -36,13 +35,11 @@ export class TicketUpdateComponent implements OnInit {
   protected dataUtils = inject(DataUtils);
   protected eventManager = inject(EventManager);
   protected ticketService = inject(TicketService);
-  protected ticketFormService = inject(TicketFormService);
   protected postService = inject(PostService);
   protected commentService = inject(CommentService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  editForm: TicketFormGroup = this.ticketFormService.createTicketFormGroup();
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ ticket }) => {
@@ -64,10 +61,6 @@ export class TicketUpdateComponent implements OnInit {
   }
 
   setFileData(event: Event, field: string, isImage: boolean): void {
-    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe({
-      error: (err: FileLoadError) =>
-        this.eventManager.broadcast(new EventWithContent<IAlert>('ngelmakprojectApp.error', {type: "error"})),
-    });
   }
 
   previousState(): void {
@@ -76,12 +69,11 @@ export class TicketUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    const ticket = this.ticketFormService.getTicket(this.editForm);
-    if (ticket.id !== null) {
-      this.subscribeToSaveResponse(this.ticketService.update(ticket));
-    } else {
-      this.subscribeToSaveResponse(this.ticketService.create(ticket));
-    }
+    // if (ticket.id !== null) {
+    //   this.subscribeToSaveResponse(this.ticketService.update(ticket));
+    // } else {
+    //   this.subscribeToSaveResponse(this.ticketService.create(ticket));
+    // }
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ITicket>>): void {
@@ -105,7 +97,6 @@ export class TicketUpdateComponent implements OnInit {
 
   protected updateForm(ticket: ITicket): void {
     this.ticket = ticket;
-    this.ticketFormService.resetForm(this.editForm, ticket);
 
     // this.postsSharedCollection = this.postService.addPostToCollectionIfMissing<IPost>(this.postsSharedCollection, ticket.postRelated);
     // this.commentsSharedCollection = this.commentService.addCommentToCollectionIfMissing<IComment>(

@@ -3,7 +3,9 @@
 >
   <div class="w-full mb-1">
     <div class="mb-4">
-      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Liste des utilisateurs</h1>
+      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
+        Liste des utilisateurs
+      </h1>
     </div>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -19,7 +21,6 @@
           >
             <svg
               class="w-3 h-3 text-gray-500 dark:text-gray-400 me-3"
-              aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
               viewBox="0 0 20 20"
@@ -31,7 +32,6 @@
             Last 30 days
             <svg
               class="w-2.5 h-2.5 ms-2.5"
-              aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 10 6"
@@ -161,7 +161,6 @@
           >
             <svg
               class="w-5 h-5 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -205,11 +204,6 @@
                 scope="row"
                 class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
               >
-                <!-- <img
-                  class="w-10 h-10 rounded-full"
-                  src="/images/people/profile-picture-1.jpg"
-                  alt="Jese image"
-                /> -->
                 @if (user.imageUrl) {
                   <img [src]="user.imageUrl" alt="User avatar" class="rounded-full w-10 h-10" />
                 } @else {
@@ -229,18 +223,18 @@
               <td class="px-6 py-4">{{ user.createdDate | formatMediumDatetime }}</td>
               <td class="px-6 py-4">
                 <div class="flex items-center">
-                  @if (user.activated) {
-                    <span class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></span>
-                    <span class="hidden sm:visible">Activé</span>
-                  } @else {
+                  @if (user.blocked) {
                     <span class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></span>
-                    <span class="hidden sm:visible">Désactivé</span>
+                    <span class="text-red-500">Non bloqué</span>
+                  } @else {
+                    <span class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></span>
+                    <span class="text-green-500">Bloqué</span>
                   }
                 </div>
               </td>
               <td class="px-6 py-4">
                 <!-- Dropdown wrapper -->
-                <div class="relative ml-auto" clickOutside (onClickOutside)="openMenu.set(-1)">
+                <div class="relative ml-auto">
                   <!-- Trigger button -->
                   <button
                     class="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition"
@@ -268,16 +262,18 @@
                     >
                       <li>
                         <button
+                          [disabled]="loadingSignal()"
+                          (click)="toggleBlock(user)"
                           class="w-full inline-flex items-center justify-between text-left px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                         >
-                          Report
-
+                          @if (user.blocked) {
+                            Débloquer
+                          } @else {
+                            Bloquer
+                          }
                           <svg
                             class="w-4 h-4"
-                            aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
                             fill="none"
                             viewBox="0 0 24 24"
                           >
@@ -291,19 +287,15 @@
                           </svg>
                         </button>
                       </li>
-
                       <li>
                         <button
-                          class="w-full inline-flex items-center justify-between text-left px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                          [disabled]="user.activated"
+                          class="w-full inline-flex items-center justify-between text-left px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition disabled:cursor-not-allowed disabled:text-gray-400 disabled:hover:bg-transparent"
                         >
-                          Update
-
+                          Activer
                           <svg
                             class="w-4 h-4"
-                            aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
                             fill="none"
                             viewBox="0 0 24 24"
                           >
@@ -312,33 +304,7 @@
                               stroke-linecap="round"
                               stroke-linejoin="round"
                               stroke-width="2"
-                              d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"
-                            />
-                          </svg>
-                        </button>
-                      </li>
-
-                      <li>
-                        <button
-                          class="w-full inline-flex items-center justify-between text-left px-3 py-2 rounded-md text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition"
-                        >
-                          Delete
-
-                          <svg
-                            class="w-4 h-4"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              stroke="currentColor"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                              d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                             />
                           </svg>
                         </button>
@@ -366,7 +332,6 @@
           >
             <svg
               class="w-3.5 h-3.5 me-2 rtl:rotate-180"
-              aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 14 10"
@@ -464,7 +429,6 @@
             Suivant
             <svg
               class="w-3.5 h-3.5 ms-2 rtl:rotate-180"
-              aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 14 10"

@@ -1,9 +1,10 @@
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { LANGUAGES } from 'app/config/language.constants';
 import { fadeInOutRight400ms } from 'app/shared/animations/fade-in-out-right.animation';
-import { Subscription } from 'rxjs';
+import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import { NavbarService } from '../navbar/navbar.component';
-import { ClickOutsideDirective } from "app/shared/directives/click-outside.directive";
+import { StateStorageService } from 'app/core/auth/state-storage.service';
 
 @Component({
   standalone: true,
@@ -12,19 +13,24 @@ import { ClickOutsideDirective } from "app/shared/directives/click-outside.direc
   animations: [fadeInOutRight400ms],
   imports: [RouterModule, ClickOutsideDirective],
 })
-export class SidebarComponent implements OnInit, OnDestroy {
+export class SidebarComponent {
+  languages = LANGUAGES;
   private sidebarBehavior = inject(NavbarService);
+  private stateStorageService = inject(StateStorageService);
 
-  private subscription: Subscription;
-  showSidebar = signal(false);
   showNgelmakSubMenu = signal(false);
 
-  ngOnInit(): void {
-    this.subscription = this.sidebarBehavior.subject$.subscribe(state => (this.showSidebar.set(state)));
+  showSidebar = computed(() => {
+    return this.sidebarBehavior.state();
+  });
+
+  // Close the sidebar when clicking outside of it.
+  closeSidebar(): void {
+    this.sidebarBehavior.state.set(false);
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  changeLanguage(languageKey: string): void {
+    this.stateStorageService.storeLocale(languageKey);
+    // this.translateService.use(languageKey);
   }
-
 }

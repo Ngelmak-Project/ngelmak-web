@@ -1,38 +1,40 @@
+import { AlertService } from 'app/shared/alert/alert.service';
 import { HttpResponse } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { combineLatest } from 'rxjs';
+import { combineLatest, finalize } from 'rxjs';
 
 import { SORT } from 'app/config/navigation.constants';
-import { Authentication } from 'app/core/auth/auth.model';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { FormatMediumDatetimePipe } from 'app/shared/date';
 import { IPage } from 'app/shared/pagination/pagination.model';
 import SharedModule from 'app/shared/shared.module';
 import { SortService, sortStateSignal } from 'app/shared/sort';
+import { UserManagementModel } from '../user-management.model';
 import { UserManagementService } from '../user-management.service';
-import { ClickOutsideDirective } from "app/shared/directives/click-outside.directive";
 
 @Component({
   standalone: true,
   selector: 'app-user-management',
   templateUrl: './user-management.component.html',
-  imports: [RouterModule, SharedModule, FormatMediumDatetimePipe, ClickOutsideDirective],
+  imports: [RouterModule, SharedModule, FormatMediumDatetimePipe],
 })
-export default class UserManagementComponent implements OnInit {
+export default class UserManagementModelManagementComponent implements OnInit {
   /** Dependencies */
   private router = inject(Router);
   private userService = inject(UserManagementService);
   private sortService = inject(SortService);
   private activatedRoute = inject(ActivatedRoute);
+  private alertService = inject(AlertService);
   adminUser = inject(AuthenticationService).authentication;
 
   /** UI state */
   openMenu = signal(-1);
 
   /** Data state */
-  users = signal<Authentication[] | null>(null);
+  users = signal<UserManagementModel[] | null>(null);
   isLoading = signal(false);
+  loadingSignal = signal(false);
   totalItems = signal(245);
 
   /** Pagination state */
@@ -43,7 +45,7 @@ export default class UserManagementComponent implements OnInit {
   hidePageSizeOptions = signal(true);
 
   /** Sorting state */
-  sortState = sortStateSignal({order: 'desc', predicate: 'createdDate'});
+  sortState = sortStateSignal({ order: 'desc', predicate: 'createdDate' });
 
   ngOnInit(): void {
     this.handleNavigation();
@@ -53,9 +55,43 @@ export default class UserManagementComponent implements OnInit {
    * Activate or deactivate a user.
    * Reloads the list after the update completes.
    */
-  setActive(user: Authentication, isActivated: boolean): void {
-    this.userService.update({ ...user, activated: isActivated }).subscribe(() => {
+  setActive(user: UserManagementModel, isActivated: boolean): void {
+    this.userService.setActive(user.id, isActivated).subscribe(() => {
       this.loadAll();
+    });
+  }
+
+  /**
+   * Block or unblock a user.
+   * @param user to block/unblock.
+   */
+  toggleBlock(user: UserManagementModel): void {
+    const id = user.id;
+    const targetState = !user.blocked; // true = block, false = unblock
+
+    // Set the appropriate loading state based on the action
+    this.loadingSignal.set(true);
+
+    // Choose the correct service method based on the target state.
+    const request$ = targetState
+      ? this.userService.blockUser(id)
+      : this.userService.unblockUser(id);
+
+    request$.pipe(finalize(() => this.loadingSignal.set(false))).subscribe(() => {
+      this.alertService.addAlert({
+        type: 'success',
+        translationKey: targetState
+          ? 'userManagement.block.success'
+          : 'userManagement.unblock.success',
+        translationParams: { param: id },
+        message: `Utilisateur @${user.login} a été ${targetState ? 'bloqué' : 'débloqué'} avec succès.`,
+      });
+      // Update the local user list to reflect the change immediately.
+      this.users.update(
+        (users) => users?.map((u) => (u.id === id ? { ...u, blocked: targetState } : u)) ?? null,
+      );
+
+      this.openMenu.set(-1);
     });
   }
 
@@ -71,10 +107,9 @@ export default class UserManagementComponent implements OnInit {
         size: this.pageSize(),
         sort: this.sortService.buildSortParam(this.sortState(), 'createdDate'),
       })
+      .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
-        next: ({ body }: HttpResponse<IPage<Authentication>>) => {
-          this.isLoading.set(false);
-
+        next: ({ body }: HttpResponse<IPage<UserManagementModel>>) => {
           if (!body) return;
 
           this.totalItems.set(Number(body.totalElements));
@@ -84,7 +119,6 @@ export default class UserManagementComponent implements OnInit {
           const totalPages = Math.ceil(body.totalElements / this.pageSize());
           this.hasNextPage.set(this.currentPage() < totalPages);
         },
-        error: () => this.isLoading.set(false),
       });
   }
 

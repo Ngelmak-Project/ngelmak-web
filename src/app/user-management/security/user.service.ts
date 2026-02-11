@@ -85,4 +85,35 @@ export class UserService {
       observe: 'response',
     });
   }
+
+  /**
+   * Requests a specific authority/role for the connected user, along with a motivation for the request.
+   * @param authorityName authority name the user request.
+   * @param motivation short motivation text.
+   */
+  requestAuthority(authorityName: string, motivation: string): Observable<any> {
+    return this.http.post(
+      `${this.resourceUrl}/authorities/request`,
+      { authorityName, motivation },
+      { observe: 'response' },
+    );
+  }
+
+  /**
+   * Retrieves a list of authorities/roles that the connected user has requested but have not yet been granted or denied.
+   */
+  findRequestedAuthorities(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.resourceUrl}/authorities/requests`);
+  }
+
+  /**
+   * Contact us form submission, allowing users to send messages to the support team or administrators.
+   * @param name of the user sending the message.
+   * @param email of the user sending the message.
+   * @param subject of the contact message.
+   * @param message content of the contact message.
+   */
+  contactUs(name: string, email: string, subject: string, message: string): Observable<void> {
+    return this.http.post<void>(`${this.applicationConfigService.getEndpointFor('auth/public')}/support/contact`, { name, email, subject, message });
+  }
 }

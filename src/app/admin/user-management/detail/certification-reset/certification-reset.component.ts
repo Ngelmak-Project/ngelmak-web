@@ -13,16 +13,16 @@ export class CertificationResetComponent {
   private userService = inject(UserManagementService);
   private alertService = inject(AlertService);
 
-  login: string;
+  id: number | undefined;
   isSaving = signal(false);
 
   save() {
     this.isSaving.set(true);
-    this.userService.certificationWithdrawal(this.login).subscribe({
+    this.userService.certificationWithdrawal(this.id).subscribe({
       next: (res) => {
         this.alertService.addAlert({
           type: "warning",
-          message: `Le compte associé au nom d'utilisateur ${this.login} n'est plus certifié.`,
+          message: `Le compte associé au nom d'utilisateur ${this.id} n'est plus certifié.`,
         });
         // this.dialogRef.close(res.body);
         this.isSaving.set(false);

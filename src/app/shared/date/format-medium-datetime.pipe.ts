@@ -7,7 +7,7 @@ import dayjs from 'dayjs/esm';
   name: 'formatMediumDatetime',
 })
 export default class FormatMediumDatetimePipe implements PipeTransform {
-  transform(date: Date | null | undefined): string {
+  transform(date: Date | dayjs.Dayjs | null | undefined): string {
     return date ? dayjs(date).format('D MMM YYYY HH:mm') : '';
   }
 }

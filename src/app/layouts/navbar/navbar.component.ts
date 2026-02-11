@@ -1,24 +1,17 @@
-import { Component, inject, Injectable, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, Injectable, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { SignInService } from 'app/authentication/sign-in/sign-in.service';
-import { LANGUAGES } from 'app/config/language.constants';
 import { AuthenticationService } from 'app/core/auth/auth.service';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import SharedModule from 'app/shared/shared.module';
-import { BehaviorSubject, fromEvent } from 'rxjs';
+import { environment } from 'environments/environment.development';
 
 @Injectable({ providedIn: 'root' })
 export class NavbarService {
-  private subject = new BehaviorSubject<boolean>(false);
-  subject$ = this.subject.asObservable();
-
-  triggerUpdate(value: boolean) {
-    this.subject.next(value);
-  }
+  state = signal<boolean>(false);
 }
 
 @Component({
@@ -29,47 +22,24 @@ export class NavbarService {
   imports: [RouterModule, SharedModule, ClickOutsideDirective],
   animations: [fadeInUp400ms],
 })
-export default class NavbarComponent implements OnInit {
-  private stateStorageService = inject(StateStorageService);
+export default class NavbarComponent {
   private sidebarBehavior = inject(NavbarService);
   private signInService = inject(SignInService);
   private router = inject(Router);
   user = inject(AuthenticationService).authentication;
   channel = inject(ChannelService).channel;
-  channelService = inject(ChannelService);
-
-  resize$ = fromEvent(window, 'resize');
-
-  inProduction?: boolean;
+  inProduction?: boolean = environment.production;
   isNavbarCollapsed = signal(true);
-  languages = LANGUAGES;
-  openAPIEnabled?: boolean;
 
   isDarkMode = signal(true); // Manage the dark mode state
   isSidebarOpened = signal(false);
-  showAppsDropdown = signal(false);
   showUserSettings = signal(false);
 
-  ngOnInit(): void {
-    // this.updateSideView(); // Detect the initial size of the window.
-    // this.channelService.identity().subscribe(); // update user channel from the cache.
-
-    // this.channelService.currentAccount().subscribe(); // get nk-channel from the cache.
-    this.resize$
-      // .pipe(
-      //   map((i: any) => i),
-      //   debounceTime(500) // He waits > 0.5s between 2 events emitted before running the next.
-      // )
-      .subscribe(() => this.updateSideView());
-  }
-
-  private updateSideView() {
-    if (window.innerWidth >= 1024) {
-      this.isSidebarOpened.set(true);
-    } else {
-      this.isSidebarOpened.set(false);
-    }
-    this.sidebarBehavior.triggerUpdate(this.isSidebarOpened());
+  constructor() {
+    effect(() => {
+      const value = this.sidebarBehavior.state();
+      this.isSidebarOpened.set(value);
+    });
   }
 
   toggleDarkMode() {
@@ -86,12 +56,7 @@ export default class NavbarComponent implements OnInit {
 
   toggleSidebar() {
     this.isSidebarOpened.set(!this.isSidebarOpened());
-    this.sidebarBehavior.triggerUpdate(this.isSidebarOpened());
-  }
-
-  changeLanguage(languageKey: string): void {
-    this.stateStorageService.storeLocale(languageKey);
-    // this.translateService.use(languageKey);
+    this.sidebarBehavior.state.set(this.isSidebarOpened());
   }
 
   collapseNavbar(): void {

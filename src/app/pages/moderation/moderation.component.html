@@ -1,17 +1,20 @@
-<section class="max-w-3xl mx-auto my-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-
+<section
+  class="max-w-3xl mx-auto my-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700"
+>
   <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Modération</h1>
 
   <p class="font-normal text-gray-700 dark:text-gray-400 mb-4">
-    La modération sur Ngelmak repose sur une éthique claire : protéger la dignité des membres, garantir la qualité des
-    échanges et préserver un espace d’expression responsable. Elle ne vise jamais à censurer des idées, mais à maintenir
-    un climat de respect, de rigueur et de réflexion constructive.
+    La modération sur Ngelmak repose sur une éthique claire : protéger la dignité des membres,
+    garantir la qualité des échanges et préserver un espace d'expression responsable. Elle ne vise
+    jamais à censurer des idées, mais à maintenir un climat de respect, de rigueur et de réflexion
+    constructive.
   </p>
 
   <p class="font-normal text-gray-700 dark:text-gray-400 mb-4">
-    Les modérateurs interviennent uniquement lorsque les principes fondamentaux du projet sont menacés : attaques
-    personnelles, comportements malveillants, violations des règles essentielles ou dégradation volontaire du débat.
-    Leur rôle est d’accompagner la communauté, pas de la contrôler.
+    Les modérateurs interviennent uniquement lorsque les principes fondamentaux du projet sont
+    menacés : attaques personnelles, comportements malveillants, violations des règles essentielles
+    ou dégradation volontaire du débat. Leur rôle est d'accompagner la communauté, pas de la
+    contrôler.
   </p>
 
   <h2 class="text-2xl font-semibold mt-10 mb-4 tracking-tight text-gray-900 dark:text-white">
@@ -27,8 +30,9 @@
   </ul>
 
   <p class="font-normal text-gray-700 dark:text-gray-400 mt-4 mb-4">
-    La modération est un service rendu à la communauté. Elle protège l’espace, encourage la responsabilité et garantit
-    que Ngelmak reste un lieu de réflexion collective et de souveraineté intellectuelle.
+    La modération est un service rendu à la communauté. Elle protège l'espace, encourage la
+    responsabilité et garantit que Ngelmak reste un lieu de réflexion collective et de souveraineté
+    intellectuelle.
   </p>
 
   <h2 class="text-2xl font-semibold mt-10 mb-4 tracking-tight text-gray-900 dark:text-white">
@@ -36,53 +40,144 @@
   </h2>
 
   <p class="font-normal text-gray-700 dark:text-gray-400 mb-6">
-    Les membres qui souhaitent contribuer davantage peuvent proposer leur candidature. La modération est un engagement
-    volontaire fondé sur la responsabilité, la patience et la compréhension des principes du projet.
+    Les membres qui souhaitent contribuer davantage peuvent proposer leur candidature. La modération
+    est un engagement volontaire fondé sur la responsabilité, la patience et la compréhension des
+    principes du projet.
   </p>
 
-  <!-- Formulaire de candidature -->
-  <form class="space-y-4">
+  @if (!user()) {
+    <p class="font-normal text-gray-700 dark:text-gray-400 mb-4">
+      Vous devez être connecté pour postuler en tant que modérateur.
+    </p>
 
-    <div>
-      <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
-        Nom complet
-      </label>
-      <input
-        type="text"
-        class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-        placeholder="Votre nom"
-      />
+    <div class="flex gap-2 flex-wrap">
+      <button
+        routerLink="/sign-in"
+        class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
+      >
+        Se connecter
+      </button>
+
+      <button
+        routerLink="/sign-up"
+        class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
+      >
+        S'inscrire
+      </button>
+    </div>
+  } @else {
+    <!-- Formulaire de candidature -->
+    <div class="space-y-4" *hasNoAuthority="'MODERATOR_ADMIN'">
+      @if (authRequest()) {
+        <div class="p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700">
+          Votre demande de modération est en cours de traitement. Merci de votre patience.
+          <time class="block mt-2 text-xs text-gray-500">
+            Demandé le {{ authRequest().requestedAt | date: 'longDate' }} à
+            {{ authRequest().requestedAt | date: 'shortTime' }}</time
+          >
+        </div>
+      } @else {
+        <!-- NAME -->
+        <div class="relative">
+          <input
+            [value]="user().firstName + ' ' + user().lastName"
+            disabled
+            type="text"
+            id="name"
+            placeholder=" "
+            class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 dark:focus:border-blue-500 peer"
+          />
+
+          <label
+            for="name"
+            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+          >
+            Nom complet
+          </label>
+        </div>
+
+        <!-- MOTIVATION -->
+        <div class="relative">
+          <textarea
+            id="motivation"
+            rows="5"
+            [field]="authorityForm.motivation"
+            placeholder=" "
+            class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 dark:focus:border-blue-500 peer resize-none"
+          ></textarea>
+
+          <label
+            for="motivation"
+            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+          >
+            Pourquoi souhaitez-vous devenir modérateur ?
+          </label>
+
+          @if (authorityForm.motivation().dirty()) {
+            @for (error of authorityForm.motivation().errors(); track error) {
+              <p class="text-red-600 dark:text-red-500 text-xs leading-tight">
+                {{ error.message }}
+              </p>
+            }
+          }
+          <!-- Wrapper: puts counter on left and errors on right -->
+          <div class="flex justify-between items-start mt-1 text-xs w-full">
+            <!-- Errors (left side) -->
+            <div class="text-left flex-1">
+              @if (authorityForm.motivation().dirty()) {
+                @for (error of authorityForm.motivation().errors(); track error) {
+                  <p class="text-red-600 dark:text-red-500 text-xs leading-tight">
+                    {{ error.message }}
+                  </p>
+                }
+              }
+            </div>
+            <!-- Character counter -->
+            <div
+              class="whitespace-nowrap ml-4"
+              [class.text-red-600]="
+                authorityForm.motivation().value().length >= authorityForm.motivation().maxLength()
+              "
+              [class.text-gray-500]="
+                authorityForm.motivation().value().length < authorityForm.motivation().maxLength()
+              "
+            >
+              {{ authorityForm.motivation().value().length }} /
+              {{ authorityForm.motivation().maxLength() }}
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          (click)="request()"
+          [disabled]="authorityForm().invalid() || isSaving()"
+          class="flex gap-2 items-center text-center dark:hover:text-white text-blue-900 bg-white border border-blue-300 focus:outline-none hover:bg-blue-100 focus:ring-4 focus:ring-blue-100 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-800 dark:text-white dark:border-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-600 dark:focus:ring-blue-700 focus:outline-2 focus:outline-dashed focus:outline-blue-500 focus:outline-offset-4 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          @if (isSaving()) {
+            <svg
+              class="inline w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
+              viewBox="0 0 100 101"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                fill="currentColor"
+              />
+              <path
+                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                fill="currentFill"
+              />
+            </svg>
+          }
+          Envoyer la demande
+        </button>
+      }
     </div>
 
-    <div>
-      <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
-        Adresse e-mail
-      </label>
-      <input
-        type="email"
-        class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-        placeholder="email@example.com"
-      />
+    <div *hasAnyAuthority="'MODERATOR_ADMIN'">
+      <p class="text-sm text-gray-500 dark:text-gray-400">Vous êtes déjà modérateur.</p>
     </div>
-
-    <div>
-      <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
-        Pourquoi souhaitez-vous devenir modérateur ?
-      </label>
-      <textarea
-        rows="4"
-        class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-        placeholder="Expliquez en quelques lignes votre motivation"
-      ></textarea>
-    </div>
-
-    <button
-      type="submit"
-      class="px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700"
-    >
-      Envoyer la demande
-    </button>
-
-  </form>
-
+  }
 </section>
