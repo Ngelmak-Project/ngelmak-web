@@ -4,7 +4,6 @@ import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/r
 import { combineLatest, Observable, Subscription, tap } from 'rxjs';
 
 import { FormsModule } from '@angular/forms';
-import { FormatMediumDatetimePipe } from 'app/shared/date';
 import SharedModule from 'app/shared/shared.module';
 import { SortByDirective, SortDirective, SortService, sortStateSignal, type SortState } from 'app/shared/sort';
 
@@ -23,7 +22,6 @@ import { EntityArrayResponseType, ReviewService } from '../service/nk-review.ser
     SharedModule,
     SortDirective,
     SortByDirective,
-    FormatMediumDatetimePipe,
   ],
 })
 export class ReviewComponent implements OnInit {

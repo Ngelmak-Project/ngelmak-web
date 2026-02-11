@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, output, signal } from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { CommentService } from 'app/entities/nk-comment/nk-comment.service';
 import { CommentUpdateComponent } from 'app/entities/nk-comment/update/nk-comment-update.component';
 
@@ -28,12 +28,12 @@ import { finalize } from 'rxjs';
     ConfirmDialogComponent,
   ],
 })
-export class CommentItemComponent implements OnInit {
+export class CommentItemComponent {
   comment = input<ICommentDTO>();
   commentSig = signal<ICommentDTO | null>(null);
   level = input(0);
   replyTo = input<ICommentDTO>(null);
-  onDeleted = output<ICommentDTO>();
+  ondelete = output<ICommentDTO>(); // Signal to emit the deleted comment back to the parent component.
 
   protected commentService = inject(CommentService);
   protected alertService = inject(AlertService);
@@ -48,21 +48,19 @@ export class CommentItemComponent implements OnInit {
   openMenu = signal(false);
   confirmDeleteOpen = signal(false);
 
-  ngOnInit() {
-    this.commentSig.set(this.comment());
+  constructor() {
+    effect(() => {
+      if (this.comment()) {
+        const comment = this.comment();
+        this.commentSig.set(comment);
+      }
+    });
   }
 
-  formatFileSize(bytes: number): string {
-    if (bytes === 0) return '0 Bytes';
-
-    const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    const index = Math.floor(Math.log(bytes) / Math.log(1024));
-    const size = bytes / Math.pow(1024, index);
-
-    return `${size.toFixed(2)} ${units[index]}`;
-  }
-
-  toggleReplies() {
+  /**
+   * Toggles the visibility of the replies section for the current comment. If the replies have not been loaded yet, it triggers an API call to fetch the replies from the server.
+   */
+  toggleReplies(): void {
     this.showReplies.set(!this.showReplies());
     if (this.replies().length == 0) {
       this.isLoading.set(true);
@@ -85,7 +83,6 @@ export class CommentItemComponent implements OnInit {
    */
   handleReplyOrUpdate(newComment: ICommentDTO) {
     const isNewReply = newComment.id !== this.commentSig().id;
-
     if (isNewReply) {
       // this.comment.replyCount++;
       this.commentSig.update((c) => ({ ...c, replyCount: c.replyCount + 1 }));
@@ -96,24 +93,43 @@ export class CommentItemComponent implements OnInit {
     }
   }
 
-  handleDeleteConfirm(result: boolean) {
+  /**
+   * Handles the cancellation of a reply or an edit action. This method is called when the user cancels the comment creation or update process.
+   */
+  handleCancelReplyOrUpdate() {
+    this.isReplying.set(false);
+  }
+
+  /**
+   * Handles the confirmation of a comment deletion. If the user confirms the deletion, it calls the API to delete the comment and emits the deleted comment back to the parent component so it can be removed from the list.
+   */
+  handleDeleteConfirm(result: boolean): void {
     this.confirmDeleteOpen.set(false);
     if (result) {
       this.isDeleting.set(true);
       this.commentService
         .delete(this.commentSig().id)
-        .pipe(finalize(() => {
-          this.isDeleting.set(false);
-          this.openMenu.set(false);
-        }))
+        .pipe(
+          finalize(() => {
+            this.isDeleting.set(false);
+            this.openMenu.set(false);
+          }),
+        )
         .subscribe({
           next: () => {
-            this.onDeleted.emit(this.commentSig());
+            // Emit the deleted comment back to the parent component so it can be removed from the list.
+            this.ondelete.emit(this.commentSig());
+            this.alertService.addAlert({
+              type: 'success',
+              translationKey: 'nkApp.comment.deleted',
+              message: 'Commentaire supprimé.',
+            });
           },
           error: () =>
             this.alertService.addAlert({
               type: 'error',
-              message: "Une error s'est produit lors de la suppression.",
+              translationKey: 'nkApp.comment.deleteError',
+              message: "Une erreur s'est produite lors de la suppression du commentaire.",
             }),
         });
     }

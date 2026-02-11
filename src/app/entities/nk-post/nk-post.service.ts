@@ -8,8 +8,8 @@ import { IPost, IPostDTO } from 'app/entities/models/nk-post.model';
 import { IPage } from 'app/shared/pagination/pagination.model';
 import { IFile } from '../models/nk-file.model';
 
-export type EntityResponseType = HttpResponse<IPost>;
-export type EntityArrayResponseType = HttpResponse<IPost[]>;
+export type EntityResponseType = HttpResponse<IPostDTO>;
+export type EntityArrayResponseType = HttpResponse<IPostDTO[]>;
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
@@ -20,6 +20,12 @@ export class PostService {
 
   protected publicResourceUrl = this.applicationConfigService.getEndpointFor('core/r/posts');
 
+  /**
+   * Creates a new post with the given data, including handling file attachments for medias and covers.
+   * @param post contains the main data of the post to be created.
+   * @param medias is an array of media files to be attached to the post.
+   * @param covers is an array of cover files to be attached to the post.
+   */
   create(post: IPost, medias: IFile[], covers: IFile[]): Observable<EntityResponseType> {
     const data: FormData = new FormData();
     post.files = [];
@@ -34,16 +40,7 @@ export class PostService {
       data.append('_covers', c?.data ?? emptyFile);
     });
 
-    // const mediaBlob = new Blob([JSON.stringify(medias.map((e) => e.data))], {
-    //   type: 'application/json',
-    // });
-    // data.append('_medias', mediaBlob);
-    // const coverBlob = new Blob([JSON.stringify(covers.map((e) => e?.data))], {
-    //   type: 'application/json',
-    // });
-    // data.append('_covers', coverBlob);
-
-    return this.http.post<IPost>(this.resourceUrl, data, {
+    return this.http.post<IPostDTO>(this.resourceUrl, data, {
       observe: 'response',
     });
   }
@@ -69,26 +66,26 @@ export class PostService {
       'covers',
       new Blob([JSON.stringify(covers.map((e) => e.data))], { type: 'application/json' }),
     );
-    return this.http.put<IPost>(this.resourceUrl, data, {
+    return this.http.put<IPostDTO>(this.resourceUrl, data, {
       observe: 'response',
     });
   }
 
   partialUpdate(post: IPost): Observable<EntityResponseType> {
-    return this.http.patch<IPost>(`${this.resourceUrl}/${post.id}`, post, {
+    return this.http.patch<IPostDTO>(`${this.resourceUrl}/${post.id}`, post, {
       observe: 'response',
     });
   }
 
   find(id: number): Observable<EntityResponseType> {
-    return this.http.get<IPost>(`${this.publicResourceUrl}/${id}`, {
+    return this.http.get<IPostDTO>(`${this.publicResourceUrl}/${id}`, {
       observe: 'response',
     });
   }
 
-  findByChannel(id: number, req?: any): Observable<HttpResponse<IPage<IPost>>> {
+  findByChannel(id: number, req?: any): Observable<HttpResponse<IPage<IPostDTO>>> {
     const options = createRequestOption(req);
-    return this.http.get<IPage<IPost>>(`${this.resourceUrl}/channel/${id}`, {
+    return this.http.get<IPage<IPostDTO>>(`${this.resourceUrl}/channel/${id}`, {
       params: options,
       observe: 'response',
     });

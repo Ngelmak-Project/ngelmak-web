@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, output, signal } from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
@@ -6,15 +6,16 @@ import { IPostDTO } from 'app/entities/models/nk-post.model';
 import SharedModule from 'app/shared/shared.module';
 
 import { IFile } from 'app/entities/models/nk-file.model';
+import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { CommentComponent } from 'app/entities/nk-comment/list/nk-comment.component';
 import { ReactionDialogComponent } from 'app/entities/nk-reaction/dialog/nk-reaction-dialog.component';
-import { DurationPipe } from 'app/shared/date';
-import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
-import { ConfirmDialogComponent } from 'app/shared/confirm-dialog/confirm-dialog.component';
-import { PostService } from '../nk-post.service';
-import { finalize } from 'rxjs';
 import { AlertService } from 'app/shared/alert/alert.service';
+import { ConfirmDialogComponent } from 'app/shared/confirm-dialog/confirm-dialog.component';
+import { DurationPipe } from 'app/shared/date';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
+import { finalize } from 'rxjs';
+import { PostService } from '../nk-post.service';
+import { PostUpdateComponent } from '../update/nk-post-update.component';
 
 @Component({
   standalone: true,
@@ -25,16 +26,17 @@ import { ClickOutsideDirective } from 'app/shared/directives/click-outside.direc
     FormsModule,
     SharedModule,
     DurationPipe,
-    ClickOutsideDirective,
-    ReactionDialogComponent,
     CommentComponent,
+    PostUpdateComponent,
+    ClickOutsideDirective,
     ConfirmDialogComponent,
+    ReactionDialogComponent,
   ],
 })
-export class PostDetailComponent implements OnInit {
-  post = input.required<IPostDTO>();
-  onDeleted = output<IPostDTO>();
-  postSig = signal<IPostDTO>(null);
+export class PostDetailComponent {
+  post = input.required<IPostDTO>(); // The post to display
+  ondeleted = output<IPostDTO>(); // Event emitted when the post is deleted.
+  postSig = signal<IPostDTO>(null); // Signal to hold the current post data, allowing for reactive updates.
 
   openMenu = signal(false);
   confirmDeleteOpen = signal(false);
@@ -47,8 +49,11 @@ export class PostDetailComponent implements OnInit {
 
   channel = inject(ChannelService).channel;
 
-  ngOnInit() {
-    this.postSig.set(this.post());
+  constructor() {
+    effect(() => {
+      const post = this.post();
+      this.postSig.set(post);
+    });
   }
 
   isImage(file: IFile): boolean {
@@ -63,14 +68,13 @@ export class PostDetailComponent implements OnInit {
     return file.type.split('/').pop()?.toUpperCase();
   }
 
-  formatFileSize(bytes: number): string {
-    if (bytes === 0) return '0 Bytes';
-
-    const units = ['Bytes', 'KB', 'MB', 'GB'];
-    const index = Math.floor(Math.log(bytes) / Math.log(1024));
-    const size = bytes / Math.pow(1024, index);
-
-    return `${size.toFixed(2)} ${units[index]}`;
+  /**
+   * Handle update signal when post is updated.
+   * @param newPost updated post.
+   */
+  handlePostUpdate(newPost: IPostDTO) {
+    this.isUpdating.set(false);
+    this.postSig.update((p) => ({ ...p, content: newPost.content, files: newPost.files }));
   }
 
   handleDeleteConfirm(result: boolean) {
@@ -87,7 +91,7 @@ export class PostDetailComponent implements OnInit {
         )
         .subscribe({
           next: () => {
-            this.onDeleted.emit(this.postSig());
+            this.ondeleted.emit(this.postSig());
           },
           error: () =>
             this.alertService.addAlert({

@@ -1,8 +1,17 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, inject, OnInit, signal, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  input,
+  OnInit,
+  output,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IFile } from 'app/entities/models/nk-file.model';
-import { IPost } from 'app/entities/models/nk-post.model';
+import { IPost, IPostDTO } from 'app/entities/models/nk-post.model';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { PostService } from './../nk-post.service';
@@ -30,14 +39,16 @@ const initPost: IPost = {
 
   encapsulation: ViewEncapsulation.None, // Disable encapsulation
 })
-export class PostUpdateComponent implements OnInit {
+export class PostUpdateComponent {
+  post = input<IPost | IPostDTO>(); // The post to edit, provided as an input property.
+  onsaved = output<IPostDTO>(); // Event emitted when the post is successfully saved.
+  oncancel = output<void>(); // Event emitted when the user cancels the edit operation.
+  protected postSig = signal<IPostDTO>(null);
+
   // readonly dialog = inject(MatDialog);
   private postService = inject(PostService);
   private alertService = inject(AlertService);
-  private activatedRoute = inject(ActivatedRoute);
-  protected post = signal<IPost>(null);
   protected isSaving = signal(false);
-  protected isLoading = signal(false);
   protected deletedFiles: IFile[] = [];
   // protected files: IFile[] = [];
   channel = inject(ChannelService).channel;
@@ -50,14 +61,16 @@ export class PostUpdateComponent implements OnInit {
     maxLength(p.content, 3000, { message: 'Le contenu ne doit pas dépasser 1000 caractères.' });
   });
 
-  ngOnInit(): void {
-    this.isLoading.set(true);
-    this.activatedRoute.data.subscribe(({ post }) => {
+  constructor() {
+    effect(() => {
+      const post = this.post();
       if (post) {
-        // this.post.set(post);
-        // this.postForm().(this.post());
-        // this.keywords = this.post()?.keywords.split(',') || [];
-        // this.updatedFiles = this.post().files;
+        this.postModel.update(() => ({
+          id: post.id,
+          content: post.content,
+          visibility: post.visibility,
+          files: post.files || [],
+        }));
       }
     });
   }
@@ -82,14 +95,16 @@ export class PostUpdateComponent implements OnInit {
     }
   }
 
-  private subscribeToSaveResponse(result: Observable<HttpResponse<IPost>>): void {
+  private subscribeToSaveResponse(result): void {
     result.pipe(finalize(() => this.isSaving.set(false))).subscribe({
-      next: () => {
+      next: (res) => {
         this.alertService.addAlert({
           type: 'success',
-          message: 'Enregistrer avec succès!',
+          translationKey: 'ngelmakApp.post.created',
+          message: 'Publié avec succès.',
         });
         this.postForm().reset({ ...initPost, files: [] }); // reset post values.
+        this.onsaved.emit(res.body);
       },
       error: () =>
         this.alertService.addAlert({

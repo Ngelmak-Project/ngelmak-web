@@ -28,7 +28,7 @@
             <div
               class="flex items-center justify-center rounded-full max-w-none w-6 h-6 text-xl uppercase text-black bg-gray-50 dark:bg-gray-300]"
             >
-              {{ commentSig().channel?.name.at(0) }}
+              {{ commentSig().channel?.name?.at(0) }}
             </div>
           }
         </a>
@@ -190,13 +190,17 @@
             @{{ replyTo()?.channel?.name }}
           </span>
         }
-        @if (!isUpdating()) {
+        @if (isUpdating()) {
+          <!-- Show the comment update form when in update mode. Pass the current comment to pre-fill the form. -->
+          <app-comment-update
+            [comment]="commentSig()"
+            (oncomment)="handleReplyOrUpdate($event)"
+          ></app-comment-update>
+        } @else {
           <div
             class="mb-3 text-gray-900 dark:text-white whitespace-pre-line"
             [innerHTML]="commentSig().content"
           ></div>
-        } @else {
-          <app-comment-update [comment]="commentSig()"></app-comment-update>
         }
       </div>
 
@@ -239,9 +243,12 @@
       </div>
 
       @if (isReplying()) {
+        <!-- Show the comment update form when in reply mode. Pass the current comment as replyTo to link the new comment as a reply. -->
         <app-comment-update
+          [withAttach]="false"
           [replyTo]="commentSig()"
-          (onSaveSuccess)="handleReplyOrUpdate($event)"
+          (oncomment)="handleReplyOrUpdate($event)"
+          (oncancel)="handleCancelReplyOrUpdate()"
         ></app-comment-update>
       }
 
@@ -252,7 +259,7 @@
               [comment]="replyComment"
               [replyTo]="commentSig()"
               [level]="level() + 1"
-              (onDeleted)="onDeletedReply($event)"
+              (ondelete)="onDeletedReply($event)"
             ></app-comment-item>
           }
         </div>

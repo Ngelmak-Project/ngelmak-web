@@ -23,10 +23,10 @@ export class CommentComponent implements OnInit {
   post = input.required<IPostDTO>();
   postSig = signal<IPostDTO>(null);
 
+  protected commentService = inject(CommentService);
   comments = signal<ICommentDTO[]>([]);
   hasNext = signal(false);
   isLoading = signal(false);
-  protected commentService = inject(CommentService);
 
   itemsPerPage = ITEMS_PER_PAGE;
   pageToLoad = 1;
@@ -81,5 +81,11 @@ export class CommentComponent implements OnInit {
     this.postSig.update((p) => ({ ...p, commentCount: p.commentCount + 1 }));
     // end the new comment to the current list
     this.comments.update((list) => [...list, newComment]);
+  }
+
+  onCancel() {
+    // No action needed on cancel for the main comment form, as it will simply reset the form fields.
+    // However, if you want to perform any additional cleanup or state reset when the comment creation is cancelled,
+    // you can implement that logic here.
   }
 }

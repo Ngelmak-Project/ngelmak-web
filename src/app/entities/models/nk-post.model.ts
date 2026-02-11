@@ -23,7 +23,7 @@ export interface IPost {
 
 export interface IPostDTO {
   id?: number;
-  content?: String;
+  content?: string;
   at?: Date;
   lastUpdate?: Date;
   visibility?: Visibility;

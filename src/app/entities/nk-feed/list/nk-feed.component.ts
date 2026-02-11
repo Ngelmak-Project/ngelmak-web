@@ -17,13 +17,15 @@ import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { IPage } from 'app/shared/pagination/pagination.model';
 import { ScrollService } from 'app/shared/services/scroll.service';
 import { FeedService } from '../nk-feed.service';
+import { PostUpdateComponent } from 'app/entities/nk-post/update/nk-post-update.component';
+import { IPostDTO } from 'app/entities/models/nk-post.model';
 
 @Component({
   standalone: true,
   selector: 'app-feed',
   templateUrl: './nk-feed.component.html',
-  imports: [RouterModule, FormsModule, SharedModule, PostDetailComponent],
-  animations: [fadeInUp400ms]
+  imports: [RouterModule, FormsModule, SharedModule, PostDetailComponent, PostUpdateComponent],
+  animations: [fadeInUp400ms],
 })
 export class FeedComponent implements OnInit, OnDestroy {
   private subs = new Subscription();
@@ -77,6 +79,14 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs.unsubscribe(); // unsubscribes ALL at once
+  }
+
+  /**
+   * Respond to the creation of the event. Add the newly created message to the feed list.
+   * @param newPost creted post.
+   */
+  handlePostSaved(newPost: IPostDTO): void {
+    this.feeds.update((list) => [{ id: null, post: newPost }, ...list]);
   }
 
   loadNext(): void {

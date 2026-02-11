@@ -1,7 +1,9 @@
 <div class="flex flex-col justify-center gap-6">
+  <app-post-update (onsaved)="handlePostSaved($event)"></app-post-update>
+
   <div class="flex flex-col gap-4 divide-y divide-gray-200 dark:divide-gray-700">
     @for (feed of feeds(); track $index) {
-      <app-post-detail @fadeInUp [post]="feed.post"></app-post-detail>
+      <app-post-detail [post]="feed.post"></app-post-detail>
     }
   </div>
   @if (isLoading()) {

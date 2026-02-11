@@ -21,11 +21,12 @@ const initComment: IComment = {
   templateUrl: './nk-comment-update.component.html',
 })
 export class CommentUpdateComponent implements OnInit {
-  withAttach = input(true);
+  withAttach = input(false);
   comment = input<IComment | ICommentDTO>(null);
   replyTo = input<IComment | ICommentDTO>(null);
   post = input<IPostDTO>(null);
-  onSaveSuccess = output<ICommentDTO>();
+  oncomment = output<ICommentDTO>(); // Signal to emit the saved comment back to the parent component.
+  oncancel = output(); // Signal to emit the cancelled comment back to the parent component.
 
   commentService = inject(CommentService);
   alertService = inject(AlertService);
@@ -38,7 +39,6 @@ export class CommentUpdateComponent implements OnInit {
     maxLength(p.content, 1000, { message: 'Nombre maximum de caractères est 1000.' });
   });
 
-
   ngOnInit(): void {
     if (this.comment()) {
       this.commentModel.set({ ...this.comment() });
@@ -49,9 +49,11 @@ export class CommentUpdateComponent implements OnInit {
     this.isSaving.set(true);
     const comment = {
       ...this.commentModel(),
-      post: this.post() != null ? { id: this.post().id } : null,
-      replyTo: this.replyTo != null ? { id: this.replyTo().id } : null,
+      post: this.post() ? { id: this.post().id } : null,
+      replyTo: this.replyTo() ? { id: this.replyTo().id } : null,
     };
+
+    // Trim content to remove leading and trailing whitespace.
     comment.content = comment.content.trim();
     comment.file = null; // [TODO] handle file selection
     if (comment.id) {
@@ -61,17 +63,34 @@ export class CommentUpdateComponent implements OnInit {
     }
   }
 
+  /**
+   * Cancels the comment creation or update process and emits a cancellation event to the parent component.
+   */
+  cancel() {
+    this.remove(); // Clear file selection.
+    this.commentForm().reset({ ...initComment, file: null }); // reset post values.
+    this.oncancel.emit();
+  }
+
   protected subscribeToSaveResponse(result): void {
     result.pipe(finalize(() => this.isSaving.set(false))).subscribe({
       next: ({ body }) => {
-        this.onSaveSuccess.emit(body);
-        this.remove();
+        // Emit the saved comment back to the parent component with all necessary data.
+        this.oncomment.emit(body);
+        // Reset the form and clear the file selection after successful save.
+        this.remove(); // Clear file selection.
         this.commentForm().reset({ ...initComment, file: null }); // reset post values.
+        this.alertService.addAlert({
+          type: 'success',
+          translationKey: 'nkApp.comment.updated',
+          message: 'Commentaire sauvegardé.',
+        });
       },
       error: () =>
         this.alertService.addAlert({
           type: 'error',
-          message: "Une error s'est produit lors de la sauvegarde.",
+          translationKey: 'nkApp.comment.error',
+          message: "Une erreur s'est produite lors de la sauvegarde.",
         }),
     });
   }
