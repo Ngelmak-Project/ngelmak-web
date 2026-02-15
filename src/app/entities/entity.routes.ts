@@ -12,11 +12,6 @@ const entityRoutes: Routes = [
     loadChildren: () => import('./nk-channel/nk-channel.routes'),
   },
   {
-    path: 'privilege',
-    title: 'ngelmakprojectApp.privilege.home.title',
-    loadChildren: () => import('./nk-privilege/nk-privilege.routes'),
-  },
-  {
     path: 'post',
     title: 'post',
     loadChildren: () => import('./nk-post/nk-post.routes'),

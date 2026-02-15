@@ -361,6 +361,7 @@
                 @if (!user()?.email) {
                   <a
                     routerLink="/security"
+                    routerLinkActive="['bg-gray-200', 'dark:bg-gray-600']"
                     class="mt-2 inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-full hover:bg-gray-200 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
                   >
                     ⚠️ Mettre à jour mes informations
@@ -373,6 +374,7 @@
                 <li *hasAnyAuthority="'ROLE_ADMIN'">
                   <a
                     routerLink="/channel-management"
+                    routerLinkActive="['bg-gray-200', 'dark:bg-gray-600']"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
                   >
                     <svg
@@ -391,6 +393,7 @@
                 <li *hasAnyAuthority="'ROLE_ADMIN'">
                   <a
                     routerLink="/user-management"
+                    routerLinkActive="['bg-gray-200', 'dark:bg-gray-600']"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
                   >
                     <svg
@@ -437,6 +440,7 @@ Additional items you can add:
                   <li>
                     <a
                       routerLink="/channel"
+                      routerLinkActive="['bg-gray-200', 'dark:bg-gray-600']"
                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
                     >
                       <svg
@@ -458,6 +462,7 @@ Additional items you can add:
                   <li>
                     <a
                       routerLink="/channel/new"
+                      routerLinkActive="['bg-gray-200', 'dark:bg-gray-600']"
                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
                     >
                       <svg
@@ -498,6 +503,7 @@ Additional items you may add later:
                   -->
                   <a
                     routerLink="/security"
+                    routerLinkActive="['bg-gray-200', 'dark:bg-gray-600']"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
                   >
                     <svg
