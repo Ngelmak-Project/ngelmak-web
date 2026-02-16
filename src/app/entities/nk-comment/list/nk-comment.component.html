@@ -1,4 +1,5 @@
 <div class="flex flex-col gap-2 w-full mx-auto bg-white dark:bg-gray-800 rounded-xl">
+  <!-- Comment box only for logged-in users -->
   <app-comment-update
     *hasAnyAuthority="'ROLE_USER'"
     [post]="postSig()"
@@ -6,7 +7,19 @@
     (oncomment)="onComment($event)"
   ></app-comment-update>
 
-  <div class="flex flex-col gap-4">
+  <!-- If user is NOT logged in -->
+  <div *hasNoAuthority="'ROLE_USER'" class="text-gray-500 text-sm italic px-2">
+    Connectez-vous pour commenter.
+  </div>
+
+  <!-- Comments list -->
+  <div class="flex flex-col gap-4 mt-2">
+    <!-- No comments -->
+    @if (comments()?.length === 0) {
+      <div class="text-gray-500 text-sm italic px-2">Aucun commentaire pour le moment.</div>
+    }
+
+    <!-- Comments -->
     @for (comment of comments(); track $index) {
       <app-comment-item
         [comment]="comment"

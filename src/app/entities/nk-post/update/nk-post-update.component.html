@@ -277,4 +277,9 @@
       </label>
     </div>
   </div>
+
+  <!-- If user is NOT logged in -->
+  <div *hasNoAuthority="'ROLE_USER'" class="text-gray-500 text-sm italic py-2 px-4">
+    Connectez-vous pour publier.
+  </div>
 </div>
