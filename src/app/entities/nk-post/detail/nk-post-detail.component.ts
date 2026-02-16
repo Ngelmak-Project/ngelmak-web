@@ -85,8 +85,8 @@ export class PostDetailComponent {
    * @param result confirmation of the deletion.
    */
   handleDeleteConfirm(result: boolean) {
+    this.confirmDeleteOpen.set(false); // Close the confirmation dialog.
     if (!result) return;
-    this.confirmDeleteOpen.set(false);
     this.isDeleting.set(true);
     this.postService
       .delete(this.postSig().id)
