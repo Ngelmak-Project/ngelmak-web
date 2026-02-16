@@ -22,9 +22,6 @@ import { EntityArrayResponseType, TicketService } from '../nk-ticket.service';
     RouterModule,
     FormsModule,
     SharedModule,
-    SortDirective,
-    SortByDirective,
-    FormatMediumDatetimePipe,
   ],
 })
 export class TicketComponent implements OnInit {

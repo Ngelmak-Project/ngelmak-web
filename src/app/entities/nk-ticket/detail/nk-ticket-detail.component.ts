@@ -3,14 +3,13 @@ import { RouterModule } from '@angular/router';
 
 import { DataUtils } from 'app/core/util/data-util.service';
 import { ITicket } from 'app/entities/models/nk-ticket.model';
-import { FormatMediumDatetimePipe } from 'app/shared/date';
 import SharedModule from 'app/shared/shared.module';
 
 @Component({
   standalone: true,
   selector: 'app-ticket-detail',
   templateUrl: './nk-ticket-detail.component.html',
-  imports: [SharedModule, RouterModule, FormatMediumDatetimePipe,],
+  imports: [SharedModule, RouterModule,],
 })
 export class TicketDetailComponent {
   ticket = input<ITicket | null>(null);
