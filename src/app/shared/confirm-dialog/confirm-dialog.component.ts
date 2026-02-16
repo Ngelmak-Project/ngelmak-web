@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { fadeInUp400ms } from '../animations/fade-in-up.animation';
 import { ClickOutsideDirective } from '../directives/click-outside.directive';
 
@@ -10,8 +10,8 @@ import { ClickOutsideDirective } from '../directives/click-outside.directive';
   imports: [ClickOutsideDirective],
 })
 export class ConfirmDialogComponent {
-  @Input() message = 'Are you sure?';
-  @Output() confirm = new EventEmitter<boolean>();
+  message = input('Are you sure?');
+  confirm = output<boolean>();
 
   close(result: boolean) {
     this.confirm.emit(result);
