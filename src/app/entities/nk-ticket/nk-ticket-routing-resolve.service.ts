@@ -5,7 +5,7 @@ import { EMPTY, Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 import { ITicket } from 'app/entities/models/nk-ticket.model';
-import { TicketService } from '../service/nk-ticket.service';
+import { TicketService } from './nk-ticket.service';
 
 const ticketResolve = (route: ActivatedRouteSnapshot): Observable<null | ITicket> => {
   const id = route.params['id'];

@@ -12,6 +12,7 @@ import { HttpResponse } from '@angular/common/http';
 import { IPostDTO } from 'app/entities/models/nk-post.model';
 import { IPage } from 'app/shared/pagination/pagination.model';
 import { CommentItemComponent } from './item/nk-comment-item.component';
+import { finalize } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -37,20 +38,29 @@ export class CommentComponent implements OnInit {
     this.loadAll();
   }
 
-  loadAll(): void {
+  /**
+   *
+   * @returns
+   */
+  private loadAll(): void {
+    // Skip is there is no comment yet.
+    if (this.post().commentCount === 0) return;
+
     this.isLoading.set(true);
     const req = {
       page: this.pageToLoad - 1,
       size: this.itemsPerPage,
     };
-    this.commentService.findByPost(this.postSig().id, req).subscribe({
-      next: (res: HttpResponse<IPage<ICommentDTO>>) => {
-        const { body } = res;
-        this.hasNext.set((body.size == body.size));
-        this.comments.set(body.content ?? []);
-      },
-      complete: () => this.isLoading.set(false),
-    });
+    this.commentService
+      .findByPost(this.postSig().id, req)
+      .pipe(finalize(() => this.isLoading.set(false)))
+      .subscribe({
+        next: (res: HttpResponse<IPage<ICommentDTO>>) => {
+          const { body } = res;
+          this.hasNext.set(body.size == body.size);
+          this.comments.set(body.content ?? []);
+        },
+      });
   }
 
   /**

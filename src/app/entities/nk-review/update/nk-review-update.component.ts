@@ -10,7 +10,7 @@ import SharedModule from 'app/shared/shared.module';
 import { Status } from 'app/entities/enumerations/status.model';
 import { IReview } from 'app/entities/models/nk-review.model';
 import { ITicket } from 'app/entities/models/nk-ticket.model';
-import { TicketService } from 'app/entities/nk-ticket/service/nk-ticket.service';
+import { TicketService } from 'app/entities/nk-ticket/nk-ticket.service';
 import { ReviewService } from '../service/nk-review.service';
 import { ReviewFormGroup, ReviewFormService } from './nk-review-form.service';
 

@@ -15,16 +15,20 @@ export class TicketService {
 
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/tickets');
 
-  create(ticket: ITicket): Observable<EntityResponseType> {
-    return this.http.post<ITicket>(this.resourceUrl, ticket, { observe: 'response' });
-  }
-
-  update(ticket: ITicket): Observable<EntityResponseType> {
-    return this.http.put<ITicket>(
-      `${this.resourceUrl}/${this.getTicketIdentifier(ticket)}`,
-      ticket,
-      { observe: 'response' },
-    );
+  /**
+   * Method to create a new ticket.
+   * @param ticket to create.
+   * @param file that represents the evidence for supporting the ticket.
+   */
+  create(ticket: ITicket, file): Observable<HttpResponse<ITicket>> {
+    const data: FormData = new FormData();
+    if (file) {
+      data.append('file', file);
+    }
+    data.append('ticket', new Blob([JSON.stringify(ticket)], { type: 'application/json' }));
+    return this.http.post<ITicket>(this.resourceUrl, data, {
+      observe: 'response',
+    });
   }
 
   find(id: number): Observable<EntityResponseType> {

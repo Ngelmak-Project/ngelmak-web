@@ -16,7 +16,7 @@ import { ITicket } from 'app/entities/models/nk-ticket.model';
 import { CommentService } from 'app/entities/nk-comment/nk-comment.service';
 import { PostService } from 'app/entities/nk-post/nk-post.service';
 import { IAlert } from 'app/shared/alert/alert.service';
-import { TicketService } from '../service/nk-ticket.service';
+import { TicketService } from '../nk-ticket.service';
 
 @Component({
   standalone: true,

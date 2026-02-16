@@ -279,7 +279,11 @@
   </div>
 
   <!-- If user is NOT logged in -->
-  <div *hasNoAuthority="'ROLE_USER'" class="text-gray-500 text-sm italic py-2 px-4">
+  <div
+    *hasNoAuthority="'ROLE_USER'"
+    class="text-gray-500 text-sm italic py-2 px-4"
+    [ngClass]="{ 'text-red-500 animate-pulse font-bold': postModel().content.length > 0 }"
+  >
     Connectez-vous pour publier.
   </div>
 </div>

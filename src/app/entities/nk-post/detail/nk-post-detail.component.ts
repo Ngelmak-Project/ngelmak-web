@@ -9,6 +9,7 @@ import { IFile } from 'app/entities/models/nk-file.model';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { CommentComponent } from 'app/entities/nk-comment/list/nk-comment.component';
 import { ReactionDialogComponent } from 'app/entities/nk-reaction/dialog/nk-reaction-dialog.component';
+import { TicketDialogComponent } from 'app/entities/nk-ticket/dialog/nk-ticket-dialog.component';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { ConfirmDialogComponent } from 'app/shared/confirm-dialog/confirm-dialog.component';
 import { DurationPipe } from 'app/shared/date';
@@ -31,6 +32,7 @@ import { PostUpdateComponent } from '../update/nk-post-update.component';
     ClickOutsideDirective,
     ConfirmDialogComponent,
     ReactionDialogComponent,
+    TicketDialogComponent,
   ],
 })
 export class PostDetailComponent {
@@ -43,6 +45,7 @@ export class PostDetailComponent {
   isDeleting = signal(false);
   isUpdating = signal(false);
   isCommentOpened = signal(false);
+  isSignalPost = signal(false); // Signal emit when user wanna signal a post.
 
   alertService = inject(AlertService);
   protected postService = inject(PostService);
@@ -77,28 +80,31 @@ export class PostDetailComponent {
     this.postSig.update((p) => ({ ...p, content: newPost.content, files: newPost.files }));
   }
 
+  /**
+   * Delete user's post from the database when confirmation is positive. Discard otherwise.
+   * @param result confirmation of the deletion.
+   */
   handleDeleteConfirm(result: boolean) {
+    if (!result) return;
     this.confirmDeleteOpen.set(false);
-    if (result) {
-      this.isDeleting.set(true);
-      this.postService
-        .delete(this.postSig().id)
-        .pipe(
-          finalize(() => {
-            this.isDeleting.set(false);
-            this.openMenu.set(false);
+    this.isDeleting.set(true);
+    this.postService
+      .delete(this.postSig().id)
+      .pipe(
+        finalize(() => {
+          this.isDeleting.set(false);
+          this.openMenu.set(false);
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.ondeleted.emit(this.postSig());
+        },
+        error: () =>
+          this.alertService.addAlert({
+            type: 'error',
+            message: "Une error s'est produit lors de la suppression.",
           }),
-        )
-        .subscribe({
-          next: () => {
-            this.ondeleted.emit(this.postSig());
-          },
-          error: () =>
-            this.alertService.addAlert({
-              type: 'error',
-              message: "Une error s'est produit lors de la suppression.",
-            }),
-        });
-    }
+      });
   }
 }

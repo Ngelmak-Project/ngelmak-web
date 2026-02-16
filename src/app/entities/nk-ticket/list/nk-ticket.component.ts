@@ -12,7 +12,7 @@ import { FormatMediumDatetimePipe } from 'app/shared/date';
 import SharedModule from 'app/shared/shared.module';
 import { SortByDirective, SortDirective, SortService, sortStateSignal, type SortState } from 'app/shared/sort';
 
-import { EntityArrayResponseType, TicketService } from '../service/nk-ticket.service';
+import { EntityArrayResponseType, TicketService } from '../nk-ticket.service';
 
 @Component({
   standalone: true,

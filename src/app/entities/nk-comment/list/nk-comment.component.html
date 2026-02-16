@@ -14,8 +14,23 @@
 
   <!-- Comments list -->
   <div class="flex flex-col gap-4 mt-2">
-    <!-- No comments -->
-    @if (comments()?.length === 0) {
+    @if (isLoading()) {
+      <!-- Comment skeleton loader -->
+      <div class="flex animate-pulse space-x-4">
+        <div class="size-10 rounded-full bg-gray-700"></div>
+        <div class="flex-1 space-y-6 py-1">
+          <div class="h-2 rounded bg-gray-700"></div>
+          <div class="space-y-3">
+            <div class="grid grid-cols-3 gap-4">
+              <div class="col-span-2 h-2 rounded bg-gray-700"></div>
+              <div class="col-span-1 h-2 rounded bg-gray-700"></div>
+            </div>
+            <div class="h-2 rounded bg-gray-700"></div>
+          </div>
+        </div>
+      </div>
+    } @else if (comments()?.length === 0) {
+      <!-- No comments -->
       <div class="text-gray-500 text-sm italic px-2">Aucun commentaire pour le moment.</div>
     }
 

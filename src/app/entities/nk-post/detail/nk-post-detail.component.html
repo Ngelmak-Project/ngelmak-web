@@ -30,7 +30,7 @@
         </a>
 
         <!-- Name + Follow button -->
-        <div class="flex items-center gap-2 flex-grow min-w-0">
+        <div class="flex items-center gap-2 flex-grow flex-wrap min-w-0">
           <a
             class="truncate text-sm font-medium text-gray-900 dark:text-white"
             [routerLink]="[
@@ -69,7 +69,7 @@
     </div>
 
     <!-- RIGHT SIDE: Menu -->
-    <div class="relative shrink-0">
+    <div *hasAnyAuthority="'ROLE_USER'" class="relative shrink-0">
       <button
         clickOutside
         (onClickOutside)="openMenu.set(false)"
@@ -91,6 +91,7 @@
         >
           <li>
             <button
+              (click)="isSignalPost.set(true)"
               class="w-full inline-flex items-center justify-between text-left px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition"
             >
               Signaler
@@ -143,7 +144,6 @@
                 </svg>
               </button>
             </li>
-
             <li>
               <button
                 (click)="confirmDeleteOpen.set(true)"
@@ -188,13 +188,6 @@
                   </svg>
                 }
               </button>
-              @if (confirmDeleteOpen()) {
-                <app-confirm-dialog
-                  message="Are you sure you want to delete this comment?"
-                  (confirm)="handleDeleteConfirm($event)"
-                >
-                </app-confirm-dialog>
-              }
             </li>
           }
         </ul>
@@ -277,5 +270,19 @@
   <!-- Comments -->
   @if (isCommentOpened()) {
     <app-comment [post]="postSig()"></app-comment>
+  }
+
+  <!-- Creating a ticket to report a problem with a publication -->
+  @if (isSignalPost()) {
+    <app-ticket-dialog [post]="postSig()" (onclose)="isSignalPost.set(false)"></app-ticket-dialog>
+  }
+
+  <!-- Post deletion -->
+  @if (confirmDeleteOpen()) {
+    <app-confirm-dialog
+      message="Êtes-vous sûr de vouloir supprimer votre publication ?"
+      (confirm)="handleDeleteConfirm($event)"
+    >
+    </app-confirm-dialog>
   }
 </article>
