@@ -10,7 +10,7 @@ To start a local development server, run:
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Once the server is running, we can navigate to `http://localhost:4200/`. The application will automatically reload whenever modification is made on any of the source files.
 
 ## Code scaffolding
 
@@ -34,7 +34,7 @@ To build the project run:
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+This will compile the project and store the build artifacts in the `dist/` directory. By default, the production build optimizes the application for performance and speed.
 
 ## Running unit tests
 
@@ -52,7 +52,7 @@ For end-to-end (e2e) testing, run:
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Angular CLI does not come with an end-to-end testing framework by default.
 
 ## Additional Resources
 
@@ -91,7 +91,7 @@ Spring Gateway (HTTP or HTTPS)
 - No mixed content.
 - No need for Angular to proxy through the same Nginx.
 - Nginx handles HTTPS directly using a certificate (Let’s Encrypt or Cloudflare Origin Cert).
-- Cloudflare adds DDoS protection, caching, and hides your server IP.
+- Cloudflare adds DDoS protection, caching, and hides the server IP.
 
 ---
 
@@ -185,8 +185,6 @@ server {
 
 # 🧱 Dockerfile (Updated for HTTPS)
 
-Your Dockerfile only needs a small change: copy SSL certificates.
-
 ```dockerfile
 FROM nginx:alpine AS runner
 
@@ -202,152 +200,4 @@ COPY ssl /etc/nginx/ssl
 EXPOSE 80 443
 
 CMD ["nginx", "-g", "daemon off;"]
-```
-
----
-
-# 🔐 SSL Certificates
-
-## Option A — Cloudflare Origin Certificates (recommended)
-
-- Go to Cloudflare → SSL/TLS → Origin Server
-- Create certificate for:
-  - `ngelmak.org`
-  - `api.ngelmak.org`
-- Download `.pem` and `.key`
-- Put them in `/nginx/ssl/`
-
-Advantages:
-
-- Valid for 15 years
-- Only trusted between Cloudflare → your server
-- No renewal headaches
-
-Set Cloudflare SSL mode to **Full (Strict)**.
-
----
-
-# 🧪 Spring Cloud Gateway Configuration
-
-Add this to `application.yml` so it respects forwarded headers:
-
-```yaml
-server:
-  forward-headers-strategy: framework
-```
-
-This ensures:
-
-- Redirects use `https://api.ngelmak.org`
-- Security filters detect HTTPS correctly
-
-A good documentation‑friendly path is one that is:
-
-- predictable
-- OS‑agnostic
-- outside your Git repository
-- easy to mount into Docker
-- easy to secure with file permissions
-
-You want something that future you (or teammates) can instantly understand without digging through the project.
-
-Here’s a clean, professional convention you can put directly into your project docs.
-
----
-
-# 📁 Recommended certificate storage path (local machine)
-
-## **Linux**
-
-```bash
-mkdir -p /etc/nginx/certs/ngelmak.org/
-```
-
-Inside folder:
-
-```
-ngelmak.org.pem
-ngelmak.org.key
-```
-
-### Why this path works well
-
-- `/etc/nginx/` is the natural home for Nginx‑related assets.
-- `certs/` keeps secrets separate from configs.
-- Subfolders per domain keep things organized.
-- Easy to mount into Docker as read‑only.
-
----
-
-Same file structure:
-
-```
-ngelmak.org.pem
-ngelmak.org.key
-```
-
----
-
-# 🧱 How to mount this into Docker (example)
-
-If your host uses the Linux/macOS path:
-
-```yaml
-services:
-  nginx:
-    image: my-nginx
-    ports:
-      - '80:80'
-      - '443:443'
-    volumes:
-      - /etc/nginx/certs:/etc/nginx/ssl:ro
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-```
-
-This keeps your Docker image clean and your certificates safe.
-
----
-
-# 🔐 Recommended file permissions
-
-On Linux/macOS:
-
-```bash
-sudo chmod 600 /etc/nginx/certs/ngelmak.org/ngelmak.org.key
-sudo chmod 644 /etc/nginx/certs/ngelmak.org/ngelmak.org.pem
-```
-
-This ensures:
-
-- Only root can read the private key
-- The certificate itself is readable by Nginx
-
----
-
-# 📘 How to document it in your project
-
-You can add a section like this:
-
----
-
-### **SSL Certificate Storage (Local Development / Deployment)**
-
-Store domain certificates outside the project repository to avoid leaking private keys.
-
-**Linux:**
-
-```
-/etc/nginx/certs/<domain>/
-```
-
-Each folder must contain:
-
-- `<domain>.pem` — certificate
-- `<domain>.key` — private key
-
-These folders are mounted into the Nginx container at runtime:
-
-```yaml
-volumes:
-  - /etc/nginx/certs:/etc/nginx/ssl:ro
 ```
