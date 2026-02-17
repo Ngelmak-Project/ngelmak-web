@@ -12,9 +12,10 @@ import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { TicketService } from '../nk-ticket.service';
 
+
 const initTicket: ITicket = {
   id: null,
-  content: '',
+  description: '',
   evidence: null,
 };
 
@@ -26,10 +27,10 @@ const initTicket: ITicket = {
   imports: [CommonModule, Field],
 })
 export class TicketDialogComponent {
-  post = input<IPostDTO>();
-  comment = input<ICommentDTO>();
-  channel = input<IChannelDTO>();
-  onclose = output<void>();
+  post = input<IPostDTO>(); // Set went reporting a post.
+  comment = input<ICommentDTO>(); // Set when reporting a comment that violate our policies.
+  channel = input<IChannelDTO>(); // Set when report concerns a user's channel.
+  onclose = output<void>(); // Emit even to close the dialog on the parent component.
 
   ticketService = inject(TicketService);
   alertService = inject(AlertService);
@@ -38,17 +39,11 @@ export class TicketDialogComponent {
   ticketModel = signal<ITicket>(initTicket);
 
   ticketForm = form(this.ticketModel, (p) => {
-    required(p.content, { message: 'Le contenu est requis.' });
-    maxLength(p.content, 1000, { message: 'Nombre maximum de caractères est 1000.' });
+    required(p.description, { message: 'Le contenu est requis.' });
+    maxLength(p.description, 1000, { message: 'Nombre maximum de caractères est 1000.' });
   });
 
   save() {
-    this.alertService.addAlert({
-      type: 'warning',
-      message: 'Sorry but this feature is not implemented yet!',
-    });
-    return;
-
     this.isSaving.set(true);
     const ticket: ITicket = {
       ...this.ticketModel(),
@@ -58,12 +53,12 @@ export class TicketDialogComponent {
       channel: this.channel() ? { id: this.channel().id } : null,
     };
 
-    // Trim content to remove leading and trailing whitespace.
-    ticket.content = ticket.content.trim();
+    // Trim description to remove leading and trailing whitespace.
+    ticket.description = ticket.description.trim();
     // Retrieve the image file.
-    const file = this.ticketModel().evidence;
+    const media = this.ticketModel().evidence?.data || null;
     this.ticketService
-      .create(ticket, file)
+      .create(ticket, media)
       .pipe(finalize(() => this.isSaving.set(false)))
       .subscribe({
         next: () => {

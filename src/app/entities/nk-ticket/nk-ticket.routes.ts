@@ -5,7 +5,6 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
 import { TicketDetailComponent } from './detail/nk-ticket-detail.component';
 import { TicketComponent } from './list/nk-ticket.component';
 import TicketResolve from './nk-ticket-routing-resolve.service';
-import { TicketUpdateComponent } from './update/nk-ticket-update.component';
 
 const ticketRoute: Routes = [
   {
@@ -19,22 +18,6 @@ const ticketRoute: Routes = [
   {
     path: ':id/view',
     component: TicketDetailComponent,
-    resolve: {
-      ticket: TicketResolve,
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: 'new',
-    component: TicketUpdateComponent,
-    resolve: {
-      ticket: TicketResolve,
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/edit',
-    component: TicketUpdateComponent,
     resolve: {
       ticket: TicketResolve,
     },

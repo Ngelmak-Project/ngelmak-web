@@ -5,12 +5,12 @@
   <div
     class="bg-white dark:bg-gray-800 rounded-xl shadow-xl p-3 md:p-6 w-full max-w-sm border border-gray-200 dark:border-gray-700"
   >
-    <!-- CONTENT -->
+    <!-- DESCRIPTION -->
     <div class="relative">
       <textarea
         id="content"
         rows="5"
-        [field]="ticketForm.content"
+        [field]="ticketForm.description"
         placeholder=" "
         class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 dark:focus:border-blue-500 peer resize-none"
       ></textarea>
@@ -22,19 +22,12 @@
         Décrivez brièvement le problème ou la situation.
       </label>
 
-      @if (ticketForm.content().dirty()) {
-        @for (error of ticketForm.content().errors(); track error) {
-          <p class="text-red-600 dark:text-red-500 text-xs leading-tight">
-            {{ error.message }}
-          </p>
-        }
-      }
       <!-- Wrapper: puts counter on left and errors on right -->
       <div class="flex justify-between items-start mt-1 text-xs w-full">
         <!-- Errors (left side) -->
         <div class="text-left flex-1">
-          @if (ticketForm.content().dirty()) {
-            @for (error of ticketForm.content().errors(); track error) {
+          @if (ticketForm.description().dirty()) {
+            @for (error of ticketForm.description().errors(); track error) {
               <p class="text-red-600 dark:text-red-500 text-xs leading-tight">
                 {{ error.message }}
               </p>
@@ -45,14 +38,14 @@
         <div
           class="whitespace-nowrap ml-4"
           [class.text-red-600]="
-            ticketForm.content().value().length >= ticketForm.content().maxLength()
+            ticketForm.description().value().length >= ticketForm.description().maxLength()
           "
           [class.text-gray-500]="
-            ticketForm.content().value().length < ticketForm.content().maxLength()
+            ticketForm.description().value().length < ticketForm.description().maxLength()
           "
         >
-          {{ ticketForm.content().value().length }} /
-          {{ ticketForm.content().maxLength() }}
+          {{ ticketForm.description().value().length }} /
+          {{ ticketForm.description().maxLength() }}
         </div>
       </div>
     </div>

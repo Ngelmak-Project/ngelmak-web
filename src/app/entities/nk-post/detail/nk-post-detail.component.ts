@@ -38,8 +38,9 @@ import { PostUpdateComponent } from '../update/nk-post-update.component';
 export class PostDetailComponent {
   post = input.required<IPostDTO>(); // The post to display
   ondeleted = output<IPostDTO>(); // Event emitted when the post is deleted.
-  postSig = signal<IPostDTO>(null); // Signal to hold the current post data, allowing for reactive updates.
 
+  postSig = signal<IPostDTO>(null); // Signal to hold the current post data, allowing for reactive updates.
+  channel = inject(ChannelService).channel; // connected user's channel.
   openMenu = signal(false);
   confirmDeleteOpen = signal(false);
   isDeleting = signal(false);
@@ -50,7 +51,6 @@ export class PostDetailComponent {
   alertService = inject(AlertService);
   protected postService = inject(PostService);
 
-  channel = inject(ChannelService).channel;
 
   constructor() {
     effect(() => {
