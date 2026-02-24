@@ -44,6 +44,18 @@ export class TicketService {
     });
   }
 
+  /**
+   * Request to get user's activity reports.
+   * @param req for pagination.
+   */
+  userActivityReports(req?: any): Observable<HttpResponse<IPage<ITicket>>> {
+    const options = createRequestOption(req);
+    return this.http.get<IPage<ITicket>>(`${this.resourceUrl}/user-activity-reports`, {
+      params: options,
+      observe: 'response',
+    });
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

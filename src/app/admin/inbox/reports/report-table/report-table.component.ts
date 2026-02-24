@@ -12,21 +12,21 @@ import {
 } from 'app/shared/sort';
 
 import { AlertService } from 'app/shared/alert/alert.service';
-import { TicketService } from '../nk-ticket.service';
 import { FormatMediumDatetimePipe } from 'app/shared/date';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { stagger150ms } from 'app/shared/animations/stagger.animation';
-import { TicketOpenComponent } from '../open/nk-ticket-open.component';
+import { TicketOpenComponent } from 'app/entities/nk-ticket/open/nk-ticket-open.component';
+import { TicketService } from 'app/entities/nk-ticket/nk-ticket.service';
 
 @Component({
   standalone: true,
-  selector: 'app-ticket',
-  templateUrl: './nk-ticket.component.html',
+  selector: 'app-report-table',
+  templateUrl: './report-table.component.html',
   imports: [RouterModule, FormsModule, SharedModule, TicketOpenComponent, FormatMediumDatetimePipe],
   animations: [fadeInUp400ms, stagger150ms],
 })
 
-export class TicketComponent implements OnInit {
+export class ReportComponent implements OnInit {
   /** Dependencies */
   private router = inject(Router);
   private ticketService = inject(TicketService);

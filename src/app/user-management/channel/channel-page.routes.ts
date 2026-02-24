@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
+import { UserActivityReportComponent } from 'app/entities/nk-ticket/user-activity-report/user-activity-report.component';
 import { ChannelCommentsComponent } from './channel-comments/channel-comments.component';
+import { ChannelPageComponent } from './channel-page.component';
 import { ChannelPostsComponent } from './channel-posts/channel-posts.component';
 import { ChannelReactionsComponent } from './channel-reactions/channel-reactions.component';
-import { ChannelPageComponent } from './channel-page.component';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 
 const channelDetailRoute: Routes = [
   {
@@ -22,6 +23,10 @@ const channelDetailRoute: Routes = [
       {
         path: 'reactions',
         component: ChannelReactionsComponent,
+      },
+      {
+        path: 'user-activity-report',
+        loadChildren: () => import('app/entities/nk-ticket/nk-ticket.routes'),
       },
       {
         path: '**',

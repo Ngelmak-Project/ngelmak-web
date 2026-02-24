@@ -2,10 +2,10 @@ import { Route } from '@angular/router';
 import { ReportsComponent } from './reports/reports.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import InboxComponent from './inbox.component';
-import { TicketDetailComponent } from 'app/entities/nk-ticket/detail/nk-ticket-detail.component';
 import ticketResolve from 'app/entities/nk-ticket/nk-ticket-routing-resolve.service';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
-import { TicketComponent } from 'app/entities/nk-ticket/table/nk-ticket.component';
+import { ReportComponent } from './reports/report-table/report-table.component';
+import { ReportDetailComponent } from './reports/report-detail/report-detail.component';
 
 const inboxRoutes: Route[] = [
   {
@@ -18,12 +18,12 @@ const inboxRoutes: Route[] = [
         children: [
           {
             path: '',
-            component: TicketComponent,
+            component: ReportComponent,
             canActivate: [UserRouteAccessService],
           },
           {
             path: ':id',
-            component: TicketDetailComponent,
+            component: ReportDetailComponent,
             resolve: {
               ticket: ticketResolve,
             },
