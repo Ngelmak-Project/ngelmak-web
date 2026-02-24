@@ -1,0 +1,126 @@
+<div
+  @fadeInUp
+  class="fixed inset-0 bg-black/40 backdrop-blur-sm flex pt-16 items-center justify-center z-40"
+>
+  <div
+    class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md border border-gray-200 dark:border-gray-700 max-h-[90vh] flex flex-col"
+  >
+    <!-- HEADER -->
+    <div class="p-3 md:p-5 border-b dark:border-gray-700">
+      <div class="flex items-start justify-between">
+        <div>
+          @if (replyTo()) {
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white leading-tight">
+              Répondre au fil de discussion
+            </h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+              Ticket #{{ ticket().id }} — Signalement utilisateur
+            </p>
+          } @else {
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white leading-tight">
+              Examen du ticket #{{ ticket().id }}
+            </h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Signalement utilisateur</p>
+          }
+        </div>
+
+        <!-- CLOSE DIALOG -->
+        <button
+          (click)="close()"
+          class="inline-flex items-center p-1.5 text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+        >
+          <svg
+            class="w-6 h-6"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18 17.94 6M18 18 6.06 6"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- SCROLLABLE CONTENT -->
+    <div class="p-3 md:p-5 overflow-y-auto space-y-6 text-gray-700 dark:text-gray-300">
+      <!-- CONTENT -->
+      <div class="relative">
+        <textarea
+          id="content"
+          rows="5"
+          [field]="reviewForm.content"
+          placeholder=" "
+          class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 dark:focus:border-blue-500 peer resize-none"
+        ></textarea>
+
+        <label
+          for="content"
+          class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+        >
+          Expliquer
+        </label>
+
+        <div class="flex justify-between items-start mt-1 text-xs w-full">
+          <!-- Errors (left side) -->
+          <div class="text-left flex-1">
+            @if (reviewForm.content().dirty()) {
+              @for (error of reviewForm.content().errors(); track error) {
+                <p class="text-red-600 dark:text-red-500 text-xs leading-tight">
+                  {{ error.message }}
+                </p>
+              }
+            }
+          </div>
+          <!-- Character counter -->
+          <div
+            class="whitespace-nowrap ml-4"
+            [class.text-red-600]="
+              reviewForm.content().value().length >= reviewForm.content().maxLength()
+            "
+            [class.text-gray-500]="
+              reviewForm.content().value().length < reviewForm.content().maxLength()
+            "
+          >
+            {{ reviewForm.content().value().length }} / {{ reviewForm.content().maxLength() }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="p-3 md:p-5 border-t dark:border-gray-700 flex justify-end gap-3">
+      <button
+        type="button"
+        (click)="close()"
+        [disabled]="isSaving()"
+        class="px-4 py-2 text-sm rounded-lg border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        Annuler
+      </button>
+
+      <button
+        type="button"
+        (click)="send()"
+        [disabled]="reviewForm().invalid() || isSaving()"
+        class="flex gap-2 items-center text-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        @if (isSaving()) {
+          <svg class="inline w-5 h-5 animate-spin text-white" viewBox="0 0 100 101" fill="none">
+            <path d="M100 50.5908C100 78.2051..." fill="currentColor" opacity="0.2" />
+            <path d="M93.9676 39.0409..." fill="currentColor" />
+          </svg>
+        }
+        Envoyer
+      </button>
+    </div>
+  </div>
+</div>
