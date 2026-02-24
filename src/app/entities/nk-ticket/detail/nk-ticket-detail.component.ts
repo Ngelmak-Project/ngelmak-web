@@ -1,28 +1,32 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { DataUtils } from 'app/core/util/data-util.service';
 import { ITicket } from 'app/entities/models/nk-ticket.model';
+import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
+import { FormatMediumDatetimePipe } from 'app/shared/date';
 import SharedModule from 'app/shared/shared.module';
+import { TicketService } from '../nk-ticket.service';
+import { ReviewDialogComponent } from 'app/entities/nk-review/dialog/nk-review-dialog.component';
+import { ReviewComponent } from 'app/entities/nk-review/list/nk-review.component';
 
 @Component({
   standalone: true,
   selector: 'app-ticket-detail',
   templateUrl: './nk-ticket-detail.component.html',
-  imports: [SharedModule, RouterModule,],
+  imports: [RouterModule, SharedModule, FormatMediumDatetimePipe, ReviewComponent, ReviewDialogComponent],
+  animations: [fadeInUp400ms],
 })
 export class TicketDetailComponent {
-  ticket = input<ITicket | null>(null);
+  ticket = input.required<ITicket>();
 
-  protected dataUtils = inject(DataUtils);
+  ticketService = inject(TicketService);
+  isSaving = signal(false);
+  showMenu = signal(false);
+  openReview = signal(false);
 
-  byteSize(base64String: string): string {
-    return this.dataUtils.byteSize(base64String);
-  }
-
-  openFile(base64String: string, contentType: string | null | undefined): void {
-    this.dataUtils.openFile(base64String, contentType);
-  }
+  loadChannel() {}
+  loadPost() {}
+  loadComment() {}
 
   previousState(): void {
     window.history.back();

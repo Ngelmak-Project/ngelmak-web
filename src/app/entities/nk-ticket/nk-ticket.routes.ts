@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 import { ASC } from 'app/config/navigation.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { TicketDetailComponent } from './detail/nk-ticket-detail.component';
-import { TicketComponent } from './list/nk-ticket.component';
+import { TicketComponent } from './table/nk-ticket.component';
 import TicketResolve from './nk-ticket-routing-resolve.service';
 
 const ticketRoute: Routes = [
@@ -16,7 +16,7 @@ const ticketRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':id/view',
+    path: ':id',
     component: TicketDetailComponent,
     resolve: {
       ticket: TicketResolve,

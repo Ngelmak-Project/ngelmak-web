@@ -8,10 +8,12 @@ export interface ITicket {
   issuedAt?: Date | null;
   resolved?: boolean | null; // Indicates whether the ticket has been closed/resolved.
   description?: string | null; // Detailed description or explanation of the issue.
+  visibility?: string | null;
   evidence?: IFile | null; // Optional file containing evidence (e.g., an image).
   post?: IPost | null; // Post associated with the ticket, if applicable.
   comment?: IComment | null; // Comment associated with the ticket, if applicable.
   channel?: IChannel | null; // Channel associated with the ticket, if applicable.
+  targetUser?: number | null; // ID of the user concerned by the ticket.
   issuedBy?: number | null; // ID of the user who issued the ticket.
   handledBy?: number | null; // ID of the user who handle the ticket.
   assignedTo?: number | null; // ID of the user responsible for handling the ticket.

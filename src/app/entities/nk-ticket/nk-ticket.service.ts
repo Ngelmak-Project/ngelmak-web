@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ITicket } from 'app/entities/models/nk-ticket.model';
+import { IPage } from 'app/shared/pagination/pagination.model';
 import { Observable } from 'rxjs';
 
 export type EntityResponseType = HttpResponse<ITicket>;
@@ -35,9 +36,12 @@ export class TicketService {
     return this.http.get<ITicket>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  query(req?: any): Observable<EntityArrayResponseType> {
+  query(req?: any): Observable<HttpResponse<IPage<ITicket>>> {
     const options = createRequestOption(req);
-    return this.http.get<ITicket[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http.get<IPage<ITicket>>(this.resourceUrl, {
+      params: options,
+      observe: 'response',
+    });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

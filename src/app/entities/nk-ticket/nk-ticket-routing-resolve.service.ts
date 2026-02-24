@@ -1,27 +1,18 @@
-import { HttpResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { EMPTY, Observable, of } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
-
+import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { ITicket } from 'app/entities/models/nk-ticket.model';
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { TicketService } from './nk-ticket.service';
 
-const ticketResolve = (route: ActivatedRouteSnapshot): Observable<null | ITicket> => {
-  const id = route.params['id'];
-  if (id) {
-    return inject(TicketService)
-      .find(id)
-      .pipe(
-        mergeMap((ticket: HttpResponse<ITicket>) => {
-          if (ticket.body) {
-            return of(ticket.body);
-          } else {
-            inject(Router).navigate(['404']);
-            return EMPTY;
-          }
-        }),
-      );
+
+export const ticketResolve: ResolveFn<ITicket> = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot,
+) => {
+  const ticketId = route.paramMap.get('id')!;
+  if (ticketId) {
+    return inject(TicketService).find(Number(ticketId)).pipe(map((value) => value.body));
   }
   return of(null);
 };
