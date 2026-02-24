@@ -34,6 +34,7 @@ export default class NavbarComponent {
   isDarkMode = signal(true); // Manage the dark mode state
   isSidebarOpened = signal(false);
   showUserSettings = signal(false);
+  showNotifications = signal(false);
 
   constructor() {
     effect(() => {

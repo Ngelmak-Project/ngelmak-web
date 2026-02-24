@@ -43,7 +43,7 @@ import {
  *   </div>
  * </div>
  */
-export function staggerAnimation(timing: number) {
+function staggerAnimation(timing: number) {
   return trigger('stagger', [
     transition('* => *', [
       query('@fadeInUp, @fadeInRight, @scaleIn', stagger(timing, animateChild()), {
@@ -84,7 +84,7 @@ export const stagger200ms = staggerAnimation(200);
  * //   animations: [scaleInOutAnimation150ms]
  * // })
  */
-export function scaleInOutAnimation(timing: number) {
+function scaleInOutAnimation(timing: number) {
   return trigger('scaleInOutAnimation', [
     transition('* <=> *', [
       query(

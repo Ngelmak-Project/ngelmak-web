@@ -6,21 +6,25 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { Pagination } from 'app/core/request/request.model';
 import { IPage } from 'app/shared/pagination/pagination.model';
-import { UserManagementModel } from './user-management.model';
+import { IContactMessage, UserManagementModel } from './user-management.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserManagementService {
   private http = inject(HttpClient);
   private applicationConfigService = inject(ApplicationConfigService);
 
-  private resourceUrl = this.applicationConfigService.getEndpointFor('auth/admin/users');
+  private userResourceUrl = this.applicationConfigService.getEndpointFor('auth/admin/users');
+  private managementResourceUrl =
+    this.applicationConfigService.getEndpointFor('auth/admin/management');
 
   /**
    * Find a user by id.
    * @param id of user to find.
    */
   find(id: number): Observable<HttpResponse<UserManagementModel>> {
-    return this.http.get<UserManagementModel>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    return this.http.get<UserManagementModel>(`${this.userResourceUrl}/${id}`, {
+      observe: 'response',
+    });
   }
 
   /**
@@ -29,7 +33,7 @@ export class UserManagementService {
    */
   query(req?: Pagination): Observable<HttpResponse<IPage<UserManagementModel>>> {
     const options = createRequestOption(req);
-    return this.http.get<IPage<UserManagementModel>>(this.resourceUrl, {
+    return this.http.get<IPage<UserManagementModel>>(this.userResourceUrl, {
       params: options,
       observe: 'response',
     });
@@ -41,7 +45,7 @@ export class UserManagementService {
    */
   search(req?: Pagination): Observable<HttpResponse<IPage<UserManagementModel>>> {
     const options = createRequestOption(req);
-    return this.http.get<IPage<UserManagementModel>>(this.resourceUrl, {
+    return this.http.get<IPage<UserManagementModel>>(this.userResourceUrl, {
       params: options,
       observe: 'response',
     });
@@ -54,7 +58,7 @@ export class UserManagementService {
    */
   setActive(id: number, activated: boolean): Observable<HttpResponse<UserManagementModel>> {
     return this.http.put<UserManagementModel>(
-      `${this.resourceUrl}/active`,
+      `${this.userResourceUrl}/active`,
       { id, activated },
       {
         observe: 'response',
@@ -73,7 +77,7 @@ export class UserManagementService {
     authorityNames: string[],
   ): Observable<HttpResponse<UserManagementModel>> {
     return this.http.put<UserManagementModel>(
-      `${this.resourceUrl}/grant-authorities`,
+      `${this.userResourceUrl}/grant-authorities`,
       { id, authorityNames },
       {
         observe: 'response',
@@ -92,7 +96,7 @@ export class UserManagementService {
     authorityNames: string[],
   ): Observable<HttpResponse<UserManagementModel>> {
     return this.http.put<UserManagementModel>(
-      `${this.resourceUrl}/revoke-authorities`,
+      `${this.userResourceUrl}/revoke-authorities`,
       { id, authorityNames },
       {
         observe: 'response',
@@ -105,7 +109,7 @@ export class UserManagementService {
    */
   blockUser(id: number): Observable<HttpResponse<UserManagementModel>> {
     return this.http.put<UserManagementModel>(
-      `${this.resourceUrl}/block/${id}`,
+      `${this.userResourceUrl}/block/${id}`,
       {},
       {
         observe: 'response',
@@ -118,7 +122,7 @@ export class UserManagementService {
    */
   unblockUser(id: number): Observable<HttpResponse<UserManagementModel>> {
     return this.http.put<UserManagementModel>(
-      `${this.resourceUrl}/unblock/${id}`,
+      `${this.userResourceUrl}/unblock/${id}`,
       {},
       {
         observe: 'response',
@@ -135,7 +139,7 @@ export class UserManagementService {
     docIdentification: string,
   ): Observable<HttpResponse<UserManagementModel>> {
     return this.http.put<UserManagementModel>(
-      `${this.resourceUrl}/certification`,
+      `${this.userResourceUrl}/certification`,
       { id, docType, docIdentification },
       {
         observe: 'response',
@@ -149,8 +153,32 @@ export class UserManagementService {
    */
   certificationWithdrawal(id: number): Observable<HttpResponse<UserManagementModel>> {
     return this.http.put<UserManagementModel>(
-      `${this.resourceUrl}/certification/withdrawal/${id}`,
+      `${this.userResourceUrl}/certification/withdrawal/${id}`,
       {},
+      { observe: 'response' },
+    );
+  }
+
+  /**
+   * Query for a list of contacts with pagination and sorting.
+   * @param req Pagination and sorting information
+   */
+  findContacts(req?: Pagination): Observable<HttpResponse<IPage<IContactMessage>>> {
+    const options = createRequestOption(req);
+    return this.http.get<IPage<IContactMessage>>(`${this.managementResourceUrl}/contacts`, {
+      params: options,
+      observe: 'response',
+    });
+  }
+
+  /**
+   * API call for closing a massage.
+   * @param id of the message to close.
+   */
+  closeContact(id: number): Observable<HttpResponse<IContactMessage>> {
+    return this.http.post<IContactMessage>(
+      `${this.managementResourceUrl}/close`,
+      { id },
       { observe: 'response' },
     );
   }

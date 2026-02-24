@@ -76,8 +76,6 @@ export class ChannelService {
   }
 
   update(channel: IChannel): Observable<EntityResponseType> {
-    console.log(channel);
-
     return this.http.put<IChannel>(this.resourceUrl, channel, {
       observe: 'response',
     });

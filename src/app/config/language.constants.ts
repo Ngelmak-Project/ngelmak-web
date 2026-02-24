@@ -5,5 +5,4 @@
 export const LANGUAGES: string[] = [
   'fr',
   'en',
-  // ngelmakpster-needle-i18n-language-constant - JHipster will add/remove languages in this array
 ];

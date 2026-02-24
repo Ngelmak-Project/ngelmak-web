@@ -12,7 +12,7 @@ import { SortService, sortStateSignal } from 'app/shared/sort';
 import { HttpResponse } from '@angular/common/http';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
-import { PostDetailComponent } from 'app/entities/nk-post/detail/nk-post-detail.component';
+import { PostCardComponent } from 'app/entities/nk-post/card/nk-post-card.component';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { IPage } from 'app/shared/pagination/pagination.model';
 import { ScrollService } from 'app/shared/services/scroll.service';
@@ -24,7 +24,7 @@ import { IPostDTO } from 'app/entities/models/nk-post.model';
   standalone: true,
   selector: 'app-feed',
   templateUrl: './nk-feed.component.html',
-  imports: [RouterModule, FormsModule, SharedModule, PostDetailComponent, PostUpdateComponent],
+  imports: [RouterModule, FormsModule, SharedModule, PostCardComponent, PostUpdateComponent],
   animations: [fadeInUp400ms],
 })
 export class FeedComponent implements OnInit, OnDestroy {

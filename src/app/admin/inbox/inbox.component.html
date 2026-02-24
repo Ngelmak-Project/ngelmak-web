@@ -1,0 +1,59 @@
+<div class="max-w-5xl mx-auto px-4 py-8 space-y-8">
+  <!-- Header -->
+  <div class="space-y-1">
+    <h1 class="text-3xl font-semibold text-gray-800 dark:text-gray-100">Boîte de réception</h1>
+    <p class="text-gray-500 dark:text-gray-400">
+      Gérez les messages, signalements et retours envoyés par les utilisateurs.
+    </p>
+  </div>
+
+  <!-- Navigation -->
+  <div class="flex flex-col md:flex-row flex-wrap gap-3">
+    <a
+      routerLink="reports"
+      routerLinkActive="dark:!bg-gray-700 dark:!border-gray-600"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+    >
+      Signalements
+    </a>
+
+    <a
+      routerLink="contacts"
+      routerLinkActive="dark:!bg-gray-700 dark:!border-gray-600"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+    >
+      Contacts
+    </a>
+
+    <a
+      routerLinkActive="dark:!bg-gray-700 dark:!border-gray-600"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+    >
+      Feedback
+    </a>
+
+    <a
+      routerLinkActive="dark:!bg-gray-700 dark:!border-gray-600"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+    >
+      Bugs
+    </a>
+
+    <a
+      routerLinkActive="dark:!bg-gray-700 dark:!border-gray-600"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+    >
+      Demandes
+    </a>
+  </div>
+
+  <!-- Section content -->
+  <div class="mt-6 rounded-lg overflow-auto">
+    <router-outlet></router-outlet>
+  </div>
+</div>

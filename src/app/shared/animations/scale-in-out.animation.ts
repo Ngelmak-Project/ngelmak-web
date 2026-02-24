@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 
-export function scaleInOut(duration: number) {
+function scaleInOut(duration: number) {
   return trigger('scaleInOut', [
     transition(':enter', [
       style({

@@ -17,3 +17,23 @@ export interface UserManagementModel {
   lastModifiedDate?: Date;
   authorities?: string[];
 }
+
+
+/**
+ * The ContactStatus enumeration.
+ */
+export enum ContactStatus {
+  NEW,
+  IN_PROGRESS,
+  CLOSED,
+}
+
+export interface IContactMessage {
+  id?: number;
+  name?: string; // optional if anonymous allowed
+  email?: string; // optional if anonymous allowed, but useful for support to reply
+  subject?: string;
+  message?: string;
+  sentAt?: Date;
+  status?: ContactStatus | string; // NEW, IN_PROGRESS, CLOSED
+}

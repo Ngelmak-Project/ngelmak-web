@@ -1,6 +1,7 @@
 @if (showSidebar()) {
   <aside
-    clickOutside (onClickOutside)="closeSidebar()"
+    clickOutside
+    (onClickOutside)="closeSidebar()"
     @fadeInOutRight
     class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 w-64 h-full pt-16 font-normal duration-75 lg:flex transition-width"
   >
@@ -328,10 +329,13 @@
       <!-- FOOTER: LANGUAGE SELECTOR -->
       <!-- ========================= -->
       <div
-        class="absolute bottom-0 left-0 justify-center w-full p-4 space-x-4 bg-white flex dark:bg-gray-800"
+        clickOutside
+        (onClickOutside)="hideLangKeyOptions.set(true)"
+        class="absolute bottom-0 left-0 p-2 w-full flex items-center justify-center"
       >
         <!-- Your language dropdown kept exactly as is -->
         <button
+          (click)="hideLangKeyOptions.set(!hideLangKeyOptions())"
           type="button"
           class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
         >
@@ -351,16 +355,37 @@
           </svg>
         </button>
 
-        <div
-          class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700"
-        >
-          <!-- Your language list unchanged -->
-        </div>
+        @if (!hideLangKeyOptions()) {
+          <div
+            class="absolute bottom-14 z-10 bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600"
+          >
+            <ul class="p-2 text-sm text-gray-700 dark:text-gray-200">
+              <li>
+                <button
+                  type="button"
+                  (click)="changeLanguage('fr')"
+                  class="inline-flex w-full rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  <div class="inline-flex items-center gap-2">Français</div>
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  (click)="changeLanguage('en')"
+                  class="inline-flex w-full rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  <div class="inline-flex items-center gap-2">English</div>
+                </button>
+              </li>
+            </ul>
+          </div>
+        }
       </div>
     </div>
   </aside>
 }
 
-<div
+<!-- <div
   class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90"
-></div>
+></div> -->

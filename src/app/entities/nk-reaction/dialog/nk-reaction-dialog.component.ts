@@ -41,6 +41,7 @@ export class ReactionDialogComponent implements OnInit {
   }
 
   update() {
+    if (!this.post.reactions) return;
     const value = Object.values(this.post.reactions.counts).reduce((acc, val) => acc + val, 0);
     this.totalReactions.set(value);
     const emojis = Object.keys(this.post.reactions.counts);

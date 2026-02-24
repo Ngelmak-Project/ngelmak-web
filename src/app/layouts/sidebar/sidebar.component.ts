@@ -19,6 +19,7 @@ export class SidebarComponent {
   private stateStorageService = inject(StateStorageService);
 
   showNgelmakSubMenu = signal(false);
+  hideLangKeyOptions = signal(false);
 
   showSidebar = computed(() => {
     return this.sidebarBehavior.state();
@@ -30,6 +31,7 @@ export class SidebarComponent {
   }
 
   changeLanguage(languageKey: string): void {
+    this.hideLangKeyOptions.set(true);
     this.stateStorageService.storeLocale(languageKey);
     // this.translateService.use(languageKey);
   }

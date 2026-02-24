@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 
-export function fadeInUpAnimation(duration: number) {
+function fadeInUpAnimation(duration: number) {
   return trigger('fadeInUp', [
     transition(':enter', [
       style({
