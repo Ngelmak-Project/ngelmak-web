@@ -1,14 +1,12 @@
-import { inject } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { of, EMPTY, Observable } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
-
-import { PostService } from './nk-post.service';
+import { inject } from '@angular/core';
+import { ResolveFn, Router } from '@angular/router';
 import { IPost } from 'app/entities/models/nk-post.model';
+import { EMPTY, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { PostService } from './nk-post.service';
 
-
-const postResolve = (route: ActivatedRouteSnapshot): Observable<null | IPost> => {
+const postResolve: ResolveFn<IPost> = (route, state) => {
   const id = route.params['id'];
   if (id) {
     return inject(PostService)

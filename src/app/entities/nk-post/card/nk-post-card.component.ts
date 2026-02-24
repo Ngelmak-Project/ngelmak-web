@@ -1,11 +1,8 @@
 import { Component, effect, inject, input, output, signal } from '@angular/core';
-import { RouterModule } from '@angular/router';
-
 import { FormsModule } from '@angular/forms';
-import { IPostDTO } from 'app/entities/models/nk-post.model';
-import SharedModule from 'app/shared/shared.module';
-
+import { RouterModule } from '@angular/router';
 import { IFile } from 'app/entities/models/nk-file.model';
+import { IPostDTO } from 'app/entities/models/nk-post.model';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { CommentComponent } from 'app/entities/nk-comment/list/nk-comment.component';
 import { ReactionDialogComponent } from 'app/entities/nk-reaction/dialog/nk-reaction-dialog.component';
@@ -14,15 +11,16 @@ import { AlertService } from 'app/shared/alert/alert.service';
 import { ConfirmDialogComponent } from 'app/shared/confirm-dialog/confirm-dialog.component';
 import { DurationPipe } from 'app/shared/date';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
+import { ShowForChannelDirective } from 'app/shared/directives/show-for-channel';
+import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { PostService } from '../nk-post.service';
 import { PostUpdateComponent } from '../update/nk-post-update.component';
-import { ShowForChannelDirective } from 'app/shared/directives/show-for-channel';
 
 @Component({
   standalone: true,
-  selector: 'app-post-detail',
-  templateUrl: './nk-post-detail.component.html',
+  selector: 'app-post-card',
+  templateUrl: './nk-post-card.component.html',
   imports: [
     RouterModule,
     FormsModule,
@@ -33,23 +31,23 @@ import { ShowForChannelDirective } from 'app/shared/directives/show-for-channel'
     ClickOutsideDirective,
     ConfirmDialogComponent,
     ReactionDialogComponent,
-    TicketDialogComponent,
     ShowForChannelDirective,
+    TicketDialogComponent,
   ],
 })
-export class PostDetailComponent {
+export class PostCardComponent {
   post = input.required<IPostDTO>(); // The post to display
   ondeleted = output<IPostDTO>(); // Event emitted when the post is deleted.
 
   postSig = signal<IPostDTO>(null); // Signal to hold the current post data, allowing for reactive updates.
   channel = inject(ChannelService).channel; // connected user's channel.
-  openMenu = signal(false);
+  showMenu = signal(false);
   confirmDeleteOpen = signal(false);
   isDeleting = signal(false);
   isUpdating = signal(false);
   isCommentOpened = signal(false);
   isSignalPost = signal(false); // Signal emit when user wanna signal a post.
-  showMenu = signal(false);
+
   alertService = inject(AlertService);
   protected postService = inject(PostService);
 
@@ -94,7 +92,7 @@ export class PostDetailComponent {
       .pipe(
         finalize(() => {
           this.isDeleting.set(false);
-          this.openMenu.set(false);
+          this.showMenu.set(false);
         }),
       )
       .subscribe({

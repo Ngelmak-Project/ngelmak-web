@@ -5,7 +5,7 @@ import { ITEMS_PER_PAGE, PAGE_HEADER } from 'app/config/pagination.constants';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { IPostDTO } from 'app/entities/models/nk-post.model';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
-import { PostDetailComponent } from 'app/entities/nk-post/detail/nk-post-detail.component';
+import { PostCardComponent } from 'app/entities/nk-post/card/nk-post-card.component';
 import { PostService } from 'app/entities/nk-post/nk-post.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { ScrollService } from 'app/shared/services/scroll.service';
@@ -16,7 +16,7 @@ import { Subscription, tap } from 'rxjs';
   selector: 'app-channel-post',
   standalone: true,
   templateUrl: './channel-post.component.html',
-  imports: [CommonModule, RouterModule, PostDetailComponent],
+  imports: [CommonModule, RouterModule, PostCardComponent],
   animations: [fadeInUp400ms],
 })
 export class ChannelPostComponent implements OnInit {

@@ -1,10 +1,10 @@
-<article class="flex flex-col gap-2 py-2">
-  <!-- Header -->
-  <header class="flex items-start justify-between gap-3 mb-2">
-    <!-- LEFT SIDE: Avatar + Name + Follow + Time -->
-    <div class="flex flex-col flex-grow gap-1">
-      <!-- Row 1: Avatar + Name + Follow -->
-      <div class="flex items-center gap-3">
+<div class="md:p-4">
+  <div
+    class="flex flex-col gap-3 md:gap-5 bg-white dark:bg-gray-800 md:rounded-2xl shadow-2xl w-full border border-gray-200 dark:border-gray-700 p-6 md:p-8"
+  >
+    <!-- HEADER -->
+    <div class="flex items-start justify-between pb-5 mb-6">
+      <div class="flex items-center gap-4">
         <!-- Avatar -->
         <a
           [routerLink]="[
@@ -14,25 +14,24 @@
           ]"
           class="shrink-0"
         >
-          @if (postSig().channel.avatar) {
-            <img
-              [src]="postSig().channel.avatar"
-              alt="Channel avatar"
-              class="rounded-full w-10 h-10"
-            />
-          } @else {
+          <img
+            *ngIf="postSig().channel.avatar; else noAvatar"
+            [src]="postSig().channel.avatar"
+            class="rounded-full w-12 h-12"
+          />
+          <ng-template #noAvatar>
             <div
-              class="flex items-center justify-center rounded-full w-10 h-10 text-xl uppercase text-black bg-gray-50 dark:bg-gray-300"
+              class="flex items-center justify-center rounded-full w-12 h-12 text-xl uppercase text-black bg-gray-50 dark:bg-gray-300"
             >
               {{ postSig().channel.name.at(0) }}
             </div>
-          }
+          </ng-template>
         </a>
 
-        <!-- Name + Follow button -->
-        <div class="flex items-center gap-2 flex-grow flex-wrap min-w-0">
+        <!-- Channel + Time -->
+        <div class="flex flex-col">
           <a
-            class="truncate text-sm font-medium text-gray-900 dark:text-white"
+            class="text-lg font-semibold text-gray-900 dark:text-white"
             [routerLink]="[
               'nk-channel',
               postSig().channel.id + '-' + postSig().channel.identifier,
@@ -42,135 +41,134 @@
             {{ postSig().channel.name }}
           </a>
 
-          <button
-            *hasAnyAuthority="'ROLE_USER'"
-            type="button"
-            class="bg-blue-100 text-blue-800 text-xs md:text-sm font-medium px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-400 border border-blue-400 shrink-0"
-          >
-            Suivre
-          </button>
+          <p class="flex items-center text-xs text-gray-600 dark:text-gray-400 mt-1">
+            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"
+              />
+            </svg>
+            <time>{{ postSig().at | duration }}</time>
+          </p>
         </div>
       </div>
-      <!-- Row 2: Time -->
-      <p class="flex items-center text-xs text-gray-600 dark:text-gray-400">
-        <svg
-          class="w-3 h-3 mr-1"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 20 20"
+
+      <!-- ACTION MENU -->
+      <div *hasAnyAuthority="'ROLE_USER'" class="relative shrink-0">
+        <button
+          clickOutside
+          (onClickOutside)="showMenu.set(false)"
+          (click)="showMenu.set(!showMenu())"
+          class="nline-flex items-center gap-1.5 p-2 text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
         >
-          <path
-            d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"
-          />
-        </svg>
-        <time>{{ postSig().at | duration }}</time>
-      </p>
-    </div>
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
+            ></path>
+          </svg>
+        </button>
 
-    <!-- RIGHT SIDE: Menu -->
-    <div *hasAnyAuthority="'ROLE_USER'" class="relative shrink-0">
-      <button
-        clickOutside
-        (onClickOutside)="openMenu.set(false)"
-        (click)="openMenu.set(!openMenu())"
-        class="inline-flex items-center p-2 text-sm text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-2 focus:outline-none focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-600"
-        type="button"
-      >
-        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-          <path
-            d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-          ></path>
-        </svg>
-      </button>
-
-      <!-- Dropdown menu -->
-      @if (openMenu()) {
-        <ul
-          class="absolute right-0 mt-1 w-32 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 shadow-lg py-1 text-xs text-gray-700 dark:text-gray-200 animate-fadeIn p-1 z-10"
-        >
-          <li>
-            <button
-              (click)="isSignalPost.set(true)"
-              class="w-full inline-flex items-center justify-between text-left px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-            >
-              Signaler
-
-              <svg
-                class="w-4 h-4"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z"
-                />
-              </svg>
-            </button>
-          </li>
-
-          @if (postSig().channel?.id == channel()?.id) {
-            <li>
-              <button
-                (click)="isUpdating.set(true)"
-                [disabled]="isUpdating()"
-                class="w-full inline-flex items-center justify-between text-left px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                Modifier
-
-                <svg
-                  class="w-4 h-4"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
+        <!-- DROPDOWN -->
+        @if (showMenu()) {
+          <div
+            class="absolute right-0 mt-2 w-56 rounded-xl shadow-xl bg-white dark:bg-gray-800 flex flex-col divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-600 py-2 z-20 animate-fadeIn"
+          >
+            <ul *showForChannel="post().channel.id">
+              <!-- UPDATE -->
+              <li>
+                <button
+                  (click)="isUpdating.set(true)"
+                  class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 text-left"
                 >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"
-                  />
-                </svg>
-              </button>
-            </li>
-            <li>
-              <button
-                (click)="confirmDeleteOpen.set(true)"
-                class="w-full inline-flex items-center justify-between text-left px-3 py-2 rounded-md text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                Supprimer
-
-                @if (isDeleting()) {
-                  <svg
-                    aria-hidden="true"
-                    class="inline w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
+                  Modifier
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
                     <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentFill"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"
                     />
                   </svg>
-                } @else {
+                </button>
+              </li>
+
+              <!-- DELETE -->
+              <li>
+                <button
+                  (click)="confirmDeleteOpen.set(true)"
+                  class="w-full px-4 py-2 text-left text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 flex items-center justify-between"
+                >
+                  Supprimer
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
+                    <path
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+
+            <!-- ANY USER -->
+            <ul>
+              <!-- REPORT POST -->
+              <li>
+                <button
+                  class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  Signaler
                   <svg
-                    class="w-4 h-4"
+                    class="w-5 h-5 text-gray-800 dark:text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 17h6l3 3v-3h2V9h-2M4 4h11v8H9l-3 3v-3H4V4Z"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+
+            <!-- DANGER ZONE (ADMIN ONLY) -->
+            <ul *hasAnyAuthority="'ROLE_ADMIN'">
+              <li>
+                <button
+                  class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition"
+                >
+                  Bloquer l'utilisateur
+                  <svg
+                    class="w-5 h-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 14v3m-3-6V7a3 3 0 1 1 6 0v4m-8 0h10a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"
+                    />
+                  </svg>
+                </button>
+              </li>
+
+              <li>
+                <button
+                  class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
+                >
+                  Supprimer
+                  <svg
+                    class="w-5 h-5"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -186,29 +184,44 @@
                       d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
                     />
                   </svg>
-                }
-              </button>
-            </li>
-          }
-        </ul>
-      }
-    </div>
-  </header>
+                </button>
+              </li>
 
-  @if (isUpdating()) {
-    <app-post-update
-      [post]="postSig()"
-      (onsaved)="handlePostUpdate($event)"
-      (oncancel)="isUpdating.set(false)"
-    ></app-post-update>
-  } @else {
-    <!-- Content -->
+              <!-- BLOCK / MASK CONTENT -->
+              <li>
+                <button
+                  class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  Masquer
+                  <svg
+                    class="w-5 h-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- CONTENT -->
     <div
-      class="mb-3 text-gray-900 dark:text-white whitespace-pre-line"
+      class="text-gray-900 dark:text-white whitespace-pre-line leading-relaxed text-base"
       [innerHTML]="postSig().content"
     ></div>
 
-    <!-- Attachments -->
+    <!-- ATTACHMENTS -->
     <div
       class="grid gap-4"
       [ngClass]="{
@@ -216,73 +229,81 @@
         'grid-cols-1 md:grid-cols-2': postSig().files.length > 1,
       }"
     >
-      @for (file of postSig().files; track file; let idx = $index) {
-        @if (isImage(file)) {
-          <img
-            class="h-auto rounded-lg shadow-xl dark:shadow-gray-800"
-            [src]="file.url"
-            alt="Imported image"
-          />
-        } @else if (isVideo(file)) {
-          <!-- your video block -->
-        } @else {
-          <!-- Non-image files always span full width -->
-          <div class="col-span-full flex items-center gap-2 py-3 px-2 border rounded-lg">...</div>
-        }
-      }
-    </div>
-  }
-
-  <!-- Comments/Reactions -->
-  <div class="flex items-center justify-start flex-wrap gap-2">
-    <!-- Comments -->
-    <button
-      type="button"
-      (click)="isCommentOpened.set(!isCommentOpened())"
-      class="h-9 py-1.5 px-3 inline-flex items-center gap-1 rounded-lg bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600 dark:bg-gray-700"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="h-5 w-5 text-gray-800 dark:text-white"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
+      <ng-container *ngFor="let file of postSig().files">
+        <img
+          *ngIf="isImage(file)"
+          [src]="file.url"
+          class="rounded-lg shadow-xl dark:shadow-gray-800"
         />
-      </svg>
-      @if (postSig().commentCount > 0) {
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
-          {{ postSig().commentCount }}
-        </span>
-      }
-    </button>
-    <!-- Reactions -->
-    <div class="h-9">
-      <app-reaction-dialog [post]="postSig()"></app-reaction-dialog>
+        <div
+          *ngIf="!isImage(file)"
+          class="col-span-full flex items-center gap-2 py-3 px-2 border rounded-lg"
+        >
+          <!-- Non-image file block -->
+          <span class="text-sm">{{ file.filename }}</span>
+        </div>
+      </ng-container>
     </div>
+
+    <!-- ACTION -->
+    <div class="flex items-center flex-wrap gap-3">
+      <!-- Comments -->
+      <button
+        type="button"
+        (click)="isCommentOpened.set(!isCommentOpened())"
+        class="flex items-center justify-center space-x-1 px-2 min-w-9 h-9 md:min-w-10 md:h-10 rounded-lg bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600 dark:bg-gray-700"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="h-5 w-5 text-gray-800 dark:text-white"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
+          />
+        </svg>
+        @if (postSig().commentCount > 0) {
+          <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
+            {{ postSig().commentCount }}
+          </span>
+        }
+      </button>
+      <!-- Reactions -->
+      <div class="min-w-9 h-9 md:min-w-10 md:h-10">
+        <app-reaction-dialog [post]="postSig()"></app-reaction-dialog>
+      </div>
+    </div>
+
+    <!-- COMMENTS -->
+    @if (isCommentOpened()) {
+      <app-comment [post]="postSig()"></app-comment>
+    }
+
+    <!-- UPDATE -->
+    @if (isUpdating()) {
+      <app-post-update
+        [post]="postSig()"
+        (onsaved)="handlePostUpdate($event)"
+        (oncancel)="isUpdating.set(false)"
+      ></app-post-update>
+    }
+
+    <!-- REPORT -->
+    @if (isSignalPost()) {
+      <app-ticket-dialog [post]="postSig()" (onclose)="isSignalPost.set(false)"></app-ticket-dialog>
+    }
+
+    <!-- DELETE CONFIRM -->
+    @if (confirmDeleteOpen()) {
+      <app-confirm-dialog
+        message="Êtes-vous sûr de vouloir supprimer votre publication ?"
+        (confirm)="handleDeleteConfirm($event)"
+      ></app-confirm-dialog>
+    }
   </div>
-
-  <!-- Comments -->
-  @if (isCommentOpened()) {
-    <app-comment [post]="postSig()"></app-comment>
-  }
-
-  <!-- Creating a ticket to report a problem with a publication -->
-  @if (isSignalPost()) {
-    <app-ticket-dialog [post]="postSig()" (onclose)="isSignalPost.set(false)"></app-ticket-dialog>
-  }
-
-  <!-- Post deletion -->
-  @if (confirmDeleteOpen()) {
-    <app-confirm-dialog
-      message="Êtes-vous sûr de vouloir supprimer votre publication ?"
-      (confirm)="handleDeleteConfirm($event)"
-    >
-    </app-confirm-dialog>
-  }
-</article>
+</div>
