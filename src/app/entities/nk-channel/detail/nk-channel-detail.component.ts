@@ -16,16 +16,15 @@ import { ChannelUpdateComponent } from '../update/nk-channel-update.component';
   animations: [fadeInRight400ms],
 })
 export class ChannelDetailComponent {
-  alertService = inject(AlertService);
-  channelService = inject(ChannelService);
-  channel = inject(ChannelService).channel;
+  protected alertService = inject(AlertService);
+  protected channelService = inject(ChannelService);
 
+  // VIEW SIGNALS
+  channel = inject(ChannelService).channel;
   isUploading = signal(false);
   isUpdating = signal(false);
-
   // 'avatar' | 'banner' | null
   editing = signal<'avatar' | 'banner' | null>(null);
-
   // Preview file before upload
   filePreview = signal<{ type: 'avatar' | 'banner'; data: File; url: string } | null>(null);
 

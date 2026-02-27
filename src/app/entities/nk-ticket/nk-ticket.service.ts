@@ -36,6 +36,14 @@ export class TicketService {
     return this.http.get<ITicket>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  /**
+   * API call for marking a ticket as resolved.
+   * @param id the ID of the ticket to resolve
+   */
+  resolve(id: number): Observable<EntityResponseType> {
+    return this.http.post<ITicket>(`${this.resourceUrl}/resolve`, { id }, { observe: 'response' });
+  }
+
   query(req?: any): Observable<HttpResponse<IPage<ITicket>>> {
     const options = createRequestOption(req);
     return this.http.get<IPage<ITicket>>(this.resourceUrl, {

@@ -12,4 +12,5 @@ export interface IReview {
   replyTo?: IReview | null; // Threading: replies to previous reviews
   author?: number | null; // Who performed the review (user/moderator/admin)
   targetUser?: number | null; // Who the review concerns (the user whose action was reported)
+  isAuthor?: boolean; // Add DTO-specific property
 }

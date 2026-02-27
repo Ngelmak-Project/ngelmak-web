@@ -5,8 +5,6 @@ import { tap } from 'rxjs/operators';
 import { AlertService } from 'app/shared/alert/alert.service';
 
 export const notificationInterceptor: HttpInterceptorFn = (request, next) => {
-  const alertService = inject(AlertService);
-
   return next(request).pipe(
     tap((event: HttpEvent<any>) => {
       if (event instanceof HttpResponse) {
@@ -22,13 +20,13 @@ export const notificationInterceptor: HttpInterceptorFn = (request, next) => {
         }
 
         if (alert) {
-          alertService.addAlert({
+          inject(AlertService).addAlert({
             type: 'success',
             translationKey: alert,
             translationParams: { param: alertParams },
           });
         }
       }
-    })
+    }),
   );
 };

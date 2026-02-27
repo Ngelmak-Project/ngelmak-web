@@ -60,6 +60,8 @@
 
     @if (openDeleteModal()) {
       <app-confirm-dialog
+        variant="danger"
+        title="Confirmation de suppression"
         message="Cette action est irréversible après le délai de récupération. Pour confirmer, veuillez saisir votre mot de passe."
         (confirm)="deleteUserAccount($event); openDeleteModal.set(false)"
       ></app-confirm-dialog>

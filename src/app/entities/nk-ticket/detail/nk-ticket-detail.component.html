@@ -14,16 +14,27 @@
           </p>
         </div>
 
-        <span
-          class="px-2.5 py-1 text-sm rounded-full font-medium shadow-sm"
-          [ngClass]="{
-            'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300': ticket().resolved,
-            'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300':
-              !ticket().resolved,
-          }"
-        >
-          {{ ticket().resolved ? 'Résolu' : "En cours d'examen" }}
-        </span>
+        <div class="flex space-x-2 md:space-x-4">
+          <span
+            class="px-2.5 py-1 text-sm rounded-full font-medium shadow-sm"
+            [ngClass]="{
+              'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300':
+                ticket().resolved,
+              'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300':
+                !ticket().resolved,
+            }"
+          >
+            {{ ticket().resolved ? 'Résolu' : "En cours d'examen" }}
+          </span>
+
+          <button
+            (click)="previousState()"
+            type="button"
+            class="px-4 py-2 text-sm rounded-full border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600"
+          >
+            Fermer
+          </button>
+        </div>
       </div>
 
       <!-- INFO BANNER -->
@@ -234,7 +245,7 @@
             Pièce jointe du signalement
           </h3>
           <a
-            [href]="ticket().evidence.url"
+            [routerLink]="ticket().evidence.url"
             target="_blank"
             class="mt-2 inline-block text-blue-600 dark:text-blue-400 underline text-sm"
           >
@@ -245,77 +256,8 @@
 
       <!-- USER RESPONSE SECTION -->
       <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
-        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Votre réponse</h3>
-
-        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">
-          Vous pouvez expliquer le contexte, contester le signalement ou fournir des informations
-          supplémentaires. Votre réponse sera visible par l'équipe de modération.
-        </p>
-
-        <!-- Example: bind to a formGroup or standalone ngModel depending on your setup -->
-        <form class="space-y-3">
-          <textarea
-            formControlName="message"
-            rows="4"
-            class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Expliquez votre point de vue, le contexte, ou toute information utile…"
-          ></textarea>
-
-          <!-- Optional: file upload for user evidence -->
-          <div class="flex flex-col gap-2 text-sm">
-            <label class="font-medium text-gray-600 dark:text-gray-300">
-              Joindre un fichier (facultatif)
-            </label>
-            <input type="file" class="text-sm text-gray-700 dark:text-gray-200" />
-          </div>
-
-          <div class="flex justify-end">
-            <button
-              type="submit"
-              class="inline-flex items-center gap-2 text-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              @if (isSubmittingResponse()) {
-                <svg
-                  class="inline w-4 h-4 animate-spin text-white"
-                  viewBox="0 0 100 101"
-                  fill="none"
-                >
-                  <path d="M100 50.5908C100 78.2051..." fill="currentColor" opacity="0.2" />
-                  <path d="M93.9676 39.0409..." fill="currentColor" />
-                </svg>
-              }
-              Envoyer ma réponse
-            </button>
-          </div>
-        </form>
+        <app-review [ticket]="ticket()"></app-review>
       </div>
-
-      <!-- OPTIONAL: HISTORY / TIMELINE -->
-      <!-- You can wire this to a ticket().events or similar if you have it -->
-      <!--
-      <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
-        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">
-          Historique du signalement
-        </h3>
-        <ul class="space-y-2 text-sm">
-          <li *ngFor="let event of ticket().events">
-            <span class="font-medium">{{ event.date | formatMediumDatetime }} :</span>
-            <span class="ml-1">{{ event.label }}</span>
-          </li>
-        </ul>
-      </div>
-      -->
-    </div>
-
-    <!-- FOOTER -->
-    <div class="p-5 md:p-7 border-t dark:border-gray-700 flex justify-end">
-      <button
-        (click)="previousState()"
-        type="button"
-        class="px-4 py-2 text-sm rounded-lg border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600"
-      >
-        Fermer
-      </button>
     </div>
   </div>
 }

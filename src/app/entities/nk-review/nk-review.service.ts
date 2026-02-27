@@ -1,19 +1,58 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { createRequestOption } from 'app/core/request/request-util';
 import { IReview } from 'app/entities/models/nk-review.model';
+import { Observable } from 'rxjs';
 
 export type EntityResponseType = HttpResponse<IReview>;
 export type EntityArrayResponseType = HttpResponse<IReview[]>;
 
 @Injectable({ providedIn: 'root' })
 export class ReviewService {
+  // LOCAL STATE
+
+  private reviews = signal<IReview[]>([]);
+  reviews$ = computed(() => this.reviews());
+
+  /**
+   * Replace the review list.
+   * @param values new review list.
+   */
+  setReviews(values: IReview[]): void {
+    this.reviews.set(values);
+  }
+
+  /**
+   * Local update of the review list.
+   * Only the content field is updated.
+   * @param review
+   */
+  updateLocal(review: IReview): void {
+    this.reviews.update((list) =>
+      list.map((r) => (r.id === review.id ? { ...r, content: review.content } : r)),
+    );
+  }
+
+  /**
+   * Add a revew at the bottom of the local list.
+   * @param review
+   */
+  addLocal(review: IReview): void {
+    this.reviews.update((list) => [...list, review]);
+  }
+
+  /**
+   * Delete a review from the local list.
+   * @param id
+   */
+  removeLocal(id: number): void {
+    this.reviews.update((list) => list.filter((r) => r.id !== id));
+  }
+
+  // API
+
   protected http = inject(HttpClient);
   protected applicationConfigService = inject(ApplicationConfigService);
-
   protected resourceUrl = this.applicationConfigService.getEndpointFor('core/reviews');
 
   create(review: IReview): Observable<EntityResponseType> {

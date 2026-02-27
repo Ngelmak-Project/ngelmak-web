@@ -7,17 +7,17 @@ export const routes: Routes = [
   {
     path: 'sign-in',
     component: SignInComponent,
-    title: 'sign-in.title',
+    title: 'global.ngelmak.sign-in.title',
   },
   {
     path: 'sign-up',
     component: SignUpComponent,
-    title: 'sign-up.title',
+    title: 'global.ngelmak.sign-up.title',
   },
   {
     path: 'activate',
     component: ActivateComponent,
-    title: 'activate.title',
+    title: 'global.ngelmak.activate.title',
   },
   {
     path: '',

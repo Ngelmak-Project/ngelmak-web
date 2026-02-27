@@ -1,46 +1,36 @@
-<div class="max-h-[600px] overflow-y-auto space-y-6 px-5">
+<div class="flex flex-col space-y-4 px-5 pb-4">
+  @if (reviews().length == 0) {
+    <app-review-update *hasNoAuthority="['ROLE_ADMIN', 'ROLE_MODERATOR']" [ticket]="ticket()" />
+  }
   @for (review of reviews(); track $index) {
-    <div class="flex flex-col gap-1">
-      <!-- Header -->
-      <div class="flex items-center gap-2">
-        <span class="font-medium text-gray-900 dark:text-white">
-          {{ review.author }}
-        </span>
-        <span class="text-xs text-gray-500 dark:text-gray-400">
-          {{ review.createdAt | date: 'short' }}
-        </span>
-      </div>
-
-      <!-- Reply context -->
-      <div
-        *ngIf="review.replyTo"
-        class="text-xs text-gray-500 dark:text-gray-400 pl-3 border-l border-gray-300 dark:border-gray-600"
-      >
-        En réponse à <span class="font-medium">{{ review.replyTo.author }}</span>
-      </div>
-
-      <!-- Content -->
-      <div
-        class="pl-3 border-l-2 border-blue-300 dark:border-blue-600 text-gray-800 dark:text-gray-200"
-      >
-        {{ review.content }}
-      </div>
-
-      <!-- Reply button -->
-      <button
-        class="self-start text-sm text-blue-600 dark:text-blue-400 hover:underline mt-1"
-        (click)="replyTo.set(review)"
-      >
-        Répondre
-      </button>
-    </div>
+    <app-review-item [ticket]="ticket()" [review]="review" />
   }
 
-  @if (replyTo()) {
-    <app-review-dialog
-      [ticket]="ticket()"
-      [replyTo]="replyTo()"
-      (onclose)="onReplied($event)"
-    ></app-review-dialog>
+  @if (!ticket().resolved) {
+    <button
+      (click)="openReview.set(true)"
+      class="ml-auto inline-flex items-center justify-between px-4 py-2 text-sm rounded-lg text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
+    >
+      Ecrire
+      <svg
+        class="w-5 h-5 text-gray-800 dark:text-white"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 17h6l3 3v-3h2V9h-2M4 4h11v8H9l-3 3v-3H4V4Z"
+        />
+      </svg>
+    </button>
+  }
+
+  <!-- Review dialog -->
+  @if (openReview()) {
+    <app-review-dialog [ticket]="ticket()" (onclose)="onCreated($event)" />
   }
 </div>

@@ -1,7 +1,6 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ITicket } from 'app/entities/models/nk-ticket.model';
-import { ReviewDialogComponent } from 'app/entities/nk-review/dialog/nk-review-dialog.component';
 import { ReviewComponent } from 'app/entities/nk-review/list/nk-review.component';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { FormatMediumDatetimePipe } from 'app/shared/date';
@@ -12,7 +11,7 @@ import { TicketService } from '../nk-ticket.service';
   standalone: true,
   selector: 'app-ticket-detail',
   templateUrl: './nk-ticket-detail.component.html',
-  imports: [RouterModule, SharedModule, FormatMediumDatetimePipe],
+  imports: [RouterModule, SharedModule, FormatMediumDatetimePipe, ReviewComponent],
   animations: [fadeInUp400ms],
 })
 export class TicketDetailComponent {
@@ -23,10 +22,6 @@ export class TicketDetailComponent {
   showMenu = signal(false);
   openReview = signal(false);
   isSubmittingResponse = signal(false)
-
-  loadChannel() {}
-  loadPost() {}
-  loadComment() {}
 
   previousState(): void {
     window.history.back();

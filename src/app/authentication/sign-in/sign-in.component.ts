@@ -1,5 +1,5 @@
 import { SignInModel } from 'app/authentication/sign-in/sign-in.model';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { SignInService } from 'app/authentication/sign-in/sign-in.service';
@@ -7,7 +7,6 @@ import { AuthenticationService } from 'app/core/auth/auth.service';
 import SharedModule from 'app/shared/shared.module';
 import { Field, form, required } from '@angular/forms/signals';
 import { finalize } from 'rxjs';
-
 
 @Component({
   standalone: true,
@@ -44,27 +43,31 @@ export class SignInComponent implements OnInit {
 
   signIn(): void {
     this.isLoging.set(true);
-    const credentials = this.loginForm().value();
-    this.signInService.signIn(credentials).pipe(finalize(() => this.isLoging.set(false))).subscribe({
-      next: () => {
-        // There were no routing during signIn (eg from navigationToStoredUrl)
-        if (!this.router.currentNavigation()) {
-          this.router.navigate(['']);
-        } else {
-          console.log('Current Navigation', this.router.currentNavigation());
-        }
-        this.alertService.addAlert({
-          type: 'success',
-          message: 'Connexion avec succès!',
-        });
-      },
-      error: () => {
-        this.alertService.addAlert({
-          type: 'error',
-          message:
-            '<strong>Erreur d&apos;authentification !</strong> Veuillez vérifier vos identifiants de connexion.',
-        });
-      },
-    });
+    const credentials = this.loginModel();
+    credentials.login = credentials.login.trim().toLocaleLowerCase();
+    this.signInService
+      .signIn(credentials)
+      .pipe(finalize(() => this.isLoging.set(false)))
+      .subscribe({
+        next: () => {
+          // There were no routing during signIn (eg from navigationToStoredUrl)
+          if (!this.router.currentNavigation()) {
+            this.router.navigate(['']);
+          } else {
+            console.log('Current Navigation', this.router.currentNavigation());
+          }
+          this.alertService.addAlert({
+            type: 'success',
+            message: 'Connexion avec succès!',
+          });
+        },
+        error: () => {
+          this.alertService.addAlert({
+            type: 'error',
+            message:
+              "<strong>Erreur d'authentification !</strong> Veuillez vérifier vos identifiants de connexion.",
+          });
+        },
+      });
   }
 }
