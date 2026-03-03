@@ -330,12 +330,12 @@
       <!-- ========================= -->
       <div
         clickOutside
-        (onClickOutside)="hideLangKeyOptions.set(true)"
+        (onClickOutside)="showLangKeyOptions.set(true)"
         class="absolute bottom-0 left-0 p-2 w-full flex items-center justify-center"
       >
         <!-- Your language dropdown kept exactly as is -->
         <button
-          (click)="hideLangKeyOptions.set(!hideLangKeyOptions())"
+          (click)="showLangKeyOptions.set(!showLangKeyOptions())"
           type="button"
           class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
         >
@@ -355,7 +355,7 @@
           </svg>
         </button>
 
-        @if (!hideLangKeyOptions()) {
+        @if (!showLangKeyOptions()) {
           <div
             class="absolute bottom-14 z-10 bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600"
           >
