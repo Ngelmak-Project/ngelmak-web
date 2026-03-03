@@ -1,15 +1,17 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { effect, inject, Injectable, signal } from '@angular/core';
-import { Observable } from 'rxjs';
-
+import { AuthenticationService } from 'app/core/auth/auth.service';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IChannel } from 'app/entities/models/nk-channel.model';
-import { AuthenticationService } from 'app/core/auth/auth.service';
+import {
+  IChannel,
+  ISubscriptionDTO,
+  ISubscriptionStatsDTO,
+} from 'app/entities/models/nk-channel.model';
+import { Observable } from 'rxjs';
 
 export type EntityResponseType = HttpResponse<IChannel>;
 export type EntityArrayResponseType = HttpResponse<IChannel[]>;
-
 
 // [TODO] Make sure the channel of the current user is saved locally to avoid back and forth fetch from the server.
 
@@ -25,12 +27,7 @@ export class ChannelService {
    * Public readonly signal for components.
    */
   readonly channel = this._channel.asReadonly();
-
-  private http = inject(HttpClient);
-  private applicationConfigService = inject(ApplicationConfigService);
   private authService = inject(AuthenticationService);
-
-  private resourceUrl = this.applicationConfigService.getEndpointFor('core/channels');
 
   constructor() {
     /**
@@ -54,8 +51,8 @@ export class ChannelService {
    */
   private loadChannel(): void {
     this.http.get<IChannel>(`${this.resourceUrl}/me`).subscribe({
-      next: (acc) => this._channel.set(acc),
-      error: () => this._channel.set(null),
+      next: (acc) => this.updateLocalChannel(acc),
+      error: () => this.updateLocalChannel(null),
     });
   }
 
@@ -65,6 +62,33 @@ export class ChannelService {
   updateLocalChannel(channel: IChannel): void {
     this._channel.set(channel);
   }
+
+  /**
+   * Add a subscription to the local list of followed channels.
+   * @param subscription The subscription to add.
+   */
+  addLocalSubs(subscription: ISubscriptionDTO): void {
+    this._channel.update((value) => ({
+      ...value,
+      stats: { ...value.stats, following: [...value.stats.following, subscription] },
+    }));
+  }
+
+  /**
+   * Remove a subscription from the local list of followed channels.
+   * @param id The ID of the subscription to remove.
+   */
+  removeLocalSubs(id: number): void {
+    this._channel.update((value) => ({
+      ...value,
+      stats: { ...value.stats, following: value.stats.following.filter((s) => s.id !== id) },
+    }));
+  }
+
+  // API
+
+  private http = inject(HttpClient);
+  private resourceUrl = inject(ApplicationConfigService).getEndpointFor('core/channels');
 
   /**
    * CRUD operations for channels (admin or profile editing).
@@ -113,6 +137,34 @@ export class ChannelService {
     const data: FormData = new FormData();
     data.append('file', file);
     return this.http.put<IChannel>(`${this.resourceUrl}/upload-banner`, data, {
+      observe: 'response',
+    });
+  }
+
+  /**
+   * Follow a channel and return the created or existing channel.
+   * @param channel contains the channel to subscribe to.
+   */
+  follow(channel: IChannel): Observable<HttpResponse<ISubscriptionDTO>> {
+    return this.http.post<ISubscriptionDTO>(`${this.resourceUrl}/follow`, channel, {
+      observe: 'response',
+    });
+  }
+
+  /**
+   * Unfollow a channel by its subscription ID.
+   * @param id the ID of a subscription to remove.
+   */
+  unfollow(id: number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/unfollow/${id}`, { observe: 'response' });
+  }
+
+  /**
+   * Retrieve subscription statistics for a given channel.
+   * @param channelId the ID of the channel to make the stats.
+   */
+  getStats(channelId: number): Observable<HttpResponse<ISubscriptionStatsDTO>> {
+    return this.http.get<ISubscriptionStatsDTO>(`${this.resourceUrl}/stats/${channelId}`, {
       observe: 'response',
     });
   }

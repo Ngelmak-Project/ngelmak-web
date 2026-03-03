@@ -1,18 +1,6 @@
-import { HttpResponse } from '@angular/common/http';
-import {
-  Component,
-  effect,
-  inject,
-  input,
-  OnInit,
-  output,
-  signal,
-  ViewEncapsulation,
-} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, effect, inject, input, output, signal, ViewEncapsulation } from '@angular/core';
 import { IFile } from 'app/entities/models/nk-file.model';
 import { IPost, IPostDTO } from 'app/entities/models/nk-post.model';
-import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { PostService } from './../nk-post.service';
 
@@ -156,14 +144,38 @@ export class PostUpdateComponent {
     return files.filter((e) => e.type === type);
   }
 
+  /**
+   * Handles a file selected by the user.
+   * Creates an IFile object, generates a preview URL for images,
+   * warns the user if the file is a video, and stores the file in the post model.
+   */
   handleFile(event) {
+    // Extract the first selected file
     const obj: File = event.target.files[0];
+
     if (obj) {
-      const file: IFile = { filename: obj.name, size: obj.size, type: obj.type, data: obj };
+      // Build the internal file representation
+      const file: IFile = {
+        filename: obj.name,
+        size: obj.size,
+        type: obj.type,
+        data: obj,
+      };
+
       if (this.isImage(file)) {
+        // Generate a preview URL for images
         file.url = URL.createObjectURL(obj);
       } else if (this.isVideo(file)) {
+        // Notify user that videos are not supported yet
+        this.alertService.addAlert({
+          type: 'info',
+          message: 'Les médias vidéos ne sont pas encore prise en charge.',
+        });
+      } else {
+        // Nothing need to be done for other media files.
       }
+
+      // Add the file to the post model
       this.postModel().files.push(file);
     }
   }

@@ -1,6 +1,6 @@
 import { Component, inject, NgZone, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Subscription, tap } from 'rxjs';
+import { finalize, Subscription, tap } from 'rxjs';
 
 import { FormsModule } from '@angular/forms';
 import { ITEMS_PER_PAGE, PAGE_HEADER } from 'app/config/pagination.constants';
@@ -19,6 +19,7 @@ import { ScrollService } from 'app/shared/services/scroll.service';
 import { FeedService } from '../nk-feed.service';
 import { PostUpdateComponent } from 'app/entities/nk-post/update/nk-post-update.component';
 import { IPostDTO } from 'app/entities/models/nk-post.model';
+import { AlertService } from 'app/shared/alert/alert.service';
 
 @Component({
   standalone: true,
@@ -133,20 +134,22 @@ export class FeedComponent implements OnInit, OnDestroy {
       q: this.query,
     };
 
-    this.feedService.query(req).subscribe({
-      next: (res: HttpResponse<IPage<IFeedDTO>>) => {
-        const { body } = res;
-        this.hasNext.set(body.content.length == this.itemsPerPage);
-        if (reset) {
-          this.feeds.set(body.content ?? []);
-        } else {
-          this.feeds.update((e) => [...e, ...body.content]);
-        }
-      },
-      complete: () => {
-        this.isLoading.set(false);
-      },
-    });
+    this.feedService
+      .query(req)
+      .pipe(finalize(() => this.isLoading.set(false)))
+      .subscribe({
+        next: (res: HttpResponse<IPage<IFeedDTO>>) => {
+          const { body } = res;
+          this.hasNext.set(body.content.length == this.itemsPerPage);
+          if (reset) {
+            this.feeds.set(body.content ?? []);
+          } else {
+            this.feeds.update((e) => [...e, ...body.content]);
+          }
+        },
+        error: () =>
+          inject(AlertService).addAlert({ type: 'warning', message: 'Problème de chargement' }),
+      });
   }
 
   search(query: string): void {

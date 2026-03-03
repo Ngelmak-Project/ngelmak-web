@@ -1,12 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
-import { form, max, required, Field } from '@angular/forms/signals';
+import { Field, form, max, required } from '@angular/forms/signals';
 import { RouterModule } from '@angular/router';
 import { IChannel } from 'app/entities/models/nk-channel.model';
-import { ChannelService } from '../nk-channel.service';
-import { finalize } from 'rxjs';
 import { AlertService } from 'app/shared/alert/alert.service';
+import { finalize } from 'rxjs';
+import { ChannelService } from '../nk-channel.service';
 
 @Component({
   standalone: true,

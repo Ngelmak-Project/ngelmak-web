@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, output, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IFile } from 'app/entities/models/nk-file.model';
@@ -39,17 +39,33 @@ export class PostCardComponent {
   post = input.required<IPostDTO>(); // The post to display
   ondeleted = output<IPostDTO>(); // Event emitted when the post is deleted.
 
-  postSig = signal<IPostDTO>(null); // Signal to hold the current post data, allowing for reactive updates.
+  protected postService = inject(PostService);
+  protected alertService = inject(AlertService);
+  channelService = inject(ChannelService);
   channel = inject(ChannelService).channel; // connected user's channel.
+
+  postSig = signal<IPostDTO>(null); // Signal to hold the current post data, allowing for reactive updates.
   showMenu = signal(false);
   confirmDeleteOpen = signal(false);
   isDeleting = signal(false);
   isUpdating = signal(false);
   isCommentOpened = signal(false);
   isSignalPost = signal(false); // Signal emit when user wanna signal a post.
+  isSubscriptionToggling = signal(false);
 
-  alertService = inject(AlertService);
-  protected postService = inject(PostService);
+  /**
+   * Computes the subscription ID for the current channel.
+   * Looks at the list of channels this channel is following and
+   * returns the ID of the subscription linking it to the post's channel.
+   * Returns null when no matching subscription exists.
+   */
+  subscription = computed(() => {
+    // No channel loaded → no subscription possible
+    if (!this.channel()) return null;
+
+    // Find the subscription where this channel follows the post's channel
+    return this.channel().stats.following.find((e) => e.subscribedToId === this.post().channel.id);
+  });
 
   constructor() {
     effect(() => {
@@ -105,5 +121,28 @@ export class PostCardComponent {
             message: "Une error s'est produit lors de la suppression.",
           }),
       });
+  }
+
+  /**
+   * Toggles the user's subscription status for the channel owner of the post.
+   * - If already subscribed → unfollows and removes the local subscription.
+   * - If not subscribed → follows and stores the new subscription locally.
+   */
+  toggleFollow() {
+    // Mark that a follow/unfollow action is in progress
+    this.isSubscriptionToggling.set(true);
+
+    const action$ = this.subscription()
+      ? this.channelService.unfollow(this.subscription().id)
+      : this.channelService.follow(this.postSig().channel);
+    action$.pipe(finalize(() => this.isSubscriptionToggling.set(false))).subscribe({
+      next: (res: any) => {
+        if (this.subscription()) {
+          this.channelService.removeLocalSubs(this.subscription().id);
+        } else {
+          this.channelService.addLocalSubs(res.body);
+        }
+      },
+    });
   }
 }
