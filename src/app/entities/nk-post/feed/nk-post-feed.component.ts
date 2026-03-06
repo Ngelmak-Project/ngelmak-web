@@ -1,37 +1,43 @@
 import { Component, inject, NgZone, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { PostService } from 'app/entities/nk-post/nk-post.service';
 import { finalize, Subscription, tap } from 'rxjs';
 
 import { FormsModule } from '@angular/forms';
 import { ITEMS_PER_PAGE, PAGE_HEADER } from 'app/config/pagination.constants';
 import { DataUtils } from 'app/core/util/data-util.service';
-import { IFeedDTO } from 'app/entities/models/nk-feed.model';
 import SharedModule from 'app/shared/shared.module';
 import { SortService, sortStateSignal } from 'app/shared/sort';
 
 import { HttpResponse } from '@angular/common/http';
 import { AuthenticationService } from 'app/core/auth/auth.service';
+import { IPostDTO } from 'app/entities/models/nk-post.model';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { PostCardComponent } from 'app/entities/nk-post/card/nk-post-card.component';
-import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
-import { IPage } from 'app/shared/pagination/pagination.model';
-import { ScrollService } from 'app/shared/services/scroll.service';
-import { FeedService } from '../nk-feed.service';
 import { PostUpdateComponent } from 'app/entities/nk-post/update/nk-post-update.component';
-import { IPostDTO } from 'app/entities/models/nk-post.model';
 import { AlertService } from 'app/shared/alert/alert.service';
+import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
+import { ScrollService } from 'app/shared/services/scroll.service';
+
+interface IFeedPageDTO {
+  content: IPostDTO[];
+  sessionKey: string;
+  windowStart: Date;
+  number: number;
+  sorts: string[];
+}
 
 @Component({
   standalone: true,
-  selector: 'app-feed',
-  templateUrl: './nk-feed.component.html',
+  selector: 'app-post-feed',
+  templateUrl: './nk-post-feed.component.html',
   imports: [RouterModule, FormsModule, SharedModule, PostCardComponent, PostUpdateComponent],
   animations: [fadeInUp400ms],
 })
-export class FeedComponent implements OnInit, OnDestroy {
+export class PostFeedComponent implements OnInit, OnDestroy {
   private subs = new Subscription();
 
-  feeds = signal<IFeedDTO[]>([]);
+  feeds = signal<IPostDTO[]>([]);
   hasNext = signal(true);
   isLoading = signal(false);
 
@@ -40,12 +46,13 @@ export class FeedComponent implements OnInit, OnDestroy {
   itemsPerPage = ITEMS_PER_PAGE;
   page = 1;
   query = '';
+  sessionKey: number | null = null;
 
   // Track last known scrollHeight to avoid reloading when height doesn't change
   private lastHeight = 0;
 
   public router = inject(Router);
-  protected feedService = inject(FeedService);
+  protected postService = inject(PostService);
   protected activatedRoute = inject(ActivatedRoute);
   protected sortService = inject(SortService);
   protected dataUtils = inject(DataUtils);
@@ -131,17 +138,19 @@ export class FeedComponent implements OnInit, OnDestroy {
     const req = {
       page: this.page - 1,
       size: this.itemsPerPage,
+      sessionKey: this.sessionKey,
       q: this.query,
     };
 
-    this.feedService
-      .query(req)
+    this.postService
+      .feeds(req)
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
-        next: (res: HttpResponse<IPage<IFeedDTO>>) => {
+        next: (res: HttpResponse<IFeedPageDTO>) => {
           const { body } = res;
-          this.hasNext.set(body.content.length == this.itemsPerPage);
+          this.hasNext.set(body.content.length > 0);
           if (reset) {
+            body.sessionKey;
             this.feeds.set(body.content ?? []);
           } else {
             this.feeds.update((e) => [...e, ...body.content]);

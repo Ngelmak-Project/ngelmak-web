@@ -115,6 +115,14 @@ export class PostService {
     });
   }
 
+  feeds(req?: any): Observable<HttpResponse<IPage<IPost>>> {
+    const options = createRequestOption(req);
+    return this.http.get<IPage<IPost>>(`${this.publicResourceUrl}/feeds`, {
+      params: options,
+      observe: 'response',
+    });
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, {
       observe: 'response',
