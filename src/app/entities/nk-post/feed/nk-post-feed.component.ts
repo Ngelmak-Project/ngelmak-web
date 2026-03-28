@@ -46,7 +46,7 @@ export class PostFeedComponent implements OnInit, OnDestroy {
   itemsPerPage = ITEMS_PER_PAGE;
   page = 1;
   query = '';
-  sessionKey: number | null = null;
+  sessionKey: string | null = null;
 
   // Track last known scrollHeight to avoid reloading when height doesn't change
   private lastHeight = 0;
@@ -150,7 +150,7 @@ export class PostFeedComponent implements OnInit, OnDestroy {
           const { body } = res;
           this.hasNext.set(body.content.length > 0);
           if (reset) {
-            body.sessionKey;
+            this.sessionKey = body.sessionKey;
             this.feeds.set(body.content ?? []);
           } else {
             this.feeds.update((e) => [...e, ...body.content]);

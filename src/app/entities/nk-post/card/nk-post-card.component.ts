@@ -53,6 +53,8 @@ export class PostCardComponent {
   isSignalPost = signal(false); // Signal emit when user wanna signal a post.
   isSubscriptionToggling = signal(false);
 
+  content = computed(() => this.postSig().content.replace(/\\n/g, '\n'));
+
   /**
    * Computes the subscription ID for the current channel.
    * Looks at the list of channels this channel is following and
