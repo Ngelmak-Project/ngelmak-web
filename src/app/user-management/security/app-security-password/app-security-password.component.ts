@@ -26,16 +26,28 @@ export class SecurityPasswordComponent {
   passwordModel = signal(initPassword);
 
   passwordForm = form(this.passwordModel, (p) => {
-    required(p.currentPassword, { message: '' });
-    minLength(p.currentPassword, 4, { message: '' });
-    maxLength(p.currentPassword, 20, { message: '' });
-    required(p.confirmPassword, { message: '' });
-    minLength(p.confirmPassword, 4, { message: '' });
-    maxLength(p.confirmPassword, 20, { message: '' });
-    required(p.newPassword, { message: '' });
-    minLength(p.newPassword, 4, { message: '' });
-    maxLength(p.newPassword, 20, { message: '' });
+    // Current password
+    required(p.currentPassword, { message: 'Current password is required.' });
+    minLength(p.currentPassword, 8, {
+      message: 'Current password must be at least 8 characters long.',
+    });
+    maxLength(p.currentPassword, 20, { message: 'Current password cannot exceed 20 characters.' });
+
+    // Confirm password
+    required(p.confirmPassword, { message: 'Password confirmation is required.' });
+    minLength(p.confirmPassword, 8, {
+      message: 'Password confirmation must be at least 8 characters long.',
+    });
+    maxLength(p.confirmPassword, 20, {
+      message: 'Password confirmation cannot exceed 20 characters.',
+    });
+
+    // New password
+    required(p.newPassword, { message: 'New password is required.' });
+    minLength(p.newPassword, 8, { message: 'New password must be at least 8 characters long.' });
+    maxLength(p.newPassword, 20, { message: 'New password cannot exceed 20 characters.' });
   });
+
   doNotMatch = signal(false);
   isUpdating = signal(false);
   showPassword = signal(false);
