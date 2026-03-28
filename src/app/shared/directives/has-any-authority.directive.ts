@@ -36,23 +36,20 @@ export class HasAnyAuthorityDirective {
   constructor() {
     const authService = inject(AuthenticationService);
     const currentAccount = authService.authentication;
+
     const hasPermission = computed(
-      () => currentAccount()?.authorities && authService.hasAnyAuthority(this.authorities())
+      () => currentAccount()?.authorities && authService.hasAnyAuthority(this.authorities()),
     );
 
-    effect(
-      () => {
-        if (hasPermission()) {
-          this.viewContainerRef.createEmbeddedView(this.templateRef);
-        } else {
-          this.viewContainerRef.clear();
-        }
-      },
-      { allowSignalWrites: true }
-    );
+    effect(() => {
+      if (hasPermission()) {
+        this.viewContainerRef.createEmbeddedView(this.templateRef);
+      } else {
+        this.viewContainerRef.clear();
+      }
+    });
   }
 }
-
 
 @Directive({
   standalone: true,
@@ -73,15 +70,12 @@ export class HasNoAuthorityDirective {
       () => currentAccount()?.authorities && authService.hasAnyAuthority(this.authorities()),
     );
 
-    effect(
-      () => {
-        if (!hasPermission()) {
-          this.viewContainerRef.createEmbeddedView(this.templateRef);
-        } else {
-          this.viewContainerRef.clear();
-        }
-      },
-      { allowSignalWrites: true },
-    );
+    effect(() => {
+      if (!hasPermission()) {
+        this.viewContainerRef.createEmbeddedView(this.templateRef);
+      } else {
+        this.viewContainerRef.clear();
+      }
+    });
   }
 }

@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { ActivateComponent } from 'app/authentication/activate/activate.component';
 import { SignInComponent } from 'app/authentication/sign-in/sign-in.component';
 import { SignUpComponent } from 'app/authentication/sign-up/sign-up.component';
+import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 
 export const routes: Routes = [
   {
@@ -18,6 +20,16 @@ export const routes: Routes = [
     path: 'activate',
     component: ActivateComponent,
     title: 'global.ngelmak.activate.title',
+  },
+  {
+    path: 'reset-password',
+    component: ForgotPasswordComponent,
+    title: 'global.ngelmak.reset-password-init.title',
+  },
+  {
+    path: 'reset-password-finish',
+    component: ResetPasswordComponent,
+    title: 'global.ngelmak.reset-password-finish.title',
   },
   {
     path: '',

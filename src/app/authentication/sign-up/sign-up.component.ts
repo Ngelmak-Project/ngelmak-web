@@ -45,24 +45,35 @@ export class SignUpComponent {
   });
 
   signupForm = form(this.signupModel, (p) => {
-    required(p.login, { message: '' });
-    minLength(p.login, 4, { message: '' });
-    maxLength(p.login, 50, { message: '' });
+    // Login
+    required(p.login, { message: "Le nom d'utilisateur est obligatoire." });
+    minLength(p.login, 4, { message: "Le nom d'utilisateur doit contenir au moins 4 caractères." });
+    maxLength(p.login, 50, { message: "Le nom d'utilisateur ne peut pas dépasser 50 caractères." });
     pattern(
       p.login,
       /^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$/,
-      { message: '' },
+      { message: "Le nom d'utilisateur n'a pas un format valide." },
     );
-    required(p.email, { message: '' });
-    minLength(p.email, 4, { message: '' });
-    maxLength(p.email, 254, { message: '' });
-    email(p.email, { message: '' });
-    required(p.password, { message: '' });
-    minLength(p.password, 4, { message: '' });
-    maxLength(p.password, 20, { message: '' });
-    required(p.confirmPassword, { message: '' });
-    minLength(p.confirmPassword, 4, { message: '' });
-    maxLength(p.confirmPassword, 20, { message: '' });
+
+    // Email
+    required(p.email, { message: "L'adresse e-mail est obligatoire." });
+    minLength(p.email, 4, { message: "L'adresse e-mail doit contenir au moins 4 caractères." });
+    maxLength(p.email, 254, { message: "L'adresse e-mail ne peut pas dépasser 254 caractères." });
+    email(p.email, { message: "L'adresse e-mail n'est pas valide." });
+
+    // Password
+    required(p.password, { message: 'Le mot de passe est obligatoire.' });
+    minLength(p.password, 8, { message: 'Le mot de passe doit contenir au moins 8 caractères.' });
+    maxLength(p.password, 20, { message: 'Le mot de passe ne peut pas dépasser 20 caractères.' });
+
+    // Password confirmation
+    required(p.confirmPassword, { message: 'La confirmation du mot de passe est obligatoire.' });
+    minLength(p.confirmPassword, 8, {
+      message: 'La confirmation doit contenir au moins 8 caractères.',
+    });
+    maxLength(p.confirmPassword, 20, {
+      message: 'La confirmation ne peut pas dépasser 20 caractères.',
+    });
   });
 
   constructor() {
@@ -89,13 +100,13 @@ export class SignUpComponent {
         },
         error: (err: HttpErrorResponse) => {
           const apiError = err.error as ApiError;
-          if (apiError.errorKey === "loginExists") {
+          if (apiError.errorKey === 'loginExists') {
             this.errorUserExists.set(true);
             this.alertService.addAlert({
               type: 'error',
-              message: 'Ce nom d\'utilisateur est déjà utilisé',
+              message: "Ce nom d'utilisateur est déjà utilisé",
             });
-          } else if (apiError.errorKey === "emailExists") {
+          } else if (apiError.errorKey === 'emailExists') {
             this.errorEmailExists.set(true);
             this.alertService.addAlert({
               type: 'error',

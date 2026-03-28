@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, input, Input, OnInit, signal } from '@angular/core';
 import { AlertService } from 'app/shared/alert/alert.service';
 
 import { HttpResponse } from '@angular/common/http';
@@ -11,50 +11,73 @@ import SharedModule from 'app/shared/shared.module';
 import { finalize, Observable } from 'rxjs';
 import { ReactionService } from '../nk-reaction.service';
 
+// [TODO] Make sure that use has account before allowing him reaction
 @Component({
   standalone: true,
   selector: 'app-reaction-dialog',
   templateUrl: './nk-reaction-dialog.component.html',
   imports: [SharedModule, FormsModule, ReactiveFormsModule, ClickOutsideDirective],
 })
-export class ReactionDialogComponent implements OnInit {
-  @Input() post: IPostDTO;
+export class ReactionDialogComponent {
+  post = input<IPostDTO>();
 
+  // Injected services
   channel = inject(ChannelService).channel;
   alertService = inject(AlertService);
   reactionService = inject(ReactionService);
 
+  // UI state signals
   isOpen = signal(false);
   isSaving = signal(false);
+
+  // Reaction-related signals
   totalReactions = signal(0);
-  emojiReactions = signal([]);
-  reactedByCurrentUser = signal('');
-  selected = '';
+  emojiReactions = signal<string[]>([]);
+  reactedByCurrentUser = signal<string | null>(null);
+
+  // Available emojis
   emojis = ['👍', '❤️', '😂', '😮', '😡', '🤔'];
 
-  ngOnInit(): void {
-    this.update();
-  }
+  /**
+   * Effect: whenever the post() changes, recompute reaction data.
+   * Replaces ngOnInit() + manual update().
+   */
+  updateEffect = effect(() => {
+    const p = this.post();
+    if (!p?.reactions) return;
 
+    // Total count
+    const total = Object.values(p.reactions.counts).reduce((acc, val) => acc + val, 0);
+    this.totalReactions.set(total);
+
+    // List of emojis used
+    this.emojiReactions.set(Object.keys(p.reactions.counts));
+
+    // Current user's reaction
+    this.reactedByCurrentUser.set(p.reactions.reactedByCurrentUser);
+  });
+
+  /**
+   * Toggle the emoji picker.
+   */
   toggle() {
     this.isOpen.set(!this.isOpen());
   }
 
-  update() {
-    if (!this.post.reactions) return;
-    const value = Object.values(this.post.reactions.counts).reduce((acc, val) => acc + val, 0);
-    this.totalReactions.set(value);
-    const emojis = Object.keys(this.post.reactions.counts);
-    this.emojiReactions.set(emojis);
-    this.reactedByCurrentUser.set(this.post.reactions.reactedByCurrentUser);
-  }
-
+  /**
+   * User selects an emoji.
+   * Handles create, update, or delete of a reaction.
+   */
   select(emoji: string) {
     this.isOpen.set(false);
-    const currentEmoji = this.reactedByCurrentUser();
-    const reactionId = this.post.reactions.reactionId;
 
-    // Case 1: user clicks the same emoji → delete reaction
+    const post = this.post();
+    if (!post?.reactions) return;
+
+    const currentEmoji = this.reactedByCurrentUser();
+    const reactionId = post.reactions.reactionId;
+
+    // Case 1: clicking the same emoji → delete reaction
     if (emoji === currentEmoji) {
       this.subscribeToSaveResponse(
         this.reactionService.delete(reactionId),
@@ -63,11 +86,11 @@ export class ReactionDialogComponent implements OnInit {
       return;
     }
 
-    // Case 2: user changes or adds a reaction
+    // Case 2: create or update reaction
     const reaction: IReaction = {
       id: reactionId ?? undefined,
       channel: this.channel(),
-      post: { id: this.post.id },
+      post: { id: post.id },
       emoji,
     };
 
@@ -80,49 +103,79 @@ export class ReactionDialogComponent implements OnInit {
     this.subscribeToSaveResponse(request$, callback.bind(this));
   }
 
+  /**
+   * Handle creation of a new reaction.
+   */
   private onCreate(reaction: IReaction) {
+    const post = this.post();
+    if (!post?.reactions) return;
+
     this.incrementEmoji(reaction.emoji);
-    this.post.reactions.reactedByCurrentUser = reaction.emoji;
-    this.post.reactions.reactionId = reaction.id;
+    post.reactions.reactedByCurrentUser = reaction.emoji;
+    post.reactions.reactionId = reaction.id;
   }
 
+  /**
+   * Handle update of an existing reaction.
+   */
   private onUpdate(reaction: IReaction) {
-    const oldEmoji = this.post.reactions.reactedByCurrentUser;
+    const post = this.post();
+    if (!post?.reactions) return;
+
+    const oldEmoji = post.reactions.reactedByCurrentUser;
     this.decrementEmoji(oldEmoji);
     this.incrementEmoji(reaction.emoji);
-    this.post.reactions.reactedByCurrentUser = reaction.emoji;
+
+    post.reactions.reactedByCurrentUser = reaction.emoji;
   }
 
+  /**
+   * Handle deletion of a reaction.
+   */
   private onDelete(_: IReaction) {
-    const oldEmoji = this.post.reactions.reactedByCurrentUser;
+    const post = this.post();
+    if (!post?.reactions) return;
+
+    const oldEmoji = post.reactions.reactedByCurrentUser;
     this.decrementEmoji(oldEmoji);
-    this.post.reactions.reactedByCurrentUser = null;
-    this.post.reactions.reactionId = null;
+
+    post.reactions.reactedByCurrentUser = null;
+    post.reactions.reactionId = null;
   }
 
+  /**
+   * Increment count for an emoji.
+   */
   private incrementEmoji(emoji: string) {
-    const counts = this.post.reactions.counts;
+    const counts = this.post()?.reactions?.counts;
+    if (!counts) return;
+
     counts[emoji] = (counts[emoji] ?? 0) + 1;
   }
 
-  private decrementEmoji(emoji: string) {
-    const counts = this.post.reactions.counts;
-    if (!counts[emoji]) return;
+  /**
+   * Decrement count for an emoji.
+   */
+  private decrementEmoji(emoji: string | null) {
+    if (!emoji) return;
+
+    const counts = this.post()?.reactions?.counts;
+    if (!counts || !counts[emoji]) return;
+
     counts[emoji]--;
-    if (counts[emoji] === 0) {
-      delete counts[emoji];
-    }
+    if (counts[emoji] === 0) delete counts[emoji];
   }
 
+  /**
+   * Subscribe to save response and handle success/error.
+   * Also resets isSaving when done.
+   */
   private subscribeToSaveResponse(
     result: Observable<HttpResponse<IReaction>>,
     callback: (reaction: IReaction) => void,
   ): void {
     result.pipe(finalize(() => this.isSaving.set(false))).subscribe({
-      next: ({ body }) => {
-        callback(body);
-        this.update();
-      },
+      next: ({ body }) => callback(body),
       error: () =>
         this.alertService.addAlert({
           type: 'error',

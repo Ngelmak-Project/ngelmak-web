@@ -2,18 +2,23 @@
   <!-- Reaction button -->
   <button
     (click)="toggle()"
-    [disabled]="isSaving()"
+    [disabled]="isSaving() || !channel()"
     class="h-full w-full inline-flex items-center justify-center space-x-1 px-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600 dark:bg-gray-700"
     [ngClass]="{ 'animate-pulse duration-100': isSaving() }"
   >
+    <!-- If the post has reactions -->
     @if (totalReactions() > 0) {
+      <!-- Show each emoji currently used -->
       @for (emoji of emojiReactions(); track $index) {
         <span class="text-lg leading-none">{{ emoji }}</span>
       }
-      <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{
-        totalReactions()
-      }}</span>
+
+      <!-- Total count -->
+      <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
+        {{ totalReactions() }}
+      </span>
     } @else {
+      <!-- Default icon when no reactions -->
       <span class="text-lg leading-none">👍</span>
     }
   </button>
@@ -23,12 +28,15 @@
     <div
       class="p-2 shadow-lg flex gap-2 absolute top-5 -left-2 z-10 text-sm text-gray-500 duration-300 bg-white border border-gray-200 rounded-lg shadow-xs dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
     >
+      <!-- List of selectable emojis -->
       @for (emoji of emojis; track $index) {
         <button
           (click)="select(emoji)"
           [disabled]="isSaving()"
           class="inline-flex items-center justify-center w-7 h-7 hover:scale-125 transition hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md"
-          [ngClass]="{ 'bg-gray-200 dark:bg-gray-600': emoji == reactedByCurrentUser() }"
+          [ngClass]="{
+            'bg-gray-200 dark:bg-gray-600': emoji == reactedByCurrentUser(),
+          }"
         >
           <span class="text-xl leading-none">{{ emoji }}</span>
         </button>
