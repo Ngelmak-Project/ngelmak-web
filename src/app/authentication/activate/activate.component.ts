@@ -1,8 +1,7 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { mergeMap } from 'rxjs/operators';
-
 import { CommonModule } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { finalize } from 'rxjs';
 import { ActivateService } from './activate.service';
 
 @Component({
@@ -11,20 +10,29 @@ import { ActivateService } from './activate.service';
   selector: 'app-activate',
   templateUrl: './activate.component.html',
 })
-export class ActivateComponent implements OnInit {
-  error = signal(false);
-  success = signal(false);
-
+export class ActivateComponent {
   private readonly activateService = inject(ActivateService);
   private readonly route = inject(ActivatedRoute);
 
-  ngOnInit(): void {
-    this.route.queryParams.pipe(mergeMap(params => this.activateService.get(params['key']))).subscribe({
-      next: () => this.success.set(true),
-      error: (error) => {
-        this.error.set(true);
-        console.log(error);
-      },
-    });
+  error = signal(false);
+  success = signal(false);
+  isLoading = signal(false);
+
+  key = this.route.snapshot.queryParamMap.get('key') ?? '';
+  keyIsPresent = signal(this.key.length > 0);
+
+  constructor() {
+    if (!this.keyIsPresent()) {
+      this.error.set(true);
+      return;
+    }
+    this.isLoading.set(true);
+    this.activateService
+      .get(this.key)
+      .pipe(finalize(() => this.isLoading.set(false)))
+      .subscribe({
+        next: () => this.success.set(true),
+        error: () => this.error.set(true),
+      });
   }
 }

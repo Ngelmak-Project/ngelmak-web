@@ -1,22 +1,35 @@
 <section class="bg-gray-50 dark:bg-gray-900">
-  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
-    <a
-      routerLink="/"
-      class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
-    >
-      <img class="w-8 h-8 mr-2" src="assets/images/ngelmak-logo-light.svg" alt="logo" />
-      Ngelmak
-    </a>
+  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0">
+    <!-- Header / Branding -->
+    <div class="flex flex-col items-center mb-2">
+      <div class="flex items-center gap-3">
+        <img
+          src="assets/images/ngelmak-logo-light.svg"
+          class="w-10 h-10 dark:opacity-90"
+          alt="Ngelmak logo"
+        />
+        <span class="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">
+          Ngelmak
+        </span>
+      </div>
+
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        Créez votre compte pour accéder à votre espace personnel.
+      </p>
+    </div>
+
+    <!-- Card -->
     <div
-      class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+      class="w-full bg-white rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
     >
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-        <h1
+        <!-- Title -->
+        <h2
           class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
         >
-          Créer mon compte
-        </h1>
-        <div class="space-y-4 md:space-y-6">
+          Créer un compte
+        </h2>
+        <form class="space-y-4 md:space-y-6">
           <!-- Login -->
           <div class="relative">
             <input
@@ -246,6 +259,34 @@
             }
             <span>Créer mon compte</span>
           </button>
+        </form>
+
+        <!-- Navigation options -->
+        <div class="space-y-3 text-center">
+          <div class="text-center text-sm text-gray-500 dark:text-gray-400">
+            Vous avez déjà un compte ?
+            <a
+              routerLink="/sign-in"
+              class="font-semibold text-blue-600 hover:underline underline-offset-4 dark:text-blue-400"
+            >
+              Retour à la connexion
+            </a>
+          </div>
+
+          <a
+            routerLink="/contact"
+            class="block text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+          >
+            Besoin d'aide ? Contactez le support
+          </a>
+        </div>
+
+        <!-- Divider -->
+        <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+          <p class="text-xs text-gray-500 dark:text-gray-400 text-center leading-relaxed">
+            Votre adresse email ne sera utilisée que pour la création de votre compte et la sécurité
+            de votre accès.
+          </p>
         </div>
       </div>
     </div>

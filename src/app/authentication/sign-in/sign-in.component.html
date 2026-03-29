@@ -1,5 +1,5 @@
 <section class="bg-gray-50 dark:bg-gray-900">
-  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
+  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0">
     <!-- Header / Branding -->
     <div class="flex flex-col items-center mb-2">
       <div class="flex items-center gap-3">
@@ -12,6 +12,10 @@
           Ngelmak
         </span>
       </div>
+
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        Connexion à votre compte Ngelmak.
+      </p>
     </div>
 
     <div
@@ -127,7 +131,9 @@
                 >
               </div>
             </div>
-            <a routerLink="/reset-password" class="text-sm font-medium text-primary-600 hover:underline dark:text-white"
+            <a
+              routerLink="/reset-password"
+              class="text-sm font-medium text-primary-600 hover:underline underline-offset-4 dark:text-white"
               >Mot de passe oublié?</a
             >
           </div>
@@ -162,7 +168,7 @@
             Vous n'avez pas encore de compte ?
             <a
               routerLink="/sign-up"
-              class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+              class="font-semibold text-blue-600 hover:underline underline-offset-4 dark:text-blue-400"
               >Créer un compte</a
             >
           </p>

@@ -1,81 +1,99 @@
-<!-- <div>
-    <div class="d-flex justify-content-center">
-        <div class="col-md-8">
-            <h1 jhiTranslate="activate.title">Activation</h1>
-            @if (success()) {
-            <div class="alert alert-success">
-                <span jhiTranslate="activate.messages.success"><strong>Your user account has been activated.</strong>
-                    Please </span>
-                <a class="alert-link" routerLink="/login" jhiTranslate="global.messages.info.authenticated.link">sign
-                    in</a>.
-            </div>
-            }
-            @if (error()) {
-            <div class="alert alert-danger" jhiTranslate="activate.messages.error">
-                <strong>Your user could not be activated.</strong> Please use the registration form to sign up.
-            </div>
-            }
-        </div>
-    </div>
-</div> -->
-
-
-
-<div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900">
-  <a href="" class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
-    <img src="assets/images/logo.svg" class="mr-4 h-11" alt="FlowBite Logo" />
-    <span>Ngelmak</span>
-  </a>
-  <!-- Card -->
-  <div class="w-full max-w-lg p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
-    <h1 class="text-4xl py-4 text-center font-bold text-gray-900 dark:text-slate-200">
-      Activation de compte
-    </h1>
-    <div class="text-slate-500">
-      @if (success()) {
-      <div class="justify-center items-center w-full max-h-full">
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-          <div class="p-4 md:p-5 text-center">
-            <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-            </svg>
-            <h3
-              class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-4 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
-              <span><strong>Votre compte utilisateur a été activé.</strong>
-                Veuillez vous </span>
-              <a class="text-blue-400 underline" routerLink="/sign-in">enregistrer</a>.
-            </h3>
-          </div>
-        </div>
+<section class="bg-gray-50 dark:bg-gray-900">
+  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0">
+    <!-- Branding -->
+    <div class="flex flex-col items-center mb-2">
+      <div class="flex items-center gap-3">
+        <img
+          src="assets/images/ngelmak-logo-light.svg"
+          class="w-10 h-10 dark:opacity-90"
+          alt="Ngelmak logo"
+        />
+        <span class="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">
+          Ngelmak
+        </span>
       </div>
-      }
-      @if (error()) {
-      <div class="justify-center items-center w-full max-h-full">
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-          <div class="p-4 md:p-5 text-center">
-            <svg class="mx-auto mb-4 text-red-400 w-12 h-12 dark:text-red-200" aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-            </svg>
-            <h3
-              class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
-              <strong>Votre utilisateur n'a pas pu
-                être activé.</strong> Veuillez utiliser le formulaire d'enregistrement pour vous inscrire.
-            </h3>
-            <a routerLink="/sign-in" type="button"
-              class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-              M'inscrire
-              <svg class="w-4 h-4 ms-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 14 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M1 5h12m0 0L9 1m4 4L9 9" />
-              </svg>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        Nous vérifions votre lien d'activation.
+      </p>
+    </div>
+
+    <!-- Card -->
+    <div
+      class="w-full bg-white rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <div class="p-6 space-y-6 md:space-y-8 sm:p-8">
+        <!-- Title -->
+        <h1
+          class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center"
+        >
+          Activation de compte
+        </h1>
+
+        <!-- Loading -->
+        @if (isLoading()) {
+          <div class="flex flex-col items-center py-2">
+            <span
+              class="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"
+            ></span>
+            <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">Quelques secondes…</p>
+          </div>
+        }
+
+        <!-- Success -->
+        @if (success()) {
+          <div
+            class="p-4 rounded-lg bg-blue-50 text-blue-800 border border-blue-200 dark:bg-blue-900 dark:text-blue-100 dark:border-blue-700"
+          >
+            <p class="text-sm leading-relaxed">
+              <strong>Votre compte est activé.</strong><br />
+              Vous pouvez maintenant accéder à votre espace.
+            </p>
+
+            <a
+              routerLink="/sign-in"
+              class="mt-4 w-full inline-flex justify-center items-center px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition"
+            >
+              Se connecter
             </a>
           </div>
+        }
+
+        <!-- Error -->
+        @if (error()) {
+          <div
+            class="p-4 rounded-lg bg-red-50/60 text-red-700 border border-red-200 dark:bg-red-900/40 dark:text-red-100 dark:border-red-700"
+          >
+            <p class="text-sm leading-relaxed mb-4">
+              <strong>L'activation n'a pas pu être effectuée.</strong><br />
+              Le lien est invalide, expiré ou déjà utilisé.
+            </p>
+
+            <a
+              routerLink="/resend-activation"
+              class="w-full inline-flex justify-center items-center px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition"
+            >
+              Demander une nouvelle clé d'activation
+            </a>
+          </div>
+        }
+
+        <!-- Navigation -->
+        <div class="text-center">
+          <a
+            routerLink="/sign-in"
+            class="block text-center text-sm font-semibold text-blue-600 hover:underline underline-offset-4 dark:text-blue-400 mt-3"
+          >
+            Retour à la connexion
+          </a>
+        </div>
+
+        <!-- Privacy message -->
+        <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+          <p class="text-xs text-gray-500 dark:text-gray-400 text-center leading-relaxed">
+            Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée.
+          </p>
         </div>
       </div>
-      }
     </div>
   </div>
-</div>
+</section>
