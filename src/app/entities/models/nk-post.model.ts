@@ -17,6 +17,7 @@ export interface IPost {
   content?: string | null;
   status?: keyof typeof Status | null;
   channel?: IChannel | null;
+  replyTo?: IPost | null;
   files?: IFile[];
   comments?: IComment[];
 }

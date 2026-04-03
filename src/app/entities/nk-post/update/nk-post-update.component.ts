@@ -1,16 +1,14 @@
 import { Component, effect, inject, input, output, signal, ViewEncapsulation } from '@angular/core';
-import { IFile } from 'app/entities/models/nk-file.model';
-import { IPost, IPostDTO } from 'app/entities/models/nk-post.model';
-import { finalize } from 'rxjs/operators';
-import { PostService } from './../nk-post.service';
-
-import SharedModule from 'app/shared/shared.module';
-
 import { Field, form, maxLength, required } from '@angular/forms/signals';
 import { AttachmentType } from 'app/entities/enumerations/attachment-type.model';
 import { Visibility } from 'app/entities/enumerations/visibility.model';
+import { IFile } from 'app/entities/models/nk-file.model';
+import { IPost, IPostDTO } from 'app/entities/models/nk-post.model';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { AlertService } from 'app/shared/alert/alert.service';
+import SharedModule from 'app/shared/shared.module';
+import { finalize } from 'rxjs/operators';
+import { PostService } from './../nk-post.service';
 
 const initPost: IPost = {
   id: null,
@@ -29,6 +27,7 @@ const initPost: IPost = {
 })
 export class PostUpdateComponent {
   post = input<IPost | IPostDTO>(); // The post to edit, provided as an input property.
+  replyTo = input<IPostDTO>(null); // The post this post is replying to, if any (used for context in replies)
   onsaved = output<IPostDTO>(); // Event emitted when the post is successfully saved.
   oncancel = output<void>(); // Event emitted when the user cancels the edit operation.
   protected postSig = signal<IPostDTO>(null);
@@ -66,6 +65,9 @@ export class PostUpdateComponent {
   save(): void {
     this.isSaving.set(true);
     const post: IPost = this.postModel();
+    if (this.replyTo()) {
+      post.replyTo = { id: this.replyTo().id } as IPost; // Only ID is needed for replyTo when sending to backend
+    }
     post.content = post.content.trim();
     const newMedias = post.files.filter((file) => file.id == null);
     post.files = [];
@@ -189,5 +191,14 @@ export class PostUpdateComponent {
     if (file.id) {
       this.deletedFiles.push(file);
     }
+  }
+
+  /**
+   * Returns the placeholder text for the content textarea based on the current state.
+   */
+  get contentPlaceholder(): string {
+    if (this.post()?.id) return 'Modifiez votre poste...';
+    if (this.replyTo()) return 'Répondez à ce poste...';
+    return 'Enseignez-nous quelque chose!';
   }
 }

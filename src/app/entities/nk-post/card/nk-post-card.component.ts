@@ -48,6 +48,7 @@ export class PostCardComponent {
   showMenu = signal(false);
   confirmDeleteOpen = signal(false);
   isDeleting = signal(false);
+  isReplying = signal(false);
   isUpdating = signal(false);
   isCommentOpened = signal(false);
   isSignalPost = signal(false); // Signal emit when user wanna signal a post.
@@ -94,7 +95,17 @@ export class PostCardComponent {
    */
   handlePostUpdate(newPost: IPostDTO) {
     this.isUpdating.set(false);
+    this.isReplying.set(false);
     this.postSig.update((p) => ({ ...p, content: newPost.content, files: newPost.files }));
+  }
+
+  /**
+   * Handle cancel signal when user cancel an update or a reply.
+   * Just close the update/reply form without doing any API call.
+   */
+  handleCancelUpdate() {
+    this.isUpdating.set(false);
+    this.isReplying.set(false);
   }
 
   /**

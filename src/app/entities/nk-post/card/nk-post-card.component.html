@@ -81,6 +81,7 @@
         (onClickOutside)="showMenu.set(false)"
         (click)="showMenu.set(!showMenu())"
         class="p-2 rounded-lg text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+        [ngClass]="{ 'bg-gray-100 dark:bg-gray-700': showMenu() }"
       >
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path
@@ -94,6 +95,36 @@
         <div
           class="absolute right-0 mt-2 w-36 rounded-xl shadow-xl bg-white dark:bg-gray-800 flex flex-col divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-600 py-2 z-20 animate-fadeIn"
         >
+          <ul *showForChannel="post().channel.id">
+            <!-- REPLY -->
+            <li>
+              <button
+                (click)="isReplying.set(true)"
+                [disabled]="isReplying()"
+                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 text-left"
+              >
+                Répondre
+                <svg
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14.5 8.046H11V6.119c0-.921-.9-1.446-1.524-.894l-5.108 4.49a1.2 1.2 0 0 0 0 1.739l5.108 4.49c.624.556 1.524.027 1.524-.893v-1.928h2a3.023 3.023 0 0 1 3 3.046V19a5.593 5.593 0 0 0-1.5-10.954Z"
+                  />
+                </svg>
+              </button>
+            </li>
+          </ul>
+
           <ul *showForChannel="post().channel.id">
             <!-- UPDATE -->
             <li>
@@ -271,11 +302,12 @@
     </div>
   </header>
 
+  <!-- UPDATE FORM (ONLY IF UPDATING) -->
   @if (isUpdating()) {
     <app-post-update
       [post]="postSig()"
       (onsaved)="handlePostUpdate($event)"
-      (oncancel)="isUpdating.set(false)"
+      (oncancel)="handleCancelUpdate()"
     ></app-post-update>
   } @else {
     <!-- Content -->
@@ -307,6 +339,15 @@
         }
       }
     </div>
+  }
+
+  <!-- REPLY FORM (ONLY IF REPLYING) -->
+  @if (isReplying()) {
+    <app-post-update
+      [replyTo]="postSig()"
+      (onsaved)="handlePostUpdate($event)"
+      (oncancel)="handleCancelUpdate()"
+    ></app-post-update>
   }
 
   <!-- Comments/Reactions -->

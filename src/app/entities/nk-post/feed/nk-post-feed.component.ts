@@ -1,10 +1,10 @@
-import { Component, inject, NgZone, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, NgZone, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PostService } from 'app/entities/nk-post/nk-post.service';
 import { finalize, Subscription, tap } from 'rxjs';
 
 import { FormsModule } from '@angular/forms';
-import { ITEMS_PER_PAGE, PAGE_HEADER } from 'app/config/pagination.constants';
+import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { DataUtils } from 'app/core/util/data-util.service';
 import SharedModule from 'app/shared/shared.module';
 import { SortService, sortStateSignal } from 'app/shared/sort';
@@ -31,115 +31,113 @@ interface IFeedPageDTO {
   standalone: true,
   selector: 'app-post-feed',
   templateUrl: './nk-post-feed.component.html',
-  imports: [RouterModule, FormsModule, SharedModule, PostCardComponent, PostUpdateComponent],
+  imports: [RouterModule, FormsModule, SharedModule, PostCardComponent, PostUpdateComponent,],
   animations: [fadeInUp400ms],
 })
 export class PostFeedComponent implements OnInit, OnDestroy {
-  private subs = new Subscription();
-
-  feeds = signal<IPostDTO[]>([]);
-  hasNext = signal(true);
-  isLoading = signal(false);
-
-  sortState = sortStateSignal({});
-
-  itemsPerPage = ITEMS_PER_PAGE;
-  page = 1;
-  query = '';
-  sessionKey: string | null = null;
-
-  // Track last known scrollHeight to avoid reloading when height doesn't change
-  private lastHeight = 0;
-
-  public router = inject(Router);
+  private router = inject(Router);
   protected postService = inject(PostService);
   protected activatedRoute = inject(ActivatedRoute);
   protected sortService = inject(SortService);
   protected dataUtils = inject(DataUtils);
   protected authService = inject(AuthenticationService);
   protected scroll = inject(ScrollService);
+  protected alertService = inject(AlertService);
   channel = inject(ChannelService).channel;
-
   protected ngZone = inject(NgZone);
 
-  ngOnInit(): void {
-    // Listen to scroll end events
-    this.subs.add(
-      this.scroll.endReached$.subscribe((height) => {
-        this.handleScrollEnd(height);
-      }),
-    );
+  private subs = new Subscription();
 
-    // Initial load
+  // Feed content
+  feeds = signal<IPostDTO[]>([]);
+  hasNext = signal(true);
+  isLoading = signal(false);
+
+  // Sorting
+  sortState = sortStateSignal({});
+
+  // Internal pagination (NOT visible in URL)
+  itemsPerPage = ITEMS_PER_PAGE;
+  page = signal(1);
+  // Search query (visible in URL)
+  query = signal('');
+  // Session key for pagination continuity
+  sessionKey = signal<string | null>(null);
+
+  // Track last scroll height to avoid infinite loops
+  private lastHeight = 0;
+
+  /**
+   * Computed boolean: search is allowed only if query length >= 5
+   */
+  hasMinimumQueryLength = computed(() => !this.isLoading() && this.query().length >= 5);
+
+  ngOnInit(): void {
+    // Infinite scroll listener
+    this.subs.add(this.scroll.endReached$.subscribe((height) => this.handleScrollEnd(height)));
+
+    /**
+     * Read ONLY the search query from the URL.
+     * Page & size are now INTERNAL ONLY.
+     */
     this.subs.add(
       this.activatedRoute.queryParamMap
         .pipe(
           tap((params) => {
-            this.query = params.get('q') ?? '';
-            const page = params.get(PAGE_HEADER);
-            this.page = +(page ?? 1);
+            this.query.set(params.get('q') ?? '');
           }),
-          tap(() => this.loadAll(true)), // reset feeds
+          tap(() => {
+            // Reset pagination when query changes
+            this.page.set(1);
+            this.loadAll(true);
+          }),
         )
         .subscribe(),
     );
   }
 
   ngOnDestroy(): void {
-    this.subs.unsubscribe(); // unsubscribes ALL at once
+    this.subs.unsubscribe();
   }
 
   /**
-   * Respond to the creation of the event. Add the newly created message to the feed list.
-   * @param newPost creted post.
+   * Add newly created post to the top of the feed.
    */
   handlePostSaved(newPost: IPostDTO): void {
     this.feeds.update((list) => [{ id: null, post: newPost }, ...list]);
   }
 
+  /**
+   * Load next page internally (NOT in URL)
+   */
   loadNext(): void {
-    this.page++;
+    this.page.update((value) => value + 1);
     this.loadAll();
   }
 
   /**
-   * Called when scroll reaches the bottom.
-   * Loads more only if:
-   * - not already loading
-   * - there is more data (hasNext)
-   * - the scrollHeight increased since last load
+   * Infinite scroll handler
    */
   private handleScrollEnd(height: number): void {
-    // 1. Avoid duplicate loads while API is busy
-    if (this.isLoading()) {
-      return;
-    }
+    if (this.isLoading()) return;
+    if (!this.hasNext()) return;
+    if (height <= this.lastHeight) return;
 
-    // 2. No more pages available
-    if (!this.hasNext()) {
-      return;
-    }
-
-    // 3. Height did not change → nothing new was added → avoid infinite loop
-    if (height <= this.lastHeight) {
-      return;
-    }
-
-    // Update last known height
     this.lastHeight = height;
-
-    // Load next page
     this.loadNext();
   }
 
+  /**
+   * Load feed data from API
+   */
   loadAll(reset = false): void {
     this.isLoading.set(true);
 
     const req = {
-      page: this.page - 1,
-      size: this.itemsPerPage,
-      sessionKey: this.sessionKey,
-      q: this.query,
+      page: this.page() - 1, // internal
+      size: this.itemsPerPage, // internal
+      sessionKey: this.sessionKey(),
+      q: this.query(),
     };
 
     this.postService
@@ -149,29 +147,41 @@ export class PostFeedComponent implements OnInit, OnDestroy {
         next: (res: HttpResponse<IFeedPageDTO>) => {
           const { body } = res;
           this.hasNext.set(body.content.length > 0);
+          console.log(body.sessionKey);
+
           if (reset) {
-            this.sessionKey = body.sessionKey;
+            this.sessionKey.set(body.sessionKey);
             this.feeds.set(body.content ?? []);
           } else {
             this.feeds.update((e) => [...e, ...body.content]);
           }
         },
         error: () =>
-          inject(AlertService).addAlert({ type: 'warning', message: 'Problème de chargement' }),
+          this.alertService.addAlert({
+            type: 'warning',
+            message: 'Problème de chargement',
+          }),
       });
   }
 
-  search(query: string): void {
-    this.handleNavigation(1, query);
+  /**
+   * Triggered when user clicks search button.
+   * Only updates the URL with the query (NOT page/size).
+   */
+  search(): void {
+    if (!this.hasMinimumQueryLength()) return;
+    this.handleNavigation(this.query());
   }
 
-  protected handleNavigation(page: number, query?: string): void {
-    const queryParamsObj = { q: query, page, size: this.itemsPerPage };
-
+  /**
+   * Navigation that ONLY exposes the search query in the URL.
+   * Pagination stays internal.
+   */
+  protected handleNavigation(query?: string): void {
     this.ngZone.run(() => {
-      this.router.navigate(['/', query?.length ? 'search' : ''], {
+      this.router.navigate(['/'], {
         relativeTo: this.activatedRoute,
-        queryParams: queryParamsObj,
+        queryParams: { q: query || null }, // ONLY q is visible
       });
     });
   }

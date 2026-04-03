@@ -1,11 +1,11 @@
-import { SignInModel } from 'app/authentication/sign-in/sign-in.model';
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { Field, form, required } from '@angular/forms/signals';
 import { Router, RouterModule } from '@angular/router';
-import { AlertService } from 'app/shared/alert/alert.service';
+import { SignInModel } from 'app/authentication/sign-in/sign-in.model';
 import { SignInService } from 'app/authentication/sign-in/sign-in.service';
 import { AuthenticationService } from 'app/core/auth/auth.service';
+import { AlertService } from 'app/shared/alert/alert.service';
 import SharedModule from 'app/shared/shared.module';
-import { Field, form, required } from '@angular/forms/signals';
 import { finalize } from 'rxjs';
 
 @Component({

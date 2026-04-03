@@ -2,13 +2,30 @@
   class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
 >
   <div class="flex flex-col gap-4 px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
-    <label for="content" class="sr-only">Enseignez-nous quelque chose!</label>
+    <!-- Reply context -->
+    @if (replyTo()) {
+      <div
+        class="text-xs text-gray-800 dark:text-gray-200 mb-2 pl-2 border-l border-gray-800 dark:border-gray-200 max-w-full"
+      >
+        En réponse à
+        <p class="inline-flex font-medium">
+          {{ replyTo().channel.name }}
+          <span class="text-xs ml-1 italic text-gray-500 dark:text-gray-400">
+            @{{ replyTo().channel.identifier }}
+          </span>
+        </p>
+        <br />
+        <span class="block italic opacity-80 truncate overflow-hidden whitespace-nowrap max-w-full">
+          {{ replyTo().content }}
+        </span>
+      </div>
+    }
     <textarea
       [field]="postForm.content"
       id="content"
       rows="5"
       class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-      placeholder="Enseignez-nous quelque chose!"
+      [placeholder]="contentPlaceholder"
     ></textarea>
 
     <!-- Wrapper: puts counter on left and errors on right -->
@@ -165,7 +182,7 @@
         }
         {{ post()?.id ? 'Modifier' : 'Enregistrer' }}
       </button>
-      @if (post()?.id) {
+      @if (post()?.id || replyTo()) {
         <button
           cancel
           type="button"
