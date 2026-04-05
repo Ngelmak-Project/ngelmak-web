@@ -1,64 +1,69 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject, NgZone, signal } from '@angular/core';
+import { Component, inject, input, NgZone, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
+import { ITEMS_PER_PAGE, PAGE_HEADER } from 'app/config/pagination.constants';
 import { AuthenticationService } from 'app/core/auth/auth.service';
-import { ICommentDTO } from 'app/entities/models/nk-comment.model';
+import { IChannel } from 'app/entities/models/nk-channel.model';
+import { IPostDTO } from 'app/entities/models/nk-post.model';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
-import { CommentItemComponent } from 'app/entities/nk-comment/list/item/nk-comment-item.component';
-import { CommentService } from 'app/entities/nk-comment/nk-comment.service';
+import { PostCardComponent } from 'app/entities/nk-post/card/nk-post-card.component';
+import { PostService } from 'app/entities/nk-post/nk-post.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { ScrollService } from 'app/shared/services/scroll.service';
-import { SortService } from 'app/shared/sort';
-import { Subscription } from 'rxjs';
+import { SortService, sortStateSignal } from 'app/shared/sort';
+import { Subscription, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-channel-comments',
-  templateUrl: './channel-comments.component.html',
-  imports: [CommonModule, RouterModule, CommentItemComponent],
+  selector: 'app-channel-feed',
+  templateUrl: './channel-feed.component.html',
+  imports: [CommonModule, RouterModule, PostCardComponent],
   animations: [fadeInUp400ms],
 })
-export class ChannelCommentsComponent {
-  private subs = new Subscription();
+export class ChannelFeedComponent {
+  channel = input.required<IChannel>();
+
   protected channelService = inject(ChannelService);
-  protected commentService = inject(CommentService);
+  protected postService = inject(PostService);
   protected activatedRoute = inject(ActivatedRoute);
   protected sortService = inject(SortService);
   protected authService = inject(AuthenticationService);
   protected scroll = inject(ScrollService);
+  protected ngZone = inject(NgZone);
+  private subs = new Subscription();
   private router = inject(Router);
 
-  channel = inject(ChannelService).channel;
-  comments = signal<ICommentDTO[]>([]);
+  posts = signal<IPostDTO[]>([]);
 
   isLoading = signal(false);
-  query = signal('');
-  page = signal(1);
-  itemsPerPage = ITEMS_PER_PAGE;
-
+  sortState = sortStateSignal({});
   hasNext = signal(false);
-
-  protected ngZone = inject(NgZone);
+  itemsPerPage = ITEMS_PER_PAGE;
+  page = signal(1);
+  query = signal('');
 
   // Track last known scrollHeight to avoid reloading when height doesn't change
-  private lastHeight = 0;
-
-  constructor() {
-    effect(() => {
-      const acc = this.channel();
-      if (!acc) return; // wait until channel is loaded
-
-      // Now it's safe to load comments
-      this.loadAll(true);
-    });
-  }
+  private lastHeight = signal(0);
 
   ngOnInit(): void {
-    // Scroll listener
+    // Listen to scroll end events
     this.subs.add(
       this.scroll.endReached$.subscribe((height) => {
         this.handleScrollEnd(height);
       }),
+    );
+
+    // Initial load
+    this.subs.add(
+      this.activatedRoute.queryParamMap
+        .pipe(
+          tap((params) => {
+            this.query.set(params.get('q') ?? '');
+            const page = params.get(PAGE_HEADER);
+            this.page.set(+(page ?? 1));
+          }),
+          tap(() => this.loadAll(true)), // reset posts
+        )
+        .subscribe(),
     );
   }
 
@@ -66,19 +71,8 @@ export class ChannelCommentsComponent {
     this.subs.unsubscribe(); // unsubscribes ALL at once
   }
 
-  filteredComments = computed(() => {
-    const q = this.query().toLowerCase();
-    const list = this.comments();
-
-    if (!q) return list;
-
-    return list.filter(
-      (c) => c.content.toLowerCase().includes(q)
-    );
-  });
-
-  loadNext() {
-    this.page.update((p) => p + 1);
+  loadNext(): void {
+    this.page.update((v) => v + 1);
     this.loadAll();
   }
 
@@ -101,12 +95,12 @@ export class ChannelCommentsComponent {
     }
 
     // 3. Height did not change → nothing new was added → avoid infinite loop
-    if (height <= this.lastHeight) {
+    if (height <= this.lastHeight()) {
       return;
     }
 
     // Update last known height
-    this.lastHeight = height;
+    this.lastHeight.set(height);
 
     // Load next page
     this.loadNext();
@@ -121,16 +115,14 @@ export class ChannelCommentsComponent {
       q: this.query(),
     };
 
-    this.commentService.findByChannel(this.channel()!.id, req).subscribe({
+    this.postService.findByAuthenticatedUser(req).subscribe({
       next: (res) => {
         const { body } = res;
-
-        this.hasNext.set(body.content.length === this.itemsPerPage);
-
+        this.hasNext.set(body.content.length == this.itemsPerPage);
         if (reset) {
-          this.comments.set(body.content ?? []);
+          this.posts.set(body.content ?? []);
         } else {
-          this.comments.update((e) => [...e, ...body.content]);
+          this.posts.update((e) => [...e, ...body.content]);
         }
       },
       complete: () => {

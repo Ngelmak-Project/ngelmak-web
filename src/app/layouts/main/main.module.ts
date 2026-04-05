@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import adminRoutes from 'app/admin/admin.routes';
 import { Authority } from 'app/config/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import entityRoutes from 'app/entities/entity.routes';
@@ -12,7 +13,6 @@ import FooterComponent from '../footer/footer.component';
 import NavbarComponent from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import MainComponent from './main.component';
-import adminRoutes from 'app/admin/admin.routes';
 
 const routes: Routes = [
   {
@@ -20,7 +20,6 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       { path: '', title: 'Ngelmak Project', component: HomeComponent },
-      // { path: 'search', title: 'Posts', component: PostComponent },
       {
         path: 'admin',
         data: {

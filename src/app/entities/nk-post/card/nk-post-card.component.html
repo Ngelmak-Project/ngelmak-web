@@ -1,8 +1,8 @@
-<article class="flex flex-col gap-2 py-2">
+<article class="flex flex-col gap-4 py-3">
   <!-- Header -->
-  <header class="flex items-start justify-between gap-4 py-2">
+  <header class="flex items-start justify-between gap-4">
     <!-- LEFT -->
-    <div class="flex items-start gap-3 flex-1 min-w-0">
+    <div class="flex items-center gap-3 flex-1 min-w-0">
       <!-- Avatar -->
       <a [routerLink]="['channel', postSig().channel.identifier]" class="shrink-0">
         @if (postSig().channel.avatar) {
@@ -20,22 +20,39 @@
         }
       </a>
 
-      <!-- Name + Follow + Time -->
-      <div class="flex flex-col min-w-0">
-        <div class="flex items-center gap-2 flex-wrap">
+      <!-- Right side -->
+      <div class="flex flex-col min-w-0 w-full">
+        <!-- Row 1: Name + Identifier -->
+        <div class="flex items-center gap-2 min-w-0">
           <a
-            class="truncate font-medium text-gray-900 dark:text-white text-sm"
+            class="truncate font-semibold text-gray-900 dark:text-white text-base"
             [routerLink]="['channel', postSig().channel.identifier]"
           >
             {{ postSig().channel.name }}
+            <span class="text-xs italic text-gray-500 dark:text-gray-400 truncate">
+              @{{ postSig().channel.identifier }}
+            </span>
           </a>
+        </div>
+
+        <!-- Row 2: Time (left) + Follow button (right) -->
+        <div class="flex items-center justify-between mt-1 w-full">
+          <!-- Time -->
+          <time class="flex items-center text-xs text-gray-500 dark:text-gray-400">
+            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"
+              />
+            </svg>
+            {{ postSig().at | duration }}
+          </time>
 
           <!-- Follow button -->
           <button
             *hasAnyAuthority="'ROLE_USER'"
             [disabled]="isSubscriptionToggling()"
             (click)="toggleFollow()"
-            class="inline-flex items-center bg-blue-100 rounded-lg text-blue-800 text-xs font-medium px-2.5 py-0.5 dark:bg-gray-700 dark:text-blue-400 border border-blue-400 disabled:cursor-not-allowed disabled:opacity-50"
+            class="inline-flex items-center rounded-md text-xs font-medium px-2.5 py-0.5 border transition disabled:opacity-50 disabled:cursor-not-allowed bg-blue-100 text-blue-800 border-blue-400 dark:bg-gray-700 dark:text-blue-400"
             [ngClass]="
               subscription()
                 ? 'text-blue-800 dark:text-blue-400 border-blue-400'
@@ -44,7 +61,7 @@
           >
             @if (isSubscriptionToggling()) {
               <svg
-                class="inline w-3 h-3 text-gray-100 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
+                class="inline w-3 h-3 animate-spin text-gray-600 dark:text-gray-300 fill-gray-600 dark:fill-gray-300"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -62,25 +79,100 @@
             {{ subscription() ? 'Suivi' : 'Suivre' }}
           </button>
         </div>
-
-        <time class="flex items-center text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-          <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"
-            />
-          </svg>
-          {{ postSig().at | duration }}
-        </time>
       </div>
     </div>
 
-    <!-- RIGHT: Menu -->
-    <div *hasAnyAuthority="'ROLE_USER'" class="relative">
+
+  </header>
+
+  <!-- UPDATE FORM (ONLY IF UPDATING) -->
+  @if (isUpdating()) {
+    <app-post-update
+      [post]="postSig()"
+      (onsaved)="handlePostUpdate($event)"
+      (oncancel)="handleCancelUpdate()"
+    ></app-post-update>
+  } @else {
+    <!-- Content -->
+    <div class="text-gray-900 dark:text-white whitespace-pre-line" [innerHTML]="content()"></div>
+
+    @if (postSig().files.length > 0) {
+      <!-- Attachments -->
+      <div
+        class="grid gap-4"
+        [ngClass]="{
+          'grid-cols-1': postSig().files.length === 1,
+          'grid-cols-1 md:grid-cols-2': postSig().files.length > 1,
+        }"
+      >
+        @for (file of postSig().files; track file; let idx = $index) {
+          @if (isImage(file)) {
+            <img
+              class="h-auto rounded-lg shadow-xl dark:shadow-gray-800"
+              [src]="file.url"
+              alt="Imported image"
+            />
+          } @else if (isVideo(file)) {
+            <!-- your video block -->
+          } @else {
+            <!-- Non-image files always span full width -->
+            <div class="col-span-full flex items-center gap-2 py-3 px-2 border rounded-lg">...</div>
+          }
+        }
+      </div>
+    }
+  }
+
+  <!-- REPLY FORM (ONLY IF REPLYING) -->
+  @if (isReplying()) {
+    <app-post-update
+      [replyTo]="postSig()"
+      (onsaved)="handlePostUpdate($event)"
+      (oncancel)="handleCancelUpdate()"
+    ></app-post-update>
+  }
+
+  <!-- Comments/Reactions -->
+  <div class="flex items-center justify-start flex-wrap gap-2">
+    <!-- Comments -->
+    <button
+      type="button"
+      (click)="isCommentOpened.set(!isCommentOpened())"
+      class="flex items-center justify-center space-x-1 px-2 min-w-9 h-9 md:min-w-10 md:h-10 rounded-lg bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600 dark:bg-gray-700"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="h-5 w-5 text-gray-800 dark:text-white"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
+        />
+      </svg>
+      @if (postSig().commentCount > 0) {
+        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
+          {{ postSig().commentCount }}
+        </span>
+      }
+    </button>
+
+    <!-- Reactions -->
+    <div class="min-w-9 h-9 md:min-w-10 md:h-10">
+      <app-reaction-dialog [post]="postSig()"></app-reaction-dialog>
+    </div>
+
+    <!-- Menu -->
+    <div *hasAnyAuthority="'ROLE_USER'" class="relative ml-auto">
       <button
         clickOutside
         (onClickOutside)="showMenu.set(false)"
         (click)="showMenu.set(!showMenu())"
-        class="p-2 rounded-lg text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+        class="flex items-center justify-center min-w-9 h-9 md:min-w-10 md:h-10p-2 rounded-lg text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
         [ngClass]="{ 'bg-gray-100 dark:bg-gray-700': showMenu() }"
       >
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -90,10 +182,9 @@
         </svg>
       </button>
 
-      <!-- DROPDOWN MENU -->
       @if (showMenu()) {
         <div
-          class="absolute right-0 mt-2 w-36 rounded-xl shadow-xl bg-white dark:bg-gray-800 flex flex-col divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-600 py-2 z-20 animate-fadeIn"
+          class="absolute right-0 bottom-10 mt-2 w-40 rounded-xl shadow-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-700 py-2 z-20 animate-fadeIn"
         >
           <ul *showForChannel="post().channel.id">
             <!-- REPLY -->
@@ -196,14 +287,12 @@
 
           <!-- ANY USER -->
           <ul>
-            <!-- REPORT POST -->
             <li>
               <button
                 (click)="isSignalPost.set(true)"
                 class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 Signaler
-
                 <svg
                   class="w-4 h-4"
                   aria-hidden="true"
@@ -225,7 +314,7 @@
             </li>
           </ul>
 
-          <!-- DANGER ZONE (ADMIN ONLY) -->
+          <!-- ADMIN ONLY -->
           <ul *hasAnyAuthority="'ROLE_ADMIN'">
             <li>
               <button
@@ -274,7 +363,6 @@
               </button>
             </li>
 
-            <!-- BLOCK / MASK CONTENT -->
             <li>
               <button
                 class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -299,88 +387,6 @@
           </ul>
         </div>
       }
-    </div>
-  </header>
-
-  <!-- UPDATE FORM (ONLY IF UPDATING) -->
-  @if (isUpdating()) {
-    <app-post-update
-      [post]="postSig()"
-      (onsaved)="handlePostUpdate($event)"
-      (oncancel)="handleCancelUpdate()"
-    ></app-post-update>
-  } @else {
-    <!-- Content -->
-    <div
-      class="mb-3 text-gray-900 dark:text-white whitespace-pre-line"
-      [innerHTML]="content()"
-    ></div>
-
-    <!-- Attachments -->
-    <div
-      class="grid gap-4"
-      [ngClass]="{
-        'grid-cols-1': postSig().files.length === 1,
-        'grid-cols-1 md:grid-cols-2': postSig().files.length > 1,
-      }"
-    >
-      @for (file of postSig().files; track file; let idx = $index) {
-        @if (isImage(file)) {
-          <img
-            class="h-auto rounded-lg shadow-xl dark:shadow-gray-800"
-            [src]="file.url"
-            alt="Imported image"
-          />
-        } @else if (isVideo(file)) {
-          <!-- your video block -->
-        } @else {
-          <!-- Non-image files always span full width -->
-          <div class="col-span-full flex items-center gap-2 py-3 px-2 border rounded-lg">...</div>
-        }
-      }
-    </div>
-  }
-
-  <!-- REPLY FORM (ONLY IF REPLYING) -->
-  @if (isReplying()) {
-    <app-post-update
-      [replyTo]="postSig()"
-      (onsaved)="handlePostUpdate($event)"
-      (oncancel)="handleCancelUpdate()"
-    ></app-post-update>
-  }
-
-  <!-- Comments/Reactions -->
-  <div class="flex items-center justify-start flex-wrap gap-2">
-    <!-- Comments -->
-    <button
-      type="button"
-      (click)="isCommentOpened.set(!isCommentOpened())"
-      class="flex items-center justify-center space-x-1 px-2 min-w-9 h-9 md:min-w-10 md:h-10 rounded-lg bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600 dark:bg-gray-700"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="h-5 w-5 text-gray-800 dark:text-white"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
-        />
-      </svg>
-      @if (postSig().commentCount > 0) {
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
-          {{ postSig().commentCount }}
-        </span>
-      }
-    </button>
-    <!-- Reactions -->
-    <div class="min-w-9 h-9 md:min-w-10 md:h-10">
-      <app-reaction-dialog [post]="postSig()"></app-reaction-dialog>
     </div>
   </div>
 

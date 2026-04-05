@@ -3,8 +3,8 @@ import { ActivateComponent } from 'app/authentication/activate/activate.componen
 import { SignInComponent } from 'app/authentication/sign-in/sign-in.component';
 import { SignUpComponent } from 'app/authentication/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
-import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 import { ResendActivationComponent } from './authentication/resend-activation/resend-activation.component';
+import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 
 export const routes: Routes = [
   {

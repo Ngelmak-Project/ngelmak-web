@@ -1,29 +1,46 @@
 import { HttpResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { EMPTY, Observable, of } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
-
+import { ResolveFn, Router } from '@angular/router';
 import { IChannel } from 'app/entities/models/nk-channel.model';
+import { EMPTY, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 import { ChannelService } from './nk-channel.service';
 
-const channelResolve = (route: ActivatedRouteSnapshot): Observable<null | IChannel> => {
-  const id: number = Number(route.params['id'].split('-')[0]);
-  if (id) {
-    return inject(ChannelService)
-      .find(id)
-      .pipe(
-        mergeMap((channel: HttpResponse<IChannel>) => {
-          if (channel.body) {
-            return of(channel.body);
-          } else {
-            inject(Router).navigate(['404']);
-            return EMPTY;
-          }
-        }),
-      );
+/**
+ * Resolve a channel before route activation.
+ * Accepts either:
+ *   - /:identifier
+ *   - /:id
+ * They are treated interchangeably.
+ */
+const channelResolve: ResolveFn<IChannel> = (route, state) => {
+  const router = inject(Router);
+  const channelService = inject(ChannelService);
+
+  // Accept both "id" and "identifier"
+  const param = route.params['identifier'] ?? route.params['id'];
+
+  // If no param provided, try using the locally stored channel
+  if (!param) {
+    const localChannel = channelService.channel();
+    if (localChannel) {
+      return of(localChannel);
+    }
+    router.navigate(['404']);
+    return EMPTY;
   }
-  return of(null);
+
+  // Fetch channel from backend using id/identifier
+  return channelService.find(param).pipe(
+    mergeMap((response: HttpResponse<IChannel>) => {
+      const channel = response.body;
+      if (channel) {
+        return of(channel);
+      }
+      router.navigate(['404']);
+      return EMPTY;
+    }),
+  );
 };
 
 export default channelResolve;

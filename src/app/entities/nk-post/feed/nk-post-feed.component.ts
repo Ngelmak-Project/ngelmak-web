@@ -1,23 +1,21 @@
-import { Component, computed, inject, NgZone, OnDestroy, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { PostService } from 'app/entities/nk-post/nk-post.service';
-import { finalize, Subscription, tap } from 'rxjs';
-
-import { FormsModule } from '@angular/forms';
-import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
-import { DataUtils } from 'app/core/util/data-util.service';
-import SharedModule from 'app/shared/shared.module';
-import { SortService, sortStateSignal } from 'app/shared/sort';
-
 import { HttpResponse } from '@angular/common/http';
+import { Component, computed, inject, NgZone, OnDestroy, OnInit, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { AuthenticationService } from 'app/core/auth/auth.service';
+import { DataUtils } from 'app/core/util/data-util.service';
 import { IPostDTO } from 'app/entities/models/nk-post.model';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { PostCardComponent } from 'app/entities/nk-post/card/nk-post-card.component';
+import { PostService } from 'app/entities/nk-post/nk-post.service';
 import { PostUpdateComponent } from 'app/entities/nk-post/update/nk-post-update.component';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { ScrollService } from 'app/shared/services/scroll.service';
+import SharedModule from 'app/shared/shared.module';
+import { SortService, sortStateSignal } from 'app/shared/sort';
+import { finalize, Subscription, tap } from 'rxjs';
 
 interface IFeedPageDTO {
   content: IPostDTO[];
@@ -52,10 +50,8 @@ export class PostFeedComponent implements OnInit, OnDestroy {
   feeds = signal<IPostDTO[]>([]);
   hasNext = signal(true);
   isLoading = signal(false);
-
   // Sorting
   sortState = sortStateSignal({});
-
   // Internal pagination (NOT visible in URL)
   itemsPerPage = ITEMS_PER_PAGE;
   page = signal(1);
@@ -147,8 +143,6 @@ export class PostFeedComponent implements OnInit, OnDestroy {
         next: (res: HttpResponse<IFeedPageDTO>) => {
           const { body } = res;
           this.hasNext.set(body.content.length > 0);
-          console.log(body.sessionKey);
-
           if (reset) {
             this.sessionKey.set(body.sessionKey);
             this.feeds.set(body.content ?? []);

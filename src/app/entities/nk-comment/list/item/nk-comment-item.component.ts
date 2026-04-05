@@ -13,6 +13,7 @@ import { ConfirmDialogComponent } from 'app/shared/confirm-dialog/confirm-dialog
 import { DurationPipe } from 'app/shared/date';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import { finalize } from 'rxjs';
+import { TicketDialogComponent } from 'app/entities/nk-ticket/dialog/nk-ticket-dialog.component';
 
 @Component({
   standalone: true,
@@ -26,6 +27,7 @@ import { finalize } from 'rxjs';
     CommentReactionDialogComponent,
     ClickOutsideDirective,
     ConfirmDialogComponent,
+    TicketDialogComponent,
   ],
 })
 export class CommentItemComponent {
@@ -44,8 +46,9 @@ export class CommentItemComponent {
   isReplying = signal(false);
   isUpdating = signal(false);
   isDeleting = signal(false);
+  isSignalComment = signal(false);
   showReplies = signal(false);
-  openMenu = signal(false);
+  showMenu = signal(false);
   confirmDeleteOpen = signal(false);
 
   constructor() {
@@ -112,7 +115,7 @@ export class CommentItemComponent {
         .pipe(
           finalize(() => {
             this.isDeleting.set(false);
-            this.openMenu.set(false);
+            this.showMenu.set(false);
           }),
         )
         .subscribe({

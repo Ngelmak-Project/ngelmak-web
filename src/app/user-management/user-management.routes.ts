@@ -5,20 +5,27 @@ import { SecurityComponent } from './security/security-component';
 
 const userManagementRoutes: Routes = [
   {
-    path: 'channel',
+    path: 'user',
     data: {
       authorities: [Authority.USER],
     },
     canActivate: [UserRouteAccessService],
-    loadChildren: () => import('app/user-management/channel/channel-page.routes'),
-  },
-  {
-    path: 'security',
-    data: {
-      authorities: [Authority.USER],
-    },
-    canActivate: [UserRouteAccessService],
-    component: SecurityComponent,
+    children: [
+      {
+        path: 'channel',
+        data: {
+          authorities: [Authority.USER],
+        },
+        loadChildren: () => import('app/user-management/channel/channel-page.routes'),
+      },
+      {
+        path: 'security',
+        data: {
+          authorities: [Authority.USER],
+        },
+        component: SecurityComponent,
+      },
+    ],
   },
 ];
 

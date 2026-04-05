@@ -1,7 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { IChannel } from 'app/entities/models/nk-channel.model';
+import { ChannelFeedComponent } from 'app/entities/nk-post/channel-feed/channel-feed.component';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInRight400ms } from 'app/shared/animations/fade-in-right.animation';
 import { finalize } from 'rxjs';
@@ -12,21 +13,23 @@ import { ChannelUpdateComponent } from '../update/nk-channel-update.component';
   standalone: true,
   selector: 'app-channel-detail',
   templateUrl: './nk-channel-detail.component.html',
-  imports: [CommonModule, RouterModule, ChannelUpdateComponent],
+  imports: [CommonModule, RouterModule, ChannelUpdateComponent, ChannelFeedComponent],
   animations: [fadeInRight400ms],
 })
 export class ChannelDetailComponent {
+  channel = input.required<IChannel>();
+
   protected alertService = inject(AlertService);
   protected channelService = inject(ChannelService);
 
   // VIEW SIGNALS
-  channel = inject(ChannelService).channel;
   isUploading = signal(false);
   isUpdating = signal(false);
   // 'avatar' | 'banner' | null
   editing = signal<'avatar' | 'banner' | null>(null);
   // Preview file before upload
   filePreview = signal<{ type: 'avatar' | 'banner'; data: File; url: string } | null>(null);
+  isSubscriptionToggling = signal(false);
 
   /**
    * Handle file selection for avatar or banner.
@@ -93,5 +96,42 @@ export class ChannelDetailComponent {
 
     this.filePreview.set(null);
     this.editing.set(null);
+  }
+
+  /**
+   * Computes the subscription ID for the current channel.
+   * Looks at the list of channels this channel is following and
+   * returns the ID of the subscription linking it to the post's channel.
+   * Returns null when no matching subscription exists.
+   */
+  subscription = computed(() => {
+    // No channel loaded → no subscription possible
+    if (!this.channel()) return null;
+
+    // Find the subscription where this channel follows the post's channel
+    return this.channel().stats.following.find((e) => e.subscribedToId === this.channel().id);
+  });
+
+  /**
+   * Toggles the user's subscription status for the channel owner of the post.
+   * - If already subscribed → unfollows and removes the local subscription.
+   * - If not subscribed → follows and stores the new subscription locally.
+   */
+  toggleFollow() {
+    // Mark that a follow/unfollow action is in progress
+    this.isSubscriptionToggling.set(true);
+
+    const action$ = this.subscription()
+      ? this.channelService.unfollow(this.subscription().id)
+      : this.channelService.follow(this.channel());
+    action$.pipe(finalize(() => this.isSubscriptionToggling.set(false))).subscribe({
+      next: (res: any) => {
+        if (this.subscription()) {
+          this.channelService.removeLocalSubs(this.subscription().id);
+        } else {
+          this.channelService.addLocalSubs(res.body);
+        }
+      },
+    });
   }
 }

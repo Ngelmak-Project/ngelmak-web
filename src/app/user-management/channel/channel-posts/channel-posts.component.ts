@@ -13,7 +13,7 @@ import { SortService, sortStateSignal } from 'app/shared/sort';
 import { Subscription, tap } from 'rxjs';
 
 @Component({
-  selector: ' app-channel-posts',
+  selector: 'app-channel-posts',
   templateUrl: './channel-posts.component.html',
   imports: [CommonModule, RouterModule, PostCardComponent],
   animations: [fadeInUp400ms],
