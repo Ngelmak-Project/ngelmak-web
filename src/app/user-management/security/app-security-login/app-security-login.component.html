@@ -11,7 +11,7 @@
     </p>
 
     @if (!editLogin()) {
-      <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-2">
         @if (user().login) {
           <p class="text-lg text-gray-900 dark:text-white">@{{ user().login }}</p>
         } @else {

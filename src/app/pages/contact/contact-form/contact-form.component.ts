@@ -12,6 +12,7 @@ const initContactModel = {
 };
 
 @Component({
+  standalone: true,
   selector: 'app-contact-form',
   templateUrl: './contact-form.component.html',
   imports: [Field],

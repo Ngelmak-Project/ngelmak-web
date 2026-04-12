@@ -1,0 +1,55 @@
+{
+  "sidebar": {
+    "home": "Accueil",
+
+    "project": {
+      "title": "Le Projet Ngelmak",
+      "visionAndGoals": "Vision & Objectifs",
+      "foundationsAndPrinciples": "Fondements & Principes",
+      "governanceAndRights": "Gouvernance & Droits",
+      "informationSharing": "Partage d'Information",
+      "mobilitySoon": "Mobilité (bientôt)",
+      "roadmap": "Feuille de route"
+    },
+
+    "community": "Communauté",
+    "reports": "Signalements",
+    "moderation": "Modération",
+    "policies": "Politiques",
+    "about": "À propos",
+    "contact": "Contact",
+    "donations": "Faire un don",
+
+    "language": {
+      "fr": "Français",
+      "en": "English"
+    }
+  },
+  "navbar": {
+    "login": "Se connecter",
+    "register": "Créer un compte",
+    "logout": "Se déconnecter",
+    "myAccount": "Mon compte",
+    "createChannel": "Créer ma chaîne",
+    "security": "Sécurité",
+    "updateInfo": "Mettre à jour mes informations",
+    "admin": {
+      "users": "Utilisateurs",
+      "inbox": "Boîte de réception",
+      "system": "Système"
+    }
+  },
+  "authentification": {
+    "signin": {
+      "brandTagline": "Connexion à votre compte Ngelmak.",
+      "title": "Se connecter à son compte",
+      "username": "Nom d'utilisateur",
+      "password": "Mot de passe",
+      "rememberMe": "Se souvenir de moi",
+      "forgotPassword": "Mot de passe oublié?",
+      "submit": "Se connecter",
+      "noAccount": "Vous n'avez pas encore de compte ?",
+      "createAccount": "Créer un compte"
+    }
+  }
+}

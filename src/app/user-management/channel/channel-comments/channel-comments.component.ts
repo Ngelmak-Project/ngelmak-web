@@ -8,7 +8,7 @@ import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { CommentItemComponent } from 'app/entities/nk-comment/list/item/nk-comment-item.component';
 import { CommentService } from 'app/entities/nk-comment/nk-comment.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
-import { ScrollService } from 'app/shared/services/scroll.service';
+import { ScrollService } from 'app/shared/scrool-detection/scroll.service';
 import { SortService } from 'app/shared/sort';
 import { Subscription } from 'rxjs';
 

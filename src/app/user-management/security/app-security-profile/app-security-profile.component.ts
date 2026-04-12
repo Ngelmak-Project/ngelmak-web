@@ -3,7 +3,6 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { Field, form, maxLength } from '@angular/forms/signals';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { AlertService } from 'app/shared/alert/alert.service';
-import { fadeInOutRight400ms } from 'app/shared/animations/fade-in-out-right.animation';
 import { finalize } from 'rxjs';
 import { UserUpdateDTO } from '../user.model';
 import { UserService } from '../user.service';
@@ -12,7 +11,6 @@ import { UserService } from '../user.service';
   selector: 'app-security-profile',
   templateUrl: './app-security-profile.component.html',
   imports: [CommonModule, Field],
-  animations: [fadeInOutRight400ms],
 })
 export class SecurityProfileComponent {
   user = inject(AuthenticationService).authentication;

@@ -14,8 +14,6 @@
       >
         <div>
           <button
-            id="dropdownRadioButton"
-            data-dropdown-toggle="dropdownRadio"
             class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
             type="button"
           >
@@ -56,9 +54,7 @@
               transform: translate3d(522.5px, 3847.5px, 0px);
             "
           >
-            <ul
-              class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
-            >
+            <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200">
               <li>
                 <div
                   class="flex items-center p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600"
@@ -191,7 +187,7 @@
             <th scope="col" class="px-6 py-3">Nom</th>
             <th scope="col" class="px-6 py-3">Date création</th>
             <th scope="col" class="px-6 py-3">Etat</th>
-            <th scope="col" class="px-6 py-3"></th>
+            <th scope="col" class="py-3"></th>
           </tr>
         </thead>
         <tbody>
@@ -224,14 +220,17 @@
                 <div class="flex items-center">
                   @if (user.blocked) {
                     <span class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></span>
-                    <span class="text-red-500">Non bloqué</span>
-                  } @else {
+                    <span class="text-red-500">Bloqué</span>
+                  } @else if (user.activated) {
                     <span class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></span>
-                    <span class="text-green-500">Bloqué</span>
+                    <span class="text-green-500">Activé</span>
+                  } @else {
+                    <span class="h-2.5 w-2.5 rounded-full bg-gray-500 me-2"></span>
+                    <span class="text-gray-500">Désactivé</span>
                   }
                 </div>
               </td>
-              <td class="px-6 py-4">
+              <td class="py-4">
                 <!-- Dropdown wrapper -->
                 <div class="relative ml-auto">
                   <!-- Trigger button -->

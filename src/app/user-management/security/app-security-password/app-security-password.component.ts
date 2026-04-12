@@ -24,6 +24,7 @@ export class SecurityPasswordComponent {
   protected alertService = inject(AlertService);
 
   passwordModel = signal(initPassword);
+  editPassword = signal(false);
 
   passwordForm = form(this.passwordModel, (p) => {
     // Current password

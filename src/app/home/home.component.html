@@ -1,76 +1,92 @@
-<div
-  class="flex justify-center items-start gap-2 lg:gap-4 p-0 md:p-2 lg:pt-4 bg-gray-100 dark:bg-gray-900 min-h-screen mx-auto"
->
-  <!-- LEFT SIDEBAR (hidden on small screens) -->
+<div class="flex divide-x divide-gray-200 dark:divide-gray-700 h-full">
+  <!-- LEFT SIDEBAR -->
   <aside
-    class="hidden md:flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 overflow-y-auto w-1/4"
+    class="hidden md:flex flex-col w-1/4 p-3 lg:p-6 bg-white dark:bg-gray-800 max-h-full overflow-y-auto space-y-6"
   >
-    @if (user()) {
-      <app-channel-view></app-channel-view>
-    } @else {
-      <!-- Guest view -->
-      <div class="pt-4">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-          Rejoignez la discussion
-        </h3>
-        <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
-          Créer un compte ne prend que quelques instants...
-        </p>
-        <div class="flex flex-col gap-2">
-          <button
-            routerLink="/sign-in"
-            class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
-          >
-            Se connecter
-          </button>
+    <!-- USER SECTION -->
+    <section>
+      @if (user()) {
+        <app-channel-overview></app-channel-overview>
+      } @else {
+        <div class="pt-4 space-y-4">
+          <header>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              Rejoignez la discussion
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+              Créer un compte ne prend que quelques instants...
+            </p>
+          </header>
+
+          <div class="flex flex-col gap-2">
+            <button
+              routerLink="/sign-in"
+              class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
+            >
+              Se connecter
+            </button>
+
+            <button
+              routerLink="/sign-up"
+              class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
+            >
+              Créer un compte
+            </button>
+          </div>
+        </div>
+      }
+    </section>
+
+    <!-- HELP / CONTACT SECTION -->
+    <section>
+      @if (showContactForm()) {
+        <div class="flex flex-col gap-4">
+          <app-contact-form></app-contact-form>
 
           <button
-            routerLink="/sign-up"
-            class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
+            (click)="showContactForm.set(false)"
+            class="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm font-medium transition"
           >
-            Créer un compte
+            Annuler
           </button>
         </div>
-      </div>
-    }
+      } @else {
+        <div class="pt-2 space-y-3">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Besoin d'aide ?</h3>
+
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            Une question, un problème ou une suggestion. Notre équipe est là pour vous accompagner.
+          </p>
+
+          <button
+            (click)="showContactForm.set(true)"
+            class="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm font-medium transition"
+          >
+            Contacter le support
+          </button>
+        </div>
+      }
+    </section>
   </aside>
 
-  <!-- MAIN FEED (always visible, full width on small screens) -->
-  <main
-    class="flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm w-full md:w-2/4"
-  >
+  <!-- MAIN FEED (scrolls) -->
+  <main class="flex-1 p-3 lg:p-6 bg-white dark:bg-gray-800 overflow-y-auto">
     <app-post-feed></app-post-feed>
   </main>
 
-  <!-- RIGHT SIDEBAR (hidden on small screens) -->
+  <!-- RIGHT SIDEBAR -->
   <aside
-    class="hidden md:flex flex-col gap-4 p-3 lg:p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm divide-y divide-gray-200 dark:divide-gray-700 overflow-auto w-1/4"
+    class="hidden md:flex flex-col w-1/4 bg-white dark:bg-gray-800 max-h-full overflow-y-auto"
   >
-    @if (showContactForm()) {
-      <div class="flex flex-col gap-2">
-        <app-contact-form></app-contact-form>
-
-        <button
-          (click)="showContactForm.set(false)"
-          class="text-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
-        >
-          Annuler
-        </button>
-      </div>
-    } @else {
-      <div class="pt-4">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Besoin d'aide ?</h3>
-
-        <p class="text-sm text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
-          Une question, un problème ou une suggestion. Notre équipe est là pour vous accompagner.
+    @for (item of [1, 2, 3,]; track $index) {
+      <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+          Sidebar Item {{ item }}
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel sapien augue. Integer
+          nec odio nec nisi efficitur efficitur.
         </p>
-
-        <button
-          (click)="showContactForm.set(true)"
-          class="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
-        >
-          Contacter le support
-        </button>
       </div>
     }
   </aside>

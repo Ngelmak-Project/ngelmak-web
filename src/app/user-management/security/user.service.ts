@@ -48,7 +48,7 @@ export class UserService {
    * @returns
    */
   updateEmail(emailUpdateDTO: EmailUpdateDTO): Observable<any> {
-    return this.http.post<Authentication>(`${this.resourceUrl}/update-email`, emailUpdateDTO, {
+    return this.http.put<Authentication>(`${this.resourceUrl}/email`, emailUpdateDTO, {
       observe: 'response',
     });
   }

@@ -12,7 +12,7 @@ import { PostService } from 'app/entities/nk-post/nk-post.service';
 import { PostUpdateComponent } from 'app/entities/nk-post/update/nk-post-update.component';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
-import { ScrollService } from 'app/shared/services/scroll.service';
+import { VisibleTriggerDirective } from 'app/shared/scrool-detection/visible-trigger.directive';
 import SharedModule from 'app/shared/shared.module';
 import { SortService, sortStateSignal } from 'app/shared/sort';
 import { finalize, Subscription, tap } from 'rxjs';
@@ -29,7 +29,14 @@ interface IFeedPageDTO {
   standalone: true,
   selector: 'app-post-feed',
   templateUrl: './nk-post-feed.component.html',
-  imports: [RouterModule, FormsModule, SharedModule, PostCardComponent, PostUpdateComponent,],
+  imports: [
+    RouterModule,
+    FormsModule,
+    SharedModule,
+    PostCardComponent,
+    PostUpdateComponent,
+    VisibleTriggerDirective,
+  ],
   animations: [fadeInUp400ms],
 })
 export class PostFeedComponent implements OnInit, OnDestroy {
@@ -39,11 +46,10 @@ export class PostFeedComponent implements OnInit, OnDestroy {
   protected sortService = inject(SortService);
   protected dataUtils = inject(DataUtils);
   protected authService = inject(AuthenticationService);
-  protected scroll = inject(ScrollService);
   protected alertService = inject(AlertService);
-  channel = inject(ChannelService).channel;
   protected ngZone = inject(NgZone);
 
+  channel = inject(ChannelService).channel;
   private subs = new Subscription();
 
   // Feed content
@@ -69,9 +75,6 @@ export class PostFeedComponent implements OnInit, OnDestroy {
   hasMinimumQueryLength = computed(() => !this.isLoading() && this.query().length >= 5);
 
   ngOnInit(): void {
-    // Infinite scroll listener
-    this.subs.add(this.scroll.endReached$.subscribe((height) => this.handleScrollEnd(height)));
-
     /**
      * Read ONLY the search query from the URL.
      * Page & size are now INTERNAL ONLY.
@@ -114,12 +117,9 @@ export class PostFeedComponent implements OnInit, OnDestroy {
   /**
    * Infinite scroll handler
    */
-  private handleScrollEnd(height: number): void {
+  handleScrollEnd(): void {
     if (this.isLoading()) return;
     if (!this.hasNext()) return;
-    if (height <= this.lastHeight) return;
-
-    this.lastHeight = height;
     this.loadNext();
   }
 

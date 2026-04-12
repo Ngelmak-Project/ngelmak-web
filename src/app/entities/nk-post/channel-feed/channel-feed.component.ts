@@ -9,8 +9,8 @@ import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { PostCardComponent } from 'app/entities/nk-post/card/nk-post-card.component';
 import { PostService } from 'app/entities/nk-post/nk-post.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
-import { ScrollService } from 'app/shared/services/scroll.service';
-import { SortService, sortStateSignal } from 'app/shared/sort';
+import { ScrollService } from 'app/shared/scrool-detection/scroll.service';
+import { sortStateSignal } from 'app/shared/sort';
 import { Subscription, tap } from 'rxjs';
 
 @Component({
@@ -25,7 +25,6 @@ export class ChannelFeedComponent {
   protected channelService = inject(ChannelService);
   protected postService = inject(PostService);
   protected activatedRoute = inject(ActivatedRoute);
-  protected sortService = inject(SortService);
   protected authService = inject(AuthenticationService);
   protected scroll = inject(ScrollService);
   protected ngZone = inject(NgZone);

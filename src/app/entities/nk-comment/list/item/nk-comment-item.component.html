@@ -9,14 +9,7 @@
 >
   <div class="flex gap-3 items-start">
     @if (level() < 2) {
-      <a
-        class="shrink-0 mt-1"
-        [routerLink]="[
-          'nk-channel',
-          commentSig().channel?.id + '-' + commentSig().channel?.identifier,
-          'view',
-        ]"
-      >
+      <a class="shrink-0 mt-1" [routerLink]="['channel', commentSig().channel?.identifier, 'view']">
         @if (commentSig().channel?.avatar) {
           <img
             [src]="commentSig().channel?.avatar"

@@ -1,0 +1,55 @@
+{
+  "sidebar": {
+    "home": "Home",
+
+    "project": {
+      "title": "The Ngelmak Project",
+      "visionAndGoals": "Vision & Goals",
+      "foundationsAndPrinciples": "Foundations & Principles",
+      "governanceAndRights": "Governance & Rights",
+      "informationSharing": "Information Sharing",
+      "mobilitySoon": "Mobility (coming soon)",
+      "roadmap": "Roadmap"
+    },
+
+    "community": "Community",
+    "reports": "Reports",
+    "moderation": "Moderation",
+    "policies": "Policies",
+    "about": "About",
+    "contact": "Contact",
+    "donations": "Donate",
+
+    "language": {
+      "fr": "French",
+      "en": "English"
+    }
+  },
+  "navbar": {
+    "login": "Sign in",
+    "register": "Create account",
+    "logout": "Sign out",
+    "myAccount": "My account",
+    "createChannel": "Create my channel",
+    "security": "Security",
+    "updateInfo": "Update my information",
+    "admin": {
+      "users": "Users",
+      "inbox": "Inbox",
+      "system": "System"
+    }
+  },
+  "authentification": {
+    "signin": {
+      "brandTagline": "Sign in to your Ngelmak account.",
+      "title": "Sign in to your account",
+      "username": "Username",
+      "password": "Password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign in",
+      "noAccount": "Don't have an account yet?",
+      "createAccount": "Create an account"
+    }
+  }
+}

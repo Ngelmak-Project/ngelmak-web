@@ -12,9 +12,7 @@
         <div
           class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700"
         >
-          <!-- ========================= -->
           <!-- SECTION: COUR (MAIN AREA) -->
-          <!-- ========================= -->
           <ul class="pb-2 space-y-2">
             <!-- Accueil -->
             <li>
@@ -39,14 +37,12 @@
                   />
                 </svg>
 
-                <span class="ml-3">Accueil</span>
+                <span translate="sidebar.home" class="ml-3">Accueil</span>
               </a>
             </li>
           </ul>
 
-          <!-- ========================= -->
           <!-- SECTION: PROJECT (SUBMENU) -->
-          <!-- ========================= -->
           <ul class="py-2 space-y-2">
             <li class="relative" clickOutside (onClickOutside)="showNgelmakSubMenu.set(false)">
               <button
@@ -66,7 +62,9 @@
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                <span class="flex-1 ml-3 text-left">Le Projet</span>
+                <span translate="sidebar.project.title" class="flex-1 ml-3 text-left"
+                  >Le Projet</span
+                >
                 <svg
                   class="w-6 h-6 transition-transform"
                   [class.rotate-180]="showNgelmakSubMenu()"
@@ -85,6 +83,7 @@
                 <ul class="py-2 space-y-2">
                   <li>
                     <a
+                      translate="sidebar.project.visionAndGoals"
                       routerLink="/project/vision"
                       routerLinkActive="bg-gray-100 dark:bg-gray-700"
                       class="flex items-center p-2 pl-11 text-base text-gray-900 rounded-lg hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
@@ -95,6 +94,7 @@
 
                   <li>
                     <a
+                      translate="sidebar.project.foundationsAndPrinciples"
                       routerLink="/project/foundations"
                       routerLinkActive="bg-gray-100 dark:bg-gray-700"
                       class="flex items-center p-2 pl-11 text-base text-gray-900 rounded-lg hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
@@ -105,6 +105,7 @@
 
                   <li>
                     <a
+                      translate="sidebar.project.governanceAndRights"
                       routerLink="/project/governance"
                       routerLinkActive="bg-gray-100 dark:bg-gray-700"
                       class="flex items-center p-2 pl-11 text-base text-gray-900 rounded-lg hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
@@ -115,6 +116,7 @@
 
                   <li>
                     <a
+                      translate="sidebar.project.informationSharing"
                       routerLink="/project/information-sharing"
                       routerLinkActive="bg-gray-100 dark:bg-gray-700"
                       class="flex items-center p-2 pl-11 text-base text-gray-900 rounded-lg hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
@@ -125,6 +127,7 @@
 
                   <li>
                     <a
+                      translate="sidebar.project.mobilitySoon"
                       routerLink="/project/mobility"
                       class="flex items-center p-2 pl-11 text-base text-gray-900 rounded-lg hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                     >
@@ -134,6 +137,7 @@
 
                   <li>
                     <a
+                      translate="sidebar.project.roadmap"
                       routerLink="/project/roadmap"
                       class="flex items-center p-2 pl-11 text-base text-gray-900 rounded-lg hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                     >
@@ -145,9 +149,7 @@
             </li>
           </ul>
 
-          <!-- ========================= -->
           <!-- SECTION: COMMUNITY -->
-          <!-- ========================= -->
           <ul class="py-2 space-y-2">
             <li>
               <a
@@ -169,7 +171,7 @@
                   />
                 </svg>
 
-                <span class="ml-3">Communauté</span>
+                <span translate="sidebar.community" class="ml-3">Communauté</span>
               </a>
             </li>
 
@@ -194,7 +196,7 @@
                   />
                 </svg>
 
-                <span class="ml-3">Signalements</span>
+                <span translate="sidebar.reports" class="ml-3">Signalements</span>
               </a>
             </li>
 
@@ -219,14 +221,12 @@
                   />
                 </svg>
 
-                <span class="ml-3">Modération</span>
+                <span translate="sidebar.moderation" class="ml-3">Modération</span>
               </a>
             </li>
           </ul>
 
-          <!-- ========================= -->
           <!-- SECTION: RESOURCES -->
-          <!-- ========================= -->
           <ul class="py-2 space-y-2">
             <li>
               <a
@@ -249,7 +249,7 @@
                   />
                 </svg>
 
-                <span class="ml-3">Politiques</span>
+                <span translate="sidebar.policies" class="ml-3">Politiques</span>
               </a>
             </li>
 
@@ -274,7 +274,7 @@
                   />
                 </svg>
 
-                <span class="ml-3">À propos</span>
+                <span translate="sidebar.about" class="ml-3">À propos</span>
               </a>
             </li>
 
@@ -297,7 +297,7 @@
                   />
                 </svg>
 
-                <span class="ml-3">Contact</span>
+                <span translate="sidebar.contact" class="ml-3">Contact</span>
               </a>
             </li>
 
@@ -318,16 +318,14 @@
                   />
                 </svg>
 
-                <span class="ml-3">Faire un don</span>
+                <span translate="sidebar.donations" class="ml-3">Faire un don</span>
               </a>
             </li>
           </ul>
         </div>
       </div>
 
-      <!-- ========================= -->
       <!-- FOOTER: LANGUAGE SELECTOR -->
-      <!-- ========================= -->
       <div
         clickOutside
         (onClickOutside)="showLangKeyOptions.set(false)"
@@ -366,7 +364,7 @@
                   (click)="changeLanguage('fr')"
                   class="inline-flex w-full rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
-                  <div class="inline-flex items-center gap-2">Français</div>
+                  <span translate="sidebar.language.fr" class="inline-flex items-center gap-2">Français</span>
                 </button>
               </li>
               <li>
@@ -375,7 +373,7 @@
                   (click)="changeLanguage('en')"
                   class="inline-flex w-full rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
-                  <div class="inline-flex items-center gap-2">English</div>
+                  <span translate="sidebar.language.en" class="inline-flex items-center gap-2">English</span>
                 </button>
               </li>
             </ul>

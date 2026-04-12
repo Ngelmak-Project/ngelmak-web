@@ -6,14 +6,7 @@
     <div class="flex items-start justify-between pb-5 mb-6">
       <div class="flex items-center gap-4">
         <!-- Avatar -->
-        <a
-          [routerLink]="[
-            'nk-channel',
-            postSig().channel.id + '-' + postSig().channel.identifier,
-            'view',
-          ]"
-          class="shrink-0"
-        >
+        <a [routerLink]="['channel', postSig().channel.identifier, 'view']" class="shrink-0">
           <img
             *ngIf="postSig().channel.avatar; else noAvatar"
             [src]="postSig().channel.avatar"
@@ -32,11 +25,7 @@
         <div class="flex flex-col">
           <a
             class="text-lg font-semibold text-gray-900 dark:text-white"
-            [routerLink]="[
-              'nk-channel',
-              postSig().channel.id + '-' + postSig().channel.identifier,
-              'view',
-            ]"
+            [routerLink]="['channel', postSig().channel.identifier, 'view']"
           >
             {{ postSig().channel.name }}
           </a>

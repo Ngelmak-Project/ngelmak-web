@@ -37,6 +37,7 @@ import { PostUpdateComponent } from '../update/nk-post-update.component';
 })
 export class PostCardComponent {
   post = input.required<IPostDTO>(); // The post to display
+  hideFollwing = input(false); // Whether to hide the follow/unfollow button (used in channel feed to avoid showing follow button on own posts)
   ondeleted = output<IPostDTO>(); // Event emitted when the post is deleted.
 
   protected postService = inject(PostService);
