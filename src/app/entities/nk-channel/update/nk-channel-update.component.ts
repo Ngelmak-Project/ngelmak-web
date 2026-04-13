@@ -1,20 +1,18 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, inject, input, OnInit, output, signal } from '@angular/core';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
-
-import SharedModule from 'app/shared/shared.module';
-
 import { Field, form, maxLength, required } from '@angular/forms/signals';
 import { IChannel } from 'app/entities/models/nk-channel.model';
 import { AlertService } from 'app/shared/alert/alert.service';
+import SharedModule from 'app/shared/shared.module';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { ChannelService } from '../nk-channel.service';
 
 @Component({
   standalone: true,
   selector: 'app-channel-update',
   templateUrl: './nk-channel-update.component.html',
-  imports: [SharedModule, Field],
+  imports: [SharedModule, Field, SharedModule],
 })
 export class ChannelUpdateComponent implements OnInit {
   channel = input<IChannel>(null);

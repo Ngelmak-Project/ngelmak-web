@@ -4,6 +4,7 @@ import { Field, form, max, required } from '@angular/forms/signals';
 import { RouterModule } from '@angular/router';
 import { IChannel } from 'app/entities/models/nk-channel.model';
 import { AlertService } from 'app/shared/alert/alert.service';
+import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { ChannelService } from '../nk-channel.service';
 
@@ -11,7 +12,7 @@ import { ChannelService } from '../nk-channel.service';
   standalone: true,
   selector: 'app-channel-overview',
   templateUrl: './nk-channel-overview.component.html',
-  imports: [CommonModule, RouterModule, Field],
+  imports: [CommonModule, RouterModule, Field, SharedModule],
 })
 export class ChannelOverviewComponent {
   isLoading = signal(false);

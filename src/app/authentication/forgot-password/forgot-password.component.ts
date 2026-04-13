@@ -5,6 +5,7 @@ import { Field, email, form, maxLength, minLength, required } from '@angular/for
 import { RouterModule } from '@angular/router';
 import { ApiError } from 'app/core/auth/auth.model';
 import { AlertService } from 'app/shared/alert/alert.service';
+import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { ForgetPasswordService } from './forgot-password.service';
 
@@ -12,7 +13,7 @@ import { ForgetPasswordService } from './forgot-password.service';
   standalone: true,
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  imports: [CommonModule, RouterModule, Field],
+  imports: [CommonModule, RouterModule, Field, SharedModule],
 })
 export class ForgotPasswordComponent {
   private forgetPasswordService = inject(ForgetPasswordService);

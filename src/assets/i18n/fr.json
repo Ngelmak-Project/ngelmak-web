@@ -1,42 +1,75 @@
 {
-  "sidebar": {
-    "home": "Accueil",
-
-    "project": {
-      "title": "Le Projet Ngelmak",
-      "visionAndGoals": "Vision & Objectifs",
-      "foundationsAndPrinciples": "Fondements & Principes",
-      "governanceAndRights": "Gouvernance & Droits",
-      "informationSharing": "Partage d'Information",
-      "mobilitySoon": "Mobilité (bientôt)",
-      "roadmap": "Feuille de route"
+  "layouts": {
+    "sidebar": {
+      "home": "Accueil",
+      "project": {
+        "title": "Le Projet Ngelmak",
+        "visionAndGoals": "Vision & Objectifs",
+        "foundationsAndPrinciples": "Fondements & Principes",
+        "governanceAndRights": "Gouvernance & Droits",
+        "informationSharing": "Partage d'Information",
+        "mobilitySoon": "Mobilité (bientôt)",
+        "roadmap": "Feuille de route"
+      },
+      "community": "Communauté",
+      "reports": "Signalements",
+      "moderation": "Modération",
+      "policies": "Politiques",
+      "about": "À propos",
+      "contact": "Contact",
+      "donations": "Faire un don",
+      "language": {
+        "fr": "Français",
+        "en": "English"
+      }
     },
+    "navbar": {
+      "login": "Se connecter",
+      "register": "Créer un compte",
+      "logout": "Se déconnecter",
+      "myAccount": "Mon compte",
+      "createChannel": "Créer ma chaîne",
+      "security": "Sécurité",
+      "updateInfo": "Mettre à jour mes informations",
+      "admin": {
+        "users": "Utilisateurs",
+        "inbox": "Boîte de réception",
+        "system": "Système"
+      }
+    },
+    "notFound": {
+      "title": "Page introuvable",
+      "hero": {
+        "title": "Page introuvable",
+        "description": "Oups… Cette page n'existe pas ou n'est plus disponible. Vous pouvez revenir à l'accueil ou poursuivre votre navigation.",
+        "backHome": "Retour à l'accueil"
+      },
 
-    "community": "Communauté",
-    "reports": "Signalements",
-    "moderation": "Modération",
-    "policies": "Politiques",
-    "about": "À propos",
-    "contact": "Contact",
-    "donations": "Faire un don",
+      "why": {
+        "title": "Pourquoi cette page n'existe pas",
+        "p1": "Ngelmak évolue constamment. Certaines pages peuvent être déplacées, renommées ou retirées au fil du développement. Il est possible que le lien que vous avez suivi ne soit plus valide.",
+        "p2": "Notre objectif est de vous offrir une expérience fluide, souveraine et accessible. Si vous pensez qu'il s'agit d'une erreur ou si vous souhaitez contribuer à l'amélioration de la plateforme, vous pouvez nous le signaler."
+      },
 
-    "language": {
-      "fr": "Français",
-      "en": "English"
+      "continue": {
+        "title": "Continuer votre navigation",
+        "description": "Vous pouvez revenir à la page d'accueil, explorer les sections principales ou découvrir les fonctionnalités en cours de développement par la communauté."
+      }
     }
   },
-  "navbar": {
-    "login": "Se connecter",
-    "register": "Créer un compte",
-    "logout": "Se déconnecter",
-    "myAccount": "Mon compte",
-    "createChannel": "Créer ma chaîne",
-    "security": "Sécurité",
-    "updateInfo": "Mettre à jour mes informations",
-    "admin": {
-      "users": "Utilisateurs",
-      "inbox": "Boîte de réception",
-      "system": "Système"
+  "home": {
+    "pageTitle": "Ngelmak — Accueil",
+    "user": {
+      "title": "Rejoignez la discussion",
+      "description": "Créer un compte ne prend que quelques instants...",
+      "signIn": "Se connecter",
+      "signUp": "Créer un compte"
+    },
+    "help": {
+      "title": "Besoin d'aide ?",
+      "description": "Une question, un problème ou une suggestion. Notre équipe est là pour vous accompagner.",
+      "contactSupport": "Contacter le support",
+      "cancel": "Annuler"
     }
   },
   "authentification": {
@@ -50,6 +83,101 @@
       "submit": "Se connecter",
       "noAccount": "Vous n'avez pas encore de compte ?",
       "createAccount": "Créer un compte"
+    },
+    "forgotPassword": {
+      "pageTitle": "Ngelmak — Réinitialisation du mot de passe",
+      "brandTitle": "Ngelmak",
+      "brandSubtitle": "Réinitialisation de votre mot de passe.",
+      "title": "Mot de passe oublié ?",
+      "subtitle": "Pas d'inquiétude. Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+      "email": {
+        "label": "Adresse email",
+        "placeholder": "Entrez votre adresse email",
+        "required": "L'adresse email est requise."
+      },
+      "submit": "Envoyer le lien",
+      "backToSignIn": "Retour à la connexion",
+      "alreadyHaveAccount": "Vous avez déjà un compte ?",
+      "contactSupport": "Besoin d'aide ? Contactez le support",
+      "securityNotice": "Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée."
+    }
+  },
+  "entities": {
+    "channel": {
+      "update": {
+        "pageTitle": "Ngelmak — Nouvelle chaîne",
+        "brandTitle": "Ngelmak",
+        "title": "Création d'une nouvelle chaîne",
+        "subtitle": "Donnez un nom et une description à votre chaîne. Ces informations aideront les utilisateurs à comprendre son objectif.",
+        "name": {
+          "label": "Nom de la chaîne",
+          "placeholder": "Entrez le nom de votre chaîne",
+          "required": "Le nom de la chaîne est requis."
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Entrez la description de votre chaîne"
+        },
+        "cancel": "Annuler",
+        "save": "Enregistrer"
+      },
+      "details": {
+        "pageTitle": "Ngelmak — Détails de la chaîne",
+        "fallbackDescription": "Aucune description...",
+        "createdAt": "Compte créé le",
+        "stats": {
+          "followers": "Abonnés",
+          "following": "Suivis",
+          "posts": "Publications"
+        },
+        "follow": "S'abonner",
+        "unfollow": "Se désabonner"
+      },
+      "overview": {
+        "avatarFallback": "Avatar",
+        "fallbackDescription": "Aucune description...",
+        "stats": {
+          "followers": "{{ value }} Abonnés",
+          "following": "{{ value }} Suivis"
+        },
+        "seeMore": "Voir plus",
+        "create": {
+          "name": {
+            "label": "Nom de la chaîne",
+            "placeholder": "Entrez le nom de votre chaîne",
+            "required": "Le nom de la chaîne est requis."
+          },
+          "save": "Enregistrer"
+        }
+      }
+    },
+    "post": {
+      "feed": {
+        "search": {
+          "label": "Rechercher",
+          "placeholder": "Recherche de posts...",
+          "clear": "Effacer",
+          "submit": "Rechercher"
+        }
+      },
+      "card": {
+        "follow": "Suivre",
+        "following": "Suivi",
+        "menu": {
+          "reply": "Répondre",
+          "update": "Modifier",
+          "delete": "Supprimer",
+          "report": {
+            "label": "Signaler",
+            "subtitle": "Laye ne saura pas qui a signalé cela."
+          },
+          "admin": {
+            "blockUser": "Bloquer l'utilisateur",
+            "delete": "Supprimer",
+            "hide": "Masquer"
+          }
+        }
+      }
     }
   }
 }

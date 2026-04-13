@@ -53,11 +53,22 @@
           </h1>
 
           <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-            {{ channel().description || 'Aucune description...' }}
+            @if (channel().description) {
+              <span>{{ channel().description }}</span>
+            } @else {
+              <span
+                translate="entities.channel.details.fallbackDescription"
+                class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed"
+              >
+                Aucune description...
+              </span>
+            }
           </p>
 
           <p class="text-sm text-gray-500 dark:text-gray-400">
-            Compte créé le
+            <span translate="entities.channel.details.stats.accountCreated" class="font-medium">
+              Compte créé le
+            </span>
             <span class="font-medium">{{ channel().createdAt | date: 'longDate' }}</span>
           </p>
         </div>
@@ -75,19 +86,31 @@
         <span class="text-2xl font-extrabold text-gray-900 dark:text-white">
           {{ channel().stats.followersCount }}
         </span>
-        <span class="text-sm text-gray-500 dark:text-gray-400 tracking-wide">Abonnés</span>
+        <span
+          translate="entities.channel.details.stats.followers"
+          class="text-sm text-gray-500 dark:text-gray-400 tracking-wide"
+          >Abonnés</span
+        >
       </div>
 
       <div class="flex flex-col">
         <span class="text-2xl font-extrabold text-gray-900 dark:text-white">
           {{ channel().stats.followingCount }}
         </span>
-        <span class="text-sm text-gray-500 dark:text-gray-400 tracking-wide">Suivis</span>
+        <span
+          translate="entities.channel.details.stats.following"
+          class="text-sm text-gray-500 dark:text-gray-400 tracking-wide"
+          >Suivis</span
+        >
       </div>
 
       <div class="flex flex-col">
         <span class="text-2xl font-extrabold text-gray-900 dark:text-white">-</span>
-        <span class="text-sm text-gray-500 dark:text-gray-400 tracking-wide">Publications</span>
+        <span
+          translate="entities.channel.details.stats.posts"
+          class="text-sm text-gray-500 dark:text-gray-400 tracking-wide"
+          >Publications</span
+        >
       </div>
     </div>
 
@@ -118,7 +141,11 @@
           />
         </svg>
       }
-      {{ subscription() ? 'Se désabonner' : "S'abonner" }}
+      @if (subscription()) {
+        <span translate="entities.channel.details.unfollow">Se désabonner</span>
+      } @else {
+        <span translate="entities.channel.details.follow">S'abonner</span>
+      }
     </button>
   </div>
 

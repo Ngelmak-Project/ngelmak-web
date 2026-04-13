@@ -65,7 +65,12 @@
           >
             <path d="M10 10a4 4 0 100-8 4 4 0 000 8zM2 18a8 8 0 1116 0H2z" />
           </svg>
-          <span class="text-sm">{{ channel().stats.followersCount }} abonnés</span>
+          <span
+            translate="entities.channel.overview.stats.followers"
+            [translateParams]="{ value: channel().stats.followersCount }"
+            class="text-sm"
+            >abonnés</span
+          >
         </div>
 
         <div class="flex flex-col items-center">
@@ -76,13 +81,19 @@
           >
             <path d="M3 3h14v2H3V3zm0 6h14v2H3V9zm0 6h14v2H3v-2z" />
           </svg>
-          <span class="text-sm">{{ channel().stats.followingCount }} suivis</span>
+          <span
+            translate="entities.channel.overview.stats.following"
+            [translateParams]="{ value: channel().stats.followingCount }"
+            class="text-sm"
+            >suivis</span
+          >
         </div>
       </div>
 
       <!-- Actions -->
       <div class="flex justify-center p-4 border-t border-gray-200 dark:border-gray-600">
         <a
+          translate="entities.channel.overview.seeMore"
           routerLink="/channel"
           class="px-6 py-2.5 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
         >
@@ -105,6 +116,7 @@
           placeholder=" "
         />
         <label
+          translate="entities.channel.overview.create.name.label"
           for="floating_filled"
           class="absolute text-sm text-gray-500 dark:text-gray-400 transform -translate-y-4 scale-75 top-4 left-2.5 origin-[0] transition-all peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
         >
@@ -116,7 +128,7 @@
       @if (channelForm.name().dirty()) {
         @for (error of channelForm.name().errors(); track error) {
           <p class="text-sm text-red-600 dark:text-red-500">
-            <span class="font-medium">{{ error.message }}</span>
+            <span class="font-medium">{{ error.message | translate}}</span>
           </p>
         }
       }
@@ -145,7 +157,7 @@
             />
           </svg>
         }
-        <span>Enregistrer</span>
+        <span translate="entities.channel.overview.create.save">Enregistrer</span>
       </button>
     </div>
   </section>

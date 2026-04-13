@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
-  private primaryLang = signal<'en' | 'fr'>('fr');
+  private primaryLang = signal<'en' | 'fr'>('en');
   private fallbackLang: 'en' | 'fr' = 'en';
 
   private dictionary = signal<any>({});

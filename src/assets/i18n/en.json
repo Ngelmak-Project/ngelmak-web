@@ -1,45 +1,78 @@
 {
-  "sidebar": {
-    "home": "Home",
+  "layouts": {
+    "sidebar": {
+      "home": "Home",
 
-    "project": {
-      "title": "The Ngelmak Project",
-      "visionAndGoals": "Vision & Goals",
-      "foundationsAndPrinciples": "Foundations & Principles",
-      "governanceAndRights": "Governance & Rights",
-      "informationSharing": "Information Sharing",
-      "mobilitySoon": "Mobility (coming soon)",
-      "roadmap": "Roadmap"
+      "project": {
+        "title": "The Ngelmak Project",
+        "visionAndGoals": "Vision & Goals",
+        "foundationsAndPrinciples": "Foundations & Principles",
+        "governanceAndRights": "Governance & Rights",
+        "informationSharing": "Information Sharing",
+        "mobilitySoon": "Mobility (coming soon)",
+        "roadmap": "Roadmap"
+      },
+
+      "community": "Community",
+      "reports": "Reports",
+      "moderation": "Moderation",
+      "policies": "Policies",
+      "about": "About",
+      "contact": "Contact",
+      "donations": "Donate",
+
+      "language": {
+        "fr": "French",
+        "en": "English"
+      }
     },
-
-    "community": "Community",
-    "reports": "Reports",
-    "moderation": "Moderation",
-    "policies": "Policies",
-    "about": "About",
-    "contact": "Contact",
-    "donations": "Donate",
-
-    "language": {
-      "fr": "French",
-      "en": "English"
+    "navbar": {
+      "login": "Sign in",
+      "register": "Create account",
+      "logout": "Sign out",
+      "myAccount": "My account",
+      "createChannel": "Create my channel",
+      "security": "Security",
+      "updateInfo": "Update my information",
+      "admin": {
+        "users": "Users",
+        "inbox": "Inbox",
+        "system": "System"
+      }
+    },
+    "notFound": {
+      "hero": {
+        "title": "Page not found",
+        "description": "Oops… This page does not exist or is no longer available. You can return to the homepage or continue browsing.",
+        "backHome": "Back to homepage"
+      },
+      "why": {
+        "title": "Why this page does not exist",
+        "p1": "Ngelmak is constantly evolving. Some pages may be moved, renamed, or removed during development. The link you followed may no longer be valid.",
+        "p2": "Our goal is to offer you a smooth, sovereign, and accessible experience. If you believe this is an error or wish to contribute to improving the platform, you can let us know."
+      },
+      "continue": {
+        "title": "Continue browsing",
+        "description": "You can return to the homepage, explore the main sections, or discover features currently being developed by the community."
+      }
     }
   },
-  "navbar": {
-    "login": "Sign in",
-    "register": "Create account",
-    "logout": "Sign out",
-    "myAccount": "My account",
-    "createChannel": "Create my channel",
-    "security": "Security",
-    "updateInfo": "Update my information",
-    "admin": {
-      "users": "Users",
-      "inbox": "Inbox",
-      "system": "System"
+  "home": {
+    "pageTitle": "Ngelmak — Home",
+    "user": {
+      "title": "Join the discussion",
+      "description": "Creating an account only takes a few moments...",
+      "signIn": "Sign in",
+      "signUp": "Create an account"
+    },
+    "help": {
+      "title": "Need help?",
+      "description": "A question, an issue, or a suggestion. Our team is here to assist you.",
+      "contactSupport": "Contact support",
+      "cancel": "Cancel"
     }
   },
-  "authentification": {
+  "auth": {
     "signin": {
       "brandTagline": "Sign in to your Ngelmak account.",
       "title": "Sign in to your account",
@@ -50,6 +83,101 @@
       "submit": "Sign in",
       "noAccount": "Don't have an account yet?",
       "createAccount": "Create an account"
+    },
+    "forgotPassword": {
+      "pageTitle": "Ngelmak — Password Reset",
+      "brandTitle": "Ngelmak",
+      "brandSubtitle": "Reset your password.",
+      "title": "Forgot your password?",
+      "subtitle": "No worries. Enter your email address and we will send you a link to reset your password.",
+      "email": {
+        "label": "Email address",
+        "placeholder": "Enter your email address",
+        "required": "Email address is required."
+      },
+      "submit": "Send reset link",
+      "backToSignIn": "Back to login",
+      "alreadyHaveAccount": "Already have an account?",
+      "contactSupport": "Need help? Contact support",
+      "securityNotice": "For your security, we never confirm whether an email address is registered."
+    }
+  },
+  "entities": {
+    "channel": {
+      "update": {
+        "pageTitle": "Ngelmak — New Channel",
+        "brandTitle": "Ngelmak",
+        "title": "Create a new channel",
+        "subtitle": "Give your channel a name and a description. This information will help users understand its purpose.",
+        "name": {
+          "label": "Channel name",
+          "placeholder": "Enter your channel name",
+          "required": "The channel name is required."
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter your channel description"
+        },
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "details": {
+        "pageTitle": "Ngelmak — Channel Details",
+        "fallbackDescription": "No description...",
+        "createdAt": "Account created on",
+        "stats": {
+          "followers": "Followers",
+          "following": "Following",
+          "posts": "Posts"
+        },
+        "follow": "Follow",
+        "unfollow": "Unfollow"
+      },
+      "overview": {
+        "avatarFallback": "Avatar",
+        "fallbackDescription": "No description...",
+        "stats": {
+          "followers": "{{ value }} Followers",
+          "following": "{{ value }} Following"
+        },
+        "seeMore": "See more",
+        "create": {
+          "name": {
+            "label": "Channel name",
+            "placeholder": "Enter your channel name",
+            "required": "The channel name is required."
+          },
+          "save": "Save"
+        }
+      }
+    },
+    "post": {
+      "feed": {
+        "search": {
+          "label": "Search",
+          "placeholder": "Search posts...",
+          "clear": "Clear",
+          "submit": "Search"
+        }
+      },
+      "card": {
+        "follow": "Follow",
+        "following": "Following",
+        "menu": {
+          "reply": "Reply",
+          "update": "Edit",
+          "delete": "Delete",
+          "report": {
+            "label": "Report",
+            "subtitle": "Laye will not know who reported this."
+          },
+          "admin": {
+            "blockUser": "Block user",
+            "delete": "Delete",
+            "hide": "Hide"
+          }
+        }
+      }
     }
   }
 }

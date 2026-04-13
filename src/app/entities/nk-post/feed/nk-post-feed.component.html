@@ -1,10 +1,10 @@
 <div class="flex flex-col justify-center gap-6">
   <!-- SEARCH BAR -->
-  <div
-    class="bg-white dark:bg-gray-800"
-  >
+  <div class="bg-white dark:bg-gray-800">
     <form class="w-full flex items-center py-2">
-      <label for="voice-search" class="sr-only">Rechercher</label>
+      <label translate="entities.post.feed.search.label" for="voice-search" class="sr-only"
+        >Rechercher</label
+      >
       <div class="relative w-full">
         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
           <img
@@ -25,7 +25,7 @@
           type="text"
           id="voice-search"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
-          placeholder="Recherche de posts..."
+          placeholder="{{ 'entities.post.feed.search.placeholder' | translate }}"
           required
         />
         @if (query()) {
@@ -73,7 +73,7 @@
             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
           />
         </svg>
-        Rechercher
+        <span translate="entities.post.feed.search.submit">Rechercher</span>
       </button>
     </form>
   </div>

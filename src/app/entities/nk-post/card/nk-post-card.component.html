@@ -78,7 +78,11 @@
                 />
               </svg>
             }
-            {{ subscription() ? 'Suivi' : 'Suivre' }}
+            @if (subscription()) {
+              <span translate="entities.post.card.following">Suivi</span>
+            } @else {
+              <span translate="entities.post.card.follow">Suivre</span>
+            }
           </button>
         </div>
       </div>
@@ -194,7 +198,7 @@
                 [disabled]="isReplying()"
                 class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 text-left"
               >
-                Répondre
+                <span translate="entities.post.card.menu.reply">Répondre</span>
                 <svg
                   class="w-4 h-4"
                   aria-hidden="true"
@@ -224,7 +228,7 @@
                 [disabled]="isUpdating()"
                 class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 text-left"
               >
-                Modifier
+                <span translate="entities.post.card.menu.update">Modifier</span>
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
                   <path
                     stroke="currentColor"
@@ -243,7 +247,7 @@
                 (click)="confirmDeleteOpen.set(true)"
                 class="w-full px-4 py-2 text-left text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 flex items-center justify-between"
               >
-                Supprimer
+                <span translate="entities.post.card.menu.delete">Supprimer</span>
 
                 @if (isDeleting()) {
                   <svg
@@ -293,8 +297,8 @@
                 class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <p class="flex flex-col items-start">
-                  Signaler
-                  <span class="text-xs text-gray-500 dark:text-gray-400">
+                  <span translate="entities.post.card.menu.report.label">Signaler</span>
+                  <span translate="entities.post.card.menu.report.subtitle" class="text-xs text-gray-500 dark:text-gray-400">
                     Laye ne saura pas qui a signalé cela.
                   </span>
                 </p>
@@ -325,7 +329,7 @@
               <button
                 class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition"
               >
-                Bloquer l'utilisateur
+                <span translate="entities.post.card.menu.admin.blockUser">Bloquer l'utilisateur</span>
                 <svg
                   class="w-5 h-5"
                   xmlns="http://www.w3.org/2000/svg"
@@ -347,7 +351,7 @@
               <button
                 class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
               >
-                Supprimer
+                <span translate="entities.post.card.menu.admin.delete">Supprimer</span>
                 <svg
                   class="w-5 h-5"
                   aria-hidden="true"
@@ -372,7 +376,7 @@
               <button
                 class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
-                Masquer
+                <span translate="entities.post.card.menu.admin.hide">Masquer</span>
                 <svg
                   class="w-5 h-5"
                   xmlns="http://www.w3.org/2000/svg"

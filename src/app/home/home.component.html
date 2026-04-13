@@ -10,16 +10,23 @@
       } @else {
         <div class="pt-4 space-y-4">
           <header>
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <h3
+              translate="home.user.title"
+              class="text-lg font-semibold text-gray-900 dark:text-white mb-2"
+            >
               Rejoignez la discussion
             </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            <p
+              translate="home.user.description"
+              class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed"
+            >
               Créer un compte ne prend que quelques instants...
             </p>
           </header>
 
           <div class="flex flex-col gap-2">
             <button
+              translate="home.user.signIn"
               routerLink="/sign-in"
               class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
             >
@@ -27,6 +34,7 @@
             </button>
 
             <button
+              translate="home.user.signUp"
               routerLink="/sign-up"
               class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
             >
@@ -44,6 +52,7 @@
           <app-contact-form></app-contact-form>
 
           <button
+            translate="home.help.cancel"
             (click)="showContactForm.set(false)"
             class="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm font-medium transition"
           >
@@ -52,13 +61,22 @@
         </div>
       } @else {
         <div class="pt-2 space-y-3">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Besoin d'aide ?</h3>
+          <h3
+            translate="home.help.title"
+            class="text-lg font-semibold text-gray-900 dark:text-white"
+          >
+            Besoin d'aide ?
+          </h3>
 
-          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+          <p
+            translate="home.help.description"
+            class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed"
+          >
             Une question, un problème ou une suggestion. Notre équipe est là pour vous accompagner.
           </p>
 
           <button
+            translate="home.help.contactSupport"
             (click)="showContactForm.set(true)"
             class="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm font-medium transition"
           >
@@ -75,10 +93,8 @@
   </main>
 
   <!-- RIGHT SIDEBAR -->
-  <aside
-    class="hidden md:flex flex-col w-1/4 bg-white dark:bg-gray-800 max-h-full overflow-y-auto"
-  >
-    @for (item of [1, 2, 3,]; track $index) {
+  <aside class="hidden md:flex flex-col w-1/4 bg-white dark:bg-gray-800 max-h-full overflow-y-auto">
+    @for (item of [1, 2, 3]; track $index) {
       <div class="p-4 border-b border-gray-200 dark:border-gray-700">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
           Sidebar Item {{ item }}
