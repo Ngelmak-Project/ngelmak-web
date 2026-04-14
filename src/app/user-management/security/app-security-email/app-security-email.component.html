@@ -2,11 +2,17 @@
   <div
     class="p-6 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
   >
-    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+    <h2
+      translate="userManagement.security.email.title"
+      class="text-2xl font-semibold text-gray-900 dark:text-white mb-4"
+    >
       Adresse email du compte
     </h2>
 
-    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 leading-relaxed">
+    <p
+      translate="userManagement.security.email.description"
+      class="text-sm text-gray-500 dark:text-gray-400 mb-4 leading-relaxed"
+    >
       Votre adresse email est utilisée <strong>uniquement</strong> pour la récupération de compte
       (mot de passe oublié, vérification d'identité). Elle n'est <strong>jamais</strong> utilisée
       pour des notifications intrusives, ni partagée avec des tiers.
@@ -33,7 +39,7 @@
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                Vérifié
+                <span translate="userManagement.security.email.verified">Vérifié</span>
               </span>
             } @else {
               <span
@@ -48,17 +54,23 @@
                     d="M12 9v4m0 4h.01M12 3a9 9 0 110 18 9 9 0 010-18z"
                   />
                 </svg>
-                Non vérifié
+                <span translate="userManagement.security.email.unverified">Non vérifié</span>
               </span>
             }
           </div>
         } @else {
           <p class="text-base italic text-red-500 dark:text-red-400">
-            Aucune adresse email renseignée
+            <span translate="userManagement.security.email.empty"
+              >Aucune adresse email renseignée</span
+            >
           </p>
         }
 
-        <button (click)="editEmail.set(true)" class="self-start mt-1 text-sm text-blue-600 hover:underline dark:text-blue-400">
+        <button
+          translate="userManagement.security.email.edit"
+          (click)="editEmail.set(true)"
+          class="self-start mt-1 text-sm text-blue-600 hover:underline dark:text-blue-400"
+        >
           Modifier l'adresse email
         </button>
       </div>
@@ -75,6 +87,7 @@
             placeholder=" "
           />
           <label
+            translate="userManagement.security.email.label"
             for="email"
             class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
             [ngClass]="{ 'text-red-500 dark:text-red-500': errorEmailExists() }"
@@ -88,7 +101,9 @@
             }
             @if (errorEmailExists()) {
               <p class="text-sm text-red-600 dark:text-red-500">
-                <span class="font-medium">Email déjà utilisé.</span>
+                <span translate="userManagement.security.email.errorExists" class="font-medium"
+                  >Email déjà utilisé.</span
+                >
               </p>
             }
           }
@@ -118,7 +133,7 @@
               />
             </svg>
 
-            Annuler
+            <span translate="userManagement.security.email.actions.cancel">Annuler</span>
           </button>
           <button
             (click)="updateEmail()"
@@ -142,7 +157,7 @@
                 />
               </svg>
             }
-            Enregister
+            <span translate="userManagement.security.email.actions.save">Enregister</span>
           </button>
         </div>
       </div>

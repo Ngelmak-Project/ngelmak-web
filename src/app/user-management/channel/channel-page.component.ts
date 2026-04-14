@@ -6,13 +6,20 @@ import { ChannelOverviewComponent } from 'app/entities/nk-channel/overview/nk-ch
 import { ChannelUpdateComponent } from 'app/entities/nk-channel/update/nk-channel-update.component';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInRight400ms } from 'app/shared/animations/fade-in-right.animation';
+import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 
 @Component({
   standalone: true,
   selector: 'app-channel-page',
   templateUrl: './channel-page.component.html',
-  imports: [CommonModule, RouterModule, ChannelUpdateComponent, ChannelOverviewComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ChannelUpdateComponent,
+    ChannelOverviewComponent,
+    SharedModule,
+  ],
   animations: [fadeInRight400ms],
 })
 export class ChannelPageComponent {

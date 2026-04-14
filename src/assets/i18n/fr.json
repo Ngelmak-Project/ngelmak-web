@@ -72,7 +72,7 @@
       "cancel": "Annuler"
     }
   },
-  "authentification": {
+  "auth": {
     "signin": {
       "brandTagline": "Connexion à votre compte Ngelmak.",
       "title": "Se connecter à son compte",
@@ -176,6 +176,158 @@
             "delete": "Supprimer",
             "hide": "Masquer"
           }
+        }
+      },
+      "channelFeed": {
+        "title": "Publications de la chaîne",
+        "noPosts": "Aucune publication pour le moment. Revenez plus tard ou explorez d'autres chaînes pour découvrir du contenu intéressant."
+      },
+      "details": {
+        "pageTitle": "Ngelmak — Détails du post",
+        "header": {
+          "avatarFallback": "Avatar",
+          "timePrefix": ""
+        },
+        "menu": {
+          "update": "Modifier",
+          "delete": "Supprimer",
+          "report": "Signaler",
+          "admin": {
+            "blockUser": "Bloquer l'utilisateur",
+            "delete": "Supprimer",
+            "hide": "Masquer"
+          }
+        }
+      },
+      "update": {
+        "pageTitle": "Ngelmak — Mise à jour du post",
+        "replyContext": {
+          "replyingTo": "En réponse à"
+        },
+        "content": {
+          "placeholder": "Enseignez-nous quelque chose!",
+          "onUpdatePlaceholder": "Modifiez votre poste...",
+          "onReplyPlaceholder": "Écrivez votre réponse...",
+          "required": "Le contenu du post est requis.",
+          "maxLength": "Le contenu du post ne peut pas dépasser 10000 caractères."
+        },
+        "files": {
+          "imageAlt": "Image importée",
+          "remove": "Supprimer le fichier"
+        },
+        "actions": {
+          "publish": "Publier",
+          "update": "Modifier",
+          "cancel": "Annuler",
+          "loginToPost": "Connectez-vous pour publier."
+        }
+      }
+    }
+  },
+  "userManagement": {
+    "channel": {
+      "pageTitle": "Ngelmak — Gestion de la chaîne",
+      "banner": {
+        "edit": "Modifier la bannière",
+        "remove": "Supprimer la bannière",
+        "validate": "Valider",
+        "cancel": "Annuler"
+      },
+      "avatar": {
+        "fallback": "Avatar",
+        "upload": "Téléverser un avatar",
+        "validate": "Valider",
+        "cancel": "Annuler",
+        "loading": "Téléversement en cours..."
+      },
+      "updateButton": "Modifier la chaîne",
+      "tabs": {
+        "posts": "Publications",
+        "comments": "Commentaires",
+        "subscriptions": "Abonnements",
+        "reports": "Signalements"
+      }
+    },
+    "security": {
+      "profile": {
+        "title": "Informations personnelles",
+        "fields": {
+          "firstName": {
+            "label": "Prénom",
+            "empty": "Prénom non renseigné"
+          },
+          "lastName": {
+            "label": "Nom",
+            "empty": "Nom non renseigné"
+          },
+          "langKey": {
+            "label": "Langue préférée",
+            "empty": "Langue non définie",
+            "options": {
+              "fr": "Français",
+              "en": "English"
+            }
+          },
+          "theme": {
+            "label": "Thème",
+            "dark": "Sombre",
+            "light": "Clair",
+            "empty": "Thème non définie"
+          }
+        },
+        "actions": {
+          "edit": "Modifier mes informations",
+          "cancel": "Annuler",
+          "save": "Enregister"
+        },
+        "image": {
+          "validate": "Valider",
+          "cancel": "Annuler",
+          "upload": "Charger une image"
+        }
+      },
+      "login": {
+        "title": "Identifiant du compte",
+        "description": "Votre identifiant est utilisé pour vous connecter à votre compte. Il n'est pas visible publiquement et n'est jamais partagé avec des tiers. Vous pouvez le modifier à tout moment si nécessaire.",
+        "empty": "Aucun identifiant renseigné",
+        "label": "Identifiant",
+        "edit": "Modifier l'identifiant",
+        "checking": "Vérification en cours...",
+        "unavailable": "Identifiant déjà utilisé",
+        "actions": {
+          "cancel": "Annuler",
+          "save": "Enregister"
+        }
+      },
+      "email": {
+        "title": "Adresse email du compte",
+        "description": "Votre adresse email est utilisée uniquement pour la récupération de compte (mot de passe oublié, vérification d'identité). Elle n'est jamais utilisée pour des notifications intrusives, ni partagée avec des tiers.",
+        "empty": "Aucune adresse email renseignée",
+        "label": "Email",
+        "edit": "Modifier l'adresse email",
+        "verified": "Vérifié",
+        "unverified": "Non vérifié",
+        "errorExists": "Email déjà utilisé.",
+        "actions": {
+          "cancel": "Annuler",
+          "save": "Enregister"
+        }
+      },
+      "password": {
+        "title": "Password management",
+        "description": "Your password is stored securely and never shared. To change your password, you must confirm the old one and choose a new one.",
+        "edit": "Change password",
+        "fields": {
+          "current": "Current password",
+          "new": "New password",
+          "confirm": "Confirm password"
+        },
+        "errors": {
+          "doNotMatch": "The two passwords do not match."
+        },
+        "actions": {
+          "cancel": "Cancel",
+          "save": "Update password"
         }
       }
     }

@@ -22,7 +22,11 @@ const routes: Routes = [
     path: '',
     component: MainComponent,
     children: [
-      { path: '', title: 'Ngelmak Project', component: HomeComponent },
+      {
+        path: '',
+        title: 'Ngelmak Project',
+        component: HomeComponent,
+      },
       {
         path: 'admin',
         data: {

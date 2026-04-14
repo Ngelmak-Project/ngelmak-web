@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, effect, inject, signal } from '@angular/core';
 import { Field, form, maxLength, minLength, required } from '@angular/forms/signals';
 import { PasswordStrengthBarComponent } from 'app/authentication/sign-up/password-strength-bar/password-strength-bar.component';
+import { ApiError } from 'app/core/auth/auth.model';
+import { AlertService } from 'app/shared/alert/alert.service';
+import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { UserService } from '../user.service';
-import { AlertService } from 'app/shared/alert/alert.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ApiError } from 'app/core/auth/auth.model';
 
 const initPassword = {
   currentPassword: '',
@@ -16,7 +17,7 @@ const initPassword = {
 
 @Component({
   selector: 'app-security-password',
-  imports: [CommonModule, Field, PasswordStrengthBarComponent],
+  imports: [CommonModule, Field, PasswordStrengthBarComponent, SharedModule],
   templateUrl: './app-security-password.component.html',
 })
 export class SecurityPasswordComponent {

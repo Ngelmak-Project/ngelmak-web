@@ -1,5 +1,6 @@
 <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
   <h2
+    translate="entities.post.channelFeed.title"
     class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white"
   >
     Publications
@@ -8,6 +9,12 @@
   <div class="flex flex-col gap-6 divide-y divide-gray-200 dark:divide-gray-700">
     @for (post of posts(); track $index) {
       <app-post-card @fadeInUp [post]="post" [hideFollwing]="true"></app-post-card>
+    }
+    @if (posts().length === 0 && !isLoading()) {
+      <p
+        translate="entities.post.channelFeed.noPosts"
+        class="text-gray-500 dark:text-gray-400 text-lg"
+      ></p>
     }
     @if (isLoading()) {
       <article class="py-8 animate-pulse">

@@ -9,13 +9,14 @@ import { PostCardComponent } from 'app/entities/nk-post/card/nk-post-card.compon
 import { PostService } from 'app/entities/nk-post/nk-post.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { ScrollService } from 'app/shared/scrool-detection/scroll.service';
+import { VisibleTriggerDirective } from 'app/shared/scrool-detection/visible-trigger.directive';
 import { SortService, sortStateSignal } from 'app/shared/sort';
 import { Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-channel-posts',
   templateUrl: './channel-posts.component.html',
-  imports: [CommonModule, RouterModule, PostCardComponent],
+  imports: [CommonModule, RouterModule, PostCardComponent, VisibleTriggerDirective],
   animations: [fadeInUp400ms],
 })
 export class ChannelPostsComponent {
@@ -36,30 +37,20 @@ export class ChannelPostsComponent {
   channel = inject(ChannelService).channel;
 
   itemsPerPage = ITEMS_PER_PAGE;
-  page = 1;
-  query = '';
+  page = signal(1);
+  query = signal('');
 
   protected ngZone = inject(NgZone);
 
-  // Track last known scrollHeight to avoid reloading when height doesn't change
-  private lastHeight = 0;
-
   ngOnInit(): void {
-    // Listen to scroll end events
-    this.subs.add(
-      this.scroll.endReached$.subscribe((height) => {
-        this.handleScrollEnd(height);
-      }),
-    );
-
     // Initial load
     this.subs.add(
       this.activatedRoute.queryParamMap
         .pipe(
           tap((params) => {
-            this.query = params.get('q') ?? '';
+            this.query.set(params.get('q') ?? '');
             const page = params.get(PAGE_HEADER);
-            this.page = +(page ?? 1);
+            this.page.set(+(page ?? 1));
           }),
           tap(() => this.loadAll(true)), // reset posts
         )
@@ -72,7 +63,7 @@ export class ChannelPostsComponent {
   }
 
   loadNext(): void {
-    this.page++;
+    this.page.update((v) => v + 1);
     this.loadAll();
   }
 
@@ -83,7 +74,7 @@ export class ChannelPostsComponent {
    * - there is more data (hasNext)
    * - the scrollHeight increased since last load
    */
-  private handleScrollEnd(height: number): void {
+  handleScrollEnd(): void {
     // 1. Avoid duplicate loads while API is busy
     if (this.isLoading()) {
       return;
@@ -94,14 +85,6 @@ export class ChannelPostsComponent {
       return;
     }
 
-    // 3. Height did not change → nothing new was added → avoid infinite loop
-    if (height <= this.lastHeight) {
-      return;
-    }
-
-    // Update last known height
-    this.lastHeight = height;
-
     // Load next page
     this.loadNext();
   }
@@ -110,9 +93,9 @@ export class ChannelPostsComponent {
     this.isLoading.set(true);
 
     const req = {
-      page: this.page - 1,
+      page: this.page() - 1,
       size: this.itemsPerPage,
-      q: this.query,
+      q: this.query(),
     };
 
     this.postService.findByAuthenticatedUser(req).subscribe({

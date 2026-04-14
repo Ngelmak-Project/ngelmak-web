@@ -177,6 +177,158 @@
             "hide": "Hide"
           }
         }
+      },
+      "channelFeed": {
+        "title": "Channel Publications",
+        "noPosts": "No posts yet. Come back later or explore other channels to discover interesting content."
+      },
+      "details": {
+        "pageTitle": "Ngelmak — Post Details",
+        "header": {
+          "avatarFallback": "Avatar",
+          "timePrefix": ""
+        },
+        "menu": {
+          "update": "Edit",
+          "delete": "Delete",
+          "report": "Report",
+          "admin": {
+            "blockUser": "Block user",
+            "delete": "Delete",
+            "hide": "Hide"
+          }
+        }
+      },
+      "update": {
+        "pageTitle": "Ngelmak — Update Post",
+        "replyContext": {
+          "replyingTo": "Replying to"
+        },
+        "content": {
+          "placeholder": "Teach us something!",
+          "onUpdatePlaceholder": "Edit your post...",
+          "onReplyPlaceholder": "Write your reply...",
+          "required": "Post content is required.",
+          "maxLength": "Post content cannot exceed 10000 characters."
+        },
+        "files": {
+          "imageAlt": "Imported image",
+          "remove": "Remove file"
+        },
+        "actions": {
+          "publish": "Publish",
+          "update": "Update",
+          "cancel": "Cancel",
+          "loginToPost": "Log in to publish."
+        }
+      }
+    }
+  },
+  "userManagement": {
+    "channel": {
+      "pageTitle": "Ngelmak — Channel Management",
+      "banner": {
+        "edit": "Edit banner",
+        "remove": "Remove banner",
+        "validate": "Validate",
+        "cancel": "Cancel"
+      },
+      "avatar": {
+        "fallback": "Avatar",
+        "upload": "Upload avatar",
+        "validate": "Validate",
+        "cancel": "Cancel",
+        "loading": "Uploading..."
+      },
+      "updateButton": "Edit channel",
+      "tabs": {
+        "posts": "Posts",
+        "comments": "Comments",
+        "subscriptions": "Subscriptions",
+        "reports": "Reports"
+      }
+    },
+    "security": {
+      "profile": {
+        "title": "Personal information",
+        "fields": {
+          "firstName": {
+            "label": "First name",
+            "empty": "First name not provided"
+          },
+          "lastName": {
+            "label": "Last name",
+            "empty": "Last name not provided"
+          },
+          "langKey": {
+            "label": "Preferred language",
+            "empty": "Language not defined",
+            "options": {
+              "fr": "French",
+              "en": "English"
+            }
+          },
+          "theme": {
+            "label": "Theme",
+            "dark": "Dark",
+            "light": "Light",
+            "empty": "Theme not defined"
+          }
+        },
+        "actions": {
+          "edit": "Edit my information",
+          "cancel": "Cancel",
+          "save": "Save"
+        },
+        "image": {
+          "validate": "Validate",
+          "cancel": "Cancel",
+          "upload": "Upload image"
+        }
+      },
+      "login": {
+        "title": "Account login",
+        "description": "Your login identifier is used to access your account. It is not publicly visible and is never shared with third parties. You can change it at any time if needed.",
+        "empty": "No login provided",
+        "label": "Login",
+        "edit": "Edit login",
+        "checking": "Checking...",
+        "unavailable": "Login already in use",
+        "actions": {
+          "cancel": "Cancel",
+          "save": "Save"
+        }
+      },
+      "email": {
+        "title": "Account email address",
+        "description": "Your email address is used only for account recovery (forgotten password, identity verification). It is never used for intrusive notifications or shared with third parties.",
+        "empty": "No email address provided",
+        "label": "Email",
+        "edit": "Edit email address",
+        "verified": "Verified",
+        "unverified": "Not verified",
+        "errorExists": "Email already in use.",
+        "actions": {
+          "cancel": "Cancel",
+          "save": "Save"
+        }
+      },
+      "password": {
+        "title": "Gestion du mot de passe",
+        "description": "Votre mot de passe est stocké de manière sécurisée et n'est jamais partagé. Pour modifier votre mot de passe, vous devez confirmer l'ancien et en choisir un nouveau.",
+        "edit": "Modifier le mot de passe",
+        "fields": {
+          "current": "Mot de passe actuel",
+          "new": "Nouveau mot de passe",
+          "confirm": "Confirmer le mot de passe"
+        },
+        "errors": {
+          "doNotMatch": "Les deux mots de passes ne correspondent pas."
+        },
+        "actions": {
+          "cancel": "Annuler",
+          "save": "Mettre à jour le mot de passe"
+        }
       }
     }
   }

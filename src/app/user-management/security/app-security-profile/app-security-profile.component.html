@@ -3,7 +3,10 @@
   <div
     class="p-6 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
   >
-    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+    <h2
+      translate="userManagement.security.profile.title"
+      class="text-2xl font-semibold text-gray-900 dark:text-white mb-6"
+    >
       Informations personnelles
     </h2>
 
@@ -124,41 +127,83 @@
         <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-5">
           <!-- First Name -->
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Prénom</p>
+            <p
+              translate="userManagement.security.profile.fields.firstName.label"
+              class="text-sm text-gray-500 dark:text-gray-400"
+            >
+              Prénom
+            </p>
             @if (user().firstName) {
               <p class="text-xl text-gray-900 dark:text-white">{{ user().firstName }}</p>
             } @else {
-              <p class="text-base italic text-red-500 dark:text-red-400">Prénom non renseigné</p>
+              <p
+                translate="userManagement.security.profile.fields.firstName.empty"
+                class="text-base italic text-red-500 dark:text-red-400"
+              >
+                Prénom non renseigné
+              </p>
             }
           </div>
 
           <!-- Last Name -->
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Nom</p>
+            <p
+              translate="userManagement.security.profile.fields.lastName.label"
+              class="text-sm text-gray-500 dark:text-gray-400"
+            >
+              Nom
+            </p>
             @if (user().lastName) {
               <p class="text-xl text-gray-900 dark:text-white">{{ user().lastName }}</p>
             } @else {
-              <p class="text-base italic text-red-500 dark:text-red-400">Nom non renseigné</p>
+              <p
+                translate="userManagement.security.profile.fields.lastName.empty"
+                class="text-base italic text-red-500 dark:text-red-400"
+              >
+                Nom non renseigné
+              </p>
             }
           </div>
 
           <!-- Language -->
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Langue préférée</p>
+            <p
+              translate="userManagement.security.profile.fields.langKey.label"
+              class="text-sm text-gray-500 dark:text-gray-400"
+            >
+              Langue préférée
+            </p>
             @if (user().langKey) {
               <p class="text-xl text-gray-900 dark:text-white uppercase">{{ user().langKey }}</p>
             } @else {
-              <p class="text-base italic text-red-500 dark:text-red-400">Langue non définie</p>
+              <p
+                translate="userManagement.security.profile.fields.langKey.empty"
+                class="text-base italic text-red-500 dark:text-red-400"
+              >
+                Langue non définie
+              </p>
             }
           </div>
 
           <!-- Theme -->
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Thème</p>
+            <p
+              translate="userManagement.security.profile.fields.theme.label"
+              class="text-sm text-gray-500 dark:text-gray-400"
+            >
+              Thème
+            </p>
             @if (user().langKey) {
-              <p class="text-xl text-gray-900 dark:text-white uppercase">{{ user().darkModeEnabled ? 'Sombre' : 'Clair' }}</p>
+              <p class="text-xl text-gray-900 dark:text-white uppercase">
+                {{ user().darkModeEnabled ? 'Sombre' : 'Clair' }}
+              </p>
             } @else {
-              <p class="text-base italic text-red-500 dark:text-red-400">Thème non définie</p>
+              <p
+                translate="userManagement.security.profile.fields.theme.empty"
+                class="text-base italic text-red-500 dark:text-red-400"
+              >
+                Thème non défini
+              </p>
             }
           </div>
         </div>
@@ -174,6 +219,7 @@
               placeholder=" "
             />
             <label
+              translate="userManagement.security.profile.fields.firstName.label"
               for="firstName"
               class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
               >Nom d'utilisateur</label
@@ -181,7 +227,7 @@
             @if (userForm.firstName().dirty()) {
               @for (error of userForm.firstName().errors(); track error) {
                 <p class="text-sm text-red-600 dark:text-red-500">
-                  <span class="font-medium">{{ error.message }}</span>
+                  <span class="font-medium">{{ error.message | translate }}</span>
                 </p>
               }
             }
@@ -197,6 +243,7 @@
               placeholder=" "
             />
             <label
+              translate="userManagement.security.profile.fields.lastName.label"
               for="lastName"
               class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
               >Nom d'utilisateur</label
@@ -204,7 +251,7 @@
             @if (userForm.lastName().dirty()) {
               @for (error of userForm.lastName().errors(); track error) {
                 <p class="text-sm text-red-600 dark:text-red-500">
-                  <span class="font-medium">{{ error.message }}</span>
+                  <span class="font-medium">{{ error.message | translate }}</span>
                 </p>
               }
             }
@@ -238,7 +285,9 @@
                   d="m13 19 3.5-9 3.5 9m-6.125-2h5.25M3 7h7m0 0h2m-2 0c0 1.63-.793 3.926-2.239 5.655M7.5 6.818V5m.261 7.655C6.79 13.82 5.521 14.725 4 15m3.761-2.345L5 10m2.761 2.655L10.2 15"
                 />
               </svg>
-              Langue préférée
+              <span translate="userManagement.security.profile.fields.langKey.label"
+                >Langue préférée</span
+              >
             </label>
 
             @if (!hideLangKeyOptions()) {
@@ -252,7 +301,11 @@
                       (click)="selectLang('fr')"
                       class="inline-flex w-full rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
-                      <div class="inline-flex items-center gap-2">Français</div>
+                      <span
+                        translate="userManagement.security.profile.fields.langKey.options.fr"
+                        class="inline-flex items-center gap-2"
+                        >Français</span
+                      >
                     </button>
                   </li>
                   <li>
@@ -261,7 +314,11 @@
                       (click)="selectLang('en')"
                       class="inline-flex w-full rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
-                      <div class="inline-flex items-center gap-2">English</div>
+                      <span
+                        translate="userManagement.security.profile.fields.langKey.options.en"
+                        class="inline-flex items-center gap-2"
+                        >English</span
+                      >
                     </button>
                   </li>
                 </ul>
@@ -298,10 +355,10 @@
             />
           </svg>
 
-          Annuler
+          <span translate="userManagement.security.profile.actions.cancel">Annuler</span>
         </button>
         <button
-        (click)="updateProfile()"
+          (click)="updateProfile()"
           [disabled]="userForm().invalid() || isUpdatingProfil()"
           class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600 disabled:cursor-not-allowed"
         >
@@ -322,7 +379,7 @@
               />
             </svg>
           }
-          Enregister
+          <span translate="userManagement.security.profile.actions.save">Enregistrer</span>
         </button>
       </div>
     } @else {
@@ -330,7 +387,9 @@
         (click)="editPersonalInfo.set(true)"
         class="inline-flex items-center px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium dark:bg-gray-700 dark:hover:bg-gray-600"
       >
-        Modifier mes informations
+        <span translate="userManagement.security.profile.actions.edit"
+          >Modifier mes informations</span
+        >
       </button>
     }
   </div>

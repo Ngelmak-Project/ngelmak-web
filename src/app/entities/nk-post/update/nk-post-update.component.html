@@ -5,6 +5,7 @@
     <!-- Reply context -->
     @if (replyTo()) {
       <div
+        translate="entities.post.update.replyContext.replyingTo"
         class="text-xs text-gray-800 dark:text-gray-200 mb-2 pl-2 border-l border-gray-800 dark:border-gray-200 max-w-full"
       >
         En réponse à
@@ -25,7 +26,7 @@
       id="content"
       rows="5"
       class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-      [placeholder]="contentPlaceholder"
+      [placeholder]="contentPlaceholder | translate"
     ></textarea>
 
     <!-- Wrapper: puts counter on left and errors on right -->
@@ -35,7 +36,7 @@
         @if (postForm.content().dirty()) {
           @for (error of postForm.content().errors(); track error) {
             <p class="text-red-600 dark:text-red-500 text-xs leading-tight">
-              {{ error.message }}
+              {{ error.message | translate}}
             </p>
           }
         }
@@ -180,11 +181,15 @@
             />
           </svg>
         }
-        {{ post()?.id ? 'Modifier' : 'Enregistrer' }}
+        @if (post()?.id || replyTo()) {
+          <span translate="entities.post.update.actions.update">Modifier</span>
+        } @else {
+          <span translate="entities.post.update.actions.publish">Publier</span>
+        }
       </button>
       @if (post()?.id || replyTo()) {
         <button
-          cancel
+          translate="entities.post.update.actions.cancel"
           type="button"
           (click)="oncancel.emit()"
           class="text-gray-500 hover:bg-gray-100 focus:ring-4 focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:bg-gray-600 dark:hover:border-gray-500 dark:focus:ring-gray-600"
@@ -297,6 +302,7 @@
 
   <!-- If user is NOT logged in -->
   <div
+    translate="entities.post.update.loginToPost"
     *hasNoAuthority="'ROLE_USER'"
     class="text-gray-500 text-sm italic py-2 px-4"
     [ngClass]="{ 'text-red-500 animate-pulse font-bold': postModel().content.length > 0 }"

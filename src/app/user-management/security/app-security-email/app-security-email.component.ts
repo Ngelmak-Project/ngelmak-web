@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { Field, form } from '@angular/forms/signals';
+import { ApiError } from 'app/core/auth/auth.model';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { AlertService } from 'app/shared/alert/alert.service';
-import { UserService } from '../user.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ApiError } from 'app/core/auth/auth.model';
+import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-security-email',
-  imports: [CommonModule, Field],
+  imports: [CommonModule, Field, SharedModule],
   templateUrl: './app-security-email.component.html',
 })
 export class SecurityEmailComponent {

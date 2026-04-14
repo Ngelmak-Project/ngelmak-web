@@ -12,11 +12,12 @@ import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { ScrollService } from 'app/shared/scrool-detection/scroll.service';
 import { sortStateSignal } from 'app/shared/sort';
 import { Subscription, tap } from 'rxjs';
+import { TranslateDirective } from "app/shared/translation/translate.directive";
 
 @Component({
   selector: 'app-channel-feed',
   templateUrl: './channel-feed.component.html',
-  imports: [CommonModule, RouterModule, PostCardComponent],
+  imports: [CommonModule, RouterModule, PostCardComponent, TranslateDirective],
   animations: [fadeInUp400ms],
 })
 export class ChannelFeedComponent {

@@ -19,6 +19,7 @@ const channelResolve: ResolveFn<IChannel> = (route, state) => {
 
   // Accept both "id" and "identifier"
   const param = route.params['identifier'] ?? route.params['id'];
+  console.log(param);
 
   // If no param provided, try using the locally stored channel
   if (!param) {

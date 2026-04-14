@@ -10,32 +10,32 @@ export const routes: Routes = [
   {
     path: 'sign-in',
     component: SignInComponent,
-    title: 'global.ngelmak.sign-in.title',
+    title: 'auth.signIn.title',
   },
   {
     path: 'sign-up',
     component: SignUpComponent,
-    title: 'global.ngelmak.sign-up.title',
+    title: 'auth.signUp.title',
   },
   {
     path: 'activate',
     component: ActivateComponent,
-    title: 'global.ngelmak.activate.title',
+    title: 'auth.activate.title',
   },
   {
     path: 'resend-activation',
     component: ResendActivationComponent,
-    title: 'global.ngelmak.resend-activation.title',
+    title: 'auth.resendActivation.title',
   },
   {
     path: 'reset-password',
     component: ForgotPasswordComponent,
-    title: 'global.ngelmak.reset-password-init.title',
+    title: 'auth.resetPasswordInit.title',
   },
   {
     path: 'reset-password-finish',
     component: ResetPasswordComponent,
-    title: 'global.ngelmak.reset-password-finish.title',
+    title: 'auth.resetPasswordFinish.title',
   },
   {
     path: '',

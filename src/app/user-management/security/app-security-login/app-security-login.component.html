@@ -2,9 +2,17 @@
   <div
     class="p-6 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
   >
-    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Identifiant du compte</h2>
+    <h2
+      translate="userManagement.security.login.title"
+      class="text-2xl font-semibold text-gray-900 dark:text-white mb-4"
+    >
+      Identifiant du compte
+    </h2>
 
-    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 leading-relaxed">
+    <p
+      translate="userManagement.security.login.description"
+      class="text-sm text-gray-500 dark:text-gray-400 mb-4 leading-relaxed"
+    >
       Votre identifiant est utilisé pour vous connecter à votre compte. Il n'est
       <strong>pas visible publiquement</strong> et n'est jamais partagé avec des tiers. Vous pouvez
       le modifier à tout moment si nécessaire.
@@ -15,10 +23,11 @@
         @if (user().login) {
           <p class="text-lg text-gray-900 dark:text-white">@{{ user().login }}</p>
         } @else {
-          <p class="text-base italic text-red-500 dark:text-red-400">Aucun identifiant renseigné</p>
+          <p translate="userManagement.security.login.empty" class="text-base italic text-red-500 dark:text-red-400">Aucun identifiant renseigné</p>
         }
 
         <button
+          translate="userManagement.security.login.edit"
           (click)="editLogin.set(true)"
           class="self-start mt-1 text-sm text-blue-600 hover:underline dark:text-blue-400"
         >
@@ -37,6 +46,7 @@
           />
 
           <label
+            translate="userManagement.security.login.label"
             for="login"
             class="absolute flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
           >
@@ -61,7 +71,7 @@
                   d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
                 ></path>
               </svg>
-              Vérification en cours…
+              <span translate="userManagement.security.login.checking">Vérification en cours...</span>
             </p>
           }
 
@@ -91,7 +101,7 @@
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
-              Identifiant déjà utilisé
+              <span translate="userManagement.security.login.unavailable">Identifiant déjà utilisé</span>
             </p>
           }
         </div>
@@ -120,7 +130,7 @@
               />
             </svg>
 
-            Annuler
+            <span translate="userManagement.security.login.actions.cancel">Annuler</span>
           </button>
           <button
             (click)="updateLogin()"
@@ -144,7 +154,7 @@
                 />
               </svg>
             }
-            Enregister
+            <span translate="userManagement.security.login.actions.save">Enregistrer</span>
           </button>
         </div>
       </div>

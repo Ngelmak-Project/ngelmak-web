@@ -21,7 +21,7 @@ const initPost: IPost = {
   standalone: true,
   selector: 'app-post-update',
   templateUrl: './nk-post-update.component.html',
-  imports: [SharedModule, Field],
+  imports: [SharedModule, Field, SharedModule],
 
   encapsulation: ViewEncapsulation.None, // Disable encapsulation
 })
@@ -44,8 +44,8 @@ export class PostUpdateComponent {
   protected postModel = signal<IPost>(initPost);
 
   protected postForm = form(this.postModel, (p) => {
-    required(p.content, { message: 'Le contenu de la publication est obligatoire.' });
-    maxLength(p.content, 3000, { message: 'Le contenu ne doit pas dépasser 1000 caractères.' });
+    required(p.content, { message: 'entities.post.update.content.required' });
+    maxLength(p.content, 1000, { message: 'entities.post.update.content.maxLength' });
   });
 
   constructor() {
@@ -197,8 +197,9 @@ export class PostUpdateComponent {
    * Returns the placeholder text for the content textarea based on the current state.
    */
   get contentPlaceholder(): string {
-    if (this.post()?.id) return 'Modifiez votre poste...';
-    if (this.replyTo()) return 'Répondez à ce poste...';
-    return 'Enseignez-nous quelque chose!';
+    const root = 'entities.post.update.content.';
+    if (this.post()?.id) return root + 'onUpdatePlaceholder';
+    if (this.replyTo()) return root + 'onReplyPlaceholder';
+    return root + 'placeholder';
   }
 }

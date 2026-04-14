@@ -5,12 +5,13 @@ import { Field, form } from '@angular/forms/signals';
 import { ApiError } from 'app/core/auth/auth.model';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { AlertService } from 'app/shared/alert/alert.service';
-import { finalize } from 'rxjs';
+import { finalize, share } from 'rxjs';
 import { UserService } from '../user.service';
+import SharedModule from 'app/shared/shared.module';
 
 @Component({
   selector: 'app-security-login',
-  imports: [CommonModule, Field],
+  imports: [CommonModule, Field, SharedModule],
   templateUrl: './app-security-login.component.html',
 })
 export class SecurityLoginComponent {
