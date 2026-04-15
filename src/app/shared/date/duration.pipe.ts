@@ -1,16 +1,37 @@
-import { Pipe, PipeTransform } from "@angular/core";
+import { Pipe, PipeTransform, effect } from '@angular/core';
+import { TranslationService } from '../translation/translation.service';
 
 @Pipe({
+  name: 'duration',
   standalone: true,
-  name: "duration",
+  pure: false, // IMPORTANT: makes pipe reactive
 })
 export default class DurationPipe implements PipeTransform {
+  private lastValue = '';
+
+  constructor(private translate: TranslationService) {
+    // Re-run pipe when dictionary updates
+    effect(() => {
+      this.lastValue = this.compute(this.lastTime);
+    });
+  }
+
+  private lastTime: any;
+
   transform(time: any): string {
-    const seconds = Math.floor((new Date().getTime() - new Date(time).getTime()) / 1000);
-    if (seconds < 29)
-      // less than 30 seconds ago will show as 'Just now'
-      return "Just now";
-    const intervals: { [key: string]: number } = {
+    this.lastTime = time;
+    this.lastValue = this.compute(time);
+    return this.lastValue;
+  }
+
+  private compute(time: any): string {
+    const seconds = Math.floor((Date.now() - new Date(time).getTime()) / 1000);
+
+    if (seconds < 29) {
+      return this.translate.translate('shared.date.duration.justNow');
+    }
+
+    const intervals: Record<string, number> = {
       year: 31536000,
       month: 2592000,
       week: 604800,
@@ -19,16 +40,26 @@ export default class DurationPipe implements PipeTransform {
       minute: 60,
       second: 1,
     };
-    let counter;
-    for (const i in intervals) {
-      counter = Math.floor(seconds / intervals[i]);
+
+    for (const unit in intervals) {
+      const counter = Math.floor(seconds / intervals[unit]);
+
       if (counter > 0) {
+        const translatedUnit = this.translate.translate(`shared.date.duration.units.${unit}`);
         if (counter === 1) {
-          return counter + " " + i + " ago"; // singular (1 day ago)
-        } else {
-          return counter + " " + i + "s ago"; // plural (2 days ago)
+          return this.translate.translate('shared.date.duration.singular', {
+            count: counter,
+            unit: translatedUnit,
+          });
         }
+
+        return this.translate.translate('shared.date.duration.plural', {
+          count: counter,
+          unit: translatedUnit,
+        });
       }
     }
+
+    return '';
   }
 }

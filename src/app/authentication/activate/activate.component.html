@@ -1,4 +1,4 @@
-<section class="bg-gray-50 dark:bg-gray-900">
+<section class="bg-gray-50 dark:bg-gray-900 py-5">
   <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0">
     <!-- Branding -->
     <div class="flex flex-col items-center mb-2">
@@ -8,11 +8,17 @@
           class="w-10 h-10 dark:opacity-90"
           alt="Ngelmak logo"
         />
-        <span class="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">
+        <span
+          translate="auth.activate.brandTitle"
+          class="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight"
+        >
           Ngelmak
         </span>
       </div>
-      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+      <p
+        translate="auth.activate.brandSubtitle"
+        class="text-sm text-gray-500 dark:text-gray-400 mt-1"
+      >
         Nous vérifions votre lien d'activation.
       </p>
     </div>
@@ -24,6 +30,7 @@
       <div class="p-6 space-y-6 md:space-y-8 sm:p-8">
         <!-- Title -->
         <h1
+          translate="auth.activate.title"
           class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center"
         >
           Activation de compte
@@ -35,7 +42,12 @@
             <span
               class="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"
             ></span>
-            <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">Quelques secondes…</p>
+            <p
+              translate="auth.activate.loading"
+              class="mt-4 text-sm text-gray-500 dark:text-gray-400"
+            >
+              Quelques secondes...
+            </p>
           </div>
         }
 
@@ -44,12 +56,13 @@
           <div
             class="p-4 rounded-lg bg-blue-50 text-blue-800 border border-blue-200 dark:bg-blue-900 dark:text-blue-100 dark:border-blue-700"
           >
-            <p class="text-sm leading-relaxed">
+            <p translate="auth.activate.success.message" class="text-sm leading-relaxed">
               <strong>Votre compte est activé.</strong><br />
               Vous pouvez maintenant accéder à votre espace.
             </p>
 
             <a
+              translate="auth.activate.success.action"
               routerLink="/sign-in"
               class="mt-4 w-full inline-flex justify-center items-center px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition"
             >
@@ -63,12 +76,13 @@
           <div
             class="p-4 rounded-lg bg-red-50/60 text-red-700 border border-red-200 dark:bg-red-900/40 dark:text-red-100 dark:border-red-700"
           >
-            <p class="text-sm leading-relaxed mb-4">
+            <p translate="auth.activate.error.message" class="text-sm leading-relaxed mb-4">
               <strong>L'activation n'a pas pu être effectuée.</strong><br />
               Le lien est invalide, expiré ou déjà utilisé.
             </p>
 
             <a
+              translate="auth.activate.error.action"
               routerLink="/resend-activation"
               class="w-full inline-flex justify-center items-center px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition"
             >
@@ -80,6 +94,7 @@
         <!-- Navigation -->
         <div class="text-center">
           <a
+            translate="auth.activate.backToSignIn"
             routerLink="/sign-in"
             class="block text-center text-sm font-semibold text-blue-600 hover:underline underline-offset-4 dark:text-blue-400 mt-3"
           >
@@ -89,7 +104,10 @@
 
         <!-- Privacy message -->
         <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
-          <p class="text-xs text-gray-500 dark:text-gray-400 text-center leading-relaxed">
+          <p
+            translate="auth.activate.privacy"
+            class="text-xs text-gray-500 dark:text-gray-400 text-center leading-relaxed"
+          >
             Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée.
           </p>
         </div>

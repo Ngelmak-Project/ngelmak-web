@@ -73,6 +73,23 @@
     }
   },
   "auth": {
+    "activate": {
+      "pageTitle": "Ngelmak — Activation de compte",
+      "brandTitle": "Ngelmak",
+      "brandSubtitle": "Nous vérifions votre lien d'activation.",
+      "title": "Activation de compte",
+      "loading": "Quelques secondes, s'il vous plaît...",
+      "success": {
+        "message": "<strong>Votre compte est activé.</strong><br />Vous pouvez maintenant accéder à votre espace.",
+        "action": "Se connecter"
+      },
+      "error": {
+        "message": "<strong>L'activation n'a pas pu être effectuée.</strong><br />Le lien est invalide, expiré ou déjà utilisé.",
+        "action": "Demander une nouvelle clé d'activation"
+      },
+      "backToSignIn": "Retour à la connexion",
+      "privacy": "Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée."
+    },
     "signin": {
       "brandTagline": "Connexion à votre compte Ngelmak.",
       "title": "Se connecter à son compte",
@@ -83,6 +100,54 @@
       "submit": "Se connecter",
       "noAccount": "Vous n'avez pas encore de compte ?",
       "createAccount": "Créer un compte"
+    },
+    "signUp": {
+      "pageTitle": "Créer un compte",
+      "brandTitle": "Ngelmak",
+      "brandSubtitle": "Créez votre compte pour accéder à votre espace personnel.",
+      "title": "Créer un compte",
+      "login": {
+        "label": "Nom d'utilisateur",
+        "placeholder": "Choisissez un nom d'utilisateur",
+        "loginAlreadyUsed": "Nom d'utilisateur déjà utilisé.",
+        "required": "Le nom d'utilisateur est requis.",
+        "minLength": "Le nom d'utilisateur doit comporter au moins 3 caractères.",
+        "maxLength": "Le nom d'utilisateur ne peut pas dépasser 50 caractères.",
+        "pattern": "Le nom d'utilisateur ne peut contenir que des lettres, des chiffres et des tirets."
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Entrez votre adresse email",
+        "emailAlreadyUsed": "Email déjà utilisé.",
+        "required": "L'adresse email est requise.",
+        "invalid": "L'adresse email n'est pas valide."
+      },
+      "password": {
+        "label": "Nouveau mot de passe",
+        "placeholder": "Entrez votre nouveau mot de passe",
+        "required": "Le mot de passe est requis.",
+        "minLength": "Le mot de passe doit comporter au moins 6 caractères."
+      },
+      "confirmPassword": {
+        "label": "Confirmer le mot de passe",
+        "placeholder": "Confirmez votre mot de passe",
+        "required": "La confirmation du mot de passe est requise.",
+        "passwordsDoNotMatch": "Les deux mots de passes ne correspondent pas."
+      },
+      "passwordStrength": {
+        "title": "Dois contenir au moins {{ minLength() }} caractères",
+        "preferable": "Préférable d'avoir :",
+        "upperLower": "Des lettres majuscules et minuscules",
+        "symbol": "Un symbole (#$&)",
+        "longPassword": "Un mot de passe plus long (min. 12 caractères)"
+      },
+      "submit": "Créer mon compte",
+      "navigation": {
+        "alreadyHaveAccount": "Vous avez déjà un compte ?",
+        "backToSignIn": "Retour à la connexion",
+        "contactSupport": "Besoin d'aide ? Contactez le support"
+      },
+      "privacy": "Votre adresse email ne sera utilisée que pour la création de votre compte et la sécurité de votre accès."
     },
     "forgotPassword": {
       "pageTitle": "Ngelmak — Réinitialisation du mot de passe",
@@ -100,6 +165,63 @@
       "alreadyHaveAccount": "Vous avez déjà un compte ?",
       "contactSupport": "Besoin d'aide ? Contactez le support",
       "securityNotice": "Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée."
+    },
+    "resendActivation": {
+      "pageTitle": "Réenvoyer le lien d'activation",
+      "brandTitle": "Ngelmak",
+      "brandSubtitle": "Recevez un nouveau lien d'activation.",
+      "title": "Réenvoyer le lien d'activation",
+      "description": "Entrez votre adresse email et nous vous enverrons un nouveau lien pour activer votre compte.",
+      "alreadyActivated": {
+        "message": "<strong>Votre compte est déjà activé.</strong><br />Vous pouvez vous connecter immédiatement.",
+        "action": "Se connecter"
+      },
+      "success": {
+        "message": "<strong>Un nouveau lien d'activation a été envoyé.</strong><br />Vérifiez votre boîte mail."
+      },
+      "error": {
+        "message": "<strong>Impossible d'envoyer le lien.</strong><br />L'adresse fournie est invalide ou ne correspond à aucun compte."
+      },
+      "form": {
+        "email": {
+          "label": "Adresse email",
+          "placeholder": "Entrez votre adresse email",
+          "required": "L'adresse email est requise."
+        },
+        "submit": "Envoyer le lien"
+      },
+      "navigation": {
+        "backSignIn": "Retour à la connexion",
+        "alreadyHaveAccount": "Vous avez déjà un compte ?",
+        "backSignInLink": "Retour à la connexion",
+        "contactSupport": "Besoin d'aide ? Contactez le support"
+      },
+      "privacy": "Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée."
+    },
+    "resetPassword": {
+      "pageTitle": "Changement de mot de passe",
+      "brandTitle": "Ngelmak",
+      "brandSubtitle": "Définissez votre nouveau mot de passe.",
+      "title": "Changement de mot de passe",
+      "key": {
+        "info": "Nous avons envoyé une clé de validation à votre adresse e-mail. Veuillez la copier‑coller dans le champ ci‑dessous.",
+        "label": "Clé de validation",
+        "placeholder": "Entrez la clé de validation",
+        "required": "La clé de validation est requise."
+      },
+      "password": {
+        "newPasswordLabel": "Nouveau mot de passe",
+        "confirmPasswordLabel": "Confirmer le mot de passe",
+        "passwordsDoNotMatch": "Les deux mots de passe ne correspondent pas.",
+        "required": "Le mot de passe est requis."
+      },
+      "submit": "Mettre à jour le mot de passe",
+      "navigation": {
+        "requestNewLink": "Demander un nouveau lien de réinitialisation",
+        "backToSignIn": "Retour à la connexion",
+        "contactSupport": "Besoin d'aide ? Contactez le support"
+      },
+      "privacy": "Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée."
     }
   },
   "entities": {
@@ -222,6 +344,164 @@
           "loginToPost": "Connectez-vous pour publier."
         }
       }
+    },
+    "comment": {
+      "list": {
+        "signInToComment": "Connectez-vous pour commenter.",
+        "noComments": "Aucun commentaire pour le moment.",
+        "item": {
+          "report": "Signaler",
+          "update": "Update",
+          "delete": "Delete",
+          "deleteConfirmTitle": "Confirmation de suppression",
+          "deleteConfirmMessage": "Êtes-vous sûr de vouloir supprimer ce commentaire ?",
+          "reply": "Répondre",
+          "replies": "replies"
+        }
+      },
+      "update": {
+        "content": {
+          "label": "Tapez votre commentaire!",
+          "placeholder": "Tapez votre commentaire!",
+          "required": "Le contenu du commentaire est requis.",
+          "maxLength": "Le contenu du commentaire ne peut pas dépasser 5000 caractères."
+        },
+        "removeImage": "Supprimer l'image",
+        "saveUpdate": "Modifier",
+        "savePublish": "Publier",
+        "cancel": "Annuler"
+      }
+    },
+    "review": {
+      "dialog": {
+        "replyTitle": "Répondre au fil de discussion",
+        "replySubtitle": "Ticket #{{id}} — Signalement utilisateur",
+        "reviewTitle": "Examen du ticket #{{id}}",
+        "reviewSubtitle": "Signalement utilisateur",
+        "content": {
+          "label": "Expliquer",
+          "placeholder": " ",
+          "required": "Le contenu de la revue est requis."
+        },
+        "cancel": "Annuler",
+        "send": "Envoyer"
+      },
+      "list": {
+        "addReview": "Ajouter un commentaire",
+        "item": {
+          "replyTo": "En réponse à",
+          "reply": "Répondre",
+          "update": "Modifier",
+          "delete": "Supprimer",
+          "deleteConfirmTitle": "Suppression d'un message",
+          "deleteConfirmMessage": "Voulez-vous supprimer votre message ?"
+        }
+      },
+      "update": {
+        "title": "Votre réponse",
+        "description": "Vous pouvez expliquer le contexte, contester le signalement ou fournir des informations supplémentaires. Votre réponse sera visible par l'équipe de modération.",
+        "content": {
+          "label": "Expliquer",
+          "placeholder": " ",
+          "required": "Le contenu de la revue est requis."
+        },
+        "send": "Envoyer votre message"
+      }
+    },
+    "ticket": {
+      "details": {
+        "title": "Signalement #{{id}}",
+        "subtitle": "Ce signalement concerne l'un de vos contenus.",
+        "statusResolved": "Résolu",
+        "statusPending": "En cours d'examen",
+        "close": "Fermer",
+        "infoBanner": "Ce signalement a été déposé par un autre utilisateur ou un modérateur. Vous pouvez consulter les détails ci-dessous et, si nécessaire, fournir des informations supplémentaires pour expliquer ou défendre votre position.",
+        "receivedAtTitle": "Signalement reçu le",
+        "statusTitle": "Statut",
+        "statusResolvedText": "Ce signalement a été traité.",
+        "statusPendingText": "Ce signalement est en cours d'examen.",
+        "handledTitle": "Traitement",
+        "handledYes": "Pris en charge par l'équipe de modération.",
+        "handledNo": "En attente de prise en charge par la modération.",
+        "targetContentTitle": "Contenu concerné",
+        "contentNotAvailable": "Le contenu concerné n'est plus disponible.",
+        "type": "Type :",
+        "typeChannel": "Chaîne",
+        "typePost": "Post",
+        "typeComment": "Commentaire",
+        "viewPost": "Voir le post #{{id}}",
+        "viewComment": "Voir le commentaire #{{id}}",
+        "reasonTitle": "Raison du signalement",
+        "evidenceTitle": "Pièce jointe du signalement",
+        "openEvidence": "Ouvrir la pièce jointe"
+      },
+      "dialog": {
+        "content": {
+          "label": "Décrivez brièvement le problème ou la situation.",
+          "placeholder": " ",
+          "required": "Le contenu du signalement est requis.",
+          "maxLength": "Le contenu du signalement ne peut pas dépasser 5000 caractères."
+        },
+        "attachEvidence": "Joindre une preuve (optionnel)",
+        "removeEvidence": "Supprimer la preuve",
+        "cancel": "Annuler",
+        "send": "Envoyer"
+      },
+      "open": {
+        "title": "Ticket #{{id}}",
+        "subtitle": "Signalement utilisateur",
+        "statusResolved": "Résolu",
+        "statusUnresolved": "Non résolu",
+        "issuedByTitle": "Émis par",
+        "issuedAtTitle": "Émis le",
+        "assignedToTitle": "Assigné à",
+        "handledByTitle": "Géré par",
+        "targetTitle": "Cible",
+        "channelLabel": "Channel :",
+        "postLabel": "Post :",
+        "commentLabel": "Commentaire :",
+        "descriptionTitle": "Description",
+        "evidenceTitle": "Preuve",
+        "openEvidence": "Voir la pièce jointe",
+        "close": "Fermer",
+        "markResolved": "Marquer comme résolu"
+      },
+      "userActivityReport": {
+        "title": "Liste des tickets",
+        "filter": {
+          "last30Days": "Last 30 days",
+          "lastDay": "Last day",
+          "last7Days": "Last 7 days",
+          "lastMonth": "Last month",
+          "lastYear": "Last year"
+        },
+        "searchLabel": "Rechercher un utilisateur",
+        "searchPlaceholder": "Entrez un nom d'utilisateur",
+        "table": {
+          "target": "Cible",
+          "description": "Description",
+          "issuedAt": "Émis le",
+          "status": "État",
+          "actions": "Actions"
+        },
+        "target": {
+          "title": "Cible :",
+          "none": "Aucune",
+          "channel": "channel {{name}}",
+          "post": "post {{id}}",
+          "comment": "comment {{id}}"
+        },
+        "statusClosed": "Fermé",
+        "statusOpen": "Ouvert",
+        "viewDetails": "Voir les détails",
+        "pagination": {
+          "previous": "Précédent",
+          "next": "Suivant",
+          "pageSize": "Taille de page",
+          "page": "Page",
+          "perPage": "{{size}} / page"
+        }
+      }
     }
   },
   "userManagement": {
@@ -314,20 +594,58 @@
         }
       },
       "password": {
-        "title": "Password management",
-        "description": "Your password is stored securely and never shared. To change your password, you must confirm the old one and choose a new one.",
-        "edit": "Change password",
+        "title": "Gestion du mot de passe",
+        "description": "Votre mot de passe est stocké de manière sécurisée et n'est jamais partagé. Pour modifier votre mot de passe, vous devez confirmer l'ancien et en choisir un nouveau.",
+        "edit": "Modifier le mot de passe",
         "fields": {
-          "current": "Current password",
-          "new": "New password",
-          "confirm": "Confirm password"
+          "current": "Mot de passe actuel",
+          "new": "Nouveau mot de passe",
+          "confirm": "Confirmer le mot de passe"
         },
         "errors": {
-          "doNotMatch": "The two passwords do not match."
+          "doNotMatch": "Les deux mots de passes ne correspondent pas."
         },
         "actions": {
-          "cancel": "Cancel",
-          "save": "Update password"
+          "cancel": "Annuler",
+          "save": "Mettre à jour le mot de passe"
+        }
+      },
+      "deletion": {
+        "title": "Suppression du compte",
+        "description1": "La suppression de votre compte est un processus différé. Une fois la demande <strong>effectuée</strong>, votre compte sera placé en attente de suppression pendant <strong>{{ deletionDelayDays }}</strong> jours.",
+        "description2": "Toute reconnexion durant cette période sera interprétée comme une <strong>récupération du compte</strong>, et la suppression sera automatiquement annulée.",
+        "description3": "Passé ce délai, toutes vos données personnelles, contenus associés et informations liées seront <strong>permanemment supprimées</strong> et ne pourront plus être récupérés.",
+        "deleteButton": "Supprimer mon compte",
+        "modal": {
+          "title": "Confirmation de suppression",
+          "message": "Cette action est irréversible après le délai de récupération. Pour confirmer, veuillez saisir votre mot de passe."
+        }
+      }
+    }
+  },
+  "shared": {
+    "date": {
+      "duration": {
+        "justNow": "À l'instant",
+        "singular": "Il y a {{count}} {{unit}}",
+        "plural": "Il y a {{count}} {{unit}}",
+        "units": {
+          "year": "an",
+          "month": "mois",
+          "week": "semaine",
+          "day": "jour",
+          "hour": "heure",
+          "minute": "minute",
+          "second": "seconde"
+        },
+        "short": {
+          "year": "y",
+          "month": "mo",
+          "week": "w",
+          "day": "d",
+          "hour": "h",
+          "minute": "m",
+          "second": "s"
         }
       }
     }

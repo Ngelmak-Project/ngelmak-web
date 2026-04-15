@@ -2,7 +2,7 @@ import { Directive, ElementRef, Input, effect, inject, OnInit } from '@angular/c
 import { TranslationService } from './translation.service';
 
 @Directive({
-  selector: '[translate]]',
+  selector: '[translate]',
   standalone: true,
 })
 export class TranslateDirective implements OnInit {
@@ -18,17 +18,20 @@ export class TranslateDirective implements OnInit {
     effect(() => {
       if (!this.key) return;
 
+      // 👇 IMPORTANT: read dictionary signal so effect re-runs when translations load
+      const _ = this.i18n.dictionary();
+
       const translated = this.i18n.translate(this.key, this.params);
 
       if (translated === this.key) {
-        this.el.nativeElement.textContent = this.defaultContent;
+        this.el.nativeElement.innerHTML = this.defaultContent;
       } else {
-        this.el.nativeElement.textContent = translated;
+        this.el.nativeElement.innerHTML = translated;
       }
     });
   }
 
   ngOnInit() {
-    this.defaultContent = this.el.nativeElement.textContent.trim();
+    this.defaultContent = this.el.nativeElement.innerHTML.trim();
   }
 }

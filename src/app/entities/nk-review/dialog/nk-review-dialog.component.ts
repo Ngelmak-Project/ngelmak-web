@@ -6,6 +6,7 @@ import { IReview } from 'app/entities/models/nk-review.model';
 import { ITicket } from 'app/entities/models/nk-ticket.model';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
+import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { ReviewService } from '../nk-review.service';
 
@@ -14,7 +15,7 @@ import { ReviewService } from '../nk-review.service';
   selector: 'app-review-dialog',
   templateUrl: './nk-review-dialog.component.html',
   animations: [fadeInUp400ms],
-  imports: [CommonModule, RouterModule, Field],
+  imports: [CommonModule, RouterModule, Field, SharedModule],
 })
 export class ReviewDialogComponent {
   ticket = input.required<ITicket>();

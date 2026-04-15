@@ -8,12 +8,14 @@ import { FormatMediumDatetimePipe } from 'app/shared/date';
 import { finalize } from 'rxjs';
 import { ReviewDialogComponent } from '../../dialog/nk-review-dialog.component';
 import { ReviewService } from '../../nk-review.service';
+import SharedModule from 'app/shared/shared.module';
 
 @Component({
   selector: 'app-review-item',
   imports: [
     CommonModule,
     FormatMediumDatetimePipe,
+    SharedModule,
     ReviewDialogComponent,
     ConfirmDialogComponent,
     FormatMediumDatetimePipe,

@@ -13,7 +13,7 @@ import { finalize } from 'rxjs';
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
 
-  imports: [SharedModule, RouterModule, Field],
+  imports: [SharedModule, RouterModule, Field, SharedModule],
 })
 export class SignInComponent implements OnInit {
   private signInService = inject(SignInService);

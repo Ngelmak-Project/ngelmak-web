@@ -5,7 +5,7 @@ export class TranslationService {
   private primaryLang = signal<'en' | 'fr'>('en');
   private fallbackLang: 'en' | 'fr' = 'en';
 
-  private dictionary = signal<any>({});
+  public dictionary = signal<any>({});
   private fallbackDictionary = signal<any>({});
   private fallbackLoaded = false;
 

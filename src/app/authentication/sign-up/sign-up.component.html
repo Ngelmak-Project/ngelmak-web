@@ -1,19 +1,25 @@
-<section class="bg-gray-50 dark:bg-gray-900">
+<section class="bg-gray-50 dark:bg-gray-900 py-5">
   <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0">
     <!-- Header / Branding -->
     <div class="flex flex-col items-center mb-2">
-      <div class="flex items-center gap-3">
+      <a routerLink="/" class="flex items-center gap-3">
         <img
           src="assets/images/ngelmak-logo-light.svg"
           class="w-10 h-10 dark:opacity-90"
           alt="Ngelmak logo"
         />
-        <span class="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">
+        <span
+          translate="auth.signUp.brandTitle"
+          class="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight"
+        >
           Ngelmak
         </span>
-      </div>
+      </a>
 
-      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+      <p
+        translate="auth.signUp.brandSubtitle"
+        class="text-sm text-gray-500 dark:text-gray-400 mt-1"
+      >
         Créez votre compte pour accéder à votre espace personnel.
       </p>
     </div>
@@ -25,6 +31,7 @@
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
         <!-- Title -->
         <h2
+          translate="auth.signUp.title"
           class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
         >
           Créer un compte
@@ -41,6 +48,7 @@
               placeholder=" "
             />
             <label
+              translate="auth.signUp.login.label"
               for="login"
               class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
               [ngClass]="{ 'text-red-500 dark:text-red-500': errorUserExists() }"
@@ -49,12 +57,14 @@
             @if (signupForm.login().dirty()) {
               @for (error of signupForm.login().errors(); track error) {
                 <p class="text-sm text-red-600 dark:text-red-500">
-                  <span class="font-medium">{{ error.message }}</span>
+                  <span class="font-medium">{{ error.message | translate }}</span>
                 </p>
               }
               @if (errorUserExists()) {
                 <p class="text-sm text-red-600 dark:text-red-500">
-                  <span class="font-medium">Nom d'autilisateur déjà utilisé.</span>
+                  <span translate="auth.signUp.login.loginAlreadyUsed" class="font-medium"
+                    >Nom d'autilisateur déjà utilisé.</span
+                  >
                 </p>
               }
             }
@@ -71,6 +81,7 @@
               placeholder=" "
             />
             <label
+              translate="auth.signUp.email.label"
               for="email"
               class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
               [ngClass]="{ 'text-red-500 dark:text-red-500': errorEmailExists() }"
@@ -79,12 +90,14 @@
             @if (signupForm.email().dirty()) {
               @for (error of signupForm.email().errors(); track error) {
                 <p class="text-sm text-red-600 dark:text-red-500">
-                  <span class="font-medium">{{ error.message }}</span>
+                  <span class="font-medium">{{ error.message | translate }}</span>
                 </p>
               }
               @if (errorEmailExists()) {
                 <p class="text-sm text-red-600 dark:text-red-500">
-                  <span class="font-medium">Email déjà utilisé.</span>
+                  <span translate="auth.signUp.email.emailAlreadyUsed" class="font-medium"
+                    >Email déjà utilisé.</span
+                  >
                 </p>
               }
             }
@@ -100,6 +113,7 @@
               placeholder=" "
             />
             <label
+              translate="auth.signUp.password.label"
               for="password"
               class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
               >Nouveau mot de passe</label
@@ -149,7 +163,7 @@
             @if (signupForm.password().dirty()) {
               @for (error of signupForm.password().errors(); track error) {
                 <p class="text-sm text-red-600 dark:text-red-500">
-                  <span class="font-medium">{{ error.message }}</span>
+                  <span class="font-medium">{{ error.message | translate }}</span>
                 </p>
               }
             }
@@ -167,6 +181,7 @@
             />
 
             <label
+              translate="auth.signUp.confirmPassword.label"
               for="confirmPassword"
               class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
               [ngClass]="{ 'text-red-500 dark:text-red-500': doNotMatch() }"
@@ -219,12 +234,17 @@
             @if (signupForm.confirmPassword().dirty()) {
               @for (error of signupForm.confirmPassword().errors(); track error) {
                 <p class="text-sm text-red-600 dark:text-red-500">
-                  <span class="font-medium">{{ error.message }}</span>
+                  <span class="font-medium">{{ error.message | translate }}</span>
                 </p>
               }
               @if (doNotMatch()) {
                 <p class="text-sm text-red-600 dark:text-red-500">
-                  <span class="font-medium">Les deux mots de passes ne correspondent pas.</span>
+                  <span
+                    translate="auth.signUp.confirmPassword.passwordsDoNotMatch"
+                    class="font-medium"
+                  >
+                    Les deux mots de passe ne correspondent pas.
+                  </span>
                 </p>
               }
             }
@@ -257,23 +277,26 @@
                 />
               </svg>
             }
-            <span>Créer mon compte</span>
+            <span translate="auth.signUp.submit">Créer mon compte</span>
           </button>
         </form>
 
         <!-- Navigation options -->
         <div class="space-y-3 text-center">
           <div class="text-center text-sm text-gray-500 dark:text-gray-400">
-            Vous avez déjà un compte ?
+            <span translate="auth.signUp.navigation.alreadyHaveAccount"
+              >Vous avez déjà un compte ?</span
+            >
             <a
               routerLink="/sign-in"
               class="font-semibold text-blue-600 hover:underline underline-offset-4 dark:text-blue-400"
             >
-              Retour à la connexion
+              <span translate="auth.signUp.navigation.backToSignIn">Retour à la connexion</span>
             </a>
           </div>
 
           <a
+            translate="auth.signUp.navigation.contactSupport"
             routerLink="/contact"
             class="block text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
           >
@@ -283,7 +306,10 @@
 
         <!-- Divider -->
         <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
-          <p class="text-xs text-gray-500 dark:text-gray-400 text-center leading-relaxed">
+          <p
+            translate="auth.signUp.privacy"
+            class="text-xs text-gray-500 dark:text-gray-400 text-center leading-relaxed"
+          >
             Votre adresse email ne sera utilisée que pour la création de votre compte et la sécurité
             de votre accès.
           </p>

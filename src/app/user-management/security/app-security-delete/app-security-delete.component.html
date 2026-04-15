@@ -2,22 +2,35 @@
   <div
     class="p-6 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-700"
   >
-    <h2 class="text-2xl font-semibold text-red-700 dark:text-red-400 mb-4">
+    <h2
+      translate="userManagement.security.deletion.title"
+      class="text-2xl font-semibold text-red-700 dark:text-red-400 mb-4"
+    >
       Suppression du compte
     </h2>
 
-    <p class="text-sm text-red-700 dark:text-red-300 leading-relaxed mb-4">
+    <p
+      translate="userManagement.security.deletion.description1"
+      [translateParams]="{ deletionDelayDays: deletionDelayDays }"
+      class="text-sm text-red-700 dark:text-red-300 leading-relaxed mb-4"
+    >
       La suppression de votre compte est un processus <strong>différé</strong>. Une fois la demande
       effectuée, votre compte sera placé en attente de suppression pendant
       <strong>{{ deletionDelayDays }} jours</strong>.
     </p>
 
-    <p class="text-sm text-red-700 dark:text-red-300 leading-relaxed mb-4">
+    <p
+      translate="userManagement.security.deletion.description2"
+      class="text-sm text-red-700 dark:text-red-300 leading-relaxed mb-4"
+    >
       Toute reconnexion durant cette période sera interprétée comme une
       <strong>récupération du compte</strong>, et la suppression sera automatiquement annulée.
     </p>
 
-    <p class="text-sm text-red-700 dark:text-red-300 leading-relaxed mb-6">
+    <p
+      translate="userManagement.security.deletion.description3"
+      class="text-sm text-red-700 dark:text-red-300 leading-relaxed mb-6"
+    >
       Passé ce délai, toutes vos données personnelles, contenus associés et informations liées
       seront <strong>définitivement supprimés</strong> et ne pourront plus être récupérés.
     </p>
@@ -55,14 +68,14 @@
         </svg>
       }
 
-      Supprimer mon compte
+      <span translate="userManagement.security.deleteButton">Supprimer mon compte</span>
     </button>
 
     @if (openDeleteModal()) {
       <app-confirm-dialog
         variant="danger"
-        title="Confirmation de suppression"
-        message="Cette action est irréversible après le délai de récupération. Pour confirmer, veuillez saisir votre mot de passe."
+        title="{{ 'userManagement.security.deletion.modal.title' | translate }}"
+        message="{{ 'userManagement.security.deletion.modal.message' | translate }}"
         (confirm)="deleteUserAccount($event); openDeleteModal.set(false)"
       ></app-confirm-dialog>
     }

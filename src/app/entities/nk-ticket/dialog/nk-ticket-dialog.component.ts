@@ -11,7 +11,7 @@ import { ITicket } from 'app/entities/models/nk-ticket.model';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { TicketService } from '../nk-ticket.service';
-
+import SharedModule from 'app/shared/shared.module';
 
 const initTicket: ITicket = {
   id: null,
@@ -24,7 +24,7 @@ const initTicket: ITicket = {
   selector: 'app-ticket-dialog',
   templateUrl: './nk-ticket-dialog.component.html',
   animations: [fadeInUp400ms],
-  imports: [CommonModule, Field],
+  imports: [CommonModule, Field, SharedModule],
 })
 export class TicketDialogComponent {
   post = input<IPostDTO>(); // Set went reporting a post.

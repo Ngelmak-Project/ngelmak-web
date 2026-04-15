@@ -13,6 +13,7 @@ import {
 import { Router, RouterModule } from '@angular/router';
 import { ApiError } from 'app/core/auth/auth.model';
 import { AlertService } from 'app/shared/alert/alert.service';
+import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { PasswordStrengthBarComponent } from './password-strength-bar/password-strength-bar.component';
 import { SignupModel } from './sign-up.model';
@@ -21,7 +22,7 @@ import { SignUpService } from './sign-up.service';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  imports: [RouterModule, CommonModule, Field, PasswordStrengthBarComponent],
+  imports: [CommonModule, RouterModule, Field, PasswordStrengthBarComponent, SharedModule],
 })
 export class SignUpComponent {
   private registerService = inject(SignUpService);

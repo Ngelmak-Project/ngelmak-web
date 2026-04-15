@@ -5,6 +5,7 @@ import { IComment, ICommentDTO } from 'app/entities/models/nk-comment.model';
 import { IFile } from 'app/entities/models/nk-file.model';
 import { IPostDTO } from 'app/entities/models/nk-post.model';
 import { AlertService } from 'app/shared/alert/alert.service';
+import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { CommentService } from '../nk-comment.service';
 
@@ -17,7 +18,7 @@ const initComment: IComment = {
 @Component({
   selector: 'app-comment-update',
   standalone: true,
-  imports: [CommonModule, Field],
+  imports: [CommonModule, Field, SharedModule],
   templateUrl: './nk-comment-update.component.html',
 })
 export class CommentUpdateComponent implements OnInit {

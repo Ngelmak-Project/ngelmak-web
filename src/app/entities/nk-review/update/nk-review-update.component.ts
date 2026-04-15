@@ -6,6 +6,8 @@ import { IReview } from 'app/entities/models/nk-review.model';
 import { ITicket } from 'app/entities/models/nk-ticket.model';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
+import SharedModule from 'app/shared/shared.module';
+import { TranslateDirective } from 'app/shared/translation/translate.directive';
 import { finalize } from 'rxjs';
 import { ReviewService } from '../nk-review.service';
 
@@ -14,7 +16,7 @@ import { ReviewService } from '../nk-review.service';
   selector: 'app-review-update',
   templateUrl: './nk-review-update.component.html',
   animations: [fadeInUp400ms],
-  imports: [CommonModule, RouterModule, Field],
+  imports: [CommonModule, RouterModule, Field, TranslateDirective, SharedModule],
 })
 export class ReviewUpdateComponent {
   ticket = input.required<ITicket>();
@@ -53,7 +55,7 @@ export class ReviewUpdateComponent {
             type: 'success',
             message: 'Merci, votre message a bien été ajouté.',
           });
-          this.reviewForm().reset({content: ''});
+          this.reviewForm().reset({ content: '' });
           this.onreviewed.emit(body);
         },
         error: () => {

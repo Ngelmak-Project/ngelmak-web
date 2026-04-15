@@ -14,6 +14,7 @@ import { DurationPipe } from 'app/shared/date';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import { finalize } from 'rxjs';
 import { TicketDialogComponent } from 'app/entities/nk-ticket/dialog/nk-ticket-dialog.component';
+import SharedModule from 'app/shared/shared.module';
 
 @Component({
   standalone: true,
@@ -22,6 +23,7 @@ import { TicketDialogComponent } from 'app/entities/nk-ticket/dialog/nk-ticket-d
   imports: [
     CommonModule,
     RouterModule,
+    SharedModule,
     DurationPipe,
     CommentUpdateComponent,
     CommentReactionDialogComponent,

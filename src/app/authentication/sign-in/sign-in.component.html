@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0">
     <!-- Header / Branding -->
     <div class="flex flex-col items-center mb-2">
-      <div class="flex items-center gap-3">
+      <a routerLink="/" class="flex items-center gap-3">
         <img
           src="assets/images/ngelmak-logo-light.svg"
           class="w-10 h-10 dark:opacity-90"
@@ -11,7 +11,7 @@
         <span class="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">
           Ngelmak
         </span>
-      </div>
+      </a>
 
       <p
         translate="auth.signin.brandTagline"
@@ -31,7 +31,7 @@
         >
           Se connecter à son compte
         </h1>
-        <form class="space-y-4 md:space-y-6" action="#">
+        <form class="space-y-4 md:space-y-6">
           <div class="relative">
             <input
               type="text"

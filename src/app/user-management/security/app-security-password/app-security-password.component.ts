@@ -17,8 +17,8 @@ const initPassword = {
 
 @Component({
   selector: 'app-security-password',
-  imports: [CommonModule, Field, PasswordStrengthBarComponent, SharedModule],
   templateUrl: './app-security-password.component.html',
+  imports: [CommonModule, Field, PasswordStrengthBarComponent, SharedModule],
 })
 export class SecurityPasswordComponent {
   protected userService = inject(UserService);

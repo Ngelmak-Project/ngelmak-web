@@ -16,6 +16,7 @@
       ></textarea>
 
       <label
+        translate="entities.ticket.dialog.content.label"
         for="content"
         class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
       >
@@ -29,7 +30,7 @@
           @if (ticketForm.description().dirty()) {
             @for (error of ticketForm.description().errors(); track error) {
               <p class="text-red-600 dark:text-red-500 text-xs leading-tight">
-                {{ error.message }}
+                {{ error.message | translate }}
               </p>
             }
           }
@@ -74,7 +75,9 @@
             clip-rule="evenodd"
           />
         </svg>
-        Joindre une preuve (optionnel)
+        <span translate="entities.ticket.dialog.attachEvidence"
+          >Joindre une preuve (optionnel)</span
+        >
       </label>
 
       <input
@@ -126,6 +129,7 @@
     <div class="mt-6 flex justify-end gap-3">
       <!-- Cancel -->
       <button
+        translate="entities.ticket.dialog.cancel"
         type="button"
         (click)="onclose.emit()"
         [disabled]="isSaving()"
@@ -158,7 +162,7 @@
             />
           </svg>
         }
-        Envoyer
+        <span translate="entities.ticket.dialog.send">Envoyer</span>
       </button>
     </div>
   </div>

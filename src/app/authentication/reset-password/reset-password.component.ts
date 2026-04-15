@@ -5,6 +5,7 @@ import { Field, form, maxLength, minLength, required } from '@angular/forms/sign
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ApiError } from 'app/core/auth/auth.model';
 import { AlertService } from 'app/shared/alert/alert.service';
+import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { PasswordStrengthBarComponent } from '../sign-up/password-strength-bar/password-strength-bar.component';
 import { ResetPasswordService } from './reset-password.service';
@@ -19,7 +20,7 @@ const initPassword = {
   standalone: true,
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  imports: [CommonModule, RouterModule, Field, PasswordStrengthBarComponent],
+  imports: [CommonModule, RouterModule, Field, PasswordStrengthBarComponent, SharedModule],
 })
 export class ResetPasswordComponent {
   protected resetPasswordService = inject(ResetPasswordService);

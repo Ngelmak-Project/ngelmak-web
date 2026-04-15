@@ -10,10 +10,19 @@
       <div class="p-3 md:p-5 border-b dark:border-gray-700">
         <div class="flex items-start justify-between">
           <div>
-            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white leading-tight">
+            <h2
+              translate="entities.ticket.open.title"
+              [translateParams]="{ id: ticketSig().id }"
+              class="text-2xl font-semibold text-gray-900 dark:text-white leading-tight"
+            >
               Ticket #{{ ticketSig().id }}
             </h2>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Signalement utilisateur</p>
+            <p
+              translate="entities.ticket.open.subtitle"
+              class="text-sm text-gray-500 dark:text-gray-400 mt-0.5"
+            >
+              Signalement utilisateur
+            </p>
           </div>
 
           <span
@@ -24,7 +33,12 @@
               'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300': !ticketSig().resolved,
             }"
           >
-            {{ ticketSig().resolved ? 'Résolu' : 'Non résolu' }}
+            {{
+              (ticketSig().resolved
+                ? 'entities.ticket.open.statusResolved'
+                : 'entities.ticket.open.statusUnresolved'
+              ) | translate
+            }}
           </span>
         </div>
       </div>
@@ -35,38 +49,65 @@
         <div class="grid grid-cols-2 gap-4">
           <!-- Émetteur -->
           <div>
-            <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Émis par</h3>
+            <h3
+              translate="entities.ticket.open.issuedByTitle"
+              class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+            >
+              Émis par
+            </h3>
             <p class="mt-1 font-medium text-base">{{ ticketSig().issuedBy }}</p>
           </div>
 
           <!-- Date -->
           <div>
-            <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Émis le</h3>
+            <h3
+              translate="entities.ticket.open.issuedAtTitle"
+              class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+            >
+              Émis le
+            </h3>
             <p class="mt-1 text-base">{{ ticketSig().issuedAt | formatMediumDatetime }}</p>
           </div>
 
           <!-- Assigné à -->
           <div>
-            <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Assigné à</h3>
+            <h3
+              translate="entities.ticket.open.assignedToTitle"
+              class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+            >
+              Assigné à
+            </h3>
             <p class="mt-1 text-base">{{ ticketSig().assignedTo ?? '—' }}</p>
           </div>
 
           <!-- Géré par -->
           <div>
-            <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Géré par</h3>
+            <h3
+              translate="entities.ticket.open.handledByTitle"
+              class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+            >
+              Géré par
+            </h3>
             <p class="mt-1 text-base">{{ ticketSig().handledBy ?? '—' }}</p>
           </div>
         </div>
 
         <!-- CIBLE -->
         <div>
-          <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Cible</h3>
+          <h3
+            translate="entities.ticket.open.targetTitle"
+            class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+          >
+            Cible
+          </h3>
 
           <div class="mt-1 text-base space-y-3">
             <!-- CHANNEL -->
             @if (ticketSig().channel) {
               <div class="flex items-center gap-3">
-                <span class="font-medium">Channel :</span>
+                <span translate="entities.ticket.open.channelLabel" class="font-medium"
+                  >Channel :</span
+                >
                 <a
                   [routerLink]="[
                     '/channel',
@@ -101,7 +142,7 @@
             <!-- POST -->
             @else if (ticketSig().post) {
               <div>
-                <span class="font-medium">Post :</span>
+                <span translate="entities.ticket.open.postLabel" class="font-medium">Post :</span>
 
                 <!-- CLICKABLE POST ID -->
                 <a
@@ -141,7 +182,9 @@
             <!-- COMMENT -->
             @else if (ticketSig().comment) {
               <div>
-                <span class="font-medium">Commentaire :</span>
+                <span translate="entities.ticket.open.commentLabel" class="font-medium"
+                  >Commentaire :</span
+                >
 
                 <!-- CLICKABLE COMMENT ID -->
                 <a
@@ -174,7 +217,12 @@
 
         <!-- DESCRIPTION -->
         <div>
-          <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Description</h3>
+          <h3
+            translate="entities.ticket.open.descriptionTitle"
+            class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+          >
+            Description
+          </h3>
           <div class="mt-2 whitespace-pre-line leading-relaxed text-base">
             {{ ticketSig().description }}
           </div>
@@ -183,8 +231,14 @@
         <!-- EVIDENCE -->
         @if (ticketSig().evidence) {
           <div>
-            <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Preuve</h3>
+            <h3
+              translate="entities.ticket.open.evidenceTitle"
+              class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+            >
+              Preuve
+            </h3>
             <a
+              translate="entities.ticket.open.openEvidence"
               [href]="ticketSig().evidence.url"
               target="_blank"
               class="mt-2 inline-block text-blue-600 dark:text-blue-400 underline text-sm"
@@ -198,6 +252,7 @@
       <!-- ACTIONS -->
       <div class="p-3 md:p-5 border-t dark:border-gray-700 flex justify-end gap-3">
         <button
+          translate="entities.ticket.open.close"
           type="button"
           (click)="onclose.emit()"
           class="px-4 py-2 text-sm rounded-lg border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600"
@@ -215,7 +270,7 @@
               <path d="M93.9676 39.0409..." fill="currentColor" />
             </svg>
           }
-          Marquer comme résolu
+          <span translate="entities.ticket.open.markResolved">Marquer comme résolu</span>
         </button>
       </div>
     </div>

@@ -9,6 +9,7 @@
 
   <!-- If user is NOT logged in -->
   <div
+    translate="entities.comment.list.signInToComment"
     *hasNoAuthority="'ROLE_USER'"
     class="text-gray-500 dark:text-gray-400 text-sm italic px-1"
   >
@@ -27,7 +28,7 @@
         </div>
       </div>
     } @else if (comments()?.length === 0) {
-      <div class="text-gray-500 dark:text-gray-400 text-sm italic px-1">
+      <div translate="entities.comment.list.noComments" class="text-gray-500 dark:text-gray-400 text-sm italic px-1">
         Aucun commentaire pour le moment.
       </div>
     }

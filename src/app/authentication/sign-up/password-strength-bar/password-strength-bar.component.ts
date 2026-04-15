@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
+import SharedModule from 'app/shared/shared.module';
 
 @Component({
   selector: 'app-password-strength-bar',
   templateUrl: './password-strength-bar.component.html',
-  imports: [CommonModule],
+  imports: [CommonModule, SharedModule],
 })
 export class PasswordStrengthBarComponent {
   password = input<string>('');

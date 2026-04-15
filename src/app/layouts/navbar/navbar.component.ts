@@ -2,11 +2,14 @@ import { Component, effect, inject, Injectable, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { SignInService } from 'app/authentication/sign-in/sign-in.service';
+import { LANGUAGES } from 'app/config/language.constants';
 import { AuthenticationService } from 'app/core/auth/auth.service';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import SharedModule from 'app/shared/shared.module';
+import { TranslationService } from 'app/shared/translation/translation.service';
 import { environment } from 'environments/environment.development';
 
 @Injectable({ providedIn: 'root' })
@@ -26,10 +29,14 @@ export default class NavbarComponent {
   private sidebarBehavior = inject(NavbarService);
   private signInService = inject(SignInService);
   private router = inject(Router);
+  translateService = inject(TranslationService);
+  stateStorageService = inject(StateStorageService);
   user = inject(AuthenticationService).authentication;
   channel = inject(ChannelService).channel;
   inProduction?: boolean = environment.production;
   isNavbarCollapsed = signal(true);
+  showLangKeyOptions = signal(false);
+  languages = LANGUAGES;
 
   isDarkMode = signal(true); // Manage the dark mode state
   isSidebarOpened = signal(false);
@@ -58,6 +65,13 @@ export default class NavbarComponent {
   toggleSidebar() {
     this.isSidebarOpened.set(!this.isSidebarOpened());
     this.sidebarBehavior.state.set(this.isSidebarOpened());
+  }
+
+  changeLanguage(lang: 'en' | 'fr'): void {
+    this.translateService.setLanguage(lang);
+    this.showLangKeyOptions.set(true);
+    this.stateStorageService.storeLocale(lang);
+    // this.translateService.use(languageKey);
   }
 
   collapseNavbar(): void {

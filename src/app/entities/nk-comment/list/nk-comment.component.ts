@@ -1,18 +1,16 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, inject, input, OnInit, signal } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { CommentService } from 'app/entities/nk-comment/nk-comment.service';
-import { CommentUpdateComponent } from 'app/entities/nk-comment/update/nk-comment-update.component';
-
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { ICommentDTO } from 'app/entities/models/nk-comment.model';
-import SharedModule from 'app/shared/shared.module';
-
-import { HttpResponse } from '@angular/common/http';
 import { IPostDTO } from 'app/entities/models/nk-post.model';
+import { CommentService } from 'app/entities/nk-comment/nk-comment.service';
+import { CommentUpdateComponent } from 'app/entities/nk-comment/update/nk-comment-update.component';
 import { IPage } from 'app/shared/pagination/pagination.model';
-import { CommentItemComponent } from './item/nk-comment-item.component';
+import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
+import { CommentItemComponent } from './item/nk-comment-item.component';
 
 @Component({
   standalone: true,

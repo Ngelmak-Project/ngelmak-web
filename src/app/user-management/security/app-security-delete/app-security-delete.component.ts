@@ -1,15 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
-import { ConfirmDialogComponent } from 'app/shared/confirm-dialog/confirm-dialog.component';
-import { UserService } from '../user.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ApiError } from 'app/core/auth/auth.model';
-import { finalize } from 'rxjs';
 import { AlertService } from 'app/shared/alert/alert.service';
+import { ConfirmDialogComponent } from 'app/shared/confirm-dialog/confirm-dialog.component';
+import SharedModule from 'app/shared/shared.module';
+import { finalize } from 'rxjs';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-security-delete',
-  imports: [ConfirmDialogComponent],
   templateUrl: './app-security-delete.component.html',
+  imports: [ConfirmDialogComponent, SharedModule],
 })
 export class SecurityDeleteComponent {
   userService = inject(UserService);

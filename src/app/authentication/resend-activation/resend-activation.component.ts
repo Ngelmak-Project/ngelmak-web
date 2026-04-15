@@ -4,6 +4,7 @@ import { Component, inject, signal } from '@angular/core';
 import { Field, email, form, maxLength, minLength, required } from '@angular/forms/signals';
 import { RouterModule } from '@angular/router';
 import { ApiError } from 'app/core/auth/auth.model';
+import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { ForgetPasswordService } from './resend-activation.service';
 
@@ -11,7 +12,7 @@ import { ForgetPasswordService } from './resend-activation.service';
   standalone: true,
   selector: 'app-resend-activation',
   templateUrl: './resend-activation.component.html',
-  imports: [CommonModule, RouterModule, Field],
+  imports: [CommonModule, RouterModule, Field, SharedModule],
 })
 export class ResendActivationComponent {
   private forgetPasswordService = inject(ForgetPasswordService);

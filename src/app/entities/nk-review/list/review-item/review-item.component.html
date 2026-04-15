@@ -1,10 +1,6 @@
 <div class="flex flex-col gap-1">
-
   <!-- Header -->
-  <div
-    class="flex items-center gap-2"
-    [ngClass]="{ 'self-end text-right': review().isAuthor }"
-  >
+  <div class="flex items-center gap-2" [ngClass]="{ 'self-end text-right': review().isAuthor }">
     <span class="font-medium text-gray-900 dark:text-white">
       {{ review().author }}
     </span>
@@ -19,16 +15,17 @@
     class="rounded-md p-3 max-w-[85%]"
     [ngClass]="{
       'self-end bg-blue-100 dark:bg-blue-900/20': review().isAuthor,
-      'self-start bg-sky-50 dark:bg-blue-500/10': !review().isAuthor
+      'self-start bg-sky-50 dark:bg-blue-500/10': !review().isAuthor,
     }"
   >
     <!-- Reply context -->
     @if (review().replyTo) {
       <div
-        class="text-xs text-gray-800 dark:text-gray-200 mb-2 pl-2
-               border-l border-gray-800 dark:border-gray-200"
+        class="text-xs text-gray-800 dark:text-gray-200 mb-2 pl-2 border-l border-gray-800 dark:border-gray-200"
       >
-        En réponse à <span class="font-medium">{{ review().replyTo.author }}</span><br />
+        <span translate="entities.review.list.item.replyTo">En réponse à</span>
+        <span class="font-medium">{{ review().replyTo.author }}</span
+        ><br />
         <span class="italic opacity-80 line-clamp-1">
           {{ review().replyTo.content }}
         </span>
@@ -36,10 +33,7 @@
     }
 
     <!-- Content -->
-    <div
-      class="text-gray-800 dark:text-gray-200"
-      [innerHTML]="review().content"
-    ></div>
+    <div class="text-gray-800 dark:text-gray-200" [innerHTML]="review().content"></div>
   </div>
 
   <!-- Actions -->
@@ -49,6 +43,7 @@
       [ngClass]="{ 'self-end': review().isAuthor, 'self-start': !review().isAuthor }"
     >
       <button
+        translate="entities.review.list.item.reply"
         (click)="reply()"
         [disabled]="isDeleting()"
         class="text-blue-600 dark:text-blue-400 hover:underline disabled:opacity-50"
@@ -58,6 +53,7 @@
 
       @if (review().isAuthor) {
         <button
+          translate="entities.review.list.item.update"
           (click)="update()"
           [disabled]="isDeleting()"
           class="text-gray-500 dark:text-gray-400 hover:underline disabled:opacity-50"
@@ -86,7 +82,7 @@
               />
             </svg>
           }
-          Supprimer
+          <span translate="entities.review.list.item.delete">Supprimer</span>
         </button>
       }
     </div>

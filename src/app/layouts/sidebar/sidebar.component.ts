@@ -16,12 +16,12 @@ import { NavbarService } from '../navbar/navbar.component';
   imports: [RouterModule, ClickOutsideDirective, SharedModule],
 })
 export class SidebarComponent {
-  languages = LANGUAGES;
   private sidebarBehavior = inject(NavbarService);
   private stateStorageService = inject(StateStorageService);
 
   showNgelmakSubMenu = signal(false);
   showLangKeyOptions = signal(false);
+  languages = LANGUAGES;
 
   showSidebar = computed(() => {
     return this.sidebarBehavior.state();
