@@ -9,13 +9,14 @@ import { CommentItemComponent } from 'app/entities/nk-comment/list/item/nk-comme
 import { CommentService } from 'app/entities/nk-comment/nk-comment.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { ScrollService } from 'app/shared/scrool-detection/scroll.service';
+import SharedModule from 'app/shared/shared.module';
 import { SortService } from 'app/shared/sort';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-channel-comments',
   templateUrl: './channel-comments.component.html',
-  imports: [CommonModule, RouterModule, CommentItemComponent],
+  imports: [CommonModule, RouterModule, CommentItemComponent, SharedModule],
   animations: [fadeInUp400ms],
 })
 export class ChannelCommentsComponent {
@@ -72,9 +73,7 @@ export class ChannelCommentsComponent {
 
     if (!q) return list;
 
-    return list.filter(
-      (c) => c.content.toLowerCase().includes(q)
-    );
+    return list.filter((c) => c.content.toLowerCase().includes(q));
   });
 
   loadNext() {

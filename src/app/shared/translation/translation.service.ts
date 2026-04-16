@@ -4,6 +4,7 @@ import { Injectable, signal } from '@angular/core';
 export class TranslationService {
   private primaryLang = signal<'en' | 'fr'>('en');
   private fallbackLang: 'en' | 'fr' = 'en';
+  lang = this.primaryLang;
 
   public dictionary = signal<any>({});
   private fallbackDictionary = signal<any>({});
@@ -44,7 +45,7 @@ export class TranslationService {
       value = this.resolveKey(this.fallbackDictionary(), key);
 
       if (value === undefined) {
-        console.warn(`[i18n] Missing translation key: "${key}"`);
+        console.debug(`[i18n] Missing translation key: "${key}"`);
         return key;
       }
     }
@@ -58,7 +59,7 @@ export class TranslationService {
     if (value === undefined) {
       // fallback not loaded yet → return key for now
       // directive will show default content
-      console.warn(`[i18n] Missing translation key: "${key}"`);
+      console.debug(`[i18n] Missing translation key: "${key}"`);
       return key;
     }
 

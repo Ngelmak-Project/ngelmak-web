@@ -279,7 +279,7 @@
           "delete": "Delete",
           "report": {
             "label": "Report",
-            "subtitle": "Laye will not know who reported this."
+            "privacy": "Your identity will remain confidential."
           },
           "admin": {
             "blockUser": "Block user",
@@ -338,7 +338,10 @@
         "signInToComment": "Log in to comment.",
         "noComments": "No comments yet.",
         "item": {
-          "report": "Report",
+          "report": {
+            "label": "Report",
+            "privacy": "Your identity will remain confidential."
+          },
           "update": "Update",
           "delete": "Delete",
           "deleteConfirmTitle": "Delete confirmation",
@@ -463,8 +466,6 @@
           "lastMonth": "Last month",
           "lastYear": "Last year"
         },
-        "searchLabel": "Search a user",
-        "searchPlaceholder": "Enter a username",
         "table": {
           "target": "Target",
           "description": "Description",
@@ -508,12 +509,19 @@
         "cancel": "Cancel",
         "loading": "Uploading..."
       },
+      "emptyDescription": "No description available at the moment...",
       "updateButton": "Edit channel",
       "tabs": {
         "posts": "Posts",
         "comments": "Comments",
         "subscriptions": "Subscriptions",
         "reports": "Reports"
+      },
+      "channelRelated": {
+        "channelPost": "My posts",
+        "channelComment": "My comments",
+        "subscriptions": "My subscriptions",
+        "reports": "Reports about me"
       }
     },
     "security": {
@@ -635,6 +643,10 @@
           "minute": "min",
           "second": "s"
         }
+      },
+      "format": {
+        "medium": "D MMM YYYY HH:mm",
+        "short": "D MMM HH:mm"
       }
     }
   }

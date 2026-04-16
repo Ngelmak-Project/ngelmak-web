@@ -10,13 +10,14 @@ import { PostService } from 'app/entities/nk-post/nk-post.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { ScrollService } from 'app/shared/scrool-detection/scroll.service';
 import { VisibleTriggerDirective } from 'app/shared/scrool-detection/visible-trigger.directive';
+import SharedModule from 'app/shared/shared.module';
 import { SortService, sortStateSignal } from 'app/shared/sort';
 import { Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-channel-posts',
   templateUrl: './channel-posts.component.html',
-  imports: [CommonModule, RouterModule, PostCardComponent, VisibleTriggerDirective],
+  imports: [CommonModule, RouterModule, PostCardComponent, VisibleTriggerDirective, SharedModule],
   animations: [fadeInUp400ms],
 })
 export class ChannelPostsComponent {

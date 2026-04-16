@@ -291,7 +291,7 @@
           "delete": "Supprimer",
           "report": {
             "label": "Signaler",
-            "subtitle": "Laye ne saura pas qui a signalé cela."
+            "privacy": "Votre identité restera confidentielle."
           },
           "admin": {
             "blockUser": "Bloquer l'utilisateur",
@@ -350,7 +350,10 @@
         "signInToComment": "Connectez-vous pour commenter.",
         "noComments": "Aucun commentaire pour le moment.",
         "item": {
-          "report": "Signaler",
+          "report": {
+            "label": "Signaler",
+            "privacy": "Votre identité restera confidentielle."
+          },
           "update": "Update",
           "delete": "Delete",
           "deleteConfirmTitle": "Confirmation de suppression",
@@ -469,14 +472,12 @@
       "userActivityReport": {
         "title": "Liste des tickets",
         "filter": {
-          "last30Days": "Last 30 days",
-          "lastDay": "Last day",
-          "last7Days": "Last 7 days",
-          "lastMonth": "Last month",
-          "lastYear": "Last year"
+          "last30Days": "30 derniers jours",
+          "lastDay": "Dernier jour",
+          "last7Days": "7 derniers jours",
+          "lastMonth": "Dernier mois",
+          "lastYear": "Dernière année"
         },
-        "searchLabel": "Rechercher un utilisateur",
-        "searchPlaceholder": "Entrez un nom d'utilisateur",
         "table": {
           "target": "Cible",
           "description": "Description",
@@ -520,12 +521,19 @@
         "cancel": "Annuler",
         "loading": "Téléversement en cours..."
       },
+      "emptyDescription": "Aucune description pour le moment...",
       "updateButton": "Modifier la chaîne",
       "tabs": {
         "posts": "Publications",
         "comments": "Commentaires",
         "subscriptions": "Abonnements",
         "reports": "Signalements"
+      },
+      "channelRelated": {
+        "channelPost": "Mes publications",
+        "channelComment": "Mes commentaires",
+        "subscriptions": "Mes abonnements",
+        "reports": "Signalements me concernant"
       }
     },
     "security": {
@@ -647,6 +655,10 @@
           "minute": "m",
           "second": "s"
         }
+      },
+      "format": {
+        "medium": "D MMM YYYY HH:mm",
+        "short": "D MMM HH:mm"
       }
     }
   }

@@ -26,7 +26,7 @@
         <div class="flex items-center gap-2 min-w-0">
           <a
             class="truncate font-semibold text-gray-900 dark:text-white text-base"
-            [routerLink]="['channel', postSig().channel.identifier]"
+            [routerLink]="['channel', postSig().channel.identifier, 'view']"
           >
             {{ postSig().channel.name }}
             <span class="text-xs italic text-gray-500 dark:text-gray-400 truncate">
@@ -176,7 +176,7 @@
         clickOutside
         (onClickOutside)="showMenu.set(false)"
         (click)="showMenu.set(!showMenu())"
-        class="flex items-center justify-center min-w-9 h-9 md:min-w-10 md:h-10p-2 rounded-lg text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+        class="flex items-center justify-center min-w-9 h-9 md:min-w-10 md:h-10p-2 rounded-lg text-gray-500 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
         [ngClass]="{ 'bg-gray-100 dark:bg-gray-700': showMenu() }"
       >
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -188,7 +188,7 @@
 
       @if (showMenu()) {
         <div
-          class="absolute right-0 bottom-10 mt-2 w-40 rounded-xl shadow-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-700 py-2 z-20 animate-fadeIn"
+          class="absolute right-0 bottom-10 mt-2 w-40 rounded-xl shadow-xl bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-700 py-2 z-20 animate-fadeIn"
         >
           <ul *showForChannel="post().channel.id">
             <!-- REPLY -->
@@ -196,7 +196,7 @@
               <button
                 (click)="isReplying.set(true)"
                 [disabled]="isReplying()"
-                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 text-left"
+                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 text-left"
               >
                 <span translate="entities.post.card.menu.reply">Répondre</span>
                 <svg
@@ -226,7 +226,7 @@
               <button
                 (click)="isUpdating.set(true)"
                 [disabled]="isUpdating()"
-                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 text-left"
+                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 text-left"
               >
                 <span translate="entities.post.card.menu.update">Modifier</span>
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
@@ -294,31 +294,36 @@
             <li>
               <button
                 (click)="isSignalPost.set(true)"
-                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                class="w-full flex flex-col px-3 py-2 hover:bg-gray-200 dark:hover:bg-gray-600"
               >
-                <p class="flex flex-col items-start">
-                  <span translate="entities.post.card.menu.report.label">Signaler</span>
-                  <span translate="entities.post.card.menu.report.subtitle" class="text-xs text-gray-500 dark:text-gray-400">
-                    Laye ne saura pas qui a signalé cela.
-                  </span>
-                </p>
-                <svg
-                  class="w-4 h-4"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
+                <p
+                  class="flex items-center justify-between text-sm text-gray-700 dark:text-gray-200"
                 >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z"
-                  />
-                </svg>
+                  <span translate="entities.post.card.menu.report.label">Signaler</span>
+                  <svg
+                    class="w-4 h-4"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z"
+                    />
+                  </svg>
+                </p>
+                <p
+                  translate="entities.post.card.menu.report.privacy"
+                  class="text-xs text-gray-500 dark:text-gray-400"
+                >
+                  Votre identité restera confidentielle.
+                </p>
               </button>
             </li>
           </ul>
@@ -329,7 +334,9 @@
               <button
                 class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition"
               >
-                <span translate="entities.post.card.menu.admin.blockUser">Bloquer l'utilisateur</span>
+                <span translate="entities.post.card.menu.admin.blockUser"
+                  >Bloquer l'utilisateur</span
+                >
                 <svg
                   class="w-5 h-5"
                   xmlns="http://www.w3.org/2000/svg"
@@ -374,7 +381,7 @@
 
             <li>
               <button
-                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
               >
                 <span translate="entities.post.card.menu.admin.hide">Masquer</span>
                 <svg

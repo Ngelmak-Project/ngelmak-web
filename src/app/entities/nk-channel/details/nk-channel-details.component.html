@@ -65,11 +65,13 @@
             }
           </p>
 
-          <p class="text-sm text-gray-500 dark:text-gray-400">
-            <span translate="entities.channel.details.stats.accountCreated" class="font-medium">
+          <p class="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+            <span translate="entities.channel.details.createdAt" class="font-medium">
               Compte créé le
             </span>
-            <span class="font-medium">{{ channel().createdAt | date: 'longDate' }}</span>
+            <span class="text-gray-900 dark:text-gray-200 font-semibold">
+              {{ channel().createdAt | formatMediumDatetime }}
+            </span>
           </p>
         </div>
       }

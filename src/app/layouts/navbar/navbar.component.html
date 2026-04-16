@@ -349,31 +349,32 @@
           <div
             @fadeInUp
             clickOutside
-            (onClickOutside)="showUserSettings.set(false)"
-            class="absolute right-0 top-12 w-40 rounded-xl shadow-xl bg-white dark:bg-gray-800 flex flex-col divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-600 p-2 z-50 animate-fadeIn"
+            (onClickOutside)="showLangKeyOptions.set(false)"
+            class="absolute right-0 top-12 w-40 rounded-xl shadow-xl bg-white dark:bg-gray-800 flex flex-col divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-600 py-2 z-50 animate-fadeIn"
           >
             <ul class="flex flex-col space-y-1 py-1">
               <li>
                 <button
                   type="button"
                   (click)="changeLanguage('fr')"
-                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
+                  class="flex items-center p-2 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
                 >
-                  <span translate="layouts.sidebar.language.fr" class="inline-flex items-center gap-2">Français</span>
+                  <span class="inline-flex items-center gap-2">Français</span>
                 </button>
               </li>
               <li>
                 <button
                   type="button"
                   (click)="changeLanguage('en')"
-                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
+                  class="flex items-center p-2 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer w-full"
                 >
-                  <span translate="layouts.sidebar.language.en" class="inline-flex items-center gap-2">English</span>
+                  <span class="inline-flex items-center gap-2">English</span>
                 </button>
               </li>
             </ul>
           </div>
         }
+
         <!-- USER PROFILE -->
         <button
           type="button"

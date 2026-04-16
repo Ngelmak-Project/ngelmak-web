@@ -6,16 +6,16 @@ import { ChannelFeedComponent } from 'app/entities/nk-post/channel-feed/channel-
 import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInRight400ms } from 'app/shared/animations/fade-in-right.animation';
 import SharedModule from 'app/shared/shared.module';
-import { TranslateDirective } from "app/shared/translation/translate.directive";
 import { finalize } from 'rxjs';
 import { ChannelService } from '../nk-channel.service';
 import { ChannelUpdateComponent } from '../update/nk-channel-update.component';
+import { FormatMediumDatetimePipe } from 'app/shared/date';
 
 @Component({
   standalone: true,
   selector: 'app-channel-details',
   templateUrl: './nk-channel-details.component.html',
-  imports: [CommonModule, RouterModule, ChannelUpdateComponent, ChannelFeedComponent, TranslateDirective, SharedModule],
+  imports: [CommonModule, RouterModule, ChannelUpdateComponent, ChannelFeedComponent, FormatMediumDatetimePipe, SharedModule],
   animations: [fadeInRight400ms],
 })
 export class ChannelDetailComponent {

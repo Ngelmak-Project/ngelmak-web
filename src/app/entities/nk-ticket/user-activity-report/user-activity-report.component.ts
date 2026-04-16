@@ -2,7 +2,6 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ITicket } from 'app/entities/models/nk-ticket.model';
-import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { stagger150ms } from 'app/shared/animations/stagger.animation';
 import { FormatMediumDatetimePipe } from 'app/shared/date';
@@ -23,7 +22,6 @@ export class UserActivityReportComponent implements OnInit {
   private router = inject(Router);
   private ticketService = inject(TicketService);
   private activatedRoute = inject(ActivatedRoute);
-  private alertService = inject(AlertService);
 
   showMenu = signal(-1);
 

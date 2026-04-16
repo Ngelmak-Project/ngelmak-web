@@ -43,7 +43,7 @@
 
         <div class="relative ml-auto" clickOutside (onClickOutside)="showMenu.set(false)">
           <button
-            class="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            class="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
             (click)="showMenu.set(!showMenu())"
             [ngClass]="{ 'bg-gray-100 dark:bg-gray-700': showMenu() }"
           >
@@ -59,23 +59,39 @@
 
           @if (showMenu()) {
             <ul
-              class="absolute right-0 mt-1 w-32 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 shadow-lg py-1 text-xs text-gray-700 dark:text-gray-200 animate-fadeIn p-1 z-10"
+              class="absolute right-0 top-8 w-40 rounded-xl shadow-xl bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-700 py-2 z-20 animate-fadeIn"
             >
               <li>
                 <button
                   (click)="isSignalComment.set(true)"
-                  class="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                  class="w-full flex flex-col px-3 py-2 hover:bg-gray-200 dark:hover:bg-gray-600"
                 >
-                  <span translate="entities.comment.list.report">Signaler</span>
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z"
-                    />
-                  </svg>
+                  <p class="flex items-center justify-between text-sm text-gray-700 dark:text-gray-200">
+                    <span translate="entities.comment.list.item.report.label">Signaler</span>
+                    <svg
+                      class="w-4 h-4"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z"
+                      />
+                    </svg>
+                  </p>
+                  <p
+                    translate="entities.comment.list.item.report.privacy"
+                    class="text-xs text-gray-500 dark:text-gray-400"
+                  >
+                    Votre identité restera confidentielle.
+                  </p>
                 </button>
               </li>
 
@@ -83,9 +99,9 @@
                 <li>
                   <button
                     (click)="isUpdating.set(true)"
-                    class="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                    class="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
-                    <span translate="entities.comment.list.update">Modifier</span>
+                    <span translate="entities.comment.list.item.update">Modifier</span>
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
                       <path
                         stroke="currentColor"
@@ -101,9 +117,9 @@
                 <li>
                   <button
                     (click)="confirmDeleteOpen.set(true)"
-                    class="w-full flex items-center justify-between px-3 py-2 rounded-md text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition"
+                    class="w-full flex items-center justify-between px-3 py-2 rounded-md text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
                   >
-                    <span translate="entities.comment.list.delete">Supprimer</span>
+                    <span translate="entities.comment.list.item.delete">Supprimer</span>
                     @if (isDeleting()) {
                       <svg
                         class="w-4 h-4 animate-spin fill-red-600 text-gray-200 dark:text-gray-600"
@@ -167,7 +183,7 @@
         <app-comment-reaction-dialog [comment]="commentSig()"></app-comment-reaction-dialog>
 
         <button
-          translate="entities.comment.list.reply"
+          translate="entities.comment.list.item.reply"
           class="font-medium hover:underline"
           (click)="isReplying.set(!isReplying())"
         >
@@ -198,7 +214,7 @@
               </svg>
             }
             {{ commentSig().replyCount }}
-            <span translate="entities.comment.list.replies">réponses</span>
+            <span translate="entities.comment.list.item.replies">réponses</span>
           </button>
         }
       </div>
