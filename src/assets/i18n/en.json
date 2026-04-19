@@ -83,7 +83,7 @@
         "action": "Sign in"
       },
       "error": {
-        "message": "<strong>Your account is activated.</strong><br />You can now access your space.",
+        "message": "<strong>Activation could not be completed.</strong><br />The link is invalid, has expired, or has already been used.",
         "action": "Request a new activation key"
       },
       "backToSignIn": "Back to login",

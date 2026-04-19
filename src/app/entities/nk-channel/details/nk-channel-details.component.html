@@ -86,7 +86,7 @@
     <div class="flex justify-center sm:justify-start gap-8 sm:gap-12 text-center w-full sm:w-auto">
       <div class="flex flex-col">
         <span class="text-2xl font-extrabold text-gray-900 dark:text-white">
-          {{ channel().stats.followersCount }}
+          {{ channel()?.stats.followersCount || 0 }}
         </span>
         <span
           translate="entities.channel.details.stats.followers"
@@ -97,7 +97,7 @@
 
       <div class="flex flex-col">
         <span class="text-2xl font-extrabold text-gray-900 dark:text-white">
-          {{ channel().stats.followingCount }}
+          {{ channel()?.stats.followingCount || 0 }}
         </span>
         <span
           translate="entities.channel.details.stats.following"

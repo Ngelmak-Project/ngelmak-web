@@ -8,7 +8,6 @@ const channelRoute: Routes = [
   {
     path: ':id/view',
     component: ChannelDetailComponent,
-    canActivate: [UserRouteAccessService],
     resolve: {
       channel: channelResolve,
     },
