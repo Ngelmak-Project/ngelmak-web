@@ -55,10 +55,18 @@ export class CommentComponent implements OnInit {
       .subscribe({
         next: (res: HttpResponse<IPage<ICommentDTO>>) => {
           const { body } = res;
-          this.hasNext.set(body.size == body.size);
-          this.comments.set(body.content ?? []);
+          const newComments = body.content || [];
+          this.comments.update((list) => [...list, ...newComments]);
+          this.hasNext.set(newComments.length == this.itemsPerPage);
         },
       });
+  }
+
+  loadNext(): void {
+    if (!this.hasNext()) return;
+
+    this.pageToLoad++;
+    this.loadAll();
   }
 
   /**
@@ -87,13 +95,7 @@ export class CommentComponent implements OnInit {
   onComment(newComment: ICommentDTO) {
     // Increase the total number of comments on the post
     this.postSig.update((p) => ({ ...p, commentCount: p.commentCount + 1 }));
-    // end the new comment to the current list
-    this.comments.update((list) => [...list, newComment]);
-  }
-
-  onCancel() {
-    // No action needed on cancel for the main comment form, as it will simply reset the form fields.
-    // However, if you want to perform any additional cleanup or state reset when the comment creation is cancelled,
-    // you can implement that logic here.
+    // add the new comment to the beginning of the current list
+    this.comments.update((list) => [newComment, ...list]);
   }
 }

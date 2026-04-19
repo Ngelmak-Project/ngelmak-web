@@ -349,6 +349,7 @@
       "list": {
         "signInToComment": "Connectez-vous pour commenter.",
         "noComments": "Aucun commentaire pour le moment.",
+        "loadMore": "Plus de commentaires",
         "item": {
           "report": {
             "label": "Signaler",

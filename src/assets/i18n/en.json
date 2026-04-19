@@ -337,6 +337,7 @@
       "list": {
         "signInToComment": "Log in to comment.",
         "noComments": "No comments yet.",
+        "loadMore": "Load more comments",
         "item": {
           "report": {
             "label": "Report",
