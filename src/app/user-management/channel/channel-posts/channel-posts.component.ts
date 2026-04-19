@@ -35,7 +35,7 @@ export class ChannelPostsComponent {
   protected activatedRoute = inject(ActivatedRoute);
   protected sortService = inject(SortService);
   protected authService = inject(AuthenticationService);
-  channel = inject(ChannelService).channel;
+  activeChannel = inject(ChannelService).channel;
 
   itemsPerPage = ITEMS_PER_PAGE;
   page = signal(1);

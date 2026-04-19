@@ -32,7 +32,7 @@ export default class NavbarComponent {
   translateService = inject(TranslationService);
   stateStorageService = inject(StateStorageService);
   user = inject(AuthenticationService).authentication;
-  channel = inject(ChannelService).channel;
+  activeChannel = inject(ChannelService).channel;
   inProduction?: boolean = environment.production;
   isNavbarCollapsed = signal(true);
   showLangKeyOptions = signal(false);

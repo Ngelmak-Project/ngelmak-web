@@ -15,9 +15,7 @@ export type EntityArrayResponseType = HttpResponse<IPostDTO[]>;
 export class PostService {
   protected http = inject(HttpClient);
   protected applicationConfigService = inject(ApplicationConfigService);
-
   protected resourceUrl = this.applicationConfigService.getEndpointFor('core/posts');
-
   protected publicResourceUrl = this.applicationConfigService.getEndpointFor('core/r/posts');
 
   /**
@@ -85,7 +83,7 @@ export class PostService {
 
   findByChannel(id: number, req?: any): Observable<HttpResponse<IPage<IPostDTO>>> {
     const options = createRequestOption(req);
-    return this.http.get<IPage<IPostDTO>>(`${this.resourceUrl}/channel/${id}`, {
+    return this.http.get<IPage<IPostDTO>>(`${this.publicResourceUrl}/channel/${id}`, {
       params: options,
       observe: 'response',
     });

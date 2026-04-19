@@ -41,7 +41,7 @@ export class CommentItemComponent {
 
   protected commentService = inject(CommentService);
   protected alertService = inject(AlertService);
-  channel = inject(ChannelService).channel;
+  activeChannel = inject(ChannelService).channel;
 
   replies = signal<ICommentDTO[]>([]);
   isLoading = signal(false);

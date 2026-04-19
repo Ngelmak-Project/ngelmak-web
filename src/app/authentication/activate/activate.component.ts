@@ -23,8 +23,6 @@ export class ActivateComponent {
   keyIsPresent = signal(this.key.length > 0);
 
   constructor() {
-    console.log("Key: ", this.key);
-    
     if (!this.keyIsPresent()) {
       this.error.set(true);
       return;

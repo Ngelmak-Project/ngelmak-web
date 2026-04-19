@@ -17,7 +17,7 @@ import { ChannelService } from '../nk-channel.service';
 export class ChannelOverviewComponent {
   isLoading = signal(false);
   isSaving = signal(false);
-  channel = inject(ChannelService).channel;
+  activeChannel = inject(ChannelService).channel;
   channelService = inject(ChannelService);
   alertService = inject(AlertService);
 

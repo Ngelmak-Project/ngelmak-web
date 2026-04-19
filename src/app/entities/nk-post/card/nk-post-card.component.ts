@@ -43,7 +43,7 @@ export class PostCardComponent {
   protected postService = inject(PostService);
   protected alertService = inject(AlertService);
   channelService = inject(ChannelService);
-  channel = inject(ChannelService).channel; // connected user's channel.
+  activeChannel = inject(ChannelService).channel; // connected user's channel.
 
   postSig = signal<IPostDTO>(null); // Signal to hold the current post data, allowing for reactive updates.
   showMenu = signal(false);
@@ -65,10 +65,10 @@ export class PostCardComponent {
    */
   subscription = computed(() => {
     // No channel loaded → no subscription possible
-    if (!this.channel()) return null;
+    if (!this.activeChannel()) return null;
 
     // Find the subscription where this channel follows the post's channel
-    return this.channel().stats.following.find((e) => e.subscribedToId === this.post().channel.id);
+    return this.activeChannel().stats.following.find((e) => e.subscribedToId === this.post().channel.id);
   });
 
   constructor() {

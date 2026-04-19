@@ -22,7 +22,7 @@ export class ReactionDialogComponent {
   post = input<IPostDTO>();
 
   // Injected services
-  channel = inject(ChannelService).channel;
+  activeChannel = inject(ChannelService).channel;
   alertService = inject(AlertService);
   reactionService = inject(ReactionService);
 
@@ -89,7 +89,7 @@ export class ReactionDialogComponent {
     // Case 2: create or update reaction
     const reaction: IReaction = {
       id: reactionId ?? undefined,
-      channel: this.channel(),
+      channel: this.activeChannel(),
       post: { id: post.id },
       emoji,
     };

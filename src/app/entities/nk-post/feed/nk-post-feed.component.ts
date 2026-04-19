@@ -49,7 +49,7 @@ export class PostFeedComponent implements OnInit, OnDestroy {
   protected alertService = inject(AlertService);
   protected ngZone = inject(NgZone);
 
-  channel = inject(ChannelService).channel;
+  activeChannel = inject(ChannelService).channel;
   private subs = new Subscription();
 
   // Feed content

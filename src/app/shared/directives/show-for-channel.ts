@@ -29,11 +29,11 @@ export class ShowForChannelDirective {
 
   constructor() {
     // Inject the channel service to access current channel
-    const channel = inject(ChannelService).channel;
+    const activeChannel = inject(ChannelService).channel;
 
     effect(() => {
       // Check if channel exists and matches the required channel ID
-      if (channel() && channel().id === this.showForChannel()) {
+      if (activeChannel() && activeChannel().id === this.showForChannel()) {
         // Render the template view if channel matches
         this.viewContainerRef.createEmbeddedView(this.templateRef);
       } else {

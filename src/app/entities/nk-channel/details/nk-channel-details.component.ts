@@ -29,7 +29,7 @@ export class ChannelDetailComponent {
   /**
    * The current user's channel, used for determining subscription status and permissions.
    */
-  private userChannel = this.channelService.channel;
+  private activeChannel = this.channelService.channel;
 
   // VIEW SIGNALS
   isUploading = signal(false);
@@ -115,11 +115,11 @@ export class ChannelDetailComponent {
    */
   subscription = computed<ISubscriptionDTO | null>(() => {
     // No channel loaded → no subscription possible
-    if (!this.userChannel()) return null;
+    if (!this.activeChannel()) return null;
 
     // Find the subscription where this channel follows the post's channel
-    return this.userChannel().stats.following.find(
-      (e) => e.subscribedToId === this.userChannel().id,
+    return this.activeChannel().stats.following.find(
+      (e) => e.subscribedToId === this.activeChannel().id,
     );
   });
 
@@ -134,7 +134,7 @@ export class ChannelDetailComponent {
 
     const action$ = this.subscription()
       ? this.channelService.unfollow(this.subscription().id)
-      : this.channelService.follow(this.userChannel());
+      : this.channelService.follow(this.activeChannel());
     action$.pipe(finalize(() => this.isSubscriptionToggling.set(false))).subscribe({
       next: (res: any) => {
         if (this.subscription()) {

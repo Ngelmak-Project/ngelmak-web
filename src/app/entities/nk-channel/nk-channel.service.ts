@@ -88,7 +88,9 @@ export class ChannelService {
   // API
 
   private http = inject(HttpClient);
-  private resourceUrl = inject(ApplicationConfigService).getEndpointFor('core/channels');
+  protected applicationConfigService = inject(ApplicationConfigService);
+  private resourceUrl = this.applicationConfigService.getEndpointFor('core/channels');
+  private publicResourceUrl = this.applicationConfigService.getEndpointFor('core/r/channels');
 
   /**
    * CRUD operations for channels (admin or profile editing).
@@ -106,7 +108,7 @@ export class ChannelService {
   }
 
   find(id: number): Observable<EntityResponseType> {
-    return this.http.get<IChannel>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    return this.http.get<IChannel>(`${this.publicResourceUrl}/${id}`, { observe: 'response' });
   }
 
   findByUser(id: number): Observable<EntityResponseType> {

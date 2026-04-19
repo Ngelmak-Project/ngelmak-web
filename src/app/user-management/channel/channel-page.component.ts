@@ -23,7 +23,7 @@ import { finalize } from 'rxjs';
   animations: [fadeInRight400ms],
 })
 export class ChannelPageComponent {
-  channel = inject(ChannelService).channel;
+  activeChannel = inject(ChannelService).channel;
 
   protected alertService = inject(AlertService);
   protected channelService = inject(ChannelService);

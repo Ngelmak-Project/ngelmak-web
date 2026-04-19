@@ -115,7 +115,7 @@ export class ChannelFeedComponent {
       q: this.query(),
     };
 
-    this.postService.findByAuthenticatedUser(req).subscribe({
+    this.postService.findByChannel(this.channel().id, req).subscribe({
       next: (res) => {
         const { body } = res;
         this.hasNext.set(body.content.length == this.itemsPerPage);

@@ -29,7 +29,7 @@ export class ChannelCommentsComponent {
   protected scroll = inject(ScrollService);
   private router = inject(Router);
 
-  channel = inject(ChannelService).channel;
+  activeChannel = inject(ChannelService).channel;
   comments = signal<ICommentDTO[]>([]);
 
   isLoading = signal(false);
@@ -46,7 +46,7 @@ export class ChannelCommentsComponent {
 
   constructor() {
     effect(() => {
-      const acc = this.channel();
+      const acc = this.activeChannel();
       if (!acc) return; // wait until channel is loaded
 
       // Now it's safe to load comments
@@ -120,7 +120,7 @@ export class ChannelCommentsComponent {
       q: this.query(),
     };
 
-    this.commentService.findByChannel(this.channel()!.id, req).subscribe({
+    this.commentService.findByChannel(this.activeChannel()!.id, req).subscribe({
       next: (res) => {
         const { body } = res;
 

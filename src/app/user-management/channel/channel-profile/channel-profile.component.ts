@@ -8,6 +8,6 @@ import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 })
 export class ChannelProfileComponent {
 
-  channel = inject(ChannelService).channel;
+  activeChannel = inject(ChannelService).channel;
 
 }

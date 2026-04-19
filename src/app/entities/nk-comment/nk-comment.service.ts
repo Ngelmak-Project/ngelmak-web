@@ -11,7 +11,6 @@ import { IPage } from 'app/shared/pagination/pagination.model';
 export class CommentService {
   protected http = inject(HttpClient);
   protected applicationConfigService = inject(ApplicationConfigService);
-
   protected resourceUrl = this.applicationConfigService.getEndpointFor('core/comments');
   protected publicResourceUrl = this.applicationConfigService.getEndpointFor('core/r/comments');
 

@@ -42,7 +42,7 @@ export class PostDetailComponent {
   ondeleted = output<IPostDTO>(); // Event emitted when the post is deleted.
 
   postSig = signal<IPostDTO>(null); // Signal to hold the current post data, allowing for reactive updates.
-  channel = inject(ChannelService).channel; // connected user's channel.
+  activeChannel = inject(ChannelService).channel; // connected user's channel.
   openMenu = signal(false);
   confirmDeleteOpen = signal(false);
   isDeleting = signal(false);

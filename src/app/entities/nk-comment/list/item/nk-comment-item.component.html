@@ -95,7 +95,7 @@
                 </button>
               </li>
 
-              @if (commentSig().channel?.id == channel()?.id) {
+              @if (commentSig().channel?.id == activeChannel()?.id) {
                 <li>
                   <button
                     (click)="isUpdating.set(true)"

@@ -28,7 +28,7 @@ import { ReactionService } from '../nk-comment-reaction.service';
 export class CommentReactionDialogComponent implements OnInit {
   @Input() comment: ICommentDTO;
 
-  channel = inject(ChannelService).channel;
+  activeChannel = inject(ChannelService).channel;
   alertService = inject(AlertService);
   reactionService = inject(ReactionService);
 
@@ -76,7 +76,7 @@ export class CommentReactionDialogComponent implements OnInit {
     // Case 2: user changes or adds a reaction
     const reaction: ICommentReaction = {
       id: reactionId ?? undefined,
-      channel: this.channel(),
+      channel: this.activeChannel(),
       comment: { id: this.comment.id },
       emoji,
     };

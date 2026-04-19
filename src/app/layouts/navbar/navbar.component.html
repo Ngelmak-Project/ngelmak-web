@@ -588,7 +588,7 @@
 
             <!-- Connected user with ROLE_USER authority -->
             <ul *hasAnyAuthority="'ROLE_USER'" class="flex flex-col space-y-1 py-1">
-              @if (channel()) {
+              @if (activeChannel()) {
                 <!-- My channel :
 (Everything related to the social media / information sharing service)
 Core items:
