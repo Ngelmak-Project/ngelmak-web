@@ -35,3 +35,19 @@ export interface IPostDTO {
   commentCount?: number;
   replyToId?: number;
 }
+
+interface ActiveChannel {
+  id?: number;
+	name?: String;
+	identifier?: String;
+	avatar?: String;
+	banner?: String;
+	description?: String;
+	postCount?: number;
+}
+
+export interface ITrending {
+  topActiveChannels?: ActiveChannel[];
+  trendingPosts?: IPostDTO[];
+  mostCommentedPosts?: IPostDTO[];
+}

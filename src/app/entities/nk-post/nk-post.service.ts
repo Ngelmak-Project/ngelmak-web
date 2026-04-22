@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IPost, IPostDTO } from 'app/entities/models/nk-post.model';
+import { IPost, IPostDTO, ITrending } from 'app/entities/models/nk-post.model';
 import { IPage } from 'app/shared/pagination/pagination.model';
 import { IFile } from '../models/nk-file.model';
 
@@ -105,18 +105,24 @@ export class PostService {
     });
   }
 
-  query(req?: any): Observable<HttpResponse<IPage<IPost>>> {
-    const options = createRequestOption(req);
-    return this.http.get<IPage<IPost>>(this.publicResourceUrl, {
-      params: options,
-      observe: 'response',
-    });
-  }
+  // query(req?: any): Observable<HttpResponse<IPage<IPost>>> {
+  //   const options = createRequestOption(req);
+  //   return this.http.get<IPage<IPost>>(this.publicResourceUrl, {
+  //     params: options,
+  //     observe: 'response',
+  //   });
+  // }
 
   feeds(req?: any): Observable<HttpResponse<IPage<IPost>>> {
     const options = createRequestOption(req);
     return this.http.get<IPage<IPost>>(`${this.publicResourceUrl}/feeds`, {
       params: options,
+      observe: 'response',
+    });
+  }
+
+  trending(): Observable<HttpResponse<ITrending>> {
+    return this.http.get<ITrending>(`${this.publicResourceUrl}/trending`, {
       observe: 'response',
     });
   }

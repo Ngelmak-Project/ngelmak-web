@@ -1,6 +1,5 @@
-import { Component, effect, inject, input, Input, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { AlertService } from 'app/shared/alert/alert.service';
-
 import { HttpResponse } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IPostDTO } from 'app/entities/models/nk-post.model';
@@ -11,7 +10,6 @@ import SharedModule from 'app/shared/shared.module';
 import { finalize, Observable } from 'rxjs';
 import { ReactionService } from '../nk-reaction.service';
 
-// [TODO] Make sure that use has account before allowing him reaction
 @Component({
   standalone: true,
   selector: 'app-reaction-dialog',
@@ -20,73 +18,62 @@ import { ReactionService } from '../nk-reaction.service';
 })
 export class ReactionDialogComponent {
   post = input<IPostDTO>();
+  protected postState = signal<IPostDTO | null>(null);
 
-  // Injected services
-  activeChannel = inject(ChannelService).channel;
-  alertService = inject(AlertService);
-  reactionService = inject(ReactionService);
+  // Services
+  protected readonly activeChannel = inject(ChannelService).channel;
+  protected readonly alertService = inject(AlertService);
+  protected readonly reactionService = inject(ReactionService);
 
-  // UI state signals
+  // UI state
   isOpen = signal(false);
   isSaving = signal(false);
 
-  // Reaction-related signals
+  // Derived UI signals
   totalReactions = signal(0);
   emojiReactions = signal<string[]>([]);
   reactedByCurrentUser = signal<string | null>(null);
 
-  // Available emojis
   emojis = ['👍', '❤️', '😂', '😮', '😡', '🤔'];
 
-  /**
-   * Effect: whenever the post() changes, recompute reaction data.
-   * Replaces ngOnInit() + manual update().
-   */
-  updateEffect = effect(() => {
+  // Sync immutable input → local writable state
+  syncEffect = effect(() => {
     const p = this.post();
+    if (p) this.postState.set(structuredClone(p));
+  });
+
+  // Recompute derived values when postState changes
+  computeEffect = effect(() => {
+    const p = this.postState();
     if (!p?.reactions) return;
 
-    // Total count
-    const total = Object.values(p.reactions.counts).reduce((acc, val) => acc + val, 0);
-    this.totalReactions.set(total);
+    const counts = p.reactions.counts;
 
-    // List of emojis used
-    this.emojiReactions.set(Object.keys(p.reactions.counts));
-
-    // Current user's reaction
+    this.totalReactions.set(Object.values(counts).reduce((a, b) => a + b, 0));
+    this.emojiReactions.set(Object.keys(counts));
     this.reactedByCurrentUser.set(p.reactions.reactedByCurrentUser);
   });
 
-  /**
-   * Toggle the emoji picker.
-   */
   toggle() {
-    this.isOpen.set(!this.isOpen());
+    this.isOpen.update(v => !v);
   }
 
-  /**
-   * User selects an emoji.
-   * Handles create, update, or delete of a reaction.
-   */
   select(emoji: string) {
     this.isOpen.set(false);
 
-    const post = this.post();
+    const post = this.postState();
     if (!post?.reactions) return;
 
-    const currentEmoji = this.reactedByCurrentUser();
+    const current = post.reactions.reactedByCurrentUser;
     const reactionId = post.reactions.reactionId;
 
-    // Case 1: clicking the same emoji → delete reaction
-    if (emoji === currentEmoji) {
-      this.subscribeToSaveResponse(
-        this.reactionService.delete(reactionId),
-        this.onDelete.bind(this),
-      );
+    // Delete
+    if (emoji === current) {
+      this.save(this.reactionService.delete(reactionId), () => this.applyDelete());
       return;
     }
 
-    // Case 2: create or update reaction
+    // Create or update
     const reaction: IReaction = {
       id: reactionId ?? undefined,
       channel: this.activeChannel(),
@@ -94,93 +81,76 @@ export class ReactionDialogComponent {
       emoji,
     };
 
-    const request$ = reaction.id
+    const req$ = reaction.id
       ? this.reactionService.update(reaction)
       : this.reactionService.create(reaction);
 
-    const callback = reaction.id ? this.onUpdate : this.onCreate;
-
-    this.subscribeToSaveResponse(request$, callback.bind(this));
+    this.save(req$, r => this.applyUpsert(r));
   }
 
-  /**
-   * Handle creation of a new reaction.
-   */
-  private onCreate(reaction: IReaction) {
-    const post = this.post();
-    if (!post?.reactions) return;
-
-    this.incrementEmoji(reaction.emoji);
-    post.reactions.reactedByCurrentUser = reaction.emoji;
-    post.reactions.reactionId = reaction.id;
-  }
-
-  /**
-   * Handle update of an existing reaction.
-   */
-  private onUpdate(reaction: IReaction) {
-    const post = this.post();
-    if (!post?.reactions) return;
-
-    const oldEmoji = post.reactions.reactedByCurrentUser;
-    this.decrementEmoji(oldEmoji);
-    this.incrementEmoji(reaction.emoji);
-
-    post.reactions.reactedByCurrentUser = reaction.emoji;
-  }
-
-  /**
-   * Handle deletion of a reaction.
-   */
-  private onDelete(_: IReaction) {
-    const post = this.post();
-    if (!post?.reactions) return;
-
-    const oldEmoji = post.reactions.reactedByCurrentUser;
-    this.decrementEmoji(oldEmoji);
-
-    post.reactions.reactedByCurrentUser = null;
-    post.reactions.reactionId = null;
-  }
-
-  /**
-   * Increment count for an emoji.
-   */
-  private incrementEmoji(emoji: string) {
-    const counts = this.post()?.reactions?.counts;
-    if (!counts) return;
-
-    counts[emoji] = (counts[emoji] ?? 0) + 1;
-  }
-
-  /**
-   * Decrement count for an emoji.
-   */
-  private decrementEmoji(emoji: string | null) {
-    if (!emoji) return;
-
-    const counts = this.post()?.reactions?.counts;
-    if (!counts || !counts[emoji]) return;
-
-    counts[emoji]--;
-    if (counts[emoji] === 0) delete counts[emoji];
-  }
-
-  /**
-   * Subscribe to save response and handle success/error.
-   * Also resets isSaving when done.
-   */
-  private subscribeToSaveResponse(
+  private save(
     result: Observable<HttpResponse<IReaction>>,
-    callback: (reaction: IReaction) => void,
-  ): void {
+    onSuccess: (r: IReaction) => void
+  ) {
+    this.isSaving.set(true);
+
     result.pipe(finalize(() => this.isSaving.set(false))).subscribe({
-      next: ({ body }) => callback(body),
+      next: ({ body }) => onSuccess(body),
       error: () =>
         this.alertService.addAlert({
           type: 'error',
           message: 'Une erreur est survenue lors de la sauvegarde.',
         }),
+    });
+  }
+
+  private applyUpsert(reaction: IReaction) {
+    const post = this.postState();
+    if (!post?.reactions) return;
+
+    const oldEmoji = post.reactions.reactedByCurrentUser;
+    const newEmoji = reaction.emoji;
+
+    const counts = { ...post.reactions.counts };
+
+    if (oldEmoji) {
+      counts[oldEmoji]--;
+      if (counts[oldEmoji] === 0) delete counts[oldEmoji];
+    }
+
+    counts[newEmoji] = (counts[newEmoji] ?? 0) + 1;
+
+    this.postState.set({
+      ...post,
+      reactions: {
+        ...post.reactions,
+        reactedByCurrentUser: newEmoji,
+        reactionId: reaction.id,
+        counts,
+      },
+    });
+  }
+
+  private applyDelete() {
+    const post = this.postState();
+    if (!post?.reactions) return;
+
+    const oldEmoji = post.reactions.reactedByCurrentUser;
+    const counts = { ...post.reactions.counts };
+
+    if (oldEmoji) {
+      counts[oldEmoji]--;
+      if (counts[oldEmoji] === 0) delete counts[oldEmoji];
+    }
+
+    this.postState.set({
+      ...post,
+      reactions: {
+        ...post.reactions,
+        reactedByCurrentUser: null,
+        reactionId: null,
+        counts,
+      },
     });
   }
 }
