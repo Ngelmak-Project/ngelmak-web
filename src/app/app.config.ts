@@ -1,3 +1,4 @@
+import { TemplatePageTitleStrategyService } from './shared/template-page-title-strategy/template-page-title-strategy.service';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
   ApplicationConfig,
@@ -5,12 +6,14 @@ import {
   provideBrowserGlobalErrorListeners
 } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideRouter, TitleStrategy, withComponentInputBinding } from '@angular/router';
 import { httpInterceptorProviders } from 'app/core/interceptor/index';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    // This line ensures your custom title strategy is used
+    { provide: TitleStrategy, useClass: TemplatePageTitleStrategyService },
     // Provide the HTTP client with interceptors for handling authentication and error responses.
     provideHttpClient(withInterceptors(httpInterceptorProviders)),
     // Global error listeners to catch unhandled errors and promise rejections.

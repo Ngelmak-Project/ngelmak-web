@@ -1,30 +1,26 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="app-authority-heading"
-        data-cy="AuthorityCreateUpdateHeading"
-        id="ngelmakprojectApp.adminAuthority.home.createOrEditLabel"
-      >
-        Créer ou éditer un Authority
-      </h2>
+      <h2>Créer ou éditer un Authority</h2>
 
       <div>
         <div class="mb-3">
-          <label class="form-label" for="field_name" >Name</label>
+          <label class="form-label" for="name">Name</label>
           <input
             type="text"
             class="form-control"
             name="name"
-            id="field_name"
-            data-cy="name"
+            id="name"
             formControlName="name"
             [readonly]="editForm.get('name')!.disabled"
           />
-          @if (editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)) {
+          @if (
+            editForm.get('name')!.invalid &&
+            (editForm.get('name')!.dirty || editForm.get('name')!.touched)
+          ) {
             <div>
               @if (editForm.get('name')?.errors?.['required']) {
-                <small class="form-text text-danger" >Ce champ est obligatoire.</small>
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
               }
               @if (editForm.get('name')?.errors?.['maxlength']) {
                 <small class="form-text text-danger" id="entity.validation.maxlength"
@@ -37,14 +33,18 @@
       </div>
 
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <button
+          type="button"
+          id="cancel-save"
+          class="btn btn-secondary"
+          (click)="previousState()"
+        >
           <!-- <span class="ban"></span>&nbsp;<span >Annuler</span> -->
         </button>
 
         <button
           type="submit"
           id="save-entity"
-          data-cy="entityCreateSaveButton"
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >

@@ -1,57 +1,86 @@
 <section
   class="max-w-3xl mx-auto my-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700"
 >
-  <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Modération</h1>
+  <h1
+    translate="pages.moderation.title"
+    class="text-3xl font-bold text-gray-900 dark:text-white mb-6"
+  >
+    Modération
+  </h1>
 
-  <p class="font-normal text-gray-700 dark:text-gray-400 mb-4">
+  <p translate="pages.moderation.intro1" class="font-normal text-gray-700 dark:text-gray-400 mb-4">
     La modération sur Ngelmak repose sur une éthique claire : protéger la dignité des membres,
     garantir la qualité des échanges et préserver un espace d'expression responsable. Elle ne vise
     jamais à censurer des idées, mais à maintenir un climat de respect, de rigueur et de réflexion
     constructive.
   </p>
 
-  <p class="font-normal text-gray-700 dark:text-gray-400 mb-4">
+  <p translate="pages.moderation.intro2" class="font-normal text-gray-700 dark:text-gray-400 mb-4">
     Les modérateurs interviennent uniquement lorsque les principes fondamentaux du projet sont
     menacés : attaques personnelles, comportements malveillants, violations des règles essentielles
     ou dégradation volontaire du débat. Leur rôle est d'accompagner la communauté, pas de la
     contrôler.
   </p>
 
-  <h2 class="text-2xl font-semibold mt-10 mb-4 tracking-tight text-gray-900 dark:text-white">
+  <h2
+    translate="pages.moderation.principales.title"
+    class="text-2xl font-semibold mt-10 mb-4 tracking-tight text-gray-900 dark:text-white"
+  >
     Principes de la modération
   </h2>
 
   <ul class="list-disc pl-6 text-gray-700 dark:text-gray-400 space-y-2">
-    <li>Respect absolu de la dignité de chaque membre.</li>
-    <li>Neutralité et absence de jugement idéologique.</li>
-    <li>Interventions limitées aux comportements nuisibles.</li>
-    <li>Sanctions graduées et toujours motivées.</li>
-    <li>Possibilité de contestation pour toute décision.</li>
+    <li translate="pages.moderation.principales.list1">
+      Respect absolu de la dignité de chaque membre.
+    </li>
+    <li translate="pages.moderation.principales.list2">
+      Neutralité et absence de jugement idéologique.
+    </li>
+    <li translate="pages.moderation.principales.list3">
+      Interventions limitées aux comportements nuisibles.
+    </li>
+    <li translate="pages.moderation.principales.list4">Sanctions graduées et toujours motivées.</li>
+    <li translate="pages.moderation.principales.list5">
+      Possibilité de contestation pour toute décision.
+    </li>
   </ul>
 
-  <p class="font-normal text-gray-700 dark:text-gray-400 mt-4 mb-4">
+  <p
+    translate="pages.moderation.service"
+    class="font-normal text-gray-700 dark:text-gray-400 mt-4 mb-4"
+  >
     La modération est un service rendu à la communauté. Elle protège l'espace, encourage la
     responsabilité et garantit que Ngelmak reste un lieu de réflexion collective et de souveraineté
     intellectuelle.
   </p>
 
-  <h2 class="text-2xl font-semibold mt-10 mb-4 tracking-tight text-gray-900 dark:text-white">
+  <h2
+    translate="pages.moderation.apply.title"
+    class="text-2xl font-semibold mt-10 mb-4 tracking-tight text-gray-900 dark:text-white"
+  >
     Devenir modérateur
   </h2>
 
-  <p class="font-normal text-gray-700 dark:text-gray-400 mb-6">
+  <p
+    translate="pages.moderation.apply.intro"
+    class="font-normal text-gray-700 dark:text-gray-400 mb-6"
+  >
     Les membres qui souhaitent contribuer davantage peuvent proposer leur candidature. La modération
     est un engagement volontaire fondé sur la responsabilité, la patience et la compréhension des
     principes du projet.
   </p>
 
   @if (!user()) {
-    <p class="font-normal text-gray-700 dark:text-gray-400 mb-4">
+    <p
+      translate="pages.moderation.apply.mustLogin"
+      class="font-normal text-gray-700 dark:text-gray-400 mb-4"
+    >
       Vous devez être connecté pour postuler en tant que modérateur.
     </p>
 
     <div class="flex gap-2 flex-wrap">
       <button
+        translate="pages.moderation.apply.signin"
         routerLink="/sign-in"
         class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
       >
@@ -59,6 +88,7 @@
       </button>
 
       <button
+        translate="pages.moderation.apply.signup"
         routerLink="/sign-up"
         class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
       >
@@ -70,9 +100,12 @@
     <div class="space-y-4" *hasNoAuthority="'MODERATOR_ADMIN'">
       @if (authRequest()) {
         <div class="p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700">
-          Votre demande de modération est en cours de traitement. Merci de votre patience.
+          <span translate="pages.moderation.apply.pending">
+            Votre demande de modération est en cours de traitement. Merci de votre patience.
+          </span>
           <time class="block mt-2 text-xs text-gray-500">
-            Demandé le {{ authRequest().requestedAt | date: 'longDate' }} à
+            <span translate="pages.moderation.apply.requestedOn">Demandé le</span>
+            {{ authRequest().requestedAt | date: 'longDate' }},
             {{ authRequest().requestedAt | date: 'shortTime' }}</time
           >
         </div>
@@ -89,6 +122,7 @@
           />
 
           <label
+            translate="pages.moderation.apply.fullName"
             for="name"
             class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
           >
@@ -107,27 +141,24 @@
           ></textarea>
 
           <label
+            translate="pages.moderation.apply.motivation.label"
             for="motivation"
             class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
           >
             Pourquoi souhaitez-vous devenir modérateur ?
           </label>
 
-          @if (authorityForm.motivation().dirty()) {
-            @for (error of authorityForm.motivation().errors(); track error) {
-              <p class="text-red-600 dark:text-red-500 text-xs leading-tight">
-                {{ error.message }}
-              </p>
-            }
-          }
           <!-- Wrapper: puts counter on left and errors on right -->
           <div class="flex justify-between items-start mt-1 text-xs w-full">
             <!-- Errors (left side) -->
             <div class="text-left flex-1">
               @if (authorityForm.motivation().dirty()) {
                 @for (error of authorityForm.motivation().errors(); track error) {
-                  <p class="text-red-600 dark:text-red-500 text-xs leading-tight">
-                    {{ error.message }}
+                  <p
+                    translate="pages.moderation.title"
+                    class="text-red-600 dark:text-red-500 text-xs leading-tight"
+                  >
+                    {{ error.message | translate }}
                   </p>
                 }
               }
@@ -171,13 +202,15 @@
               />
             </svg>
           }
-          Envoyer la demande
+          <span translate="pages.moderation.apply.submit">Envoyer la demande</span>
         </button>
       }
     </div>
 
     <div *hasAnyAuthority="'MODERATOR_ADMIN'">
-      <p class="text-sm text-gray-500 dark:text-gray-400">Vous êtes déjà modérateur.</p>
+      <p translate="pages.moderation.alreadyModerator" class="text-sm text-gray-500 dark:text-gray-400">
+        Vous êtes déjà modérateur.
+      </p>
     </div>
   }
 </section>

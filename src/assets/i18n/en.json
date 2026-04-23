@@ -2,7 +2,6 @@
   "layouts": {
     "sidebar": {
       "home": "Home",
-
       "project": {
         "title": "The Ngelmak Project",
         "visionAndGoals": "Vision & Goals",
@@ -12,7 +11,6 @@
         "mobilitySoon": "Mobility (coming soon)",
         "roadmap": "Roadmap"
       },
-
       "community": "Community",
       "reports": "Reports",
       "moderation": "Moderation",
@@ -20,7 +18,6 @@
       "about": "About",
       "contact": "Contact",
       "donations": "Donate",
-
       "language": {
         "fr": "French",
         "en": "English"
@@ -649,6 +646,129 @@
         "medium": "D MMM YYYY HH:mm",
         "short": "D MMM HH:mm"
       }
+    }
+  },
+  "pages": {
+    "about": {
+      "pageTitle": "Ngelmak — About",
+      "title": "About Ngelmak",
+      "intro1": "Ngelmak is a pan-African project dedicated to creating a sovereign, free, and ethical digital space. It addresses a fundamental need: enabling Africans to communicate, analyze, debate, and build their own narrative without relying on foreign platforms that filter their voices or impose their narratives.",
+      "intro2": "The name Ngelmak, which means “courtyard” in Serer, refers to the traditional space where people gather to exchange, reflect, and make decisions together. This is precisely the role the project aims to restore to our digital space: a place of free expression, collective responsibility, and intellectual sovereignty.",
+      "why.title": "Why Ngelmak Exists",
+      "why.text1": "Africa evolves within an informational landscape dominated by foreign platforms that shape the perception of our realities. This dependency deprives Africans of a space to document their experiences, protect their collective memory, and assert their sovereignty. Narratives about us are often distorted, filtered, or instrumentalized.",
+      "why.text2": "Faced with this strategic void, Ngelmak offers a credible, sustainable, and independent alternative, built by Africans and for Africans. The project aims to provide a space for responsible, rigorous expression oriented toward the common good.",
+      "vision.title": "Our Vision",
+      "vision.text1": "Ngelmak is rooted in a pan-African vision based on unity, dignity, and intellectual sovereignty. Despite our linguistic, cultural, or ideological differences, we share a common condition: being perceived from the outside through reductive or dehumanizing narratives.",
+      "vision.text2": "The project aims to enable Africans to regain control over their voice, their image, and their history, while fully participating in international discussions with their own analyses and perspectives.",
+      "building.title": "What We Are Building",
+      "building.text1": "Ngelmak is not a commercial company but a community tool founded on solidarity, responsibility, and the common good. The project will evolve gradually, starting with modest but essential features, and will grow over time thanks to community contributions.",
+      "building.text2": "The project is built on sacred principles: absolute free access, complete absence of profit motives, strict data protection, transparency, and community governance. These foundations ensure that Ngelmak remains a free, ethical, and sovereign space.",
+      "collective.title": "A Collective Initiative",
+      "collective.text1": "Although the founder holds the initial rights and safeguards the vision, Ngelmak belongs to its community. Users can propose ideas, contribute to development, participate in decisions, and help shape the future of the project.",
+      "collective.text2": "Ngelmak is an initiative built with rigor, conviction, and responsibility, designed to sustainably serve the interests of Africans and all who share this vision."
+    },
+    "community": {
+      "pageTitle": "Ngelmak — Community",
+      "title": "Community",
+      "intro1": "The community is the living heart of Ngelmak. It brings together people who wish to reflect, share, analyze, and contribute to the construction of a sovereign, free, and responsible digital space. Each member plays an essential role in the quality of exchanges and in the evolution of the project.",
+      "intro2": "Unlike traditional platforms focused on visibility or competition, Ngelmak values contribution, rigor, and responsibility. The community is not a passive audience: it actively participates in moderation, governance, decision-making, and the continuous improvement of the space.",
+      "role.title": "Role of the Community",
+      "role.text": "Members can propose ideas, report harmful behavior, participate in discussions, contribute to development, and help maintain a healthy environment. Their involvement ensures that Ngelmak remains a collective space, built by and for its users.",
+      "role.list1": "Participate in debates and enrich discussions.",
+      "role.list2": "Contribute to the quality of exchanges through thoughtful analysis.",
+      "role.list3": "Report behaviors that go against the principles of the project.",
+      "role.list4": "Propose improvements or feature ideas.",
+      "role.list5": "Take part in community decisions when necessary.",
+      "sovereign.title": "A Sovereign Community",
+      "sovereign.text1": "Ngelmak belongs to its community. The project does not depend on any company, institution, or external actor. This independence ensures that decisions are made in the collective interest, without commercial or political pressure.",
+      "sovereign.text2": "Every member, regardless of background or origin, can contribute to building a sovereign, ethical, and sustainable African digital space. The community is the force that allows the project to exist, grow stronger, and evolve."
+    },
+    "donations": {
+      "pageTitle": "Ngelmak — Support",
+      "title": "Support Ngelmak",
+      "intro1": "Ngelmak is a completely free, independent project with no profit motive. Donations help cover essential technical costs and ensure that the platform remains sovereign, ethical, and free from external influence.",
+      "intro2": "Contributing is a voluntary act. Every donation, regardless of its amount, helps strengthen a digital African space built by and for its community.",
+      "form.title": "Make a Donation",
+      "form.amount.label": "Donation amount (€)",
+      "form.amount.placeholder": "Ex: 5",
+      "form.message.label": "Message (optional)",
+      "form.message.placeholder": "A word for the community (optional)",
+      "form.submit": "Send donation",
+      "stats.title": "Statistics",
+      "stats.total": "Total donations",
+      "stats.contributors": "Contributors",
+      "stats.average": "Average donation",
+      "stats.last": "Last donation",
+      "history.title": "Donation History",
+      "history.intro": "For the sake of transparency, the latest donations appear below. Contributions are anonymized to protect members' privacy.",
+      "history.emptyAmount": "— €",
+      "history.emptyMessage": "No donations yet"
+    },
+    "moderation": {
+      "pageTitle": "Ngelmak — Moderation",
+      "title": "Moderation",
+      "intro1": "Moderation on Ngelmak is based on a clear ethic: protecting the dignity of members, ensuring the quality of exchanges, and preserving a space for responsible expression. It is never intended to censor ideas, but to maintain an atmosphere of respect, rigor, and constructive reflection.",
+      "intro2": "Moderators intervene only when the fundamental principles of the project are threatened: personal attacks, malicious behavior, violations of essential rules, or deliberate degradation of the debate. Their role is to support the community, not control it.",
+      "principles.title": "Principles of Moderation",
+      "principles.list1": "Absolute respect for the dignity of every member.",
+      "principles.list2": "Neutrality and absence of ideological judgment.",
+      "principles.list3": "Interventions limited to harmful behaviors.",
+      "principles.list4": "Graduated and always justified sanctions.",
+      "principles.list5": "Possibility to contest any decision.",
+      "service": "Moderation is a service provided to the community. It protects the space, encourages responsibility, and ensures that Ngelmak remains a place of collective reflection and intellectual sovereignty.",
+      "apply.title": "Become a Moderator",
+      "apply.intro": "Members who wish to contribute more can submit their application. Moderation is a voluntary commitment based on responsibility, patience, and understanding of the project's principles.",
+      "apply.mustLogin": "You must be logged in to apply as a moderator.",
+      "apply.signin": "Sign in",
+      "apply.signup": "Sign up",
+      "apply.pending": "Your moderation request is being processed. Thank you for your patience.",
+      "apply.requestedOn": "Requested on",
+      "apply.fullName": "Full name",
+      "apply.motivation.label": "Why do you want to become a moderator?",
+      "apply.motivation.required": "This field is required.",
+      "apply.submit": "Submit request",
+      "apply.alreadyModerator": "You are already a moderator."
+    },
+    "policies": {
+      "pageTitle": "Ngelmak — Policies&Commitments",
+      "policies.title": "Policies & Commitments",
+      "policies.intro": "Ngelmak's policies are based on sacred, intangible, and non‑negotiable principles. They ensure the protection of users, the sovereignty of the project, and fidelity to its founding vision. These commitments define what Ngelmak is, what it protects, and what it refuses to become.",
+      "policies.free.title": "Absolute Free Access",
+      "policies.free.text1": "All services offered by Ngelmak will always remain free, without exception. No feature will be paid, no commission will be taken, and no access will be conditioned by a subscription or payment.",
+      "policies.free.text2": "Free access is not a commercial argument, but a fundamental ethical commitment ensuring that the platform remains a common good accessible to all.",
+      "policies.nonprofit.title": "Total Absence of Profit Motive",
+      "policies.nonprofit.text1": "Ngelmak is not intended to generate revenue, attract investors, or become a lucrative company. It is a community tool designed to meet collective needs, not to serve private interests.",
+      "policies.nonprofit.text2": "No intrusive advertising, no data selling, and no commercial partnership contrary to the project's values will ever be implemented. Ngelmak is and will remain non‑profit.",
+      "policies.data.title": "Strict Data Protection",
+      "policies.data.text1": "No data will be sold, shared, or exploited by third parties in any form. Information entrusted by users will not be exchanged or used for commercial, political, or advertising purposes.",
+      "policies.data.text2": "Confidentiality and data security are absolute commitments, respected at every stage of the project's development, operation, and evolution.",
+      "policies.transparency.title": "Total Transparency",
+      "policies.transparency.text1": "All major decisions, technical evolutions, strategic orientations, and governance choices will be documented and accessible to all. This transparency also applies to the use of donations, which will be subject to clear, public, and verifiable tracking.",
+      "policies.transparency.text2": "Nothing related to the functioning, financing, or future of the project will be hidden or decided in the shadows. Transparency is an essential pillar of trust and long‑term sustainability.",
+      "policies.governance.title": "Rights & Governance",
+      "policies.governance.text1": "The founder holds the initial copyright and ensures the protection of the vision. The project is published under a GNU‑type open‑source license, ensuring that the code remains free, accessible, and modifiable by all.",
+      "policies.governance.text2": "Governance is based on three levels: the founder, the contributors, and the community. No major change can be adopted without community consultation and validation by the founder.",
+      "policies.governance.text3": "Strategic decisions — modification of sacred principles, introduction of paid services, license changes, privatization, or any evolution likely to divert the project — are strictly regulated and require a rigorous validation process.",
+      "policies.commitment.title": "Commitment to the Community",
+      "policies.commitment.text1": "Ngelmak belongs to those who use it. The community can propose ideas, vote on certain orientations, report issues, and contribute to the evolution of the project.",
+      "policies.commitment.text2": "Ngelmak's policies are designed to protect this shared space, ensure its integrity, and guarantee its continuity in alignment with its founding values."
+    },
+    "reports": {
+      "pageTitle": "Ngelmak — Reporting",
+      "title": "Reporting",
+      "intro1": "The reporting system allows the community to protect the quality of the expression space. It is not used to censor opinions, but to identify harmful behaviors or actions that go against Ngelmak's fundamental principles.",
+      "intro2": "In an environment built on responsibility and rigor, reporting is a civic tool. It helps maintain a climate of respect, dignity, and constructive reflection for all members.",
+      "what.title": "What Can Be Reported",
+      "what.text": "Reports concern only behaviors that harm the quality of the debate or undermine the dignity of others. They must never be used to challenge a different opinion or analysis.",
+      "what.list1": "Personal attacks, insults, or degrading remarks.",
+      "what.list2": "Clearly false or manipulative content.",
+      "what.list3": "Violations of the project's sacred principles.",
+      "what.list4": "Provocations or disruptive behavior.",
+      "what.list5": "Publication of private or sensitive information.",
+      "process.title": "Process and Transparency",
+      "process.text": "When content is reported, it is reviewed according to clear and public criteria. Some reports may be made visible to ensure transparency and prevent abuse. The goal is to protect the space, not to impose arbitrary sanctions.",
+      "appeal.title": "Appeal",
+      "appeal.text": "Any user may request a review if they believe a report or decision concerning them is unjustified. Appeals are an integral part of the process and ensure fairness within the system."
     }
   }
 }

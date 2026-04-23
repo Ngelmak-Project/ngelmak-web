@@ -90,7 +90,7 @@ Spring Gateway (HTTP or HTTPS)
 - Angular and API are cleanly separated by subdomains.
 - No mixed content.
 - No need for Angular to proxy through the same Nginx.
-- Nginx handles HTTPS directly using a certificate (Let’s Encrypt or Cloudflare Origin Cert).
+- Nginx handles HTTPS directly using a certificate (Let's Encrypt or Cloudflare Origin Cert).
 - Cloudflare adds DDoS protection, caching, and hides the server IP.
 
 ---
@@ -106,7 +106,7 @@ Spring Gateway (HTTP or HTTPS)
    ├── Dockerfile
 ```
 
-You can use **Cloudflare Origin Certificates** (recommended) or **Let’s Encrypt**.
+You can use **Cloudflare Origin Certificates** (recommended) or **Let's Encrypt**.
 
 ---
 

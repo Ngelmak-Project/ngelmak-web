@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 const entityRoutes: Routes = [
   {
     path: 'channel',
-    title: 'ngelmakprojectApp.channel.home.title',
+    title: 'channel.home.title',
     loadChildren: () => import('./nk-channel/nk-channel.routes'),
   },
   {

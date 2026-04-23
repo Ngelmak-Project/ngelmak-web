@@ -1,21 +1,25 @@
-import { Injectable } from '@angular/core';
+import { TranslationService } from './../translation/translation.service';
+import { inject, Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { TitleStrategy, RouterStateSnapshot } from '@angular/router';
+import { RouterStateSnapshot, TitleStrategy } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TemplatePageTitleStrategyService extends TitleStrategy {
-  constructor(private readonly title: Title) {
-    super();
-  }
-  override updateTitle(routerState: RouterStateSnapshot) {
-    let title = this.buildTitle(routerState);
-    if (title !== undefined) {
-      title = `Ngelmak | ${title}`;
+  private readonly title = inject(Title);
+  private readonly translationService = inject(TranslationService);
+
+  updateTitle(snapshot: RouterStateSnapshot): void {
+    // buildTitle retrieves the 'title' property from the route config
+    const titleKey = this.buildTitle(snapshot);
+
+    if (titleKey) {
+      const translatedTitle = this.translationService.translate(titleKey) || titleKey;
+      console.log(titleKey);
+      this.title.setTitle(translatedTitle);
     } else {
-      title = 'Ngelmak';
+      this.title.setTitle('Ngelmak Project');
     }
-    this.title.setTitle(title);
   }
 }
