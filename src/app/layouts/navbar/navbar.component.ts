@@ -69,9 +69,8 @@ export default class NavbarComponent {
 
   changeLanguage(lang: 'en' | 'fr'): void {
     this.translateService.setLanguage(lang);
-    this.showLangKeyOptions.set(true);
+    this.showLangKeyOptions.set(false);
     this.stateStorageService.storeLocale(lang);
-    // this.translateService.use(languageKey);
   }
 
   collapseNavbar(): void {

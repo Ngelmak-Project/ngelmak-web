@@ -7,13 +7,13 @@ import { UserActivityReportComponent } from './user-activity-report/user-activit
 const ticketRoute: Routes = [
   {
     path: '',
-    title: 'ngelmakprojet.ticket.title',
+    title: 'ngelmakTranslation.entities.ticket.userActivityReport.pageTitle',
     component: UserActivityReportComponent,
     canActivate: [UserRouteAccessService],
   },
   {
     path: ':id',
-    title: 'ngelmakprojet.ticket.detail.title',
+    title: 'ngelmakTranslation.entities.ticket.details.pageTitle',
     component: TicketDetailComponent,
     resolve: {
       ticket: TicketResolve,

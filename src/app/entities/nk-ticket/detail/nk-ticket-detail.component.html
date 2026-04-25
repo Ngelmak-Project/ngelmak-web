@@ -7,14 +7,14 @@
       <div class="flex items-start justify-between gap-4">
         <div>
           <h2
-            translate="entities.ticket.details.title"
+            translate="ngelmakTranslation.entities.ticket.details.title"
             [translateParams]="{ id: ticket().id }"
             class="text-2xl font-semibold text-gray-900 dark:text-white leading-tight"
           >
             Signalement #{{ ticket().id }}
           </h2>
           <p
-            translate="entities.ticket.details.subtitle"
+            translate="ngelmakTranslation.entities.ticket.details.subtitle"
             class="text-sm text-gray-500 dark:text-gray-400 mt-0.5"
           >
             Ce signalement concerne l'un de vos contenus.
@@ -40,7 +40,7 @@
           </span>
 
           <button
-            translate="entities.ticket.details.close"
+            translate="ngelmakTranslation.entities.ticket.details.close"
             (click)="previousState()"
             type="button"
             class="px-4 py-2 text-sm rounded-full border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600"
@@ -68,7 +68,7 @@
             d="M12 9v4m0 4h.01M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z"
           />
         </svg>
-        <p translate="entities.ticket.details.infoBanner">
+        <p translate="ngelmakTranslation.entities.ticket.details.infoBanner">
           Ce signalement a été déposé par un autre utilisateur ou un modérateur. Vous pouvez
           consulter les détails ci-dessous et, si nécessaire, fournir des informations
           supplémentaires pour expliquer ou défendre votre position.
@@ -83,7 +83,7 @@
         <!-- Date -->
         <div>
           <h3
-            translate="entities.ticket.details.receivedAtTitle"
+            translate="ngelmakTranslation.entities.ticket.details.receivedAtTitle"
             class="text-sm font-semibold text-gray-500 dark:text-gray-400"
           >
             Signalement reçu le
@@ -96,7 +96,7 @@
         <!-- STATUS -->
         <div>
           <h3
-            translate="entities.ticket.details.statusTitle"
+            translate="ngelmakTranslation.entities.ticket.details.statusTitle"
             class="text-sm font-semibold text-gray-500 dark:text-gray-400"
           >
             Statut
@@ -114,7 +114,7 @@
         <!-- HANDLED BY (OPTIONAL, NEUTRAL) -->
         <div>
           <h3
-            translate="entities.ticket.details.handledTitle"
+            translate="ngelmakTranslation.entities.ticket.details.handledTitle"
             class="text-sm font-semibold text-gray-500 dark:text-gray-400"
           >
             Traitement
@@ -133,7 +133,7 @@
       <!-- TARGET CONTENT -->
       <div>
         <h3
-          translate="entities.ticket.details.targetContentTitle"
+          translate="ngelmakTranslation.entities.ticket.details.targetContentTitle"
           class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2"
         >
           Contenu concerné
@@ -143,8 +143,8 @@
           <!-- CHANNEL -->
           @if (ticket().channel) {
             <div class="flex flex-wrap items-center gap-3">
-              <span translate="entities.ticket.details.type" class="font-medium">Type :</span>
-              <span translate="entities.ticket.details.typeChannel" class="px-2 py-1 text-xs">
+              <span translate="ngelmakTranslation.entities.ticket.details.type" class="font-medium">Type :</span>
+              <span translate="ngelmakTranslation.entities.ticket.details.typeChannel" class="px-2 py-1 text-xs">
                 Chaîne
               </span>
 
@@ -183,13 +183,13 @@
           @else if (ticket().post) {
             <div class="space-y-2">
               <div class="flex items-center gap-3">
-                <span translate="entities.ticket.details.type" class="font-medium">Type :</span>
-                <span translate="entities.ticket.details.typePost" class="px-2 py-1 text-xs">
+                <span translate="ngelmakTranslation.entities.ticket.details.type" class="font-medium">Type :</span>
+                <span translate="ngelmakTranslation.entities.ticket.details.typePost" class="px-2 py-1 text-xs">
                   Post
                 </span>
 
                 <a
-                  translate="entities.ticket.details.viewPost"
+                  translate="ngelmakTranslation.entities.ticket.details.viewPost"
                   [translateParams]="{ id: ticket().post.id }"
                   [routerLink]="['/post', ticket().post.id]"
                   target="_blank"
@@ -229,13 +229,13 @@
           @else if (ticket().comment) {
             <div class="space-y-2">
               <div class="flex items-center gap-3">
-                <span translate="entities.ticket.details.type" class="font-medium">Type :</span>
-                <span translate="entities.ticket.details.typeComment" class="px-2 py-1 text-xs">
+                <span translate="ngelmakTranslation.entities.ticket.details.type" class="font-medium">Type :</span>
+                <span translate="ngelmakTranslation.entities.ticket.details.typeComment" class="px-2 py-1 text-xs">
                   Commentaire
                 </span>
 
                 <a
-                  translate="entities.ticket.details.viewComment"
+                  translate="ngelmakTranslation.entities.ticket.details.viewComment"
                   [translateParams]="{ id: ticket().comment.id }"
                   [routerLink]="[]"
                   fragment="comment-{{ ticket().comment.id }}"
@@ -261,7 +261,7 @@
             </div>
           } @else {
             <p
-              translate="entities.ticket.details.contentNotAvailable"
+              translate="ngelmakTranslation.entities.ticket.details.contentNotAvailable"
               class="text-sm text-gray-500 dark:text-gray-400"
             >
               Le contenu concerné n'est plus disponible.
@@ -273,7 +273,7 @@
       <!-- REASON / DESCRIPTION -->
       <div>
         <h3
-          translate="entities.ticket.details.reasonTitle"
+          translate="ngelmakTranslation.entities.ticket.details.reasonTitle"
           class="text-sm font-semibold text-gray-500 dark:text-gray-400"
         >
           Raison du signalement
@@ -289,13 +289,13 @@
       @if (ticket().evidence) {
         <div>
           <h3
-            translate="entities.ticket.details.evidenceTitle"
+            translate="ngelmakTranslation.entities.ticket.details.evidenceTitle"
             class="text-sm font-semibold text-gray-500 dark:text-gray-400"
           >
             Pièce jointe du signalement
           </h3>
           <a
-            translate="entities.ticket.details.openEvidence"
+            translate="ngelmakTranslation.entities.ticket.details.openEvidence"
             [routerLink]="ticket().evidence.url"
             target="_blank"
             class="mt-2 inline-block text-blue-600 dark:text-blue-400 underline text-sm"

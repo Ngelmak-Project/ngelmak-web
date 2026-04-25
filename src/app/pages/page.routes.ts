@@ -10,42 +10,41 @@ import { DonationsComponent } from './donations/donations.component';
 const pageRoutes: Routes = [
   {
     path: 'about',
-    title: 'pages.about.pageTitle',
+    title: 'ngelmakTranslation.pages.about.pageTitle',
     component: AboutComponent,
   },
   {
     path: 'community',
-    title: 'pages.community.pageTitle',
+    title: 'ngelmakTranslation.pages.community.pageTitle',
     component: CommunityComponent,
   },
   {
     path: 'moderation',
-    title: 'pages.moderation.pageTitle',
+    title: 'ngelmakTranslation.pages.moderation.pageTitle',
     component: ModerationComponent,
   },
   {
     path: 'donations',
-    title: 'pages.donations.pageTitle',
+    title: 'ngelmakTranslation.pages.donations.pageTitle',
     component: DonationsComponent,
   },
   {
     path: 'contact',
-    title: 'pages.contact.pageTitle',
+    title: 'ngelmakTranslation.pages.contact.pageTitle',
     component: ContactComponent,
   },
   {
     path: 'policies',
-    title: 'pages.policies.pageTitle',
+    title: 'ngelmakTranslation.pages.policies.pageTitle',
     component: PoliciesComponent,
   },
   {
     path: 'reports',
-    title: 'pages.reports.pageTitle',
+    title: 'ngelmakTranslation.pages.reports.pageTitle',
     component: ReportsComponent,
   },
   {
     path: 'project',
-    title: 'pages.project.home.pageTitle',
     loadChildren: () => import('./project/project.routes'),
   },
 ];

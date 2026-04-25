@@ -6,10 +6,10 @@
       <div class="flex space-x-1 md:space-x-4 items-center justify-start">
         <button
           (click)="toggleSidebar()"
-          class="peer/theme-toggle text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-lg w-8 h-8 p-1 md:w-10 md:h-10 md:p-2.5"
+          class="flex items-center justify-center peer/theme-toggle text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-lg w-8 h-8 p-1 md:w-10 md:h-10 md:p-2.5"
         >
           <svg
-            class="w-4 h-4 md:w-6 md:h-6 m-auto"
+            class="w-4 h-4 md:w-6 md:h-6"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -290,10 +290,10 @@
           (click)="toggleDarkMode()"
           type="button"
           matTooltip="Toggle dark mode"
-          class="peer/theme-toggle text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-lg w-8 h-8 p-1 md:w-10 md:h-10 md:p-2.5"
+          class="flex items-center justify-center peer/theme-toggle text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-lg w-8 h-8 p-1 md:w-10 md:h-10 md:p-2.5"
         >
           <svg
-            class="w-4 h-4 md:w-6 md:h-6 m-auto"
+            class="w-4 h-4 md:w-6 md:h-6"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -314,10 +314,10 @@
         <button
           (click)="showLangKeyOptions.set(!showLangKeyOptions())"
           type="button"
-          class="peer/theme-toggle text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-lg w-8 h-8 p-1 md:w-10 md:h-10 md:p-2.5"
+          class="flex items-center justify-center peer/theme-toggle text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-lg w-8 h-8 p-1 md:w-10 md:h-10 md:p-2.5"
         >
           <svg
-            class="w-4 h-4 md:w-6 md:h-6 m-auto"
+            class="w-4 h-4 md:w-6 md:h-6"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -406,7 +406,7 @@
                 </span>
                 @if (!user()?.email || !user()?.activated) {
                   <a
-                    translate="layouts.navbar.updateInfo"
+                    translate="ngelmakTranslation.layouts.navbar.updateInfo"
                     routerLink="/user/security"
                     routerLinkActive="bg-gray-200 dark:bg-gray-600"
                     class="mt-2 inline-flex items-center text-center gap-1 p-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-full hover:bg-gray-200 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
@@ -438,7 +438,7 @@
                       />
                     </svg>
                     <span
-                      translate="layouts.navbar.login"
+                      translate="ngelmakTranslation.layouts.navbar.login"
                       class="flex-1 ms-3 whitespace-nowrap text-start"
                       >Se connecter</span
                     >
@@ -464,7 +464,7 @@
                       />
                     </svg>
                     <span
-                      translate="layouts.navbar.register"
+                      translate="ngelmakTranslation.layouts.navbar.register"
                       class="flex-1 ms-3 whitespace-nowrap text-start"
                       >Créer un compte</span
                     >
@@ -496,14 +496,14 @@
                     />
                   </svg>
                   <span
-                    translate="layouts.navbar.admin.users"
+                    translate="ngelmakTranslation.layouts.navbar.admin.users"
                     class="flex-1 ms-3 whitespace-nowrap text-start"
                     >Utilisateurs</span
                   >
                   <!-- Users (Admin only):
                       List all users
                       Activate / deactivate
-                      Reset password (admin‑triggered)
+                      Reset password (admin-triggered)
                       Force logout
                       Assign roles (User, Moderator, Admin)
                       View user activity summary (last login, number of posts, etc.)
@@ -533,7 +533,7 @@
                     />
                   </svg>
                   <span
-                    translate="layouts.navbar.admin.inbox"
+                    translate="ngelmakTranslation.layouts.navbar.admin.inbox"
                     class="flex-1 ms-3 whitespace-nowrap text-start"
                   >
                     Boîte de réception
@@ -568,7 +568,7 @@
                   </svg>
 
                   <span
-                    translate="layouts.navbar.admin.system"
+                    translate="ngelmakTranslation.layouts.navbar.admin.system"
                     class="flex-1 ms-3 whitespace-nowrap text-start"
                     >Système</span
                   >
@@ -621,7 +621,7 @@ Additional items you can add:
                       ></path>
                     </svg>
                     <span
-                      translate="layouts.navbar.myAccount"
+                      translate="ngelmakTranslation.layouts.navbar.myAccount"
                       class="flex-1 ms-3 whitespace-nowrap text-start"
                       >Mon compte</span
                     >
@@ -650,7 +650,7 @@ Additional items you can add:
                     </svg>
 
                     <span
-                      translate="layouts.navbar.createChannel"
+                      translate="ngelmakTranslation.layouts.navbar.createChannel"
                       class="flex-1 ms-3 whitespace-nowrap text-start"
                       >Créer ma chaine</span
                     >
@@ -695,7 +695,7 @@ Additional items you may add later:
                   </svg>
 
                   <span
-                    translate="layouts.navbar.security"
+                    translate="ngelmakTranslation.layouts.navbar.security"
                     class="flex-1 ms-3 whitespace-nowrap text-start"
                     >Sécurité</span
                   >
@@ -722,7 +722,7 @@ Additional items you may add later:
                     />
                   </svg>
                   <span
-                    translate="layouts.navbar.logout"
+                    translate="ngelmakTranslation.layouts.navbar.logout"
                     class="flex-1 ms-3 whitespace-nowrap text-start"
                     >Se déconnecter</span
                   >

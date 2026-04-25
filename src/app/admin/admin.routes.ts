@@ -7,7 +7,6 @@ const adminRoutes: Routes = [
       {
         path: 'user-management',
         loadChildren: () => import('./user-management/user-management.routes'),
-        title: 'global.menu.admin.user-management',
       },
       {
         path: 'inbox',

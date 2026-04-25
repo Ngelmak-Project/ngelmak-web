@@ -10,32 +10,32 @@ import { RoadmapComponent } from './roadmap/roadmap.component';
 const projectRoute: Routes = [
   {
     path: 'foundations',
-    title: 'foundations.title',
+    title: 'ngelmakTranslation.pages.project.foundations.pageTitle',
     component: FoundationsComponent,
   },
   {
     path: 'governance',
-    title: 'governance.title',
+    title: 'ngelmakTranslation.pages.project.governance.pageTitle',
     component: GovernanceComponent,
   },
   {
     path: 'vision',
-    title: 'vision.title',
+    title: 'ngelmakTranslation.pages.project.vision.pageTitle',
     component: VisionComponent,
   },
   {
     path: 'information-sharing',
-    title: 'info.title',
+    title: 'ngelmakTranslation.pages.project.informationSharing.pageTitle',
     component: InformationSharingComponent,
   },
   {
     path: 'mobility',
-    title: 'mobility.title',
+    title: 'ngelmakTranslation.pages.project.mobility.pageTitle',
     component: MobilityComponent,
   },
   {
     path: 'roadmap',
-    title: 'roadmap.title',
+    title: 'ngelmakTranslation.pages.project.roadmap.pageTitle',
     component: RoadmapComponent,
   },
 ];

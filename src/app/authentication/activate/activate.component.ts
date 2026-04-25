@@ -4,12 +4,13 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { finalize } from 'rxjs';
 import { ActivateService } from './activate.service';
 import SharedModule from 'app/shared/shared.module';
+import { LanguageSwitcherComponent } from "app/shared/language-switcher/language-switcher.component";
 
 @Component({
   standalone: true,
   selector: 'app-activate',
   templateUrl: './activate.component.html',
-  imports: [CommonModule, RouterModule, SharedModule],
+  imports: [CommonModule, RouterModule, SharedModule, LanguageSwitcherComponent],
 })
 export class ActivateComponent {
   private readonly activateService = inject(ActivateService);

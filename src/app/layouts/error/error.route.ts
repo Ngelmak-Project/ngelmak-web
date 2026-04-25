@@ -9,7 +9,7 @@ export const errorRoute: Routes = [
     data: {
       errorMessage: 'error.http.404',
     },
-    title: 'error.title',
+    title: 'ngelmakTranslation.layouts.notFound.hero.pageTitle',
   },
   {
     path: '**',

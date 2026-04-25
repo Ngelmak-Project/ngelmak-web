@@ -1,5 +1,10 @@
-<div class="flex flex-col rounded-xl ">
-  <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Nous écrire</h2>
+<div class="flex flex-col rounded-xl">
+  <h2
+    translate="ngelmakTranslation.pages.contact.writeToUs"
+    class="text-2xl font-semibold text-gray-900 dark:text-white mb-6"
+  >
+    Nous écrire
+  </h2>
   <div class="flex flex-col gap-6">
     <!-- NAME -->
     <div class="relative">
@@ -12,6 +17,7 @@
       />
 
       <label
+        translate="ngelmakTranslation.pages.contact.form.name.label"
         for="name"
         class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
       >
@@ -21,7 +27,7 @@
       @if (contactForm.name().dirty()) {
         @for (error of contactForm.name().errors(); track error) {
           <p class="text-red-600 dark:text-red-500 text-xs leading-tight">
-            {{ error.message }}
+            {{ error.message | translate }}
           </p>
         }
       }
@@ -38,6 +44,7 @@
       />
 
       <label
+        translate="ngelmakTranslation.pages.contact.form.email.label"
         for="email"
         class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
       >
@@ -47,7 +54,7 @@
       @if (contactForm.email().dirty()) {
         @for (error of contactForm.email().errors(); track error) {
           <p class="text-red-600 dark:text-red-500 text-xs leading-tight">
-            {{ error.message }}
+            {{ error.message | translate }}
           </p>
         }
       }
@@ -64,6 +71,7 @@
       />
 
       <label
+        translate="ngelmakTranslation.pages.contact.form.subject.label"
         for="subject"
         class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
       >
@@ -73,7 +81,7 @@
       @if (contactForm.subject().dirty()) {
         @for (error of contactForm.subject().errors(); track error) {
           <p class="text-red-600 dark:text-red-500 text-xs leading-tight">
-            {{ error.message }}
+            {{ error.message | translate }}
           </p>
         }
       }
@@ -90,6 +98,7 @@
       ></textarea>
 
       <label
+      translate="ngelmakTranslation.pages.contact.form.message.label"
         for="message"
         class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
       >
@@ -130,7 +139,7 @@
             />
           </svg>
         }
-        Envoyer
+        <span translate="ngelmakTranslation.pages.contact.form.submit">Envoyer</span>
       </button>
     </div>
   </div>

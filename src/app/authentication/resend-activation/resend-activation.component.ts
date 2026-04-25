@@ -7,12 +7,13 @@ import { ApiError } from 'app/core/auth/auth.model';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { ForgetPasswordService } from './resend-activation.service';
+import { LanguageSwitcherComponent } from "app/shared/language-switcher/language-switcher.component";
 
 @Component({
   standalone: true,
   selector: 'app-resend-activation',
   templateUrl: './resend-activation.component.html',
-  imports: [CommonModule, RouterModule, Field, SharedModule],
+  imports: [CommonModule, RouterModule, Field, SharedModule, LanguageSwitcherComponent],
 })
 export class ResendActivationComponent {
   private forgetPasswordService = inject(ForgetPasswordService);

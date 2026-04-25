@@ -3,14 +3,14 @@
     class="p-6 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-700"
   >
     <h2
-      translate="userManagement.security.deletion.title"
+      translate="ngelmakTranslation.userManagement.security.deletion.title"
       class="text-2xl font-semibold text-red-700 dark:text-red-400 mb-4"
     >
       Suppression du compte
     </h2>
 
     <p
-      translate="userManagement.security.deletion.description1"
+      translate="ngelmakTranslation.userManagement.security.deletion.description1"
       [translateParams]="{ deletionDelayDays: deletionDelayDays }"
       class="text-sm text-red-700 dark:text-red-300 leading-relaxed mb-4"
     >
@@ -20,7 +20,7 @@
     </p>
 
     <p
-      translate="userManagement.security.deletion.description2"
+      translate="ngelmakTranslation.userManagement.security.deletion.description2"
       class="text-sm text-red-700 dark:text-red-300 leading-relaxed mb-4"
     >
       Toute reconnexion durant cette période sera interprétée comme une
@@ -28,7 +28,7 @@
     </p>
 
     <p
-      translate="userManagement.security.deletion.description3"
+      translate="ngelmakTranslation.userManagement.security.deletion.description3"
       class="text-sm text-red-700 dark:text-red-300 leading-relaxed mb-6"
     >
       Passé ce délai, toutes vos données personnelles, contenus associés et informations liées
@@ -68,7 +68,7 @@
         </svg>
       }
 
-      <span translate="userManagement.security.deleteButton">Supprimer mon compte</span>
+      <span translate="ngelmakTranslation.userManagement.security.deletion.deleteButton">Supprimer mon compte</span>
     </button>
 
     @if (openDeleteModal()) {

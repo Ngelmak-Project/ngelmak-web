@@ -10,17 +10,14 @@ const systemRoutes: Route[] = [
       {
         path: 'health',
         component: HealthComponent,
-        title: 'global.menu.admin.health.title',
       },
       {
         path: 'logs',
         component: LogsComponent,
-        title: 'global.menu.admin.logs.title',
       },
       {
         path: 'metrics',
         component: MetricsComponent,
-        title: 'global.menu.admin.metrics.title',
       },
     ],
   },

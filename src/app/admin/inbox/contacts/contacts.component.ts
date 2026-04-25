@@ -68,7 +68,7 @@ export class ContactsComponent {
 
     this.userManagementService
       .findContacts({
-        page: this.currentPage() - 1, // backend is 0‑indexed
+        page: this.currentPage() - 1, // backend is 0-indexed
         size: this.pageSize(),
         sort: this.sortService.buildSortParam(this.sortState(), 'sentAt'),
       })

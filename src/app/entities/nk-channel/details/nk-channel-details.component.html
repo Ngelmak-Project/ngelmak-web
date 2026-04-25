@@ -57,7 +57,7 @@
               <span>{{ channel().description }}</span>
             } @else {
               <span
-                translate="entities.channel.details.fallbackDescription"
+                translate="ngelmakTranslation.entities.channel.details.fallbackDescription"
                 class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed"
               >
                 Aucune description...
@@ -66,7 +66,7 @@
           </p>
 
           <p class="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
-            <span translate="entities.channel.details.createdAt" class="font-medium">
+            <span translate="ngelmakTranslation.entities.channel.details.createdAt" class="font-medium">
               Compte créé le
             </span>
             <span class="text-gray-900 dark:text-gray-200 font-semibold">
@@ -89,7 +89,7 @@
           {{ channel()?.stats.followersCount || 0 }}
         </span>
         <span
-          translate="entities.channel.details.stats.followers"
+          translate="ngelmakTranslation.entities.channel.details.stats.followers"
           class="text-sm text-gray-500 dark:text-gray-400 tracking-wide"
           >Abonnés</span
         >
@@ -100,7 +100,7 @@
           {{ channel()?.stats.followingCount || 0 }}
         </span>
         <span
-          translate="entities.channel.details.stats.following"
+          translate="ngelmakTranslation.entities.channel.details.stats.following"
           class="text-sm text-gray-500 dark:text-gray-400 tracking-wide"
           >Suivis</span
         >
@@ -109,7 +109,7 @@
       <div class="flex flex-col">
         <span class="text-2xl font-extrabold text-gray-900 dark:text-white">-</span>
         <span
-          translate="entities.channel.details.stats.posts"
+          translate="ngelmakTranslation.entities.channel.details.stats.posts"
           class="text-sm text-gray-500 dark:text-gray-400 tracking-wide"
           >Publications</span
         >
@@ -144,9 +144,9 @@
         </svg>
       }
       @if (subscription()) {
-        <span translate="entities.channel.details.unfollow">Se désabonner</span>
+        <span translate="ngelmakTranslation.entities.channel.details.unfollow">Se désabonner</span>
       } @else {
-        <span translate="entities.channel.details.follow">S'abonner</span>
+        <span translate="ngelmakTranslation.entities.channel.details.follow">S'abonner</span>
       }
     </button>
   </div>

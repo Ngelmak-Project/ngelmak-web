@@ -11,14 +11,14 @@
         <div class="flex items-start justify-between">
           <div>
             <h2
-              translate="entities.ticket.open.title"
+              translate="ngelmakTranslation.entities.ticket.open.title"
               [translateParams]="{ id: ticketSig().id }"
               class="text-2xl font-semibold text-gray-900 dark:text-white leading-tight"
             >
               Ticket #{{ ticketSig().id }}
             </h2>
             <p
-              translate="entities.ticket.open.subtitle"
+              translate="ngelmakTranslation.entities.ticket.open.subtitle"
               class="text-sm text-gray-500 dark:text-gray-400 mt-0.5"
             >
               Signalement utilisateur
@@ -50,7 +50,7 @@
           <!-- Émetteur -->
           <div>
             <h3
-              translate="entities.ticket.open.issuedByTitle"
+              translate="ngelmakTranslation.entities.ticket.open.issuedByTitle"
               class="text-sm font-semibold text-gray-500 dark:text-gray-400"
             >
               Émis par
@@ -61,7 +61,7 @@
           <!-- Date -->
           <div>
             <h3
-              translate="entities.ticket.open.issuedAtTitle"
+              translate="ngelmakTranslation.entities.ticket.open.issuedAtTitle"
               class="text-sm font-semibold text-gray-500 dark:text-gray-400"
             >
               Émis le
@@ -72,7 +72,7 @@
           <!-- Assigné à -->
           <div>
             <h3
-              translate="entities.ticket.open.assignedToTitle"
+              translate="ngelmakTranslation.entities.ticket.open.assignedToTitle"
               class="text-sm font-semibold text-gray-500 dark:text-gray-400"
             >
               Assigné à
@@ -83,7 +83,7 @@
           <!-- Géré par -->
           <div>
             <h3
-              translate="entities.ticket.open.handledByTitle"
+              translate="ngelmakTranslation.entities.ticket.open.handledByTitle"
               class="text-sm font-semibold text-gray-500 dark:text-gray-400"
             >
               Géré par
@@ -95,7 +95,7 @@
         <!-- CIBLE -->
         <div>
           <h3
-            translate="entities.ticket.open.targetTitle"
+            translate="ngelmakTranslation.entities.ticket.open.targetTitle"
             class="text-sm font-semibold text-gray-500 dark:text-gray-400"
           >
             Cible
@@ -105,7 +105,7 @@
             <!-- CHANNEL -->
             @if (ticketSig().channel) {
               <div class="flex items-center gap-3">
-                <span translate="entities.ticket.open.channelLabel" class="font-medium"
+                <span translate="ngelmakTranslation.entities.ticket.open.channelLabel" class="font-medium"
                   >Channel :</span
                 >
                 <a
@@ -142,7 +142,7 @@
             <!-- POST -->
             @else if (ticketSig().post) {
               <div>
-                <span translate="entities.ticket.open.postLabel" class="font-medium">Post :</span>
+                <span translate="ngelmakTranslation.entities.ticket.open.postLabel" class="font-medium">Post :</span>
 
                 <!-- CLICKABLE POST ID -->
                 <a
@@ -182,7 +182,7 @@
             <!-- COMMENT -->
             @else if (ticketSig().comment) {
               <div>
-                <span translate="entities.ticket.open.commentLabel" class="font-medium"
+                <span translate="ngelmakTranslation.entities.ticket.open.commentLabel" class="font-medium"
                   >Commentaire :</span
                 >
 
@@ -218,7 +218,7 @@
         <!-- DESCRIPTION -->
         <div>
           <h3
-            translate="entities.ticket.open.descriptionTitle"
+            translate="ngelmakTranslation.entities.ticket.open.descriptionTitle"
             class="text-sm font-semibold text-gray-500 dark:text-gray-400"
           >
             Description
@@ -232,13 +232,13 @@
         @if (ticketSig().evidence) {
           <div>
             <h3
-              translate="entities.ticket.open.evidenceTitle"
+              translate="ngelmakTranslation.entities.ticket.open.evidenceTitle"
               class="text-sm font-semibold text-gray-500 dark:text-gray-400"
             >
               Preuve
             </h3>
             <a
-              translate="entities.ticket.open.openEvidence"
+              translate="ngelmakTranslation.entities.ticket.open.openEvidence"
               [href]="ticketSig().evidence.url"
               target="_blank"
               class="mt-2 inline-block text-blue-600 dark:text-blue-400 underline text-sm"
@@ -252,7 +252,7 @@
       <!-- ACTIONS -->
       <div class="p-3 md:p-5 border-t dark:border-gray-700 flex justify-end gap-3">
         <button
-          translate="entities.ticket.open.close"
+          translate="ngelmakTranslation.entities.ticket.open.close"
           type="button"
           (click)="onclose.emit()"
           class="px-4 py-2 text-sm rounded-lg border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600"
@@ -270,7 +270,7 @@
               <path d="M93.9676 39.0409..." fill="currentColor" />
             </svg>
           }
-          <span translate="entities.ticket.open.markResolved">Marquer comme résolu</span>
+          <span translate="ngelmakTranslation.entities.ticket.open.markResolved">Marquer comme résolu</span>
         </button>
       </div>
     </div>

@@ -7,13 +7,14 @@ import { AuthenticationService } from 'app/core/auth/auth.service';
 import { AlertService } from 'app/shared/alert/alert.service';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
+import { LanguageSwitcherComponent } from "app/shared/language-switcher/language-switcher.component";
 
 @Component({
   standalone: true,
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
 
-  imports: [SharedModule, RouterModule, Field, SharedModule],
+  imports: [SharedModule, RouterModule, Field, SharedModule, LanguageSwitcherComponent],
 })
 export class SignInComponent implements OnInit {
   private signInService = inject(SignInService);

@@ -18,11 +18,12 @@ import { finalize } from 'rxjs';
 import { PasswordStrengthBarComponent } from './password-strength-bar/password-strength-bar.component';
 import { SignupModel } from './sign-up.model';
 import { SignUpService } from './sign-up.service';
+import { LanguageSwitcherComponent } from "app/shared/language-switcher/language-switcher.component";
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  imports: [CommonModule, RouterModule, Field, PasswordStrengthBarComponent, SharedModule],
+  imports: [CommonModule, RouterModule, Field, PasswordStrengthBarComponent, SharedModule, LanguageSwitcherComponent],
 })
 export class SignUpComponent {
   private registerService = inject(SignUpService);

@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AlertComponent } from './shared/alert/alert.component';
-import { DevRibbonComponent } from "./shared/dev-ribbon/dev-ribbon";
+import { DevRibbonComponent } from "./shared/dev-ribbon/dev-ribbon.component";
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, AlertComponent, DevRibbonComponent],

@@ -6,7 +6,7 @@ import SettingsComponent from './settings.component';
 const settingsRoute: Route = {
   path: 'settings',
   component: SettingsComponent,
-  title: 'global.menu.account.settings',
+  title: 'ngelmakTranslation.global.menu.account.settings',
   canActivate: [UserRouteAccessService],
 };
 

@@ -7,7 +7,7 @@ import { TranslationService } from '../translation/translation.service';
   selector: 'app-dev-ribbon',
   standalone: true,
   imports: [CommonModule, SharedModule],
-  templateUrl: './dev-ribbon.html',
+  templateUrl: './dev-ribbon.component.html',
 })
 export class DevRibbonComponent {
   dev = signal(isDevMode());

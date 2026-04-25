@@ -67,7 +67,7 @@
                   class="w-full flex flex-col px-3 py-2 hover:bg-gray-200 dark:hover:bg-gray-600"
                 >
                   <p class="flex items-center justify-between text-sm text-gray-700 dark:text-gray-200">
-                    <span translate="entities.comment.list.item.report.label">Signaler</span>
+                    <span translate="ngelmakTranslation.entities.comment.list.item.report.label">Signaler</span>
                     <svg
                       class="w-4 h-4"
                       aria-hidden="true"
@@ -87,7 +87,7 @@
                     </svg>
                   </p>
                   <p
-                    translate="entities.comment.list.item.report.privacy"
+                    translate="ngelmakTranslation.entities.comment.list.item.report.privacy"
                     class="text-xs text-gray-500 dark:text-gray-400"
                   >
                     Votre identité restera confidentielle.
@@ -101,7 +101,7 @@
                     (click)="isUpdating.set(true)"
                     class="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
-                    <span translate="entities.comment.list.item.update">Modifier</span>
+                    <span translate="ngelmakTranslation.entities.comment.list.item.update">Modifier</span>
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
                       <path
                         stroke="currentColor"
@@ -119,7 +119,7 @@
                     (click)="confirmDeleteOpen.set(true)"
                     class="w-full flex items-center justify-between px-3 py-2 rounded-md text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
                   >
-                    <span translate="entities.comment.list.item.delete">Supprimer</span>
+                    <span translate="ngelmakTranslation.entities.comment.list.item.delete">Supprimer</span>
                     @if (isDeleting()) {
                       <svg
                         class="w-4 h-4 animate-spin fill-red-600 text-gray-200 dark:text-gray-600"
@@ -183,7 +183,7 @@
         <app-comment-reaction-dialog [comment]="commentSig()"></app-comment-reaction-dialog>
 
         <button
-          translate="entities.comment.list.item.reply"
+          translate="ngelmakTranslation.entities.comment.list.item.reply"
           class="font-medium hover:underline"
           (click)="isReplying.set(!isReplying())"
         >
@@ -214,7 +214,7 @@
               </svg>
             }
             {{ commentSig().replyCount }}
-            <span translate="entities.comment.list.item.replies">réponses</span>
+            <span translate="ngelmakTranslation.entities.comment.list.item.replies">réponses</span>
           </button>
         }
       </div>

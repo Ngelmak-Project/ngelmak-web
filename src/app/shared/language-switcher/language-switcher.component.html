@@ -1,0 +1,51 @@
+<div class="fixed right-2 bottom-2">
+  <!-- FLOATING BUTTON -->
+  <button
+    (click)="showLangKeyOptions.set(!showLangKeyOptions())"
+    type="button"
+    class="z-[9999] rounded-lg w-9 h-9 p-1.5 md:w-10 md:h-10 md:p-2 /* Better contrast for bg-gray-50 / dark:bg-gray-900 */ bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-700 shadow-md shadow-gray-300/40 dark:shadow-black/40 backdrop-blur-sm"
+  >
+    <svg
+      class="w-5 h-5 md:w-6 md:h-6 m-auto"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="m13 19 3.5-9 3.5 9m-6.125-2h5.25M3 7h7m0 0h2m-2 0c0 1.63-.793 3.926-2.239 5.655M7.5 6.818V5m.261 7.655C6.79 13.82 5.521 14.725 4 15m3.761-2.345L5 10m2.761 2.655L10.2 15"
+      />
+    </svg>
+  </button>
+
+  <!-- DROPDOWN -->
+  @if (showLangKeyOptions()) {
+    <div
+      class="absolute bottom-12 right-0 w-32 rounded-xl shadow-xl bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-600 py-2 z-[9999] animate-fadeIn"
+    >
+      <ul class="flex flex-col space-y-1 py-1">
+        <li>
+          <button
+            type="button"
+            (click)="changeLanguage('fr')"
+            class="flex items-center p-2 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-full"
+          >
+            Français
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            (click)="changeLanguage('en')"
+            class="flex items-center p-2 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-full"
+          >
+            English
+          </button>
+        </li>
+      </ul>
+    </div>
+  }
+</div>

@@ -23,7 +23,7 @@
       <div
         class="text-xs text-gray-800 dark:text-gray-200 mb-2 pl-2 border-l border-gray-800 dark:border-gray-200"
       >
-        <span translate="entities.review.list.item.replyTo">En réponse à</span>
+        <span translate="ngelmakTranslation.entities.review.list.item.replyTo">En réponse à</span>
         <span class="font-medium">{{ review().replyTo.author }}</span
         ><br />
         <span class="italic opacity-80 line-clamp-1">
@@ -43,7 +43,7 @@
       [ngClass]="{ 'self-end': review().isAuthor, 'self-start': !review().isAuthor }"
     >
       <button
-        translate="entities.review.list.item.reply"
+        translate="ngelmakTranslation.entities.review.list.item.reply"
         (click)="reply()"
         [disabled]="isDeleting()"
         class="text-blue-600 dark:text-blue-400 hover:underline disabled:opacity-50"
@@ -53,7 +53,7 @@
 
       @if (review().isAuthor) {
         <button
-          translate="entities.review.list.item.update"
+          translate="ngelmakTranslation.entities.review.list.item.update"
           (click)="update()"
           [disabled]="isDeleting()"
           class="text-gray-500 dark:text-gray-400 hover:underline disabled:opacity-50"
@@ -82,7 +82,7 @@
               />
             </svg>
           }
-          <span translate="entities.review.list.item.delete">Supprimer</span>
+          <span translate="ngelmakTranslation.entities.review.list.item.delete">Supprimer</span>
         </button>
       }
     </div>

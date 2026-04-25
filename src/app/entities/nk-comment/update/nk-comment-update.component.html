@@ -2,7 +2,7 @@
   class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
 >
   <div class="flex flex-col gap-1 lg:gap-2 p-2 bg-white rounded-t-lg dark:bg-gray-800">
-    <label translate="entities.comment.update.content.label" for="content" class="sr-only"
+    <label translate="ngelmakTranslation.entities.comment.update.content.label" for="content" class="sr-only"
       >Tapez votre commentaire!</label
     >
     <textarea
@@ -105,14 +105,14 @@
           </svg>
         }
         @if (comment()?.id) {
-          <span translate="entities.comment.update.saveUpdate">Modifier</span>
+          <span translate="ngelmakTranslation.entities.comment.update.saveUpdate">Modifier</span>
         } @else {
-          <span translate="entities.comment.update.savePublish">Publier</span>
+          <span translate="ngelmakTranslation.entities.comment.update.savePublish">Publier</span>
         }
       </button>
       <!-- CANCEL -->
       <button
-        translate="entities.comment.update.cancel"
+        translate="ngelmakTranslation.entities.comment.update.cancel"
         annuler
         (click)="cancel()"
         [disabled]="isSaving()"

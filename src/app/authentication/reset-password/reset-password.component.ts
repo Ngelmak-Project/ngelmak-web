@@ -9,6 +9,7 @@ import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { PasswordStrengthBarComponent } from '../sign-up/password-strength-bar/password-strength-bar.component';
 import { ResetPasswordService } from './reset-password.service';
+import { LanguageSwitcherComponent } from "app/shared/language-switcher/language-switcher.component";
 
 const initPassword = {
   key: '',
@@ -20,7 +21,7 @@ const initPassword = {
   standalone: true,
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  imports: [CommonModule, RouterModule, Field, PasswordStrengthBarComponent, SharedModule],
+  imports: [CommonModule, RouterModule, Field, PasswordStrengthBarComponent, SharedModule, LanguageSwitcherComponent],
 })
 export class ResetPasswordComponent {
   protected resetPasswordService = inject(ResetPasswordService);

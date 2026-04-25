@@ -50,7 +50,7 @@ export class AlertService {
    * - default timeout
    * - default UI flags
    *
-   * Also schedules auto‑close if enabled.
+   * Also schedules auto-close if enabled.
    *
    * @param alert Partial alert definition
    * @returns The fully resolved alert object
@@ -69,7 +69,7 @@ export class AlertService {
     // Add alert to the signal list
     this._alerts.update(list => [...list, resolved]);
 
-    // Auto‑close if enabled
+    // Auto-close if enabled
     if (resolved.autoclose && resolved.timeout! > 0) {
       setTimeout(() => this.closeAlert(resolved.id!), resolved.timeout);
     }

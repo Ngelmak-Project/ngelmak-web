@@ -11,13 +11,13 @@
         <div>
           @if (replyTo()) {
             <h2
-              translate="entities.review.dialog.replyTitle"
+              translate="ngelmakTranslation.entities.review.dialog.replyTitle"
               class="text-2xl font-semibold text-gray-900 dark:text-white leading-tight"
             >
               Répondre au fil de discussion
             </h2>
             <p
-              translate="entities.review.dialog.replySubtitle"
+              translate="ngelmakTranslation.entities.review.dialog.replySubtitle"
               [translateParams]="{ id: ticket().id }"
               class="text-sm text-gray-500 dark:text-gray-400 mt-0.5"
             >
@@ -25,14 +25,14 @@
             </p>
           } @else {
             <h2
-              translate="entities.review.dialog.reviewTitle"
+              translate="ngelmakTranslation.entities.review.dialog.reviewTitle"
               [translateParams]="{ id: ticket().id }"
               class="text-2xl font-semibold text-gray-900 dark:text-white leading-tight"
             >
               Examen du ticket #{{ ticket().id }}
             </h2>
             <p
-              translate="entities.review.dialog.reviewSubtitle"
+              translate="ngelmakTranslation.entities.review.dialog.reviewSubtitle"
               class="text-sm text-gray-500 dark:text-gray-400 mt-0.5"
             >
               Signalement utilisateur
@@ -79,7 +79,7 @@
         ></textarea>
 
         <label
-          translate="entities.review.dialog.content.label"
+          translate="ngelmakTranslation.entities.review.dialog.content.label"
           for="content"
           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
         >
@@ -116,7 +116,7 @@
     <!-- ACTIONS -->
     <div class="p-3 md:p-5 border-t dark:border-gray-700 flex justify-end gap-3">
       <button
-        translate="entities.review.dialog.cancel"
+        translate="ngelmakTranslation.entities.review.dialog.cancel"
         type="button"
         (click)="close()"
         [disabled]="isSaving()"
@@ -137,7 +137,7 @@
             <path d="M93.9676 39.0409..." fill="currentColor" />
           </svg>
         }
-        <span translate="entities.review.dialog.send">Envoyer</span>
+        <span translate="ngelmakTranslation.entities.review.dialog.send">Envoyer</span>
       </button>
     </div>
   </div>

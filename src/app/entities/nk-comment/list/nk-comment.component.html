@@ -11,7 +11,7 @@
 
   <!-- If user is NOT logged in -->
   <div
-    translate="entities.comment.list.signInToComment"
+    translate="ngelmakTranslation.entities.comment.list.signInToComment"
     *hasNoAuthority="'ROLE_USER'"
     class="text-gray-500 dark:text-gray-400 text-sm italic px-1"
   >
@@ -31,7 +31,7 @@
       </div>
     } @else if (comments()?.length === 0) {
       <div
-        translate="entities.comment.list.noComments"
+        translate="ngelmakTranslation.entities.comment.list.noComments"
         class="text-gray-500 dark:text-gray-400 text-sm italic px-1"
       >
         Aucun commentaire pour le moment.
@@ -70,7 +70,7 @@
           />
         </svg>
       }
-      <span translate="entities.comment.list.loadMore">Plus de commentaires</span>
+      <span translate="ngelmakTranslation.entities.comment.list.loadMore">Plus de commentaires</span>
     </button>
   }
 </div>

@@ -8,12 +8,13 @@ import { AlertService } from 'app/shared/alert/alert.service';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { ForgetPasswordService } from './forgot-password.service';
+import { LanguageSwitcherComponent } from "app/shared/language-switcher/language-switcher.component";
 
 @Component({
   standalone: true,
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  imports: [CommonModule, RouterModule, Field, SharedModule],
+  imports: [CommonModule, RouterModule, Field, SharedModule, LanguageSwitcherComponent],
 })
 export class ForgotPasswordComponent {
   private forgetPasswordService = inject(ForgetPasswordService);

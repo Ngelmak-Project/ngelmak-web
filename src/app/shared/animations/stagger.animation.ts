@@ -57,7 +57,7 @@ export const stagger150ms = staggerAnimation(150);
 export const stagger200ms = staggerAnimation(200);
 
 /**
- * Creates a reusable scale‑in / scale‑out animation trigger.
+ * Creates a reusable scale-in / scale-out animation trigger.
  *
  * This animation applies a smooth scaling effect to elements as they
  * enter or leave the DOM. Entering elements start slightly smaller

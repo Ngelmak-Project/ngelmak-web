@@ -1,789 +1,975 @@
 {
-  "layouts": {
-    "sidebar": {
-      "home": "Accueil",
-      "project": {
-        "title": "Le Projet Ngelmak",
-        "visionAndGoals": "Vision & Objectifs",
-        "foundationsAndPrinciples": "Fondements & Principes",
-        "governanceAndRights": "Gouvernance & Droits",
-        "informationSharing": "Partage d'Information",
-        "mobilitySoon": "Mobilité (bientôt)",
-        "roadmap": "Feuille de route"
+  "ngelmakTranslation": {
+    "layouts": {
+      "sidebar": {
+        "home": "Accueil",
+        "project": {
+          "title": "Le Projet Ngelmak",
+          "visionAndGoals": "Vision & Objectifs",
+          "foundationsAndPrinciples": "Fondements & Principes",
+          "governanceAndRights": "Gouvernance & Droits",
+          "informationSharing": "Partage d'Information",
+          "mobilitySoon": "Mobilité (bientôt)",
+          "roadmap": "Feuille de route"
+        },
+        "community": "Communauté",
+        "reports": "Signalements",
+        "moderation": "Modération",
+        "policies": "Politiques",
+        "about": "À propos",
+        "contact": "Contact",
+        "donations": "Faire un don",
+        "language": {
+          "fr": "Français",
+          "en": "English"
+        }
       },
-      "community": "Communauté",
-      "reports": "Signalements",
-      "moderation": "Modération",
-      "policies": "Politiques",
-      "about": "À propos",
-      "contact": "Contact",
-      "donations": "Faire un don",
-      "language": {
-        "fr": "Français",
-        "en": "English"
-      }
-    },
-    "navbar": {
-      "login": "Se connecter",
-      "register": "Créer un compte",
-      "logout": "Se déconnecter",
-      "myAccount": "Mon compte",
-      "createChannel": "Créer ma chaîne",
-      "security": "Sécurité",
-      "updateInfo": "Mettre à jour mes informations",
-      "admin": {
-        "users": "Utilisateurs",
-        "inbox": "Boîte de réception",
-        "system": "Système"
-      }
-    },
-    "notFound": {
-      "title": "Page introuvable",
-      "hero": {
+      "navbar": {
+        "login": "Se connecter",
+        "register": "Créer un compte",
+        "logout": "Se déconnecter",
+        "myAccount": "Mon compte",
+        "createChannel": "Créer ma chaîne",
+        "security": "Sécurité",
+        "updateInfo": "Mettre à jour mes informations",
+        "admin": {
+          "users": "Utilisateurs",
+          "inbox": "Boîte de réception",
+          "system": "Système"
+        }
+      },
+      "notFound": {
         "title": "Page introuvable",
-        "description": "Oups… Cette page n'existe pas ou n'est plus disponible. Vous pouvez revenir à l'accueil ou poursuivre votre navigation.",
-        "backHome": "Retour à l'accueil"
-      },
+        "hero": {
+          "pageTitle": "Ngelmak — 404",
+          "title": "Page introuvable",
+          "description": "Oups… Cette page n'existe pas ou n'est plus disponible. Vous pouvez revenir à l'accueil ou poursuivre votre navigation.",
+          "backHome": "Retour à l'accueil"
+        },
 
-      "why": {
-        "title": "Pourquoi cette page n'existe pas",
-        "p1": "Ngelmak évolue constamment. Certaines pages peuvent être déplacées, renommées ou retirées au fil du développement. Il est possible que le lien que vous avez suivi ne soit plus valide.",
-        "p2": "Notre objectif est de vous offrir une expérience fluide, souveraine et accessible. Si vous pensez qu'il s'agit d'une erreur ou si vous souhaitez contribuer à l'amélioration de la plateforme, vous pouvez nous le signaler."
-      },
+        "why": {
+          "title": "Pourquoi cette page n'existe pas",
+          "p1": "Ngelmak évolue constamment. Certaines pages peuvent être déplacées, renommées ou retirées au fil du développement. Il est possible que le lien que vous avez suivi ne soit plus valide.",
+          "p2": "Notre objectif est de vous offrir une expérience fluide, souveraine et accessible. Si vous pensez qu'il s'agit d'une erreur ou si vous souhaitez contribuer à l'amélioration de la plateforme, vous pouvez nous le signaler."
+        },
 
-      "continue": {
-        "title": "Continuer votre navigation",
-        "description": "Vous pouvez revenir à la page d'accueil, explorer les sections principales ou découvrir les fonctionnalités en cours de développement par la communauté."
+        "continue": {
+          "title": "Continuer votre navigation",
+          "description": "Vous pouvez revenir à la page d'accueil, explorer les sections principales ou découvrir les fonctionnalités en cours de développement par la communauté."
+        }
       }
-    }
-  },
-  "home": {
-    "pageTitle": "Ngelmak — Accueil",
-    "user": {
-      "title": "Rejoignez la discussion",
-      "description": "Créer un compte ne prend que quelques instants...",
-      "signIn": "Se connecter",
-      "signUp": "Créer un compte"
     },
-    "help": {
-      "title": "Besoin d'aide ?",
-      "description": "Une question, un problème ou une suggestion. Notre équipe est là pour vous accompagner.",
-      "contactSupport": "Contacter le support",
-      "cancel": "Annuler"
-    }
-  },
-  "auth": {
-    "activate": {
-      "pageTitle": "Ngelmak — Activation de compte",
-      "brandTitle": "Ngelmak",
-      "brandSubtitle": "Nous vérifions votre lien d'activation.",
-      "title": "Activation de compte",
-      "loading": "Quelques secondes, s'il vous plaît...",
-      "success": {
-        "message": "<strong>Votre compte est activé.</strong><br />Vous pouvez maintenant accéder à votre espace.",
-        "action": "Se connecter"
+    "home": {
+      "pageTitle": "Ngelmak — Accueil",
+      "user": {
+        "title": "Rejoignez la discussion",
+        "description": "Créer un compte ne prend que quelques instants...",
+        "signIn": "Se connecter",
+        "signUp": "Créer un compte"
       },
-      "error": {
-        "message": "<strong>L'activation n'a pas pu être effectuée.</strong><br />Le lien est invalide, expiré ou déjà utilisé.",
-        "action": "Demander une nouvelle clé d'activation"
-      },
-      "backToSignIn": "Retour à la connexion",
-      "privacy": "Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée."
+      "help": {
+        "title": "Besoin d'aide ?",
+        "description": "Une question, un problème ou une suggestion. Notre équipe est là pour vous accompagner.",
+        "contactSupport": "Contacter le support",
+        "cancel": "Annuler"
+      }
     },
-    "signin": {
-      "brandTagline": "Connexion à votre compte Ngelmak.",
-      "title": "Se connecter à son compte",
-      "username": "Nom d'utilisateur",
-      "password": "Mot de passe",
-      "rememberMe": "Se souvenir de moi",
-      "forgotPassword": "Mot de passe oublié?",
-      "submit": "Se connecter",
-      "noAccount": "Vous n'avez pas encore de compte ?",
-      "createAccount": "Créer un compte"
-    },
-    "signUp": {
-      "pageTitle": "Créer un compte",
-      "brandTitle": "Ngelmak",
-      "brandSubtitle": "Créez votre compte pour accéder à votre espace personnel.",
-      "title": "Créer un compte",
-      "login": {
-        "label": "Nom d'utilisateur",
-        "placeholder": "Choisissez un nom d'utilisateur",
-        "loginAlreadyUsed": "Nom d'utilisateur déjà utilisé.",
-        "required": "Le nom d'utilisateur est requis.",
-        "minLength": "Le nom d'utilisateur doit comporter au moins 3 caractères.",
-        "maxLength": "Le nom d'utilisateur ne peut pas dépasser 50 caractères.",
-        "pattern": "Le nom d'utilisateur ne peut contenir que des lettres, des chiffres et des tirets."
-      },
-      "email": {
-        "label": "Email",
-        "placeholder": "Entrez votre adresse email",
-        "emailAlreadyUsed": "Email déjà utilisé.",
-        "required": "L'adresse email est requise.",
-        "invalid": "L'adresse email n'est pas valide."
-      },
-      "password": {
-        "label": "Nouveau mot de passe",
-        "placeholder": "Entrez votre nouveau mot de passe",
-        "required": "Le mot de passe est requis.",
-        "minLength": "Le mot de passe doit comporter au moins 6 caractères."
-      },
-      "confirmPassword": {
-        "label": "Confirmer le mot de passe",
-        "placeholder": "Confirmez votre mot de passe",
-        "required": "La confirmation du mot de passe est requise.",
-        "passwordsDoNotMatch": "Les deux mots de passes ne correspondent pas."
-      },
-      "passwordStrength": {
-        "title": "Dois contenir au moins {{ minLength() }} caractères",
-        "preferable": "Préférable d'avoir :",
-        "upperLower": "Des lettres majuscules et minuscules",
-        "symbol": "Un symbole (#$&)",
-        "longPassword": "Un mot de passe plus long (min. 12 caractères)"
-      },
-      "submit": "Créer mon compte",
-      "navigation": {
-        "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "auth": {
+      "activate": {
+        "pageTitle": "Ngelmak — Activation de compte",
+        "brandTitle": "Ngelmak",
+        "brandSubtitle": "Nous vérifions votre lien d'activation.",
+        "title": "Activation de compte",
+        "loading": "Quelques secondes, s'il vous plaît...",
+        "success": {
+          "message": "<strong>Votre compte est activé.</strong><br />Vous pouvez maintenant accéder à votre espace.",
+          "action": "Se connecter"
+        },
+        "error": {
+          "message": "<strong>L'activation n'a pas pu être effectuée.</strong><br />Le lien est invalide, expiré ou déjà utilisé.",
+          "action": "Demander une nouvelle clé d'activation"
+        },
         "backToSignIn": "Retour à la connexion",
-        "contactSupport": "Besoin d'aide ? Contactez le support"
+        "privacy": "Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée."
       },
-      "privacy": "Votre adresse email ne sera utilisée que pour la création de votre compte et la sécurité de votre accès."
-    },
-    "forgotPassword": {
-      "pageTitle": "Ngelmak — Réinitialisation du mot de passe",
-      "brandTitle": "Ngelmak",
-      "brandSubtitle": "Réinitialisation de votre mot de passe.",
-      "title": "Mot de passe oublié ?",
-      "subtitle": "Pas d'inquiétude. Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
-      "email": {
-        "label": "Adresse email",
-        "placeholder": "Entrez votre adresse email",
-        "required": "L'adresse email est requise."
+      "signIn": {
+        "pageTitle": "Ngelmak — Connexion",
+        "brandTagline": "Connexion à votre compte Ngelmak.",
+        "title": "Se connecter à son compte",
+        "username": "Nom d'utilisateur",
+        "password": "Mot de passe",
+        "rememberMe": "Se souvenir de moi",
+        "forgotPassword": "Mot de passe oublié?",
+        "submit": "Se connecter",
+        "noAccount": "Vous n'avez pas encore de compte ?",
+        "createAccount": "Créer un compte"
       },
-      "submit": "Envoyer le lien",
-      "backToSignIn": "Retour à la connexion",
-      "alreadyHaveAccount": "Vous avez déjà un compte ?",
-      "contactSupport": "Besoin d'aide ? Contactez le support",
-      "securityNotice": "Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée."
-    },
-    "resendActivation": {
-      "pageTitle": "Réenvoyer le lien d'activation",
-      "brandTitle": "Ngelmak",
-      "brandSubtitle": "Recevez un nouveau lien d'activation.",
-      "title": "Réenvoyer le lien d'activation",
-      "description": "Entrez votre adresse email et nous vous enverrons un nouveau lien pour activer votre compte.",
-      "alreadyActivated": {
-        "message": "<strong>Votre compte est déjà activé.</strong><br />Vous pouvez vous connecter immédiatement.",
-        "action": "Se connecter"
+      "signUp": {
+        "pageTitle": "Ngelmak — Créer un compte",
+        "brandTitle": "Ngelmak",
+        "brandSubtitle": "Créez votre compte pour accéder à votre espace personnel.",
+        "title": "Créer un compte",
+        "login": {
+          "label": "Nom d'utilisateur",
+          "placeholder": "Choisissez un nom d'utilisateur",
+          "loginAlreadyUsed": "Nom d'utilisateur déjà utilisé.",
+          "required": "Le nom d'utilisateur est requis.",
+          "minLength": "Le nom d'utilisateur doit comporter au moins 3 caractères.",
+          "maxLength": "Le nom d'utilisateur ne peut pas dépasser 50 caractères.",
+          "pattern": "Le nom d'utilisateur ne peut contenir que des lettres, des chiffres et des tirets."
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Entrez votre adresse email",
+          "emailAlreadyUsed": "Email déjà utilisé.",
+          "required": "L'adresse email est requise.",
+          "invalid": "L'adresse email n'est pas valide."
+        },
+        "password": {
+          "label": "Nouveau mot de passe",
+          "placeholder": "Entrez votre nouveau mot de passe",
+          "required": "Le mot de passe est requis.",
+          "minLength": "Le mot de passe doit comporter au moins 6 caractères."
+        },
+        "confirmPassword": {
+          "label": "Confirmer le mot de passe",
+          "placeholder": "Confirmez votre mot de passe",
+          "required": "La confirmation du mot de passe est requise.",
+          "passwordsDoNotMatch": "Les deux mots de passes ne correspondent pas."
+        },
+        "passwordStrength": {
+          "title": "Dois contenir au moins {{ minLength() }} caractères",
+          "preferable": "Préférable d'avoir :",
+          "upperLower": "Des lettres majuscules et minuscules",
+          "symbol": "Un symbole (#$&)",
+          "longPassword": "Un mot de passe plus long (min. 12 caractères)"
+        },
+        "submit": "Créer mon compte",
+        "navigation": {
+          "alreadyHaveAccount": "Vous avez déjà un compte ?",
+          "backToSignIn": "Retour à la connexion",
+          "contactSupport": "Besoin d'aide ? Contactez le support"
+        },
+        "privacy": "Votre adresse email ne sera utilisée que pour la création de votre compte et la sécurité de votre accès."
       },
-      "success": {
-        "message": "<strong>Un nouveau lien d'activation a été envoyé.</strong><br />Vérifiez votre boîte mail."
-      },
-      "error": {
-        "message": "<strong>Impossible d'envoyer le lien.</strong><br />L'adresse fournie est invalide ou ne correspond à aucun compte."
-      },
-      "form": {
+      "forgotPassword": {
+        "pageTitle": "Ngelmak — Réinitialisation du mot de passe",
+        "brandTitle": "Ngelmak",
+        "brandSubtitle": "Réinitialisation de votre mot de passe.",
+        "title": "Mot de passe oublié ?",
+        "subtitle": "Pas d'inquiétude. Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
         "email": {
           "label": "Adresse email",
           "placeholder": "Entrez votre adresse email",
           "required": "L'adresse email est requise."
         },
-        "submit": "Envoyer le lien"
-      },
-      "navigation": {
-        "backSignIn": "Retour à la connexion",
-        "alreadyHaveAccount": "Vous avez déjà un compte ?",
-        "backSignInLink": "Retour à la connexion",
-        "contactSupport": "Besoin d'aide ? Contactez le support"
-      },
-      "privacy": "Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée."
-    },
-    "resetPassword": {
-      "pageTitle": "Changement de mot de passe",
-      "brandTitle": "Ngelmak",
-      "brandSubtitle": "Définissez votre nouveau mot de passe.",
-      "title": "Changement de mot de passe",
-      "key": {
-        "info": "Nous avons envoyé une clé de validation à votre adresse e-mail. Veuillez la copier‑coller dans le champ ci‑dessous.",
-        "label": "Clé de validation",
-        "placeholder": "Entrez la clé de validation",
-        "required": "La clé de validation est requise."
-      },
-      "password": {
-        "newPasswordLabel": "Nouveau mot de passe",
-        "confirmPasswordLabel": "Confirmer le mot de passe",
-        "passwordsDoNotMatch": "Les deux mots de passe ne correspondent pas.",
-        "required": "Le mot de passe est requis."
-      },
-      "submit": "Mettre à jour le mot de passe",
-      "navigation": {
-        "requestNewLink": "Demander un nouveau lien de réinitialisation",
+        "submit": "Envoyer le lien",
         "backToSignIn": "Retour à la connexion",
-        "contactSupport": "Besoin d'aide ? Contactez le support"
+        "alreadyHaveAccount": "Vous avez déjà un compte ?",
+        "contactSupport": "Besoin d'aide ? Contactez le support",
+        "securityNotice": "Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée."
       },
-      "privacy": "Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée."
-    }
-  },
-  "entities": {
-    "channel": {
-      "update": {
-        "pageTitle": "Ngelmak — Nouvelle chaîne",
+      "resendActivation": {
+        "pageTitle": "Réenvoyer le lien d'activation",
         "brandTitle": "Ngelmak",
-        "title": "Création d'une nouvelle chaîne",
-        "subtitle": "Donnez un nom et une description à votre chaîne. Ces informations aideront les utilisateurs à comprendre son objectif.",
-        "name": {
-          "label": "Nom de la chaîne",
-          "placeholder": "Entrez le nom de votre chaîne",
-          "required": "Le nom de la chaîne est requis."
+        "brandSubtitle": "Recevez un nouveau lien d'activation.",
+        "title": "Réenvoyer le lien d'activation",
+        "description": "Entrez votre adresse email et nous vous enverrons un nouveau lien pour activer votre compte.",
+        "alreadyActivated": {
+          "message": "<strong>Votre compte est déjà activé.</strong><br />Vous pouvez vous connecter immédiatement.",
+          "action": "Se connecter"
         },
-        "description": {
-          "label": "Description",
-          "placeholder": "Entrez la description de votre chaîne"
+        "success": {
+          "message": "<strong>Un nouveau lien d'activation a été envoyé.</strong><br />Vérifiez votre boîte mail."
         },
-        "cancel": "Annuler",
-        "save": "Enregistrer"
+        "error": {
+          "message": "<strong>Impossible d'envoyer le lien.</strong><br />L'adresse fournie est invalide ou ne correspond à aucun compte."
+        },
+        "form": {
+          "email": {
+            "label": "Adresse email",
+            "placeholder": "Entrez votre adresse email",
+            "required": "L'adresse email est requise."
+          },
+          "submit": "Envoyer le lien"
+        },
+        "navigation": {
+          "backToSignIn": "Retour à la connexion",
+          "alreadyHaveAccount": "Vous avez déjà un compte ?",
+          "backToSignInLink": "Retour à la connexion",
+          "contactSupport": "Besoin d'aide ? Contactez le support"
+        },
+        "privacy": "Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée."
       },
-      "details": {
-        "pageTitle": "Ngelmak — Détails de la chaîne",
-        "fallbackDescription": "Aucune description...",
-        "createdAt": "Compte créé le",
-        "stats": {
-          "followers": "Abonnés",
-          "following": "Suivis",
-          "posts": "Publications"
+      "resetPassword": {
+        "pageTitle": "Changement de mot de passe",
+        "brandTitle": "Ngelmak",
+        "brandSubtitle": "Définissez votre nouveau mot de passe.",
+        "title": "Changement de mot de passe",
+        "key": {
+          "info": "Nous avons envoyé une clé de validation à votre adresse e-mail. Veuillez la copier-coller dans le champ ci-dessous.",
+          "label": "Clé de validation",
+          "placeholder": "Entrez la clé de validation",
+          "required": "La clé de validation est requise."
         },
-        "follow": "S'abonner",
-        "unfollow": "Se désabonner"
-      },
-      "overview": {
-        "avatarFallback": "Avatar",
-        "fallbackDescription": "Aucune description...",
-        "stats": {
-          "followers": "{{ value }} Abonnés",
-          "following": "{{ value }} Suivis"
+        "password": {
+          "newPasswordLabel": "Nouveau mot de passe",
+          "confirmPasswordLabel": "Confirmer le mot de passe",
+          "passwordsDoNotMatch": "Les deux mots de passe ne correspondent pas.",
+          "required": "Le mot de passe est requis."
         },
-        "seeMore": "Voir plus",
-        "create": {
+        "submit": "Mettre à jour le mot de passe",
+        "navigation": {
+          "requestNewLink": "Demander un nouveau lien de réinitialisation",
+          "backToSignIn": "Retour à la connexion",
+          "contactSupport": "Besoin d'aide ? Contactez le support"
+        },
+        "privacy": "Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée."
+      }
+    },
+    "entities": {
+      "channel": {
+        "update": {
+          "pageTitle": "Ngelmak — Nouvelle chaîne",
+          "brandTitle": "Ngelmak",
+          "title": "Création d'une nouvelle chaîne",
+          "subtitle": "Donnez un nom et une description à votre chaîne. Ces informations aideront les utilisateurs à comprendre son objectif.",
           "name": {
             "label": "Nom de la chaîne",
             "placeholder": "Entrez le nom de votre chaîne",
             "required": "Le nom de la chaîne est requis."
           },
+          "description": {
+            "label": "Description",
+            "placeholder": "Entrez la description de votre chaîne"
+          },
+          "cancel": "Annuler",
           "save": "Enregistrer"
-        }
-      }
-    },
-    "post": {
-      "feed": {
-        "search": {
-          "label": "Rechercher",
-          "placeholder": "Recherche de posts...",
-          "clear": "Effacer",
-          "submit": "Rechercher"
-        }
-      },
-      "card": {
-        "follow": "Suivre",
-        "following": "Suivi",
-        "menu": {
-          "reply": "Répondre",
-          "update": "Modifier",
-          "delete": "Supprimer",
-          "report": {
-            "label": "Signaler",
-            "privacy": "Votre identité restera confidentielle."
+        },
+        "details": {
+          "pageTitle": "Ngelmak — Détails de la chaîne",
+          "fallbackDescription": "Aucune description...",
+          "createdAt": "Compte créé le",
+          "stats": {
+            "followers": "Abonnés",
+            "following": "Suivis",
+            "posts": "Publications"
           },
-          "admin": {
-            "blockUser": "Bloquer l'utilisateur",
-            "delete": "Supprimer",
-            "hide": "Masquer"
-          }
-        }
-      },
-      "channelFeed": {
-        "title": "Publications de la chaîne",
-        "noPosts": "Aucune publication pour le moment. Revenez plus tard ou explorez d'autres chaînes pour découvrir du contenu intéressant."
-      },
-      "details": {
-        "pageTitle": "Ngelmak — Détails du post",
-        "header": {
+          "follow": "S'abonner",
+          "unfollow": "Se désabonner"
+        },
+        "overview": {
           "avatarFallback": "Avatar",
-          "timePrefix": ""
+          "fallbackDescription": "Aucune description...",
+          "stats": {
+            "followers": "{{ value }} Abonnés",
+            "following": "{{ value }} Suivis"
+          },
+          "seeMore": "Voir plus",
+          "create": {
+            "name": {
+              "label": "Nom de la chaîne",
+              "placeholder": "Entrez le nom de votre chaîne",
+              "required": "Le nom de la chaîne est requis."
+            },
+            "save": "Enregistrer"
+          }
+        }
+      },
+      "post": {
+        "feed": {
+          "search": {
+            "label": "Rechercher",
+            "placeholder": "Recherche de posts...",
+            "clear": "Effacer",
+            "submit": "Rechercher"
+          }
         },
-        "menu": {
-          "update": "Modifier",
-          "delete": "Supprimer",
-          "report": "Signaler",
-          "admin": {
-            "blockUser": "Bloquer l'utilisateur",
+        "card": {
+          "follow": "Suivre",
+          "following": "Suivi",
+          "menu": {
+            "reply": "Répondre",
+            "update": "Modifier",
             "delete": "Supprimer",
-            "hide": "Masquer"
-          }
-        }
-      },
-      "update": {
-        "pageTitle": "Ngelmak — Mise à jour du post",
-        "replyContext": {
-          "replyingTo": "En réponse à"
-        },
-        "content": {
-          "placeholder": "Enseignez-nous quelque chose!",
-          "onUpdatePlaceholder": "Modifiez votre poste...",
-          "onReplyPlaceholder": "Écrivez votre réponse...",
-          "required": "Le contenu du post est requis.",
-          "maxLength": "Le contenu du post ne peut pas dépasser 10000 caractères."
-        },
-        "files": {
-          "imageAlt": "Image importée",
-          "remove": "Supprimer le fichier"
-        },
-        "actions": {
-          "publish": "Publier",
-          "update": "Modifier",
-          "cancel": "Annuler",
-          "loginToPost": "Connectez-vous pour publier."
-        }
-      }
-    },
-    "comment": {
-      "list": {
-        "signInToComment": "Connectez-vous pour commenter.",
-        "noComments": "Aucun commentaire pour le moment.",
-        "loadMore": "Plus de commentaires",
-        "item": {
-          "report": {
-            "label": "Signaler",
-            "privacy": "Votre identité restera confidentielle."
-          },
-          "update": "Update",
-          "delete": "Delete",
-          "deleteConfirmTitle": "Confirmation de suppression",
-          "deleteConfirmMessage": "Êtes-vous sûr de vouloir supprimer ce commentaire ?",
-          "reply": "Répondre",
-          "replies": "replies"
-        }
-      },
-      "update": {
-        "content": {
-          "label": "Tapez votre commentaire!",
-          "placeholder": "Tapez votre commentaire!",
-          "required": "Le contenu du commentaire est requis.",
-          "maxLength": "Le contenu du commentaire ne peut pas dépasser 5000 caractères."
-        },
-        "removeImage": "Supprimer l'image",
-        "saveUpdate": "Modifier",
-        "savePublish": "Publier",
-        "cancel": "Annuler"
-      }
-    },
-    "review": {
-      "dialog": {
-        "replyTitle": "Répondre au fil de discussion",
-        "replySubtitle": "Ticket #{{id}} — Signalement utilisateur",
-        "reviewTitle": "Examen du ticket #{{id}}",
-        "reviewSubtitle": "Signalement utilisateur",
-        "content": {
-          "label": "Expliquer",
-          "placeholder": " ",
-          "required": "Le contenu de la revue est requis."
-        },
-        "cancel": "Annuler",
-        "send": "Envoyer"
-      },
-      "list": {
-        "addReview": "Ajouter un commentaire",
-        "item": {
-          "replyTo": "En réponse à",
-          "reply": "Répondre",
-          "update": "Modifier",
-          "delete": "Supprimer",
-          "deleteConfirmTitle": "Suppression d'un message",
-          "deleteConfirmMessage": "Voulez-vous supprimer votre message ?"
-        }
-      },
-      "update": {
-        "title": "Votre réponse",
-        "description": "Vous pouvez expliquer le contexte, contester le signalement ou fournir des informations supplémentaires. Votre réponse sera visible par l'équipe de modération.",
-        "content": {
-          "label": "Expliquer",
-          "placeholder": " ",
-          "required": "Le contenu de la revue est requis."
-        },
-        "send": "Envoyer votre message"
-      }
-    },
-    "ticket": {
-      "details": {
-        "title": "Signalement #{{id}}",
-        "subtitle": "Ce signalement concerne l'un de vos contenus.",
-        "statusResolved": "Résolu",
-        "statusPending": "En cours d'examen",
-        "close": "Fermer",
-        "infoBanner": "Ce signalement a été déposé par un autre utilisateur ou un modérateur. Vous pouvez consulter les détails ci-dessous et, si nécessaire, fournir des informations supplémentaires pour expliquer ou défendre votre position.",
-        "receivedAtTitle": "Signalement reçu le",
-        "statusTitle": "Statut",
-        "statusResolvedText": "Ce signalement a été traité.",
-        "statusPendingText": "Ce signalement est en cours d'examen.",
-        "handledTitle": "Traitement",
-        "handledYes": "Pris en charge par l'équipe de modération.",
-        "handledNo": "En attente de prise en charge par la modération.",
-        "targetContentTitle": "Contenu concerné",
-        "contentNotAvailable": "Le contenu concerné n'est plus disponible.",
-        "type": "Type :",
-        "typeChannel": "Chaîne",
-        "typePost": "Post",
-        "typeComment": "Commentaire",
-        "viewPost": "Voir le post #{{id}}",
-        "viewComment": "Voir le commentaire #{{id}}",
-        "reasonTitle": "Raison du signalement",
-        "evidenceTitle": "Pièce jointe du signalement",
-        "openEvidence": "Ouvrir la pièce jointe"
-      },
-      "dialog": {
-        "content": {
-          "label": "Décrivez brièvement le problème ou la situation.",
-          "placeholder": " ",
-          "required": "Le contenu du signalement est requis.",
-          "maxLength": "Le contenu du signalement ne peut pas dépasser 5000 caractères."
-        },
-        "attachEvidence": "Joindre une preuve (optionnel)",
-        "removeEvidence": "Supprimer la preuve",
-        "cancel": "Annuler",
-        "send": "Envoyer"
-      },
-      "open": {
-        "title": "Ticket #{{id}}",
-        "subtitle": "Signalement utilisateur",
-        "statusResolved": "Résolu",
-        "statusUnresolved": "Non résolu",
-        "issuedByTitle": "Émis par",
-        "issuedAtTitle": "Émis le",
-        "assignedToTitle": "Assigné à",
-        "handledByTitle": "Géré par",
-        "targetTitle": "Cible",
-        "channelLabel": "Channel :",
-        "postLabel": "Post :",
-        "commentLabel": "Commentaire :",
-        "descriptionTitle": "Description",
-        "evidenceTitle": "Preuve",
-        "openEvidence": "Voir la pièce jointe",
-        "close": "Fermer",
-        "markResolved": "Marquer comme résolu"
-      },
-      "userActivityReport": {
-        "title": "Liste des tickets",
-        "filter": {
-          "last30Days": "30 derniers jours",
-          "lastDay": "Dernier jour",
-          "last7Days": "7 derniers jours",
-          "lastMonth": "Dernier mois",
-          "lastYear": "Dernière année"
-        },
-        "table": {
-          "target": "Cible",
-          "description": "Description",
-          "issuedAt": "Émis le",
-          "status": "État",
-          "actions": "Actions"
-        },
-        "target": {
-          "title": "Cible :",
-          "none": "Aucune",
-          "channel": "channel {{name}}",
-          "post": "post {{id}}",
-          "comment": "comment {{id}}"
-        },
-        "statusClosed": "Fermé",
-        "statusOpen": "Ouvert",
-        "viewDetails": "Voir les détails",
-        "pagination": {
-          "previous": "Précédent",
-          "next": "Suivant",
-          "pageSize": "Taille de page",
-          "page": "Page",
-          "perPage": "{{size}} / page"
-        }
-      }
-    }
-  },
-  "userManagement": {
-    "channel": {
-      "pageTitle": "Ngelmak — Gestion de la chaîne",
-      "banner": {
-        "edit": "Modifier la bannière",
-        "remove": "Supprimer la bannière",
-        "validate": "Valider",
-        "cancel": "Annuler"
-      },
-      "avatar": {
-        "fallback": "Avatar",
-        "upload": "Téléverser un avatar",
-        "validate": "Valider",
-        "cancel": "Annuler",
-        "loading": "Téléversement en cours..."
-      },
-      "emptyDescription": "Aucune description pour le moment...",
-      "updateButton": "Modifier la chaîne",
-      "tabs": {
-        "posts": "Publications",
-        "comments": "Commentaires",
-        "subscriptions": "Abonnements",
-        "reports": "Signalements"
-      },
-      "channelRelated": {
-        "channelPost": "Mes publications",
-        "channelComment": "Mes commentaires",
-        "subscriptions": "Mes abonnements",
-        "reports": "Signalements me concernant"
-      }
-    },
-    "security": {
-      "profile": {
-        "title": "Informations personnelles",
-        "fields": {
-          "firstName": {
-            "label": "Prénom",
-            "empty": "Prénom non renseigné"
-          },
-          "lastName": {
-            "label": "Nom",
-            "empty": "Nom non renseigné"
-          },
-          "langKey": {
-            "label": "Langue préférée",
-            "empty": "Langue non définie",
-            "options": {
-              "fr": "Français",
-              "en": "English"
+            "report": {
+              "label": "Signaler",
+              "privacy": "Votre identité restera confidentielle."
+            },
+            "admin": {
+              "blockUser": "Bloquer l'utilisateur",
+              "delete": "Supprimer",
+              "hide": "Masquer"
             }
-          },
-          "theme": {
-            "label": "Thème",
-            "dark": "Sombre",
-            "light": "Clair",
-            "empty": "Thème non définie"
           }
         },
-        "actions": {
-          "edit": "Modifier mes informations",
-          "cancel": "Annuler",
-          "save": "Enregister"
+        "channelFeed": {
+          "title": "Publications de la chaîne",
+          "noPosts": "Aucune publication pour le moment. Revenez plus tard ou explorez d'autres chaînes pour découvrir du contenu intéressant."
         },
-        "image": {
+        "details": {
+          "pageTitle": "Ngelmak — Détails du post",
+          "header": {
+            "avatarFallback": "Avatar",
+            "timePrefix": ""
+          },
+          "menu": {
+            "update": "Modifier",
+            "delete": "Supprimer",
+            "report": "Signaler",
+            "admin": {
+              "blockUser": "Bloquer l'utilisateur",
+              "delete": "Supprimer",
+              "hide": "Masquer"
+            }
+          }
+        },
+        "update": {
+          "pageTitle": "Ngelmak — Mise à jour du post",
+          "replyContext": {
+            "replyingTo": "En réponse à"
+          },
+          "content": {
+            "placeholder": "Enseignez-nous quelque chose!",
+            "onUpdatePlaceholder": "Modifiez votre poste...",
+            "onReplyPlaceholder": "Écrivez votre réponse...",
+            "required": "Le contenu du post est requis.",
+            "maxLength": "Le contenu du post ne peut pas dépasser 10000 caractères."
+          },
+          "files": {
+            "imageAlt": "Image importée",
+            "remove": "Supprimer le fichier"
+          },
+          "actions": {
+            "publish": "Publier",
+            "update": "Modifier",
+            "cancel": "Annuler",
+            "loginToPost": "Connectez-vous pour publier."
+          }
+        }
+      },
+      "comment": {
+        "list": {
+          "signInToComment": "Connectez-vous pour commenter.",
+          "noComments": "Aucun commentaire pour le moment.",
+          "loadMore": "Plus de commentaires",
+          "item": {
+            "report": {
+              "label": "Signaler",
+              "privacy": "Votre identité restera confidentielle."
+            },
+            "update": "Update",
+            "delete": "Delete",
+            "deleteConfirmTitle": "Confirmation de suppression",
+            "deleteConfirmMessage": "Êtes-vous sûr de vouloir supprimer ce commentaire ?",
+            "reply": "Répondre",
+            "replies": "replies"
+          }
+        },
+        "update": {
+          "content": {
+            "label": "Tapez votre commentaire!",
+            "placeholder": "Tapez votre commentaire!",
+            "required": "Le contenu du commentaire est requis.",
+            "maxLength": "Le contenu du commentaire ne peut pas dépasser 5000 caractères."
+          },
+          "removeImage": "Supprimer l'image",
+          "saveUpdate": "Modifier",
+          "savePublish": "Publier",
+          "cancel": "Annuler"
+        }
+      },
+      "review": {
+        "dialog": {
+          "replyTitle": "Répondre au fil de discussion",
+          "replySubtitle": "Ticket #{{id}} — Signalement utilisateur",
+          "reviewTitle": "Examen du ticket #{{id}}",
+          "reviewSubtitle": "Signalement utilisateur",
+          "content": {
+            "label": "Expliquer",
+            "placeholder": " ",
+            "required": "Le contenu de la revue est requis."
+          },
+          "cancel": "Annuler",
+          "send": "Envoyer"
+        },
+        "list": {
+          "addReview": "Ajouter un commentaire",
+          "item": {
+            "replyTo": "En réponse à",
+            "reply": "Répondre",
+            "update": "Modifier",
+            "delete": "Supprimer",
+            "deleteConfirmTitle": "Suppression d'un message",
+            "deleteConfirmMessage": "Voulez-vous supprimer votre message ?"
+          }
+        },
+        "update": {
+          "title": "Votre réponse",
+          "description": "Vous pouvez expliquer le contexte, contester le signalement ou fournir des informations supplémentaires. Votre réponse sera visible par l'équipe de modération.",
+          "content": {
+            "label": "Expliquer",
+            "placeholder": " ",
+            "required": "Le contenu de la revue est requis."
+          },
+          "send": "Envoyer votre message"
+        }
+      },
+      "ticket": {
+        "details": {
+          "pageTitle": "Ngelmak — Détail du signalement",
+          "title": "Signalement #{{id}}",
+          "subtitle": "Ce signalement concerne l'un de vos contenus.",
+          "statusResolved": "Résolu",
+          "statusPending": "En cours d'examen",
+          "close": "Fermer",
+          "infoBanner": "Ce signalement a été déposé par un autre utilisateur ou un modérateur. Vous pouvez consulter les détails ci-dessous et, si nécessaire, fournir des informations supplémentaires pour expliquer ou défendre votre position.",
+          "receivedAtTitle": "Signalement reçu le",
+          "statusTitle": "Statut",
+          "statusResolvedText": "Ce signalement a été traité.",
+          "statusPendingText": "Ce signalement est en cours d'examen.",
+          "handledTitle": "Traitement",
+          "handledYes": "Pris en charge par l'équipe de modération.",
+          "handledNo": "En attente de prise en charge par la modération.",
+          "targetContentTitle": "Contenu concerné",
+          "contentNotAvailable": "Le contenu concerné n'est plus disponible.",
+          "type": "Type :",
+          "typeChannel": "Chaîne",
+          "typePost": "Post",
+          "typeComment": "Commentaire",
+          "viewPost": "Voir le post #{{id}}",
+          "viewComment": "Voir le commentaire #{{id}}",
+          "reasonTitle": "Raison du signalement",
+          "evidenceTitle": "Pièce jointe du signalement",
+          "openEvidence": "Ouvrir la pièce jointe"
+        },
+        "dialog": {
+          "content": {
+            "label": "Décrivez brièvement le problème ou la situation.",
+            "placeholder": " ",
+            "required": "Le contenu du signalement est requis.",
+            "maxLength": "Le contenu du signalement ne peut pas dépasser 5000 caractères."
+          },
+          "attachEvidence": "Joindre une preuve (optionnel)",
+          "removeEvidence": "Supprimer la preuve",
+          "cancel": "Annuler",
+          "send": "Envoyer"
+        },
+        "open": {
+          "title": "Ticket #{{id}}",
+          "subtitle": "Signalement utilisateur",
+          "statusResolved": "Résolu",
+          "statusUnresolved": "Non résolu",
+          "issuedByTitle": "Émis par",
+          "issuedAtTitle": "Émis le",
+          "assignedToTitle": "Assigné à",
+          "handledByTitle": "Géré par",
+          "targetTitle": "Cible",
+          "channelLabel": "Channel :",
+          "postLabel": "Post :",
+          "commentLabel": "Commentaire :",
+          "descriptionTitle": "Description",
+          "evidenceTitle": "Preuve",
+          "openEvidence": "Voir la pièce jointe",
+          "close": "Fermer",
+          "markResolved": "Marquer comme résolu"
+        },
+        "userActivityReport": {
+          "pageTitle": "Ngelmak — List des tickets",
+          "title": "Liste des tickets",
+          "filter": {
+            "last30Days": "30 derniers jours",
+            "lastDay": "Dernier jour",
+            "last7Days": "7 derniers jours",
+            "lastMonth": "Dernier mois",
+            "lastYear": "Dernière année"
+          },
+          "table": {
+            "target": "Cible",
+            "description": "Description",
+            "issuedAt": "Émis le",
+            "status": "État",
+            "actions": "Actions"
+          },
+          "target": {
+            "title": "Cible :",
+            "none": "Aucune",
+            "channel": "channel {{name}}",
+            "post": "post {{id}}",
+            "comment": "comment {{id}}"
+          },
+          "statusClosed": "Fermé",
+          "statusOpen": "Ouvert",
+          "viewDetails": "Voir les détails",
+          "pagination": {
+            "previous": "Précédent",
+            "next": "Suivant",
+            "pageSize": "Taille de page",
+            "page": "Page",
+            "perPage": "{{size}} / page"
+          }
+        }
+      }
+    },
+    "userManagement": {
+      "channel": {
+        "pageTitle": "Ngelmak — Gestion de la chaîne",
+        "banner": {
+          "edit": "Modifier la bannière",
+          "remove": "Supprimer la bannière",
+          "validate": "Valider",
+          "cancel": "Annuler"
+        },
+        "avatar": {
+          "fallback": "Avatar",
+          "upload": "Téléverser un avatar",
           "validate": "Valider",
           "cancel": "Annuler",
-          "upload": "Charger une image"
-        }
-      },
-      "login": {
-        "title": "Identifiant du compte",
-        "description": "Votre identifiant est utilisé pour vous connecter à votre compte. Il n'est pas visible publiquement et n'est jamais partagé avec des tiers. Vous pouvez le modifier à tout moment si nécessaire.",
-        "empty": "Aucun identifiant renseigné",
-        "label": "Identifiant",
-        "edit": "Modifier l'identifiant",
-        "checking": "Vérification en cours...",
-        "unavailable": "Identifiant déjà utilisé",
-        "actions": {
-          "cancel": "Annuler",
-          "save": "Enregister"
-        }
-      },
-      "email": {
-        "title": "Adresse email du compte",
-        "description": "Votre adresse email est utilisée uniquement pour la récupération de compte (mot de passe oublié, vérification d'identité). Elle n'est jamais utilisée pour des notifications intrusives, ni partagée avec des tiers.",
-        "empty": "Aucune adresse email renseignée",
-        "label": "Email",
-        "edit": "Modifier l'adresse email",
-        "verified": "Vérifié",
-        "unverified": "Non vérifié",
-        "errorExists": "Email déjà utilisé.",
-        "actions": {
-          "cancel": "Annuler",
-          "save": "Enregister"
-        }
-      },
-      "password": {
-        "title": "Gestion du mot de passe",
-        "description": "Votre mot de passe est stocké de manière sécurisée et n'est jamais partagé. Pour modifier votre mot de passe, vous devez confirmer l'ancien et en choisir un nouveau.",
-        "edit": "Modifier le mot de passe",
-        "fields": {
-          "current": "Mot de passe actuel",
-          "new": "Nouveau mot de passe",
-          "confirm": "Confirmer le mot de passe"
+          "loading": "Téléversement en cours..."
         },
-        "errors": {
-          "doNotMatch": "Les deux mots de passes ne correspondent pas."
+        "emptyDescription": "Aucune description pour le moment...",
+        "updateButton": "Modifier la chaîne",
+        "tabs": {
+          "posts": "Publications",
+          "comments": "Commentaires",
+          "subscriptions": "Abonnements",
+          "reports": "Signalements"
         },
-        "actions": {
-          "cancel": "Annuler",
-          "save": "Mettre à jour le mot de passe"
+        "channelRelated": {
+          "channelPost": "Mes publications",
+          "channelComment": "Mes commentaires",
+          "subscriptions": "Mes abonnements",
+          "reports": "Signalements me concernant"
         }
       },
-      "deletion": {
-        "title": "Suppression du compte",
-        "description1": "La suppression de votre compte est un processus différé. Une fois la demande <strong>effectuée</strong>, votre compte sera placé en attente de suppression pendant <strong>{{ deletionDelayDays }}</strong> jours.",
-        "description2": "Toute reconnexion durant cette période sera interprétée comme une <strong>récupération du compte</strong>, et la suppression sera automatiquement annulée.",
-        "description3": "Passé ce délai, toutes vos données personnelles, contenus associés et informations liées seront <strong>permanemment supprimées</strong> et ne pourront plus être récupérés.",
-        "deleteButton": "Supprimer mon compte",
-        "modal": {
-          "title": "Confirmation de suppression",
-          "message": "Cette action est irréversible après le délai de récupération. Pour confirmer, veuillez saisir votre mot de passe."
+      "security": {
+        "profile": {
+          "title": "Informations personnelles",
+          "fields": {
+            "firstName": {
+              "label": "Prénom",
+              "empty": "Prénom non renseigné"
+            },
+            "lastName": {
+              "label": "Nom",
+              "empty": "Nom non renseigné"
+            },
+            "langKey": {
+              "label": "Langue préférée",
+              "empty": "Langue non définie",
+              "options": {
+                "fr": "Français",
+                "en": "English"
+              }
+            },
+            "theme": {
+              "label": "Thème",
+              "dark": "Sombre",
+              "light": "Clair",
+              "empty": "Thème non définie"
+            }
+          },
+          "actions": {
+            "edit": "Modifier mes informations",
+            "cancel": "Annuler",
+            "save": "Enregister"
+          },
+          "image": {
+            "validate": "Valider",
+            "cancel": "Annuler",
+            "upload": "Charger une image"
+          }
+        },
+        "login": {
+          "title": "Identifiant du compte",
+          "description": "Votre identifiant est utilisé pour vous connecter à votre compte. Il n'est pas visible publiquement et n'est jamais partagé avec des tiers. Vous pouvez le modifier à tout moment si nécessaire.",
+          "empty": "Aucun identifiant renseigné",
+          "label": "Identifiant",
+          "edit": "Modifier l'identifiant",
+          "checking": "Vérification en cours...",
+          "unavailable": "Identifiant déjà utilisé",
+          "actions": {
+            "cancel": "Annuler",
+            "save": "Enregister"
+          }
+        },
+        "email": {
+          "title": "Adresse email du compte",
+          "description": "Votre adresse email est utilisée uniquement pour la récupération de compte (mot de passe oublié, vérification d'identité). Elle n'est jamais utilisée pour des notifications intrusives, ni partagée avec des tiers.",
+          "empty": "Aucune adresse email renseignée",
+          "label": "Email",
+          "edit": "Modifier l'adresse email",
+          "verified": "Vérifié",
+          "unverified": "Non vérifié",
+          "errorExists": "Email déjà utilisé.",
+          "actions": {
+            "cancel": "Annuler",
+            "save": "Enregister"
+          }
+        },
+        "password": {
+          "title": "Gestion du mot de passe",
+          "description": "Votre mot de passe est stocké de manière sécurisée et n'est jamais partagé. Pour modifier votre mot de passe, vous devez confirmer l'ancien et en choisir un nouveau.",
+          "edit": "Modifier le mot de passe",
+          "fields": {
+            "current": "Mot de passe actuel",
+            "new": "Nouveau mot de passe",
+            "confirm": "Confirmer le mot de passe"
+          },
+          "errors": {
+            "doNotMatch": "Les deux mots de passes ne correspondent pas."
+          },
+          "actions": {
+            "cancel": "Annuler",
+            "save": "Mettre à jour le mot de passe"
+          }
+        },
+        "deletion": {
+          "title": "Suppression du compte",
+          "description1": "La suppression de votre compte est un processus différé. Une fois la demande <strong>effectuée</strong>, votre compte sera placé en attente de suppression pendant <strong>{{ deletionDelayDays }}</strong> jours.",
+          "description2": "Toute reconnexion durant cette période sera interprétée comme une <strong>récupération du compte</strong>, et la suppression sera automatiquement annulée.",
+          "description3": "Passé ce délai, toutes vos données personnelles, contenus associés et informations liées seront <strong>permanemment supprimées</strong> et ne pourront plus être récupérés.",
+          "deleteButton": "Supprimer mon compte",
+          "modal": {
+            "title": "Confirmation de suppression",
+            "message": "Cette action est irréversible après le délai de récupération. Pour confirmer, veuillez saisir votre mot de passe."
+          }
         }
       }
-    }
-  },
-  "shared": {
-    "date": {
-      "duration": {
-        "justNow": "À l'instant",
-        "singular": "Il y a {{count}} {{unit}}",
-        "plural": "Il y a {{count}} {{unit}}",
-        "units": {
-          "year": "an",
-          "month": "mois",
-          "week": "semaine",
-          "day": "jour",
-          "hour": "heure",
-          "minute": "minute",
-          "second": "seconde"
+    },
+    "shared": {
+      "date": {
+        "duration": {
+          "justNow": "À l'instant",
+          "singular": "Il y a {{count}} {{unit}}",
+          "plural": "Il y a {{count}} {{unit}}",
+          "units": {
+            "year": "an",
+            "month": "mois",
+            "week": "semaine",
+            "day": "jour",
+            "hour": "heure",
+            "minute": "minute",
+            "second": "seconde"
+          },
+          "short": {
+            "year": "y",
+            "month": "mo",
+            "week": "w",
+            "day": "d",
+            "hour": "h",
+            "minute": "m",
+            "second": "s"
+          }
         },
-        "short": {
-          "year": "y",
-          "month": "mo",
-          "week": "w",
-          "day": "d",
-          "hour": "h",
-          "minute": "m",
-          "second": "s"
+        "format": {
+          "medium": "D MMM YYYY HH:mm",
+          "short": "D MMM HH:mm"
+        }
+      }
+    },
+    "pages": {
+      "project": {
+        "foundations": {
+          "pageTitle": "Ngelmak — Fondements & Principes",
+          "title": "Fondements & Principes",
+          "intro": "Ngelmak repose sur un ensemble de principes sacrés, non négociables, qui garantissent la fidélité du projet à sa vision initiale. Ces fondements définissent notre identité et protègent l'espace contre toute dérive commerciale, politique ou idéologique.",
+          "free": {
+            "title": "Gratuité absolue",
+            "text": "Tous les services proposés par Ngelmak resteront toujours gratuits. Aucune fonctionnalité premium, aucune commission, aucun abonnement ne sera jamais introduit. La gratuité est un engagement éthique, pas un argument commercial."
+          },
+          "noProfit": {
+            "title": "Absence totale de volonté de profit",
+            "text": "Ngelmak n'est pas une entreprise. Aucune publicité intrusive, aucune vente de données, aucun partenariat contraire à nos valeurs ne sera toléré. Le projet est un bien commun, pas un produit."
+          },
+          "dataProtection": {
+            "title": "Protection stricte des données",
+            "text": "Les données des utilisateurs ne seront jamais vendues, partagées ou exploitées par des tiers. La confidentialité et la sécurité sont des engagements absolus, respectés à chaque étape du développement et du fonctionnement du projet."
+          },
+          "communityGovernance": {
+            "title": "Gouvernance communautaire",
+            "text": "Les décisions majeures impliquent la communauté. Le fondateur protège la vision, les contributeurs enrichissent l'outil, et la communauté oriente les évolutions. Ngelmak appartient à celles et ceux qui le font vivre."
+          },
+          "transparency": {
+            "title": "Transparence totale",
+            "text": "Toutes les décisions, évolutions techniques et contributions financières seront documentées et accessibles. Rien ne sera dissimulé. La transparence est un pilier essentiel de la confiance et de la pérennité du projet."
+          }
+        },
+        "governance": {
+          "pageTitle": "Ngelmak — Gouvernance & Droits",
+          "title": "Gouvernance & Droits",
+          "intro": "La gouvernance de Ngelmak repose sur un équilibre clair entre protection de la vision fondatrice, participation communautaire et transparence. Chaque acteur joue un rôle essentiel dans la stabilité et l'intégrité du projet.",
+          "founder": {
+            "title": "Le fondateur",
+            "text": "Le fondateur détient les droits initiaux et garantit la cohérence du projet. Il protège les principes sacrés, valide les orientations stratégiques et veille à ce que Ngelmak ne soit jamais détourné de ses objectifs."
+          },
+          "contributors": {
+            "title": "Les contributeurs",
+            "text": "Les contributeurs participent au développement, à la rédaction, à la conception et à l'amélioration du projet. Leur travail est essentiel, mais il s'inscrit toujours dans le cadre des principes fondateurs."
+          },
+          "community": {
+            "title": "La communauté",
+            "text": "La communauté occupe une place centrale. Elle propose des idées, participe aux décisions, signale les problèmes et contribue à la réflexion collective. Ngelmak appartient à celles et ceux qui l'utilisent."
+          },
+          "strategicDecisions": {
+            "title": "Décisions stratégiques",
+            "text": "Toute décision susceptible d'affecter l'identité du projet — principes sacrés, modèle économique, gouvernance — nécessite la consultation de la communauté et la validation du fondateur. Ce mécanisme protège Ngelmak contre toute dérive ou tentative d'appropriation."
+          }
+        },
+        "informationSharing": {
+          "pageTitle": "Ngelmak — Partage d'Information",
+          "title": "Partage d'Information",
+          "intro": {
+            "p1": "Le partage d'information constitue le premier module fonctionnel de Ngelmak. Il permet aux membres de publier des analyses, des réflexions, des témoignages ou des enseignements dans un cadre responsable et structuré. L'objectif n'est pas de produire du contenu pour la visibilité, mais de contribuer à une compréhension collective de nos réalités.",
+            "p2": "Chaque publication doit s'inscrire dans une démarche de rigueur, de respect et d'utilité publique. Le partage d'information est un acte citoyen : il engage l'auteur et enrichit la communauté."
+          },
+          "post": {
+            "title": "Le Poste : unité centrale d'expression",
+            "text": "Le Poste est la forme principale d'expression sur Ngelmak. Il peut s'agir d'une analyse, d'un commentaire approfondi, d'un témoignage ou d'une réflexion personnelle. Il doit présenter une intention claire, une structure minimale et une valeur ajoutée pour la communauté.",
+            "list1": "Un contenu argumenté et honnête.",
+            "list2": "Un contexte permettant de comprendre la portée du propos.",
+            "list3": "Une contribution orientée vers l'intérêt collectif.",
+            "list4": "Une écriture respectueuse et responsable."
+          },
+          "encouraged": {
+            "title": "Ce qui est encouragé",
+            "text": "Le module valorise les contenus qui éclairent, expliquent ou enrichissent la réflexion. Les analyses, les retours d'expérience, les synthèses, les critiques constructives et les contributions pédagogiques sont particulièrement appréciées."
+          },
+          "forbidden": {
+            "title": "Ce qui est interdit",
+            "text": "Pour préserver la qualité de l'espace, certains contenus ne sont pas autorisés. Il s'agit notamment des attaques personnelles, des provocations, des mises en scène sans utilité publique ou des publications dépourvues de contexte ou de réflexion.",
+            "list1": "Insultes, moqueries ou dénigrement.",
+            "list2": "Contenus mensongers ou manipulatoires.",
+            "list3": "Reposts bruts sans analyse ou valeur ajoutée.",
+            "list4": "Informations privées concernant un tiers."
+          },
+          "comments": {
+            "title": "Les commentaires",
+            "text": "Les commentaires prolongent le dialogue. Ils doivent être argumentés, respectueux et orientés vers la compréhension. Ils ne sont pas des réactions impulsives, mais des contributions destinées à enrichir la discussion."
+          }
+        },
+        "mobility": {
+          "pageTitle": "Ngelmak — Mobilité (bientôt)",
+          "title": "Mobilité (bientôt)",
+          "intro": {
+            "p1": "Le module Mobilité sera le deuxième grand service de Ngelmak. Il a pour objectif de faciliter les déplacements entre membres de la communauté dans un esprit de solidarité, de responsabilité et de souveraineté. Contrairement aux plateformes commerciales, ce service sera entièrement gratuit, sans commission et sans exploitation des données.",
+            "p2": "L'idée est simple : permettre à un conducteur de proposer un trajet, et à un voyageur de formuler une demande, tout en garantissant un cadre sûr, transparent et respectueux. Ce module s'inscrit dans la continuité des valeurs de Ngelmak : entraide, confiance et intérêt général."
+          },
+          "sovereignAlternative": {
+            "title": "Une alternative souveraine",
+            "text": "Les plateformes de mobilité actuelles reposent sur des modèles commerciaux opaques, des commissions élevées et une collecte massive de données personnelles. Ngelmak propose une alternative souveraine, indépendante et non lucrative, conçue pour répondre aux besoins réels des utilisateurs sans les transformer en produits."
+          },
+          "plannedFunctioning": {
+            "title": "Fonctionnement prévu",
+            "list1": "Un conducteur pourra publier un trajet avec un point de départ, une destination et un horaire.",
+            "list2": "Un voyageur pourra formuler une demande de déplacement ou rejoindre un trajet existant.",
+            "list3": "Les échanges se feront dans un cadre sécurisé et transparent.",
+            "list4": "Aucune transaction financière ne sera intégrée à la plateforme.",
+            "afterList": "Le module sera déployé progressivement afin de garantir sa fiabilité et son adéquation avec les besoins de la communauté."
+          },
+          "trustBasedService": {
+            "title": "Un service fondé sur la confiance",
+            "text": "La mobilité repose sur la confiance mutuelle. Les membres pourront évaluer leur expérience, signaler les problèmes éventuels et contribuer à l'amélioration continue du service. La communauté jouera un rôle central dans la régulation et la qualité du module."
+          }
+        },
+        "vision": {
+          "pageTitle": "Ngelmak — Vision & Objectifs",
+          "title": "Vision & Objectifs",
+          "intro": "Ngelmak est né d'un constat simple mais essentiel : l'Afrique ne dispose pas d'un espace numérique souverain où ses peuples peuvent communiquer librement, analyser leurs réalités et construire leur propre narratif sans dépendre de plateformes étrangères. Notre vision est de bâtir un outil durable, crédible et profondément ancré dans l'intérêt collectif.",
+          "geopoliticalContext": {
+            "title": "Contexte géopolitique",
+            "text": "Les plateformes dominantes façonnent la perception mondiale de l'Afrique, filtrent les voix africaines et imposent des récits souvent déformés ou hostiles. Cette dépendance structurelle prive les Africains d'un espace où documenter leurs expériences, protéger leur mémoire collective et affirmer leur souveraineté intellectuelle."
+          },
+          "whyNgelmak": {
+            "title": "Pourquoi Ngelmak",
+            "text": "Face à ce vide stratégique, Ngelmak propose une alternative souveraine, construite par des Africains et pour des Africains. Le projet vise à offrir un espace d'expression responsable, rigoureux et orienté vers la compréhension collective plutôt que la recherche de visibilité."
+          },
+          "objectives": {
+            "title": "Nos objectifs",
+            "list1": "Créer un espace numérique souverain, libre et éthique.",
+            "list2": "Favoriser l'analyse, la réflexion et le débat constructif.",
+            "list3": "Permettre aux Africains de reprendre la maîtrise de leur narratif.",
+            "list4": "Protéger la mémoire collective et les expériences vécues.",
+            "list5": "Bâtir un outil communautaire durable, transparent et non lucratif."
+          }
+        },
+        "roadmap": {
+          "pageTitle": "Ngelmak — Feuille de route",
+          "title": "Feuille de route",
+          "intro": "La feuille de route présente les prochaines étapes du développement de Ngelmak. Elle évoluera avec les besoins de la communauté et les contributions des membres.",
+          "shortTerm": {
+            "title": "Court terme",
+            "list1": "Lancement du module de partage d'information.",
+            "list2": "Mise en place du système de signalement.",
+            "list3": "Publication des pages Vision, Principes et Gouvernance."
+          },
+          "mediumTerm": {
+            "title": "Moyen terme",
+            "list1": "Déploiement du module Mobilité.",
+            "list2": "Création des profils utilisateurs.",
+            "list3": "Outils de contribution communautaire."
+          },
+          "longTerm": {
+            "title": "Long terme",
+            "list1": "Espaces thématiques et débats structurés.",
+            "list2": "Archives souveraines.",
+            "list3": "Outils d'analyse collective."
+          }
         }
       },
-      "format": {
-        "medium": "D MMM YYYY HH:mm",
-        "short": "D MMM HH:mm"
+      "contact": {
+        "pageTitle": "Ngelmak — Contact",
+        "title": "Contact",
+        "intro": {
+          "p1": "Vous pouvez utiliser ce formulaire pour contacter l'équipe du projet Ngelmak. Que ce soit pour poser une question, proposer une idée, signaler un problème ou simplement partager une réflexion, nous lisons chaque message avec attention.",
+          "p2": "Ngelmak est un projet communautaire fondé sur la transparence, la responsabilité et l'écoute. Votre contribution, quelle qu'elle soit, aide à améliorer l'espace et à renforcer notre démarche collective."
+        },
+        "writeToUs": "Nous écrire",
+        "form": {
+          "name": {
+            "label": "Nom complet (ou pseudonyme)",
+            "placeholder": "Entrez votre nom",
+            "required": "Le nom est requis."
+          },
+          "email": {
+            "label": "Adresse email (optionnelle)",
+            "placeholder": "Entrez votre adresse email",
+            "invalid": "L'adresse email n'est pas valide."
+          },
+          "subject": {
+            "label": "Sujet",
+            "placeholder": "Entrez le sujet",
+            "required": "Le sujet est requis."
+          },
+          "message": {
+            "label": "Message",
+            "placeholder": "Entrez votre message",
+            "required": "Le message est requis."
+          },
+          "submit": "Envoyer"
+        }
+      },
+      "about": {
+        "pageTitle": "Ngelmak — À propos de nous",
+        "title": "À propos de Ngelmak",
+        "intro1": "Ngelmak est un projet panafricain dédié à la création d'un espace numérique souverain, libre et éthique. Il répond à un besoin essentiel : permettre aux Africains de communiquer, d'analyser, de débattre et de construire leur propre narratif sans dépendre de plateformes étrangères qui filtrent leurs voix ou imposent leurs récits.",
+        "intro2": "Le nom Ngelmak, qui signifie « cour » en sérère, renvoie à cet espace traditionnel où l'on se rassemble pour échanger, réfléchir et décider ensemble. C'est précisément cette fonction que le projet souhaite redonner à notre espace numérique : un lieu de parole libre, de responsabilité collective et de souveraineté intellectuelle.",
+        "why.title": "Pourquoi Ngelmak existe",
+        "why.text1": "L'Afrique évolue dans un paysage informationnel dominé par des plateformes étrangères qui façonnent la perception de nos réalités. Cette dépendance prive les Africains d'un espace où documenter leurs expériences, protéger leur mémoire collective et affirmer leur souveraineté. Les récits qui nous concernent sont souvent déformés, filtrés ou instrumentalisés.",
+        "why.text2": "Face à ce vide stratégique, Ngelmak propose une alternative crédible, durable et indépendante, construite par des Africains et pour des Africains. Le projet vise à offrir un espace d'expression responsable, rigoureux et orienté vers l'intérêt général.",
+        "vision.title": "Notre vision",
+        "vision.text1": "Ngelmak s'inscrit dans une vision panafricaine fondée sur l'unité, la dignité et la souveraineté intellectuelle. Malgré nos différences linguistiques, culturelles ou idéologiques, nous partageons une condition commune : être souvent perçus de l'extérieur à travers des récits réducteurs ou déshumanisants.",
+        "vision.text2": "Le projet vise à permettre aux Africains de reprendre la maîtrise de leur parole, de leur image et de leur histoire, tout en participant pleinement aux discussions internationales avec leurs propres analyses et perspectives.",
+        "building.title": "Ce que nous construisons",
+        "building.text1": "Ngelmak n'est pas une entreprise commerciale, mais un outil communautaire fondé sur la solidarité, la responsabilité et l'intérêt général. Le projet évoluera progressivement, en commençant par des fonctionnalités modestes mais essentielles, et s'enrichira au fil du temps grâce aux contributions de la communauté.",
+        "building.text2": "Le projet repose sur des principes sacrés : gratuité absolue, absence totale de volonté de profit, protection stricte des données, transparence et gouvernance communautaire. Ces fondements garantissent que Ngelmak restera un espace libre, éthique et souverain.",
+        "collective.title": "Une initiative collective",
+        "collective.text1": "Bien que le fondateur détienne les droits initiaux et assure la protection de la vision, Ngelmak appartient à sa communauté. Les utilisateurs peuvent proposer des idées, contribuer au développement, participer aux décisions et aider à façonner l'avenir du projet.",
+        "collective.text2": "Ngelmak est une initiative construite avec rigueur, conviction et responsabilité, destinée à servir durablement les intérêts des Africains et de tous ceux qui partagent cette vision."
+      },
+      "community": {
+        "pageTitle": "Ngelmak — Communauté",
+        "title": "Communauté",
+        "intro1": "La communauté est le cœur vivant de Ngelmak. Elle rassemble des personnes qui souhaitent réfléchir, partager, analyser et contribuer à la construction d'un espace numérique souverain, libre et responsable. Chaque membre joue un rôle essentiel dans la qualité des échanges et dans l'évolution du projet.",
+        "intro2": "Contrairement aux plateformes traditionnelles centrées sur la visibilité ou la compétition, Ngelmak valorise la contribution, la rigueur et la responsabilité. La communauté n'est pas un public passif : elle participe activement à la modération, à la gouvernance, aux décisions et à l'amélioration continue de l'espace.",
+        "role.title": "Rôle de la communauté",
+        "role.text": "Les membres peuvent proposer des idées, signaler des comportements nuisibles, participer aux discussions, contribuer au développement et aider à maintenir un environnement sain. Leur implication garantit que Ngelmak reste un espace collectif, construit par et pour ses utilisateurs.",
+        "role.list1": "Participer aux débats et enrichir les discussions.",
+        "role.list2": "Contribuer à la qualité des échanges par des analyses réfléchies.",
+        "role.list3": "Signaler les comportements contraires aux principes du projet.",
+        "role.list4": "Proposer des améliorations ou des idées de fonctionnalités.",
+        "role.list5": "Prendre part aux décisions communautaires lorsque nécessaire.",
+        "sovereign.title": "Une communauté souveraine",
+        "sovereign.text1": "Ngelmak appartient à sa communauté. Le projet ne dépend d'aucune entreprise, institution ou acteur extérieur. Cette indépendance garantit que les décisions sont prises dans l'intérêt collectif, sans pression commerciale ou politique.",
+        "sovereign.text2": "Chaque membre, quel que soit son parcours ou son origine, peut contribuer à la construction d'un espace numérique africain souverain, éthique et durable. La communauté est la force qui permet au projet d'exister, de se renforcer et d'évoluer."
+      },
+      "donations": {
+        "pageTitle": "Ngelmak — Soutien",
+        "title": "Soutenir Ngelmak",
+        "intro1": "Ngelmak est un projet entièrement gratuit, indépendant et sans volonté de profit. Les dons permettent de couvrir les frais techniques essentiels et de garantir que la plateforme reste souveraine, éthique et libre de toute influence extérieure.",
+        "intro2": "Contribuer est un acte volontaire. Chaque don, quel que soit son montant, aide à renforcer un espace numérique africain construit par et pour sa communauté.",
+        "form.title": "Faire un don",
+        "form.amount.label": "Montant du don (€)",
+        "form.amount.placeholder": "Ex : 5",
+        "form.message.label": "Message (optionnel)",
+        "form.message.placeholder": "Un mot pour la communauté (facultatif)",
+        "form.submit": "Envoyer le don",
+        "stats.title": "Statistiques",
+        "stats.total": "Total des dons",
+        "stats.contributors": "Contributeurs",
+        "stats.average": "Don moyen",
+        "stats.last": "Dernier don",
+        "history.title": "Historique des dons",
+        "history.intro": "Par souci de transparence, les derniers dons apparaissent ci-dessous. Les contributions sont anonymisées pour protéger la vie privée des membres.",
+        "history.emptyAmount": "— €",
+        "history.emptyMessage": "Aucun don pour le moment"
+      },
+      "moderation": {
+        "pageTitle": "Ngelmak — Modération",
+        "title": "Modération",
+        "intro1": "La modération sur Ngelmak repose sur une éthique claire : protéger la dignité des membres, garantir la qualité des échanges et préserver un espace d'expression responsable. Elle ne vise jamais à censurer des idées, mais à maintenir un climat de respect, de rigueur et de réflexion constructive.",
+        "intro2": "Les modérateurs interviennent uniquement lorsque les principes fondamentaux du projet sont menacés : attaques personnelles, comportements malveillants, violations des règles essentielles ou dégradation volontaire du débat. Leur rôle est d'accompagner la communauté, pas de la contrôler.",
+        "principles.title": "Principes de la modération",
+        "principles.list1": "Respect absolu de la dignité de chaque membre.",
+        "principles.list2": "Neutralité et absence de jugement idéologique.",
+        "principles.list3": "Interventions limitées aux comportements nuisibles.",
+        "principles.list4": "Sanctions graduées et toujours motivées.",
+        "principles.list5": "Possibilité de contestation pour toute décision.",
+        "service": "La modération est un service rendu à la communauté. Elle protège l'espace, encourage la responsabilité et garantit que Ngelmak reste un lieu de réflexion collective et de souveraineté intellectuelle.",
+        "apply.title": "Devenir modérateur",
+        "apply.intro": "Les membres qui souhaitent contribuer davantage peuvent proposer leur candidature. La modération est un engagement volontaire fondé sur la responsabilité, la patience et la compréhension des principes du projet.",
+        "apply.mustLogin": "Vous devez être connecté pour postuler en tant que modérateur.",
+        "apply.signin": "Se connecter",
+        "apply.signup": "S'inscrire",
+        "apply.pending": "Votre demande de modération est en cours de traitement. Merci de votre patience.",
+        "apply.requestedOn": "Demandé le",
+        "apply.fullName": "Nom complet",
+        "apply.motivation.label": "Pourquoi souhaitez-vous devenir modérateur ?",
+        "apply.motivation.required": "Ce champ est requis.",
+        "apply.submit": "Envoyer la demande",
+        "apply.alreadyModerator": "Vous êtes déjà modérateur."
+      },
+      "policies": {
+        "pageTitle": "Ngelmak — Politiques&Engagements",
+        "title": "Politiques & Engagements",
+        "intro": "Les politiques de Ngelmak reposent sur des principes sacrés, intangibles et non négociables. Elles garantissent la protection des utilisateurs, la souveraineté du projet et la fidélité à sa vision fondatrice. Ces engagements définissent ce que Ngelmak est, ce qu'il protège et ce qu'il refuse de devenir.",
+        "free.title": "Gratuité absolue",
+        "free.text1": "Tous les services proposés par Ngelmak resteront toujours gratuits, sans aucune exception. Aucune fonctionnalité ne sera payante, aucune commission ne sera prélevée, et aucun accès ne sera conditionné à un abonnement ou à un paiement.",
+        "free.text2": "La gratuité n'est pas un argument commercial, mais un engagement éthique fondamental garantissant que l'outil demeure un bien commun accessible à tous.",
+        "nonprofit.title": "Absence totale de volonté de profit",
+        "nonprofit.text1": "Ngelmak n'a pas vocation à générer des revenus, à attirer des investisseurs ou à se transformer en entreprise lucrative. Il s'agit d'un outil communautaire conçu pour répondre à des besoins collectifs, et non pour servir des intérêts privés.",
+        "nonprofit.text2": "Aucune publicité intrusive, aucune vente de données, aucun partenariat commercial contraire aux valeurs du projet ne sera jamais mis en place. Ngelmak est et restera non lucratif.",
+        "data.title": "Protection stricte des données",
+        "data.text1": "Aucune donnée ne sera vendue, partagée ou exploitée par des tiers, sous quelque forme que ce soit. Les informations confiées par les utilisateurs ne seront ni échangées, ni utilisées à des fins commerciales, politiques ou publicitaires.",
+        "data.text2": "La confidentialité et la sécurité des données constituent des engagements absolus, respectés à chaque étape du développement, du fonctionnement et de l'évolution du projet.",
+        "transparency.title": "Transparence totale",
+        "transparency.text1": "Toutes les décisions importantes, évolutions techniques, orientations stratégiques et choix de gouvernance seront documentés et accessibles à tous. Cette transparence s'applique également à l'usage des dons, qui fera l'objet d'un suivi clair, public et vérifiable.",
+        "transparency.text2": "Rien de ce qui concerne le fonctionnement, le financement ou l'avenir du projet ne sera dissimulé ou décidé dans l'ombre. La transparence est un pilier essentiel de la confiance et de la pérennité du projet.",
+        "governance.title": "Droits & gouvernance",
+        "governance.text1": "Le fondateur détient les droits d'auteur initiaux et assure la protection de la vision. Le projet est publié sous une licence open source de type GNU, garantissant que le code restera libre, accessible et modifiable par tous.",
+        "governance.text2": "La gouvernance repose sur trois niveaux : le fondateur, les contributeurs et la communauté. Aucun changement majeur ne peut être adopté sans consultation de la communauté et validation du fondateur.",
+        "governance.text3": "Les décisions stratégiques — modification des principes sacrés, introduction de services payants, changement de licence, privatisation ou toute évolution susceptible de détourner le projet — sont strictement encadrées et nécessitent un processus de validation rigoureux.",
+        "commitment.title": "Engagement envers la communauté",
+        "commitment.text1": "Ngelmak appartient à celles et ceux qui l'utilisent. La communauté peut proposer des idées, voter sur certaines orientations, signaler des problèmes et contribuer à l'évolution du projet.",
+        "commitment.text2": "Les politiques de Ngelmak sont conçues pour protéger cet espace commun, garantir son intégrité et assurer sa continuité dans le respect de ses valeurs fondatrices."
+      },
+      "reports": {
+        "pageTitle": "Ngelmak — Signalement",
+        "title": "Signalement",
+        "intro1": "Le système de signalement permet à la communauté de protéger la qualité de l'espace d'expression. Il ne sert pas à censurer des opinions, mais à identifier les comportements nuisibles ou contraires aux principes fondamentaux de Ngelmak.",
+        "intro2": "Dans un environnement fondé sur la responsabilité et la rigueur, le signalement est un outil citoyen. Il aide à maintenir un climat de respect, de dignité et de réflexion constructive pour tous les membres.",
+        "what.title": "Ce qui peut être signalé",
+        "what.text": "Les signalements concernent uniquement les comportements qui nuisent à la qualité du débat ou portent atteinte à la dignité d'autrui. Ils ne doivent jamais être utilisés pour contester une opinion ou une analyse différente.",
+        "what.list1": "Attaques personnelles, insultes ou propos dégradants.",
+        "what.list2": "Contenus mensongers manifestes ou manipulatoires.",
+        "what.list3": "Violations des principes sacrés du projet.",
+        "what.list4": "Provocations ou comportements perturbateurs.",
+        "what.list5": "Publication d'informations privées ou sensibles.",
+        "process.title": "Fonctionnement et transparence",
+        "process.text": "Lorsqu'un contenu est signalé, il est examiné selon des critères clairs et publics. Certains signalements pourront être rendus visibles afin de garantir la transparence et d'éviter les abus. L'objectif est de protéger l'espace, non de sanctionner arbitrairement.",
+        "appeal.title": "Contestation",
+        "appeal.text": "Tout utilisateur peut demander une révision s'il estime qu'un signalement ou une décision le concernant est injustifiée. La contestation fait partie intégrante du processus et garantit l'équité du système."
       }
-    }
-  },
-  "pages": {
-    "about": {
-      "pageTitle": "Ngelmak — À propos de nous",
-      "title": "À propos de Ngelmak",
-      "intro1": "Ngelmak est un projet panafricain dédié à la création d'un espace numérique souverain, libre et éthique. Il répond à un besoin essentiel : permettre aux Africains de communiquer, d'analyser, de débattre et de construire leur propre narratif sans dépendre de plateformes étrangères qui filtrent leurs voix ou imposent leurs récits.",
-      "intro2": "Le nom Ngelmak, qui signifie « cour » en sérère, renvoie à cet espace traditionnel où l'on se rassemble pour échanger, réfléchir et décider ensemble. C'est précisément cette fonction que le projet souhaite redonner à notre espace numérique : un lieu de parole libre, de responsabilité collective et de souveraineté intellectuelle.",
-      "why.title": "Pourquoi Ngelmak existe",
-      "why.text1": "L'Afrique évolue dans un paysage informationnel dominé par des plateformes étrangères qui façonnent la perception de nos réalités. Cette dépendance prive les Africains d'un espace où documenter leurs expériences, protéger leur mémoire collective et affirmer leur souveraineté. Les récits qui nous concernent sont souvent déformés, filtrés ou instrumentalisés.",
-      "why.text2": "Face à ce vide stratégique, Ngelmak propose une alternative crédible, durable et indépendante, construite par des Africains et pour des Africains. Le projet vise à offrir un espace d'expression responsable, rigoureux et orienté vers l'intérêt général.",
-      "vision.title": "Notre vision",
-      "vision.text1": "Ngelmak s'inscrit dans une vision panafricaine fondée sur l'unité, la dignité et la souveraineté intellectuelle. Malgré nos différences linguistiques, culturelles ou idéologiques, nous partageons une condition commune : être souvent perçus de l'extérieur à travers des récits réducteurs ou déshumanisants.",
-      "vision.text2": "Le projet vise à permettre aux Africains de reprendre la maîtrise de leur parole, de leur image et de leur histoire, tout en participant pleinement aux discussions internationales avec leurs propres analyses et perspectives.",
-      "building.title": "Ce que nous construisons",
-      "building.text1": "Ngelmak n'est pas une entreprise commerciale, mais un outil communautaire fondé sur la solidarité, la responsabilité et l'intérêt général. Le projet évoluera progressivement, en commençant par des fonctionnalités modestes mais essentielles, et s'enrichira au fil du temps grâce aux contributions de la communauté.",
-      "building.text2": "Le projet repose sur des principes sacrés : gratuité absolue, absence totale de volonté de profit, protection stricte des données, transparence et gouvernance communautaire. Ces fondements garantissent que Ngelmak restera un espace libre, éthique et souverain.",
-      "collective.title": "Une initiative collective",
-      "collective.text1": "Bien que le fondateur détienne les droits initiaux et assure la protection de la vision, Ngelmak appartient à sa communauté. Les utilisateurs peuvent proposer des idées, contribuer au développement, participer aux décisions et aider à façonner l'avenir du projet.",
-      "collective.text2": "Ngelmak est une initiative construite avec rigueur, conviction et responsabilité, destinée à servir durablement les intérêts des Africains et de tous ceux qui partagent cette vision."
-    },
-    "community": {
-      "pageTitle": "Ngelmak — Communauté",
-      "title": "Communauté",
-      "intro1": "La communauté est le cœur vivant de Ngelmak. Elle rassemble des personnes qui souhaitent réfléchir, partager, analyser et contribuer à la construction d'un espace numérique souverain, libre et responsable. Chaque membre joue un rôle essentiel dans la qualité des échanges et dans l'évolution du projet.",
-      "intro2": "Contrairement aux plateformes traditionnelles centrées sur la visibilité ou la compétition, Ngelmak valorise la contribution, la rigueur et la responsabilité. La communauté n'est pas un public passif : elle participe activement à la modération, à la gouvernance, aux décisions et à l'amélioration continue de l'espace.",
-      "role.title": "Rôle de la communauté",
-      "role.text": "Les membres peuvent proposer des idées, signaler des comportements nuisibles, participer aux discussions, contribuer au développement et aider à maintenir un environnement sain. Leur implication garantit que Ngelmak reste un espace collectif, construit par et pour ses utilisateurs.",
-      "role.list1": "Participer aux débats et enrichir les discussions.",
-      "role.list2": "Contribuer à la qualité des échanges par des analyses réfléchies.",
-      "role.list3": "Signaler les comportements contraires aux principes du projet.",
-      "role.list4": "Proposer des améliorations ou des idées de fonctionnalités.",
-      "role.list5": "Prendre part aux décisions communautaires lorsque nécessaire.",
-      "sovereign.title": "Une communauté souveraine",
-      "sovereign.text1": "Ngelmak appartient à sa communauté. Le projet ne dépend d'aucune entreprise, institution ou acteur extérieur. Cette indépendance garantit que les décisions sont prises dans l'intérêt collectif, sans pression commerciale ou politique.",
-      "sovereign.text2": "Chaque membre, quel que soit son parcours ou son origine, peut contribuer à la construction d'un espace numérique africain souverain, éthique et durable. La communauté est la force qui permet au projet d'exister, de se renforcer et d'évoluer."
-    },
-    "donations": {
-      "pageTitle": "Ngelmak — Soutien",
-      "title": "Soutenir Ngelmak",
-      "intro1": "Ngelmak est un projet entièrement gratuit, indépendant et sans volonté de profit. Les dons permettent de couvrir les frais techniques essentiels et de garantir que la plateforme reste souveraine, éthique et libre de toute influence extérieure.",
-      "intro2": "Contribuer est un acte volontaire. Chaque don, quel que soit son montant, aide à renforcer un espace numérique africain construit par et pour sa communauté.",
-      "form.title": "Faire un don",
-      "form.amount.label": "Montant du don (€)",
-      "form.amount.placeholder": "Ex : 5",
-      "form.message.label": "Message (optionnel)",
-      "form.message.placeholder": "Un mot pour la communauté (facultatif)",
-      "form.submit": "Envoyer le don",
-      "stats.title": "Statistiques",
-      "stats.total": "Total des dons",
-      "stats.contributors": "Contributeurs",
-      "stats.average": "Don moyen",
-      "stats.last": "Dernier don",
-      "history.title": "Historique des dons",
-      "history.intro": "Par souci de transparence, les derniers dons apparaissent ci-dessous. Les contributions sont anonymisées pour protéger la vie privée des membres.",
-      "history.emptyAmount": "— €",
-      "history.emptyMessage": "Aucun don pour le moment"
-    },
-    "moderation": {
-      "pageTitle": "Ngelmak — Modération",
-      "title": "Modération",
-      "intro1": "La modération sur Ngelmak repose sur une éthique claire : protéger la dignité des membres, garantir la qualité des échanges et préserver un espace d'expression responsable. Elle ne vise jamais à censurer des idées, mais à maintenir un climat de respect, de rigueur et de réflexion constructive.",
-      "intro2": "Les modérateurs interviennent uniquement lorsque les principes fondamentaux du projet sont menacés : attaques personnelles, comportements malveillants, violations des règles essentielles ou dégradation volontaire du débat. Leur rôle est d'accompagner la communauté, pas de la contrôler.",
-      "principles.title": "Principes de la modération",
-      "principles.list1": "Respect absolu de la dignité de chaque membre.",
-      "principles.list2": "Neutralité et absence de jugement idéologique.",
-      "principles.list3": "Interventions limitées aux comportements nuisibles.",
-      "principles.list4": "Sanctions graduées et toujours motivées.",
-      "principles.list5": "Possibilité de contestation pour toute décision.",
-      "service": "La modération est un service rendu à la communauté. Elle protège l'espace, encourage la responsabilité et garantit que Ngelmak reste un lieu de réflexion collective et de souveraineté intellectuelle.",
-      "apply.title": "Devenir modérateur",
-      "apply.intro": "Les membres qui souhaitent contribuer davantage peuvent proposer leur candidature. La modération est un engagement volontaire fondé sur la responsabilité, la patience et la compréhension des principes du projet.",
-      "apply.mustLogin": "Vous devez être connecté pour postuler en tant que modérateur.",
-      "apply.signin": "Se connecter",
-      "apply.signup": "S'inscrire",
-      "apply.pending": "Votre demande de modération est en cours de traitement. Merci de votre patience.",
-      "apply.requestedOn": "Demandé le",
-      "apply.fullName": "Nom complet",
-      "apply.motivation.label": "Pourquoi souhaitez-vous devenir modérateur ?",
-      "apply.motivation.required": "Ce champ est requis.",
-      "apply.submit": "Envoyer la demande",
-      "apply.alreadyModerator": "Vous êtes déjà modérateur."
-    },
-    "policies": {
-      "pageTitle": "Ngelmak — Politiques&Engagements",
-      "title": "Politiques & Engagements",
-      "intro": "Les politiques de Ngelmak reposent sur des principes sacrés, intangibles et non négociables. Elles garantissent la protection des utilisateurs, la souveraineté du projet et la fidélité à sa vision fondatrice. Ces engagements définissent ce que Ngelmak est, ce qu'il protège et ce qu'il refuse de devenir.",
-      "free.title": "Gratuité absolue",
-      "free.text1": "Tous les services proposés par Ngelmak resteront toujours gratuits, sans aucune exception. Aucune fonctionnalité ne sera payante, aucune commission ne sera prélevée, et aucun accès ne sera conditionné à un abonnement ou à un paiement.",
-      "free.text2": "La gratuité n'est pas un argument commercial, mais un engagement éthique fondamental garantissant que l'outil demeure un bien commun accessible à tous.",
-      "nonprofit.title": "Absence totale de volonté de profit",
-      "nonprofit.text1": "Ngelmak n'a pas vocation à générer des revenus, à attirer des investisseurs ou à se transformer en entreprise lucrative. Il s'agit d'un outil communautaire conçu pour répondre à des besoins collectifs, et non pour servir des intérêts privés.",
-      "nonprofit.text2": "Aucune publicité intrusive, aucune vente de données, aucun partenariat commercial contraire aux valeurs du projet ne sera jamais mis en place. Ngelmak est et restera non lucratif.",
-      "data.title": "Protection stricte des données",
-      "data.text1": "Aucune donnée ne sera vendue, partagée ou exploitée par des tiers, sous quelque forme que ce soit. Les informations confiées par les utilisateurs ne seront ni échangées, ni utilisées à des fins commerciales, politiques ou publicitaires.",
-      "data.text2": "La confidentialité et la sécurité des données constituent des engagements absolus, respectés à chaque étape du développement, du fonctionnement et de l'évolution du projet.",
-      "transparency.title": "Transparence totale",
-      "transparency.text1": "Toutes les décisions importantes, évolutions techniques, orientations stratégiques et choix de gouvernance seront documentés et accessibles à tous. Cette transparence s'applique également à l'usage des dons, qui fera l'objet d'un suivi clair, public et vérifiable.",
-      "transparency.text2": "Rien de ce qui concerne le fonctionnement, le financement ou l'avenir du projet ne sera dissimulé ou décidé dans l'ombre. La transparence est un pilier essentiel de la confiance et de la pérennité du projet.",
-      "governance.title": "Droits & gouvernance",
-      "governance.text1": "Le fondateur détient les droits d'auteur initiaux et assure la protection de la vision. Le projet est publié sous une licence open source de type GNU, garantissant que le code restera libre, accessible et modifiable par tous.",
-      "governance.text2": "La gouvernance repose sur trois niveaux : le fondateur, les contributeurs et la communauté. Aucun changement majeur ne peut être adopté sans consultation de la communauté et validation du fondateur.",
-      "governance.text3": "Les décisions stratégiques — modification des principes sacrés, introduction de services payants, changement de licence, privatisation ou toute évolution susceptible de détourner le projet — sont strictement encadrées et nécessitent un processus de validation rigoureux.",
-      "commitment.title": "Engagement envers la communauté",
-      "commitment.text1": "Ngelmak appartient à celles et ceux qui l'utilisent. La communauté peut proposer des idées, voter sur certaines orientations, signaler des problèmes et contribuer à l'évolution du projet.",
-      "commitment.text2": "Les politiques de Ngelmak sont conçues pour protéger cet espace commun, garantir son intégrité et assurer sa continuité dans le respect de ses valeurs fondatrices."
-    },
-    "reports": {
-      "pageTitle": "Ngelmak — Signalement",
-      "title": "Signalement",
-      "intro1": "Le système de signalement permet à la communauté de protéger la qualité de l'espace d'expression. Il ne sert pas à censurer des opinions, mais à identifier les comportements nuisibles ou contraires aux principes fondamentaux de Ngelmak.",
-      "intro2": "Dans un environnement fondé sur la responsabilité et la rigueur, le signalement est un outil citoyen. Il aide à maintenir un climat de respect, de dignité et de réflexion constructive pour tous les membres.",
-      "what.title": "Ce qui peut être signalé",
-      "what.text": "Les signalements concernent uniquement les comportements qui nuisent à la qualité du débat ou portent atteinte à la dignité d'autrui. Ils ne doivent jamais être utilisés pour contester une opinion ou une analyse différente.",
-      "what.list1": "Attaques personnelles, insultes ou propos dégradants.",
-      "what.list2": "Contenus mensongers manifestes ou manipulatoires.",
-      "what.list3": "Violations des principes sacrés du projet.",
-      "what.list4": "Provocations ou comportements perturbateurs.",
-      "what.list5": "Publication d'informations privées ou sensibles.",
-      "process.title": "Fonctionnement et transparence",
-      "process.text": "Lorsqu'un contenu est signalé, il est examiné selon des critères clairs et publics. Certains signalements pourront être rendus visibles afin de garantir la transparence et d'éviter les abus. L'objectif est de protéger l'espace, non de sanctionner arbitrairement.",
-      "appeal.title": "Contestation",
-      "appeal.text": "Tout utilisateur peut demander une révision s'il estime qu'un signalement ou une décision le concernant est injustifiée. La contestation fait partie intégrante du processus et garantit l'équité du système."
     }
   }
 }

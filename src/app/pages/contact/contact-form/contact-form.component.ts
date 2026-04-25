@@ -1,6 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { email, Field, form, maxLength, required } from '@angular/forms/signals';
 import { AlertService } from 'app/shared/alert/alert.service';
+import SharedModule from 'app/shared/shared.module';
 import { UserService } from 'app/user-management/security/user.service';
 import { finalize } from 'rxjs';
 
@@ -15,7 +17,7 @@ const initContactModel = {
   standalone: true,
   selector: 'app-contact-form',
   templateUrl: './contact-form.component.html',
-  imports: [Field],
+  imports: [CommonModule, Field, SharedModule],
 })
 export class ContactFormComponent {
   userService = inject(UserService);

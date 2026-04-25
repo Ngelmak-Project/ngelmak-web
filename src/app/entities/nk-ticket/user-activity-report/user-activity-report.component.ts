@@ -52,7 +52,7 @@ export class UserActivityReportComponent implements OnInit {
 
     this.ticketService
       .userActivityReports({
-        page: this.currentPage() - 1, // backend is 0‑indexed
+        page: this.currentPage() - 1, // backend is 0-indexed
         size: this.pageSize(),
       })
       .pipe(finalize(() => this.isLoading.set(false)))
