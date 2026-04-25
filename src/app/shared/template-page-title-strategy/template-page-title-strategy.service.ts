@@ -16,7 +16,6 @@ export class TemplatePageTitleStrategyService extends TitleStrategy {
 
     if (titleKey) {
       const translatedTitle = this.translationService.translate(titleKey) || titleKey;
-      console.log(titleKey);
       this.title.setTitle(translatedTitle);
     } else {
       this.title.setTitle('Ngelmak Project');

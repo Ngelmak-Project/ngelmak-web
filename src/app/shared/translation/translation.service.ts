@@ -1,14 +1,16 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, OnInit, signal } from '@angular/core';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
 
 @Injectable({ providedIn: 'root' })
-export class TranslationService {
-  private primaryLang = signal<string>('en');
-  private fallbackLang: string = 'en';
-  readonly lang = this.primaryLang;
-
-  public dictionary = signal<any>({});
+export class TranslationService  {
+  private stateStorageService = inject(StateStorageService);
+  private primaryLang = signal<string>('fr');
+  private fallbackLang: string = 'fr';
   private fallbackDictionary = signal<any>({});
   private fallbackLoaded = false;
+
+  readonly lang = this.primaryLang;
+  public dictionary = signal<any>({});
 
   constructor() {
     this.load(this.primaryLang());
@@ -22,7 +24,6 @@ export class TranslationService {
 
   private async loadFallbackIfNeeded() {
     if (this.fallbackLoaded) return;
-
     const data = await fetch(`assets/i18n/${this.fallbackLang}.json`).then((r) => r.json());
     this.fallbackDictionary.set(data);
     this.fallbackLoaded = true;
@@ -30,6 +31,7 @@ export class TranslationService {
 
   setLanguage(lang: string) {
     this.load(lang);
+    this.stateStorageService.storeLocale(lang);
   }
 
   private resolveKey(dict: any, key: string): any {

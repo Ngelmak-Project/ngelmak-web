@@ -1,7 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LANGUAGES } from 'app/config/language.constants';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { fadeInOutRight400ms } from 'app/shared/animations/fade-in-out-right.animation';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import SharedModule from 'app/shared/shared.module';
@@ -17,7 +16,6 @@ import { NavbarService } from '../navbar/navbar.component';
 })
 export class SidebarComponent {
   private sidebarBehavior = inject(NavbarService);
-  private stateStorageService = inject(StateStorageService);
   translateService = inject(TranslationService);
 
   showNgelmakSubMenu = signal(false);
@@ -33,7 +31,6 @@ export class SidebarComponent {
   changeLanguage(lang: string): void {
     this.translateService.setLanguage(lang);
     this.showLangKeyOptions.set(true);
-    this.stateStorageService.storeLocale(lang);
   }
 
   // Close the sidebar when clicking outside of it.

@@ -44,8 +44,8 @@ export class PostUpdateComponent {
   protected postModel = signal<IPost>(initPost);
 
   protected postForm = form(this.postModel, (p) => {
-    required(p.content, { message: 'entities.post.update.content.required' });
-    maxLength(p.content, 1000, { message: 'entities.post.update.content.maxLength' });
+    required(p.content, { message: 'ngelmakTranslation.entities.post.update.content.required' });
+    maxLength(p.content, 1000, { message: 'ngelmakTranslation.entities.post.update.content.maxLength' });
   });
 
   constructor() {
@@ -197,7 +197,7 @@ export class PostUpdateComponent {
    * Returns the placeholder text for the content textarea based on the current state.
    */
   get contentPlaceholder(): string {
-    const root = 'entities.post.update.content.';
+    const root = 'ngelmakTranslation.entities.post.update.content.';
     if (this.post()?.id) return root + 'onUpdatePlaceholder';
     if (this.replyTo()) return root + 'onReplyPlaceholder';
     return root + 'placeholder';

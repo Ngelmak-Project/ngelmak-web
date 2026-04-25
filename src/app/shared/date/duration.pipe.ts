@@ -28,7 +28,7 @@ export default class DurationPipe implements PipeTransform {
     const seconds = Math.floor((Date.now() - new Date(time).getTime()) / 1000);
 
     if (seconds < 29) {
-      return this.translate.translate('shared.date.duration.justNow');
+      return this.translate.translate('ngelmakTranslation.shared.date.duration.justNow');
     }
 
     const intervals: Record<string, number> = {
@@ -45,15 +45,15 @@ export default class DurationPipe implements PipeTransform {
       const counter = Math.floor(seconds / intervals[unit]);
 
       if (counter > 0) {
-        const translatedUnit = this.translate.translate(`shared.date.duration.units.${unit}`);
+        const translatedUnit = this.translate.translate(`ngelmakTranslation.shared.date.duration.units.${unit}`);
         if (counter === 1) {
-          return this.translate.translate('shared.date.duration.singular', {
+          return this.translate.translate('ngelmakTranslation.shared.date.duration.singular', {
             count: counter,
             unit: translatedUnit,
           });
         }
 
-        return this.translate.translate('shared.date.duration.plural', {
+        return this.translate.translate('ngelmakTranslation.shared.date.duration.plural', {
           count: counter,
           unit: translatedUnit,
         });

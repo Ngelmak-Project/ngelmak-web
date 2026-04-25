@@ -1,10 +1,8 @@
 import { Component, effect, inject, Injectable, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-
 import { SignInService } from 'app/authentication/sign-in/sign-in.service';
 import { LANGUAGES } from 'app/config/language.constants';
 import { AuthenticationService } from 'app/core/auth/auth.service';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
@@ -30,7 +28,6 @@ export default class NavbarComponent {
   private signInService = inject(SignInService);
   private router = inject(Router);
   translateService = inject(TranslationService);
-  stateStorageService = inject(StateStorageService);
   user = inject(AuthenticationService).authentication;
   activeChannel = inject(ChannelService).channel;
   inProduction?: boolean = environment.production;
@@ -71,7 +68,6 @@ export default class NavbarComponent {
   changeLanguage(lang: string): void {
     this.translateService.setLanguage(lang);
     this.showLangKeyOptions.set(false);
-    this.stateStorageService.storeLocale(lang);
   }
 
   collapseNavbar(): void {

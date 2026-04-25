@@ -16,8 +16,8 @@ export default class ShortDurationPipe implements PipeTransform {
     // < 30 seconds → "Just now"
     if (seconds < 29) {
       return short
-        ? this.translate.translate('shared.date.duration.short.second') // "s"
-        : this.translate.translate('shared.date.duration.justNow');
+        ? this.translate.translate('ngelmakTranslation.shared.date.duration.short.second') // "s"
+        : this.translate.translate('ngelmakTranslation.shared.date.duration.justNow');
     }
 
     const intervals: Record<string, number> = {
@@ -36,23 +36,23 @@ export default class ShortDurationPipe implements PipeTransform {
       if (counter > 0) {
         if (short) {
           const shortUnit = this.translate.translate(
-            `shared.date.duration.short.${unit}`
+            `ngelmakTranslation.shared.date.duration.short.${unit}`
           );
           return `${counter}${shortUnit}`;
         }
 
         const translatedUnit = this.translate.translate(
-          `shared.date.duration.units.${unit}`
+          `ngelmakTranslation.shared.date.duration.units.${unit}`
         );
 
         if (counter === 1) {
-          return this.translate.translate('shared.date.duration.singular', {
+          return this.translate.translate('ngelmakTranslation.shared.date.duration.singular', {
             count: counter,
             unit: translatedUnit
           });
         }
 
-        return this.translate.translate('shared.date.duration.plural', {
+        return this.translate.translate('ngelmakTranslation.shared.date.duration.plural', {
           count: counter,
           unit: translatedUnit
         });

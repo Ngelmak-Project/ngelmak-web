@@ -7,7 +7,7 @@ import 'dayjs/locale/en';
 @Pipe({
   name: 'formatMediumDatetime',
   standalone: true,
-  pure: false
+  pure: false,
 })
 export default class FormatMediumDatetimePipe implements PipeTransform {
   private lastValue = '';
@@ -38,8 +38,8 @@ export default class FormatMediumDatetimePipe implements PipeTransform {
     if (!date) return '';
 
     const key = short
-      ? 'shared.date.format.short'
-      : 'shared.date.format.medium';
+      ? 'ngelmakTranslation.shared.date.format.short'
+      : 'ngelmakTranslation.shared.date.format.medium';
 
     const format = this.i18n.translate(key);
 
