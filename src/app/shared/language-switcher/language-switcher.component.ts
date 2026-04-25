@@ -1,6 +1,7 @@
 import { TranslationService } from 'app/shared/translation/translation.service';
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LANGUAGES } from 'app/config/language.constants';
 
 @Component({
   selector: 'app-language-switcher',
@@ -9,10 +10,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './language-switcher.component.html',
 })
 export class LanguageSwitcherComponent {
-  showLangKeyOptions = signal(false);
   translateService = inject(TranslationService);
 
-  changeLanguage(lang: 'en' | 'fr') {
+  showLangKeyOptions = signal(false);
+  languages = LANGUAGES;
+  lang = this.translateService.lang;
+
+  changeLanguage(lang: string) {
     this.translateService.setLanguage(lang);
     this.showLangKeyOptions.set(false);
   }

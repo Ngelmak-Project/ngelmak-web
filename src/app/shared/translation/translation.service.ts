@@ -2,8 +2,8 @@ import { Injectable, signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
-  private primaryLang = signal<'en' | 'fr'>('en');
-  private fallbackLang: 'en' | 'fr' = 'en';
+  private primaryLang = signal<string>('en');
+  private fallbackLang: string = 'en';
   readonly lang = this.primaryLang;
 
   public dictionary = signal<any>({});
@@ -14,7 +14,7 @@ export class TranslationService {
     this.load(this.primaryLang());
   }
 
-  async load(lang: 'en' | 'fr') {
+  async load(lang: string) {
     const data = await fetch(`assets/i18n/${lang}.json`).then((r) => r.json());
     this.dictionary.set(data);
     this.primaryLang.set(lang);
@@ -28,7 +28,7 @@ export class TranslationService {
     this.fallbackLoaded = true;
   }
 
-  setLanguage(lang: 'en' | 'fr') {
+  setLanguage(lang: string) {
     this.load(lang);
   }
 

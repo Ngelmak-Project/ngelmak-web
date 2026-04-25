@@ -37,7 +37,9 @@
                   />
                 </svg>
 
-                <span translate="ngelmakTranslation.layouts.sidebar.home" class="ml-3">Accueil</span>
+                <span translate="ngelmakTranslation.layouts.sidebar.home" class="ml-3"
+                  >Accueil</span
+                >
               </a>
             </li>
           </ul>
@@ -62,7 +64,9 @@
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                <span translate="ngelmakTranslation.layouts.sidebar.project.title" class="flex-1 ml-3 text-left"
+                <span
+                  translate="ngelmakTranslation.layouts.sidebar.project.title"
+                  class="flex-1 ml-3 text-left"
                   >Le Projet</span
                 >
                 <svg
@@ -171,7 +175,9 @@
                   />
                 </svg>
 
-                <span translate="ngelmakTranslation.layouts.sidebar.community" class="ml-3">Communauté</span>
+                <span translate="ngelmakTranslation.layouts.sidebar.community" class="ml-3"
+                  >Communauté</span
+                >
               </a>
             </li>
 
@@ -196,7 +202,9 @@
                   />
                 </svg>
 
-                <span translate="ngelmakTranslation.layouts.sidebar.reports" class="ml-3">Signalements</span>
+                <span translate="ngelmakTranslation.layouts.sidebar.reports" class="ml-3"
+                  >Signalements</span
+                >
               </a>
             </li>
 
@@ -221,7 +229,9 @@
                   />
                 </svg>
 
-                <span translate="ngelmakTranslation.layouts.sidebar.moderation" class="ml-3">Modération</span>
+                <span translate="ngelmakTranslation.layouts.sidebar.moderation" class="ml-3"
+                  >Modération</span
+                >
               </a>
             </li>
           </ul>
@@ -249,7 +259,9 @@
                   />
                 </svg>
 
-                <span translate="ngelmakTranslation.layouts.sidebar.policies" class="ml-3">Politiques</span>
+                <span translate="ngelmakTranslation.layouts.sidebar.policies" class="ml-3"
+                  >Politiques</span
+                >
               </a>
             </li>
 
@@ -274,7 +286,9 @@
                   />
                 </svg>
 
-                <span translate="ngelmakTranslation.layouts.sidebar.about" class="ml-3">À propos</span>
+                <span translate="ngelmakTranslation.layouts.sidebar.about" class="ml-3"
+                  >À propos</span
+                >
               </a>
             </li>
 
@@ -297,7 +311,9 @@
                   />
                 </svg>
 
-                <span translate="ngelmakTranslation.layouts.sidebar.contact" class="ml-3">Contact</span>
+                <span translate="ngelmakTranslation.layouts.sidebar.contact" class="ml-3"
+                  >Contact</span
+                >
               </a>
             </li>
 
@@ -318,7 +334,9 @@
                   />
                 </svg>
 
-                <span translate="ngelmakTranslation.layouts.sidebar.donations" class="ml-3">Faire un don</span>
+                <span translate="ngelmakTranslation.layouts.sidebar.donations" class="ml-3"
+                  >Faire un don</span
+                >
               </a>
             </li>
           </ul>
@@ -355,27 +373,22 @@
 
         @if (showLangKeyOptions()) {
           <div
-            class="absolute bottom-14 z-10 bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600"
+            class="absolute bottom-14 w-32 rounded-xl shadow-xl bg-white dark:bg-gray-800 flex flex-col divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-600 py-2 z-50 animate-fadeIn"
           >
-            <ul class="py-2 w-32 text-sm text-gray-700 dark:text-gray-200">
-              <li>
-                <button
-                  type="button"
-                  (click)="changeLanguage('fr')"
-                  class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  <span class="inline-flex items-center gap-2">Français</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  (click)="changeLanguage('en')"
-                  class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  <span class="inline-flex items-center gap-2">English</span>
-                </button>
-              </li>
+            <ul class="flex flex-col space-y-1 py-1">
+              @for (language of languages; track $index) {
+                <li>
+                  <button
+                    type="button"
+                    (click)="changeLanguage(language.code)"
+                    class="flex items-center p-2 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-full"
+                    [ngClass]="{ 'bg-gray-100 dark:bg-gray-700': lang() === language.code }"
+                    [disabled]="lang() === language.code"
+                  >
+                    {{ language.label }}
+                  </button>
+                </li>
+              }
             </ul>
           </div>
         }

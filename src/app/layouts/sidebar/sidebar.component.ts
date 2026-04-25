@@ -18,22 +18,22 @@ import { NavbarService } from '../navbar/navbar.component';
 export class SidebarComponent {
   private sidebarBehavior = inject(NavbarService);
   private stateStorageService = inject(StateStorageService);
+  translateService = inject(TranslationService);
 
   showNgelmakSubMenu = signal(false);
   showLangKeyOptions = signal(false);
+  lang = this.translateService.lang;
   languages = LANGUAGES;
 
   showSidebar = computed(() => {
     return this.sidebarBehavior.state();
   });
 
-  translateService = inject(TranslationService);
 
-  changeLanguage(lang: 'en' | 'fr'): void {
+  changeLanguage(lang: string): void {
     this.translateService.setLanguage(lang);
     this.showLangKeyOptions.set(true);
     this.stateStorageService.storeLocale(lang);
-    // this.translateService.use(languageKey);
   }
 
   // Close the sidebar when clicking outside of it.

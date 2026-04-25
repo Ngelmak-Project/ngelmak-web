@@ -36,6 +36,7 @@ export default class NavbarComponent {
   inProduction?: boolean = environment.production;
   isNavbarCollapsed = signal(true);
   showLangKeyOptions = signal(false);
+  lang = this.translateService.lang;
   languages = LANGUAGES;
 
   isDarkMode = signal(true); // Manage the dark mode state
@@ -67,7 +68,7 @@ export default class NavbarComponent {
     this.sidebarBehavior.state.set(this.isSidebarOpened());
   }
 
-  changeLanguage(lang: 'en' | 'fr'): void {
+  changeLanguage(lang: string): void {
     this.translateService.setLanguage(lang);
     this.showLangKeyOptions.set(false);
     this.stateStorageService.storeLocale(lang);

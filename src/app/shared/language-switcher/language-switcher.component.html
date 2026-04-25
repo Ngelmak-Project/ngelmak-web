@@ -27,24 +27,19 @@
       class="absolute bottom-12 right-0 w-32 rounded-xl shadow-xl bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-600 py-2 z-[9999] animate-fadeIn"
     >
       <ul class="flex flex-col space-y-1 py-1">
-        <li>
-          <button
-            type="button"
-            (click)="changeLanguage('fr')"
-            class="flex items-center p-2 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-full"
-          >
-            Français
-          </button>
-        </li>
-        <li>
-          <button
-            type="button"
-            (click)="changeLanguage('en')"
-            class="flex items-center p-2 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-full"
-          >
-            English
-          </button>
-        </li>
+        @for (language of languages; track $index) {
+          <li>
+            <button
+              type="button"
+              (click)="changeLanguage(language.code)"
+              class="flex items-center p-2 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-full"
+              [ngClass]="{ 'bg-gray-100 dark:bg-gray-700': lang() === language.code }"
+              [disabled]="lang() === language.code"
+            >
+              {{ language.label }}
+            </button>
+          </li>
+        }
       </ul>
     </div>
   }
