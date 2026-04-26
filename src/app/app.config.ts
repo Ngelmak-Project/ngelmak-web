@@ -1,4 +1,3 @@
-import { TemplatePageTitleStrategyService } from './shared/template-page-title-strategy/template-page-title-strategy.service';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
   ApplicationConfig,
@@ -9,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, TitleStrategy, withComponentInputBinding } from '@angular/router';
 import { httpInterceptorProviders } from 'app/core/interceptor/index';
 import { routes } from './app.routes';
+import { TemplatePageTitleStrategyService } from './shared/template-page-title-strategy/template-page-title-strategy.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
