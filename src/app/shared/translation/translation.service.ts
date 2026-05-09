@@ -9,7 +9,7 @@ export class TranslationService {
   private primaryLang = signal<string>('fr');
   readonly lang = this.primaryLang;
 
-  /**
+  /*
    * Cache of already-loaded languages.
    * Prevents refetching JSON files during the same session.
    */
@@ -18,7 +18,8 @@ export class TranslationService {
   public dictionary = signal<Record<string, string>>({});
 
   constructor() {
-    this.load(this.primaryLang());
+    const lang = this.stateStorageService.getLocale();
+    this.load(lang || this.primaryLang());
   }
 
   /**

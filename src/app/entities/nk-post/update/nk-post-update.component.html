@@ -1,312 +1,333 @@
-<div
-  class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
->
-  <div class="flex flex-col gap-4 px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
-    <!-- Reply context -->
-    @if (replyTo()) {
-      <div
-        translate="ngelmakTranslation.entities.post.update.replyContext.replyingTo"
-        class="text-xs text-gray-800 dark:text-gray-200 mb-2 pl-2 border-l border-gray-800 dark:border-gray-200 max-w-full"
-      >
-        En réponse à
-        <p class="inline-flex font-medium">
-          {{ replyTo().channel.name }}
-          <span class="text-xs ml-1 italic text-gray-500 dark:text-gray-400">
-            @{{ replyTo().channel.identifier }}
-          </span>
-        </p>
-        <br />
-        <span class="block italic opacity-80 truncate overflow-hidden whitespace-nowrap max-w-full">
-          {{ replyTo().content }}
-        </span>
-      </div>
-    }
-    <textarea
-      [field]="postForm.content"
-      id="content"
-      rows="5"
-      class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-      [placeholder]="contentPlaceholder | translate"
-    ></textarea>
+<div class="w-full max-w-2xl mx-auto">
+  <!-- Main Card with Gradient Background -->
+  <div
+    class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-white via-blue-50/30 to-white dark:from-gray-800 dark:via-blue-900/10 dark:to-gray-800 border border-gray-200/50 dark:border-gray-700/50 shadow-lg dark:shadow-2xl transition-all duration-300 hover:shadow-xl hover:border-gray-300/70 dark:hover:border-gray-600/70"
+  >
+    <!-- Decorative Gradient Orb (Background) -->
+    <div
+      class="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-200/20 to-purple-200/20 dark:from-blue-500/10 dark:to-purple-500/10 rounded-full blur-3xl pointer-events-none"
+    ></div>
+    <div
+      class="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-cyan-200/20 to-blue-200/20 dark:from-cyan-500/10 dark:to-blue-500/10 rounded-full blur-3xl pointer-events-none"
+    ></div>
 
-    <!-- Wrapper: puts counter on left and errors on right -->
-    <div class="flex justify-between items-start mt-1 text-xs w-full">
-      <!-- Errors (left side) -->
-      <div class="text-left flex-1">
-        @if (postForm.content().dirty()) {
+    <!-- Main Content -->
+    <div class="relative z-10 flex flex-col gap-4 px-6 py-5">
+      <!-- Reply Context - Enhanced -->
+      @if (postReply()) {
+        <div
+          class="group flex gap-3 p-4 bg-gradient-to-r from-blue-50/80 to-cyan-50/80 dark:from-blue-900/30 dark:to-cyan-900/30 border-l-4 border-blue-400 dark:border-blue-500 rounded-r-xl transition-all duration-300 hover:from-blue-100/80 hover:to-cyan-100/80 dark:hover:from-blue-900/40 dark:hover:to-cyan-900/40"
+        >
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-blue-900 dark:text-blue-200">
+              {{ postReply().channel.name }}
+              <span class="font-normal text-blue-700 dark:text-blue-300 text-opacity-75"
+                >@{{ postReply().channel.identifier }}</span
+              >
+            </p>
+            <p
+              class="text-sm text-blue-800 dark:text-blue-300 truncate opacity-80 mt-1 leading-relaxed"
+            >
+              {{ postReply().content }}
+            </p>
+          </div>
+          <button
+            class="flex-shrink-0 p-1 text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 opacity-0 group-hover:opacity-100 transition-opacity"
+            type="button"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+      }
+
+      <!-- Textarea - Premium Design -->
+      <div class="relative group">
+        <textarea
+          [field]="postForm.content"
+          id="content"
+          rows="5"
+          class="w-full px-5 py-4 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 dark:focus:ring-offset-0 focus:border-transparent dark:focus:border-transparent placeholder-gray-400 dark:placeholder-gray-500 resize-none transition-all duration-300 shadow-sm hover:border-gray-300 dark:hover:border-gray-500 focus:shadow-lg focus:bg-white dark:focus:bg-gray-700"
+          [placeholder]="contentPlaceholder | translate"
+        ></textarea>
+
+        <!-- Character count - Repositioned & Styled -->
+        <div
+          class="float-end bottom-2 right-3 text-xs font-medium flex-shrink-0 transition-colors duration-300"
+          [class.text-red-500]="postForm.content().value().length >= postForm.content().maxLength()"
+          [class.text-blue-500]="
+            postForm.content().value().length >= postForm.content().maxLength() * 0.9 &&
+            postForm.content().value().length < postForm.content().maxLength()
+          "
+          [class.text-gray-400]="
+            postForm.content().value().length < postForm.content().maxLength() * 0.9
+          "
+        >
+          <span class="opacity-70">{{ postForm.content().value().length }}</span>
+          <span class="opacity-50">/{{ postForm.content().maxLength() }}</span>
+        </div>
+      </div>
+
+      <!-- Validation Errors - Enhanced Display -->
+      @if (postForm.content().dirty() && postForm.content().errors().length > 0) {
+        <div
+          class="animate-in fade-in slide-in-from-top-2 duration-300 space-y-2 p-3 bg-red-50/80 dark:bg-red-900/20 border border-red-200/50 dark:border-red-800/50 rounded-lg"
+        >
           @for (error of postForm.content().errors(); track error) {
-            <p class="text-red-600 dark:text-red-500 text-xs leading-tight">
-              {{ error.message | translate}}
+            <p class="text-red-600 dark:text-red-400 text-sm flex items-center gap-2">
+              {{ error.message | translate }}
             </p>
           }
-        }
-      </div>
-      <!-- Character counter -->
-      <div
-        class="whitespace-nowrap ml-4"
-        [class.text-red-600]="postForm.content().value().length >= postForm.content().maxLength()"
-        [class.text-gray-500]="postForm.content().value().length < postForm.content().maxLength()"
-      >
-        {{ postForm.content().value().length }} / {{ postForm.content().maxLength() }}
-      </div>
-    </div>
+        </div>
+      }
 
-    <!-- JOINED FILES -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      @for (file of postForm.files().value(); track file; let idx = $index) {
-        @if (isImage(file)) {
-          <div class="flex relative max-h-48">
-            <img
-              class="h-auto rounded-lg shadow-xl dark:shadow-gray-800"
-              [src]="file.url"
-              alt="Imported image"
-            />
-
-            <button
-              type="button"
-              (click)="remove(idx)"
-              [disabled]="isSaving()"
-              [hidden]="isSaving()"
-              class="ms-auto bg-gray-50 text-gray-500 rounded-lg focus:ring-2 focus:ring-gray-400 p-1.5 hover:bg-gray-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-400 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white absolute top-2 left-2"
-            >
-              <svg
-                class="w-3 h-3"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 14"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                />
-              </svg>
-            </button>
-          </div>
-        } @else if (isVideo(file)) {
-        } @else {
-          <div
-            class="col-span-full flex items-center gap-1 md:gap-2 py-3 px-1 border border-gray-200 dark:border-gray-700 rounded-lg"
+      <!-- Files Grid - Beautiful Showcase -->
+      @if (postForm.files().value().length > 0) {
+        <div class="space-y-3">
+          <p
+            class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
           >
-            <div
-              class="flex-none flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100 dark:bg-primary-900"
-            >
-              <svg
-                class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
-                  d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625zM7.5 15a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 017.5 15zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H8.25z"
-                ></path>
-                <path
-                  d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z"
-                ></path>
-              </svg>
-            </div>
-            <div class="flex-1 w-10 flex flex-col">
-              <p
-                class="w-full text-sm font-semibold text-gray-900 dark:text-white truncate overflow-hidden text-ellipsis whitespace-nowrap"
-              >
-                {{ file.filename }}
-              </p>
-              <p class="text-sm text-gray-500 dark:text-gray-400">
-                <span class="uppercase">{{ extention(file) }}</span
-                >, {{ formatFileSize(file.size) }}
-              </p>
-            </div>
-            <div class="flex-none flex items-center">
-              <button
-                (click)="remove(idx)"
-                [disabled]="isSaving()"
-                [hidden]="isSaving()"
-                type="button"
-                class="p-2 rounded hover:bg-gray-100"
-              >
-                <svg
-                  class="w-3 h-3"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 14"
+            Attachments
+          </p>
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 auto-rows-max"
+          >
+            @for (file of postForm.files().value(); track file; let idx = $index) {
+              <!-- Image Files -->
+              @if (isImage(file)) {
+                <div
+                  class="group relative overflow-hidden rounded-2xl aspect-square shadow-md hover:shadow-2xl transition-all duration-300"
                 >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                  <img
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    [src]="file.url"
+                    alt="Uploaded image"
+                    loading="lazy"
                   />
-                </svg>
-              </button>
-            </div>
+                  <!-- Gradient Overlay on Hover -->
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  ></div>
+
+                  <!-- Delete Button -->
+                  <button
+                    type="button"
+                    (click)="remove(idx)"
+                    [disabled]="isSaving()"
+                    class="absolute top-3 right-3 bg-white/95 hover:bg-red-500 text-gray-900 hover:text-white rounded-lg p-2.5 opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 backdrop-blur-md"
+                  >
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        fill-rule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              } @else {
+                <!-- Non-Image Files -->
+                <div
+                  class="group flex flex-col gap-3 p-4 bg-gradient-to-br from-gray-50 to-gray-100/50 dark:from-gray-700/40 dark:to-gray-800/40 border border-gray-200/50 dark:border-gray-600/30 rounded-2xl hover:border-blue-300/70 dark:hover:border-blue-500/40 transition-all duration-300 hover:shadow-lg hover:bg-gradient-to-br hover:from-blue-50 hover:to-cyan-50/50 dark:hover:from-blue-900/20 dark:hover:to-cyan-900/20 relative"
+                >
+                  <!-- File Icon -->
+                  <div class="flex items-center gap-3">
+                    <div
+                      class="flex-none w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/60 dark:to-blue-800/60 group-hover:shadow-md transition-shadow"
+                    >
+                      <svg
+                        class="w-6 h-6 text-blue-600 dark:text-blue-400"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625z"
+                        />
+                      </svg>
+                    </div>
+
+                    <!-- File Info -->
+                    <div class="flex-1 min-w-0">
+                      <p class="font-semibold text-gray-900 dark:text-gray-100 text-sm truncate">
+                        {{ file.filename }}
+                      </p>
+                      <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        {{ extention(file) }} • {{ formatFileSize(file.size) }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Delete Button -->
+                  <button
+                    (click)="remove(idx)"
+                    [disabled]="isSaving()"
+                    type="button"
+                    class="absolute top-3 right-3 p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
+                  >
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        fill-rule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              }
+            }
           </div>
-        }
+        </div>
       }
     </div>
-  </div>
 
-  <!-- ACTIONS BUTTONS -->
-  <div
-    class="flex items-start justify-between flex-wrap px-3 py-2 border-t dark:border-gray-600 border-gray-200"
-  >
-    <div class="flex items-center space-x-1">
-      <button
-        (click)="save()"
-        [disabled]="postForm().invalid() || isSaving() || !activeChannel()"
-        type="button"
-        class="flex gap-2 items-center text-center text-white dark:hover:text-white border border-blue-700 focus:outline-none hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 bg-blue-600 dark:bg-blue-800 dark:text-white dark:border-blue-700 dark:hover:bg-blue-900 dark:hover:border-blue-700 dark:focus:ring-blue-800 focus:outline-2 focus:outline-dashed focus:outline-blue-500 focus:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        @if (isSaving()) {
+    <!-- Actions Footer - Redesigned -->
+    <div
+      class="relative z-10 flex items-center justify-between gap-4 px-6 py-4 bg-gradient-to-r from-gray-50/50 to-blue-50/30 dark:from-gray-800/40 dark:to-blue-900/20 border-t border-gray-200/50 dark:border-gray-700/50"
+    >
+      <div class="flex items-center gap-2">
+        <!-- Publish/Update Button -->
+        <button
+          (click)="save()"
+          [disabled]="postForm().invalid() || isSaving() || !activeChannel()"
+          type="button"
+          class="relative inline-flex gap-2 items-center px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-700 dark:to-blue-800 dark:hover:from-blue-600 dark:hover:to-blue-700 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:shadow-lg overflow-hidden group"
+        >
+          <!-- Button Shine Effect -->
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"
+          ></div>
+
+          @if (isSaving()) {
+            <svg class="w-4 h-4 animate-spin relative z-10" fill="none" viewBox="0 0 24 24">
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+          } @else {
+            <svg class="w-4 h-4 relative z-10" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5.951-1.429 5.951 1.429a1 1 0 001.169-1.409l-7-14z"
+              />
+            </svg>
+          }
+          <span class="relative z-10">
+            {{
+              post()?.id
+                ? ('ngelmakTranslation.entities.post.update.actions.update' | translate)
+                : ('ngelmakTranslation.entities.post.update.actions.publish' | translate)
+            }}
+          </span>
+        </button>
+
+        <!-- Cancel Button -->
+        @if (post()?.id) {
+          <button
+            type="button"
+            (click)="oncancel.emit()"
+            class="px-5 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800/50 border-2 border-gray-200 dark:border-gray-600/50 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:border-gray-300 dark:hover:border-gray-500 transition-all duration-300 hover:shadow-md"
+          >
+            {{ 'ngelmakTranslation.entities.post.update.actions.cancel' | translate }}
+          </button>
+        }
+      </div>
+
+      <!-- Right Side Actions -->
+      <div class="flex items-center gap-2">
+        <!-- Image Upload Button -->
+        <label
+          (click)="imgUpload.click()"
+          class="group relative p-2.5 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer rounded-lg hover:bg-blue-100/50 dark:hover:bg-blue-900/30 transition-all duration-300 hover:shadow-md"
+        >
           <svg
-            class="inline w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
-            viewBox="0 0 100 101"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5 transition-transform duration-300 group-hover:scale-110"
+            fill="currentColor"
+            viewBox="0 0 24 24"
           >
             <path
-              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-              fill="currentColor"
+              fill-rule="evenodd"
+              d="M13 10a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H14a1 1 0 0 1-1-1Z"
+              clip-rule="evenodd"
             />
             <path
-              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-              fill="currentFill"
+              fill-rule="evenodd"
+              d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12c0 .556-.227 1.06-.593 1.422A.999.999 0 0 1 20.5 20H4a2.002 2.002 0 0 1-2-2V6Zm6.892 12 3.833-5.356-3.99-4.322a1 1 0 0 0-1.549.097L4 12.879V6h16v9.95l-3.257-3.619a1 1 0 0 0-1.557.088L11.2 18H8.892Z"
+              clip-rule="evenodd"
             />
           </svg>
-        }
-        @if (post()?.id || replyTo()) {
-          <span translate="ngelmakTranslation.entities.post.update.actions.update">Modifier</span>
-        } @else {
-          <span translate="ngelmakTranslation.entities.post.update.actions.publish">Publier</span>
-        }
-      </button>
-      @if (post()?.id || replyTo()) {
+          <input
+            type="file"
+            accept=".png, .jpg, .jpeg"
+            class="hidden"
+            (change)="handleFile($event)"
+            #imgUpload
+            [disabled]="isSaving()"
+          />
+        </label>
+
         <button
-          translate="ngelmakTranslation.entities.post.update.actions.cancel"
           type="button"
-          (click)="oncancel.emit()"
-          class="text-gray-500 hover:bg-gray-100 focus:ring-4 focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:bg-gray-600 dark:hover:border-gray-500 dark:focus:ring-gray-600"
+          (click)="toggleVisibility()"
+          [attr.aria-pressed]="postModel().visible"
+          [title]="postModel().visible ? 'Make private' : 'Make public'"
+          class="group relative p-2.5 text-gray-600 dark:text-gray-400 transition-all duration-300 rounded-lg hover:shadow-md"
+          [ngClass]="{
+            'text-blue-600 dark:text-blue-400 hover:bg-blue-100/50 dark:hover:bg-blue-900/30':
+              postModel().visible,
+            'text-purple-600 dark:text-purple-400 hover:bg-purple-100/50 dark:hover:bg-purple-900/30':
+              !postModel().visible,
+          }"
         >
-          Annuler
+          <span
+            class="w-5 h-5 text-base leading-none inline-flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+          >
+            {{ postModel().visible ? '🌍' : '🔒' }}
+          </span>
         </button>
-      }
+      </div>
     </div>
 
-    <div class="flex justify-center">
-      <!-- upload file -->
-      <!-- <label
-        (click)="fileUpload.click()"
-        class="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-      >
+    <!-- Login Prompt - Beautiful Alert -->
+    <div
+      *hasNoAuthority="'ROLE_USER'"
+      class="relative z-10 px-6 py-4 bg-gradient-to-r from-amber-50/80 to-orange-50/80 dark:from-amber-900/30 dark:to-orange-900/30 border-t border-amber-200/50 dark:border-amber-800/50 transition-all duration-300"
+    >
+      <div class="flex items-center gap-3">
         <svg
-          class="w-5 h-5 md:w-6 md:h-6 text-gray-800 dark:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
+          class="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0"
           fill="currentColor"
-          viewBox="0 0 24 24"
+          viewBox="0 0 20 20"
         >
           <path
             fill-rule="evenodd"
-            d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7Z"
+            d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
             clip-rule="evenodd"
           />
         </svg>
-
-        <input
-          type="file"
-          accept=".pdf, .doc, .docx, .xls, .xlsx, .txt, .zip"
-          class="hidden"
-          (change)="handleFile($event)"
-          #fileUpload
-          [disabled]="isSaving()"
-        />
-      </label> -->
-      <!-- upload video -->
-      <!-- <label
-        (click)="fileUpload.click()"
-        class="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-      >
-        <svg
-          class="w-5 h-5 md:w-6 md:h-6 text-gray-800 dark:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="none"
-          viewBox="0 0 24 24"
+        <p class="text-sm font-medium text-amber-900 dark:text-amber-200">
+          Sign in to publish your thoughts and engage with the community.
+        </p>
+        <a
+          routerLink="/sign-in"
+          class="ml-auto flex-shrink-0 px-4 py-1.5 text-sm font-semibold text-amber-700 dark:text-amber-300 hover:bg-amber-100/50 dark:hover:bg-amber-900/40 rounded-lg transition-colors"
         >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1Zm0 0-4 4m5 0H4m1 0 4-4m1 4 4-4m-4 7v6l4-3-4-3Z"
-          />
-        </svg>
-
-        <input
-          type="file"
-          accept="video/mp4, video/webm, video/ogg"
-          class="hidden"
-          (change)="handleFile($event)"
-          #fileUpload
-          [disabled]="isSaving()"
-        />
-      </label> -->
-      <!-- upload image -->
-      <label
-        (click)="imgUpload.click()"
-        class="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-      >
-        <svg
-          class="w-5 h-5 md:w-6 md:h-6 text-gray-800 dark:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M13 10a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H14a1 1 0 0 1-1-1Z"
-            clip-rule="evenodd"
-          />
-          <path
-            fill-rule="evenodd"
-            d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12c0 .556-.227 1.06-.593 1.422A.999.999 0 0 1 20.5 20H4a2.002 2.002 0 0 1-2-2V6Zm6.892 12 3.833-5.356-3.99-4.322a1 1 0 0 0-1.549.097L4 12.879V6h16v9.95l-3.257-3.619a1 1 0 0 0-1.557.088L11.2 18H8.892Z"
-            clip-rule="evenodd"
-          />
-        </svg>
-
-        <input
-          type="file"
-          accept=".png, .jpg, .jpeg"
-          class="hidden"
-          (change)="handleFile($event)"
-          #imgUpload
-          [disabled]="isSaving()"
-        />
-      </label>
+          Sign In
+        </a>
+      </div>
     </div>
-  </div>
-
-  <!-- If user is NOT logged in -->
-  <div
-    translate="ngelmakTranslation.entities.post.update.actions.loginToPost"
-    *hasNoAuthority="'ROLE_USER'"
-    class="text-gray-500 text-sm italic py-2 px-4"
-    [ngClass]="{ 'text-red-500 animate-pulse font-bold': postModel().content.length > 0 }"
-  >
-    Connectez-vous pour publier.
   </div>
 </div>

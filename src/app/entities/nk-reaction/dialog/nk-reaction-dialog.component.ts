@@ -76,7 +76,6 @@ export class ReactionDialogComponent {
     // Create or update
     const reaction: IReaction = {
       id: reactionId ?? undefined,
-      channel: this.activeChannel(),
       post: { id: post.id },
       emoji,
     };

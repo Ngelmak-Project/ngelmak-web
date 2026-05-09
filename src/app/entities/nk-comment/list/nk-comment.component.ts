@@ -32,7 +32,6 @@ export class CommentComponent implements OnInit {
 
   ngOnInit(): void {
     this.postSig.set(this.post());
-
     this.loadAll();
   }
 

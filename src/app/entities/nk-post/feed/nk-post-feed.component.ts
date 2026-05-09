@@ -66,9 +66,6 @@ export class PostFeedComponent implements OnInit, OnDestroy {
   // Session key for pagination continuity
   sessionKey = signal<string | null>(null);
 
-  // Track last scroll height to avoid infinite loops
-  private lastHeight = 0;
-
   /**
    * Computed boolean: search is allowed only if query length >= 5
    */

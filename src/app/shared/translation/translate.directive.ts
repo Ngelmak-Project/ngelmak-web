@@ -14,12 +14,12 @@ export class TranslateDirective implements OnInit {
 
   /*
    * Translation key provided by the user.
-   * Example: <div translate="home.title"></div>
+   * eg., <div translate="home.title"></div>
    */
   @Input('translate') key!: string;
   /*
    * Optional interpolation parameters.
-   * Example: <div [translateParams]="{ name: 'Alex' }"></div>
+   * eg., <div [translateParams]="{ name: 'Alex' }"></div>
    */
   @Input('translateParams') params?: Record<string, any>;
 

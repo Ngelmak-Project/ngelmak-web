@@ -1,45 +1,55 @@
-<article class="flex flex-col gap-4 py-3">
-  <!-- Header -->
+<article
+  class="group flex flex-col gap-5 py-4 px-4 rounded-2xl bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-2xl transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600"
+>
+  <!-- HEADER -->
   <header class="flex items-start justify-between gap-4">
-    <!-- LEFT -->
-    <div class="flex items-center gap-3 flex-1 min-w-0">
-      <!-- Avatar -->
-      <a [routerLink]="['channel', postSig().channel.identifier, 'view']" class="shrink-0">
+    <!-- LEFT SECTION -->
+    <div class="flex items-center gap-4 flex-1 min-w-0">
+      <!-- AVATAR WITH GLOW EFFECT -->
+      <a
+        [routerLink]="['channel', postSig().channel.identifier, 'view']"
+        class="shrink-0 group/avatar relative"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-lg opacity-0 group-hover/avatar:opacity-50 transition-opacity duration-300"
+        ></div>
         @if (postSig().channel.avatar) {
           <img
             [src]="postSig().channel.avatar"
             alt="Avatar"
-            class="w-11 h-11 rounded-full object-cover"
+            class="relative w-12 h-12 rounded-full object-cover ring-2 ring-white dark:ring-gray-800 shadow-md transition-transform duration-300 hover:scale-110"
           />
         } @else {
           <div
-            class="w-11 h-11 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 font-semibold text-lg"
+            class="relative w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg shadow-md ring-2 ring-white dark:ring-gray-800"
           >
             {{ postSig().channel.name.at(0) }}
           </div>
         }
       </a>
 
-      <!-- Right side -->
-      <div class="flex flex-col min-w-0 w-full">
-        <!-- Row 1: Name + Identifier -->
-        <div class="flex items-center gap-2 min-w-0">
+      <!-- USER INFO -->
+      <div class="flex flex-col min-w-0 flex-1">
+        <!-- NAME & IDENTIFIER -->
+        <div class="flex items-center gap-1 min-w-0 flex-wrap">
           <a
-            class="truncate font-semibold text-gray-900 dark:text-white text-base"
+            class="truncate font-bold text-gray-900 dark:text-white text-base hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             [routerLink]="['channel', postSig().channel.identifier, 'view']"
           >
             {{ postSig().channel.name }}
-            <span class="text-xs italic text-gray-500 dark:text-gray-400 truncate">
-              @{{ postSig().channel.identifier }}
-            </span>
           </a>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400 truncate">
+            @{{ postSig().channel.identifier }}
+          </span>
         </div>
 
-        <!-- Row 2: Time (left) + Follow button (right) -->
-        <div class="flex items-center justify-between mt-1 w-full">
-          <!-- Time -->
-          <time class="flex items-center text-xs text-gray-500 dark:text-gray-400">
-            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+        <!-- TIME & FOLLOW BUTTON -->
+        <div class="flex items-center justify-between w-full gap-2">
+          <!-- TIME WITH ICON -->
+          <time
+            class="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors"
+          >
+            <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path
                 d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"
               />
@@ -47,23 +57,23 @@
             {{ postSig().at | duration }}
           </time>
 
-          <!-- Follow button -->
+          <!-- FOLLOW BUTTON -->
           <button
             *hasAnyAuthority="'ROLE_USER'"
             [disabled]="isSubscriptionToggling()"
             (click)="toggleFollow()"
-            class="inline-flex items-center rounded-md text-xs font-medium px-2.5 py-0.5 border transition disabled:opacity-50 disabled:cursor-not-allowed bg-blue-100 text-blue-800 border-blue-400 dark:bg-gray-700 dark:text-blue-400"
-            [ngClass]="
-              hideFollwing()
-                ? 'hidden'
-                : subscription()
-                  ? 'text-blue-800 dark:text-blue-400 border-blue-400'
-                  : 'text-gray-800 dark:text-gray-400 border-gray-500'
-            "
+            class="inline-flex items-center gap-2 rounded-full text-xs font-semibold px-3 py-1.5 border-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-md hover:scale-105 active:scale-95"
+            [ngClass]="{
+              hidden: hideFollwing(),
+              'bg-gradient-to-r from-blue-400 to-blue-500 text-white border-blue-500 dark:border-blue-400 hover:from-blue-500 hover:to-blue-600':
+                subscription(),
+              'bg-white text-gray-800 border-gray-400 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 hover:border-gray-500 dark:hover:border-gray-500':
+                !subscription(),
+            }"
           >
             @if (isSubscriptionToggling()) {
               <svg
-                class="inline w-3 h-3 animate-spin text-gray-600 dark:text-gray-300 fill-gray-600 dark:fill-gray-300"
+                class="w-3.5 h-3.5 animate-spin"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -89,21 +99,59 @@
     </div>
   </header>
 
-  <!-- UPDATE FORM (ONLY IF UPDATING) -->
-  @if (isUpdating()) {
-    <app-post-update
-      [post]="postSig()"
-      (onsaved)="handlePostUpdate($event)"
-      (oncancel)="handleCancelUpdate()"
-    ></app-post-update>
-  } @else {
-    <!-- Content -->
-    <div class="text-gray-900 dark:text-white whitespace-pre-line" [innerHTML]="content()"></div>
+  <!-- REPLY SECTION -->
+  @if (postSig().postReply) {
+    <a
+      [routerLink]="['/post', postSig().postReply.id, 'view']"
+      class="group flex items-start gap-3 p-3 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+    >
+      <!-- Avatar -->
+      <img
+        [src]="postSig().postReply.channel.avatar"
+        class="w-10 h-10 rounded-full object-cover"
+        alt="Avatar"
+      />
 
+      <!-- Text -->
+      <div class="flex flex-col min-w-0">
+        <div class="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-300">
+          <span class="font-semibold text-gray-900 dark:text-white">
+            {{ postSig().postReply.channel.name }}
+          </span>
+          <span class="text-xs text-gray-500 dark:text-gray-400">
+            @{{ postSig().postReply.channel.identifier }}
+          </span>
+        </div>
+
+        <p class="text-sm text-gray-700 dark:text-gray-300 truncate">
+          {{ postSig().postReply.content }}
+        </p>
+      </div>
+    </a>
+  }
+
+  <!-- UPDATE FORM -->
+  @if (isUpdating()) {
+    <div
+      class="relative rounded-xl bg-white dark:bg-gray-800 border-2 border-blue-300 dark:border-blue-600 p-4 shadow-lg"
+    >
+      <app-post-update
+        [post]="postSig()"
+        (onsaved)="handlePostUpdate($event)"
+        (oncancel)="handleCancelUpdate()"
+      ></app-post-update>
+    </div>
+  } @else {
+    <!-- CONTENT -->
+    <div
+      class="text-gray-800 dark:text-gray-100 whitespace-pre-line leading-relaxed text-base font-medium [&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:hover:underline"
+      [innerHTML]="content()"
+    ></div>
+
+    <!-- ATTACHMENTS -->
     @if (postSig().files.length > 0) {
-      <!-- Attachments -->
       <div
-        class="grid gap-4"
+        class="grid gap-3 mt-2"
         [ngClass]="{
           'grid-cols-1': postSig().files.length === 1,
           'grid-cols-1 md:grid-cols-2': postSig().files.length > 1,
@@ -111,38 +159,60 @@
       >
         @for (file of postSig().files; track file; let idx = $index) {
           @if (isImage(file)) {
-            <img
-              class="h-auto rounded-lg shadow-xl dark:shadow-gray-800"
-              [src]="file.url"
-              alt="Imported image"
-            />
+            <div
+              class="relative group/image overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
+            >
+              <img
+                class="h-auto w-full object-cover transition-transform duration-300 group-hover/image:scale-105"
+                [src]="file.url"
+                alt="Imported image"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-300"
+              ></div>
+            </div>
           } @else if (isVideo(file)) {
-            <!-- your video block -->
+            <!-- video block -->
           } @else {
-            <!-- Non-image files always span full width -->
-            <div class="col-span-full flex items-center gap-2 py-3 px-2 border rounded-lg">...</div>
+            <div
+              class="col-span-full flex items-center gap-3 py-3 px-4 bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl hover:border-gray-400 dark:hover:border-gray-500 transition-colors group/file"
+            >
+              <svg
+                class="w-5 h-5 text-gray-500 dark:text-gray-400 group-hover/file:text-blue-500 transition-colors"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M8 16.5a1 1 0 11-2 0 1 1 0 012 0zM15 7a1 1 0 11-2 0 1 1 0 012 0z" />
+              </svg>
+              <span class="text-sm font-medium text-gray-600 dark:text-gray-300">
+                {{ file.filename }}
+              </span>
+            </div>
           }
         }
       </div>
     }
   }
 
-  <!-- REPLY FORM (ONLY IF REPLYING) -->
+  <!-- REPLY FORM -->
   @if (isReplying()) {
     <app-post-update
-      [replyTo]="postSig()"
+      [postReply]="postSig()"
       (onsaved)="handlePostUpdate($event)"
       (oncancel)="handleCancelUpdate()"
     ></app-post-update>
   }
 
-  <!-- Comments/Reactions -->
-  <div class="flex items-center justify-start flex-wrap gap-2">
-    <!-- Comments -->
+  <!-- ACTIONS BAR -->
+  <div
+    class="flex items-center justify-start gap-2"
+  >
+    <!-- COMMENT BUTTON -->
     <button
       type="button"
       (click)="isCommentOpened.set(!isCommentOpened())"
-      class="flex items-center justify-center space-x-1 px-2 min-w-9 h-9 md:min-w-10 md:h-10 rounded-lg bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600 dark:bg-gray-700"
+      class="flex items-center justify-center gap-2 px-3 py-2 min-h-10 rounded-lg bg-gray-100 hover:bg-blue-100 dark:hover:bg-gray-700 dark:bg-gray-800 transition-all duration-200 group/comment hover:shadow-md"
+      [ngClass]="{ 'bg-blue-100 dark:bg-gray-700': isCommentOpened() }"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +220,7 @@
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="h-5 w-5 text-gray-800 dark:text-white"
+        class="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover/comment:text-blue-600 dark:group-hover/comment:text-blue-400 transition-colors"
       >
         <path
           stroke-linecap="round"
@@ -159,25 +229,27 @@
         />
       </svg>
       @if (postSig().commentCount > 0) {
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
+        <span
+          class="text-sm font-bold text-gray-700 dark:text-gray-200 group-hover/comment:text-blue-700 dark:group-hover/comment:text-blue-300 transition-colors"
+        >
           {{ postSig().commentCount }}
         </span>
       }
     </button>
 
-    <!-- Reactions -->
-    <div class="min-w-9 h-9 md:min-w-10 md:h-10">
+    <!-- REACTIONS -->
+    <div class="min-h-10 flex">
       <app-reaction-dialog [post]="postSig()"></app-reaction-dialog>
     </div>
 
-    <!-- Menu -->
+    <!-- MENU (RIGHT) -->
     <div *hasAnyAuthority="'ROLE_USER'" class="relative ml-auto">
       <button
         clickOutside
         (onClickOutside)="showMenu.set(false)"
         (click)="showMenu.set(!showMenu())"
-        class="flex items-center justify-center min-w-9 h-9 md:min-w-10 md:h-10p-2 rounded-lg text-gray-500 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
-        [ngClass]="{ 'bg-gray-100 dark:bg-gray-700': showMenu() }"
+        class="flex items-center justify-center w-10 h-10 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 group/menu"
+        [ngClass]="{ 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200': showMenu() }"
       >
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path
@@ -185,10 +257,10 @@
           />
         </svg>
       </button>
-
+      <!-- MENU ITEMS GO HERE -->
       @if (showMenu()) {
         <div
-          class="absolute right-0 bottom-10 mt-2 w-40 rounded-xl shadow-xl bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-700 py-2 z-20 animate-fadeIn"
+          class="absolute right-0 bottom-11 w-48 rounded-2xl bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-2xl divide-y divide-gray-200 dark:divide-gray-700 transition-all duration-300 z-20 animate-fadeIn overflow-hidden"
         >
           <ul *showForChannel="post().channel.id">
             <!-- REPLY -->
@@ -196,7 +268,7 @@
               <button
                 (click)="isReplying.set(true)"
                 [disabled]="isReplying()"
-                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 text-left"
+                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 transition-all duration-200"
               >
                 <span translate="ngelmakTranslation.entities.post.card.menu.reply">Répondre</span>
                 <svg
@@ -226,7 +298,7 @@
               <button
                 (click)="isUpdating.set(true)"
                 [disabled]="isUpdating()"
-                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 text-left"
+                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 transition-all duration-200"
               >
                 <span translate="ngelmakTranslation.entities.post.card.menu.update">Modifier</span>
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
@@ -294,12 +366,14 @@
             <li>
               <button
                 (click)="isSignalPost.set(true)"
-                class="w-full flex flex-col px-3 py-2 hover:bg-gray-200 dark:hover:bg-gray-600"
+                class="w-full flex flex-col px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 transition-all duration-200 text-left"
               >
                 <p
                   class="flex items-center justify-between text-sm text-gray-700 dark:text-gray-200"
                 >
-                  <span translate="ngelmakTranslation.entities.post.card.menu.report.label">Signaler</span>
+                  <span translate="ngelmakTranslation.entities.post.card.menu.report.label"
+                    >Signaler</span
+                  >
                   <svg
                     class="w-4 h-4"
                     aria-hidden="true"
@@ -358,7 +432,9 @@
               <button
                 class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
               >
-                <span translate="ngelmakTranslation.entities.post.card.menu.admin.delete">Supprimer</span>
+                <span translate="ngelmakTranslation.entities.post.card.menu.admin.delete"
+                  >Supprimer</span
+                >
                 <svg
                   class="w-5 h-5"
                   aria-hidden="true"
@@ -378,12 +454,13 @@
                 </svg>
               </button>
             </li>
-
             <li>
               <button
                 class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
               >
-                <span translate="ngelmakTranslation.entities.post.card.menu.admin.hide">Masquer</span>
+                <span translate="ngelmakTranslation.entities.post.card.menu.admin.hide"
+                  >Masquer</span
+                >
                 <svg
                   class="w-5 h-5"
                   xmlns="http://www.w3.org/2000/svg"
@@ -406,16 +483,19 @@
     </div>
   </div>
 
-  <!-- Comments -->
+  <!-- COMMENTS SECTION -->
   @if (isCommentOpened()) {
-    <app-comment [post]="postSig()"></app-comment>
+    <div
+      class="pt-4 border-t border-gray-200 dark:border-gray-700 animate-in fade-in duration-300"
+    >
+      <app-comment [post]="postSig()"></app-comment>
+    </div>
   }
 
-  <!-- Creating a ticket to report a problem with a publication -->
+  <!-- REPORT DIALOG -->
   @if (isSignalPost()) {
     <app-ticket-dialog [post]="postSig()" (onclose)="isSignalPost.set(false)"></app-ticket-dialog>
   }
-
   <!-- Post deletion -->
   @if (confirmDeleteOpen()) {
     <app-confirm-dialog

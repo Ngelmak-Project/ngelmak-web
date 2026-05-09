@@ -1,4 +1,4 @@
-import { Component, effect, inject, Injectable, signal } from '@angular/core';
+import { Component, computed, effect, inject, Injectable, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { SignInService } from 'app/authentication/sign-in/sign-in.service';
 import { LANGUAGES } from 'app/config/language.constants';
@@ -37,16 +37,9 @@ export default class NavbarComponent {
   languages = LANGUAGES;
 
   isDarkMode = signal(true); // Manage the dark mode state
-  isSidebarOpened = signal(false);
   showUserSettings = signal(false);
   showNotifications = signal(false);
-
-  constructor() {
-    effect(() => {
-      const value = this.sidebarBehavior.state();
-      this.isSidebarOpened.set(value);
-    });
-  }
+  isSidebarOpened = computed(() => this.sidebarBehavior.state());
 
   toggleDarkMode() {
     const html = document.documentElement;
@@ -61,8 +54,7 @@ export default class NavbarComponent {
   }
 
   toggleSidebar() {
-    this.isSidebarOpened.set(!this.isSidebarOpened());
-    this.sidebarBehavior.state.set(this.isSidebarOpened());
+    this.sidebarBehavior.state.set(!this.isSidebarOpened());
   }
 
   changeLanguage(lang: string): void {

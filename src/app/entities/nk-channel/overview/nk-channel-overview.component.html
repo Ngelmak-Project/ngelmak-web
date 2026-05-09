@@ -1,104 +1,118 @@
 @if (activeChannel()) {
-  <section class="pt-12">
-    <div
-      class="flex flex-col w-full mt-4 bg-gray-50 dark:bg-gray-700 shadow-xl rounded-xl text-gray-900 dark:text-gray-100"
-    >
-      <!-- Avatar -->
-      <div class="flex justify-center -translate-y-1/2">
-        <div
-          class="w-28 h-28 md:w-32 md:h-32 rounded-full border-4 border-white dark:border-gray-800 overflow-hidden shadow-lg"
-        >
-          @if (activeChannel().avatar) {
-            <div
-              class="w-full h-full relative flex items-center justify-center bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200 text-base font-semibold rounded-full overflow-hidden"
-            >
-              <!-- Fallback text -->
-              <span class="fallback-text">Avatar</span>
+  <section class="pt-12 pb-6">
+    <div class="group relative">
+      <!-- Subtle glow on hover -->
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-blue-500/15 to-purple-500/15 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      ></div>
 
-              <!-- Image -->
-              <img
-                class="object-cover w-full h-full absolute inset-0"
-                [src]="activeChannel().avatar"
-                alt=""
-                onload="
-                  this.style.display = 'block';
-                  this.parentNode.querySelector('.fallback-text').style.display = 'none';
-                "
-                onerror="
-                  this.style.display = 'none';
-                  this.parentNode.querySelector('.fallback-text').style.display = 'flex';
-                "
-              />
-            </div>
-          } @else {
+      <!-- Card -->
+      <div
+        class="relative flex flex-col w-full bg-white/95 dark:bg-gray-700/70 border border-gray-300/40 dark:border-gray-500/20 text-gray-200 dark:text-gray-100 shadow-xl rounded-2xl"
+      >
+        <!-- Avatar -->
+        <div class="flex justify-center -translate-y-1/2 relative z-10">
+          <div class="relative group/avatar">
+            <!-- Avatar Container -->
             <div
-              class="w-full h-full flex items-center justify-center bg-gray-300 dark:bg-gray-600 text-5xl font-bold text-gray-800 dark:text-gray-200"
+              class="w-24 h-24 md:w-28 md:h-28 rounded-full border-4 border-white dark:border-gray-800 overflow-hidden shadow-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center transition-transform group-hover/avatar:scale-105 relative z-10"
             >
-              {{ activeChannel().name.at(0) }}
+              @if (activeChannel().avatar) {
+                <img
+                  [src]="activeChannel().avatar"
+                  alt=""
+                  class="w-full h-full object-cover object-center"
+                  onload="
+                    this.style.display = 'block';
+                    this.parentNode.querySelector('.fallback').style.display = 'none';
+                  "
+                  onerror="
+                    this.style.display = 'none';
+                    this.parentNode.querySelector('.fallback').style.display = 'flex';
+                  "
+                />
+
+                <!-- Fallback -->
+                <span
+                  class="fallback hidden w-full h-full items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white font-bold text-xl"
+                >
+                  {{ activeChannel().name.at(0) }}
+                </span>
+              } @else {
+                <!-- No avatar -->
+                <span
+                  class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white font-bold text-xl"
+                >
+                  {{ activeChannel().name.at(0) }}
+                </span>
+              }
             </div>
+
+            <!-- Glow (Always visible underneath) -->
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full blur-lg opacity-50 transition-opacity z-0 top-2"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Channel Info -->
+        <div class="text-center -mt-10 px-4 pt-2 pb-1">
+          <h2 class="font-semibold text-lg text-gray-900 dark:text-gray-100">
+            {{ activeChannel().name }}
+          </h2>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+            @{{ activeChannel().identifier }}
+          </p>
+          @if (activeChannel().description) {
+            <p class="text-xs text-gray-600 dark:text-gray-300 mt-1.5 line-clamp-2">
+              {{ activeChannel().description }}
+            </p>
           }
         </div>
-      </div>
 
-      <!-- Channel Info -->
-      <div class="text-center -mt-12 px-4">
-        <h2 class="font-semibold text-xl">
-          {{ activeChannel().name }}
-        </h2>
-
-        <p class="text-xs italic text-gray-500 dark:text-gray-300">@{{ activeChannel().identifier }}</p>
-
-        @if (activeChannel().description) {
-          <p class="text-gray-600 dark:text-gray-200 mt-2">
-            {{ activeChannel().description }}
-          </p>
-        }
-      </div>
-
-      <!-- Stats -->
-      <div class="flex justify-around py-5 border-t border-gray-200 dark:border-gray-600 mt-4">
-        <div class="flex flex-col items-center">
-          <svg
-            class="w-5 text-blue-700 dark:text-blue-400 mb-1"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M10 10a4 4 0 100-8 4 4 0 000 8zM2 18a8 8 0 1116 0H2z" />
-          </svg>
-          <span
-            translate="ngelmakTranslation.entities.channel.overview.stats.followers"
-            [translateParams]="{ value: activeChannel().stats.followersCount }"
-            class="text-sm"
-            >abonnés</span
-          >
-        </div>
-
-        <div class="flex flex-col items-center">
-          <svg
-            class="w-5 text-blue-700 dark:text-blue-400 mb-1"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M3 3h14v2H3V3zm0 6h14v2H3V9zm0 6h14v2H3v-2z" />
-          </svg>
-          <span
-            translate="ngelmakTranslation.entities.channel.overview.stats.following"
-            [translateParams]="{ value: activeChannel().stats.followingCount }"
-            class="text-sm"
-            >suivis</span
-          >
-        </div>
-      </div>
-
-      <!-- Actions -->
-      <div class="flex justify-center p-4 border-t border-gray-200 dark:border-gray-600">
-        <a
-          translate="ngelmakTranslation.entities.channel.overview.seeMore"
-          routerLink="/channel"
-          class="px-6 py-2.5 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+        <!-- Stats -->
+        <div
+          class="flex justify-around py-4 px-3 border-t border-gray-200/50 dark:border-gray-600/30 mt-2 gap-2"
         >
-          Voir plus
-        </a>
+          <div class="flex flex-col items-center flex-1">
+            <svg
+              class="w-4 h-4 text-blue-600 dark:text-blue-400 mb-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M10 10a4 4 0 100-8 4 4 0 000 8zM2 18a8 8 0 1116 0H2z" />
+            </svg>
+            <span class="text-xs text-gray-600 dark:text-gray-400 font-medium">Followers</span>
+            <span class="text-sm font-bold text-blue-600 dark:text-blue-400">{{
+              activeChannel().stats.followersCount | number
+            }}</span>
+          </div>
+          <div class="flex flex-col items-center flex-1">
+            <svg
+              class="w-4 h-4 text-purple-600 dark:text-purple-400 mb-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M3 3h14v2H3V3zm0 6h14v2H3V9zm0 6h14v2H3v-2z" />
+            </svg>
+            <span class="text-xs text-gray-600 dark:text-gray-400 font-medium">Following</span>
+            <span class="text-sm font-bold text-purple-600 dark:text-purple-400">{{
+              activeChannel().stats.followingCount | number
+            }}</span>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div
+          class="flex justify-center gap-2 p-3 border-t border-gray-200/50 dark:border-gray-600/30"
+        >
+          <a
+            routerLink="/user/channel"
+            class="px-5 py-2.5 rounded-full text-xs font-semibold bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md hover:shadow-lg hover:scale-105 transition-all active:scale-95"
+          >
+            View Profile
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -128,7 +142,7 @@
       @if (channelForm.name().dirty()) {
         @for (error of channelForm.name().errors(); track error) {
           <p class="text-sm text-red-600 dark:text-red-500">
-            <span class="font-medium">{{ error.message | translate}}</span>
+            <span class="font-medium">{{ error.message | translate }}</span>
           </p>
         }
       }
@@ -157,7 +171,9 @@
             />
           </svg>
         }
-        <span translate="ngelmakTranslation.entities.channel.overview.create.save">Enregistrer</span>
+        <span translate="ngelmakTranslation.entities.channel.overview.create.save"
+          >Enregistrer</span
+        >
       </button>
     </div>
   </section>

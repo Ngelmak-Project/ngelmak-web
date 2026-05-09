@@ -1,6 +1,4 @@
-<div
-  class="flex flex-col gap-3 w-full mx-auto bg-white dark:bg-gray-800 rounded-xl p-3 border border-gray-200 dark:border-gray-700"
->
+<div class="flex flex-col gap-2 md:gap-3w-full mx-auto">
   <!-- Comment box only for logged-in users -->
   <app-comment-update
     *hasAnyAuthority="'ROLE_USER'"
@@ -19,7 +17,7 @@
   </div>
 
   <!-- Comments list -->
-  <div class="flex flex-col gap-9 mt-1">
+  <div class="flex flex-col gap-2 md:gap-3">
     @if (isLoading()) {
       <div class="flex animate-pulse gap-4 items-start">
         <div class="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-700"></div>
@@ -70,7 +68,9 @@
           />
         </svg>
       }
-      <span translate="ngelmakTranslation.entities.comment.list.loadMore">Plus de commentaires</span>
+      <span translate="ngelmakTranslation.entities.comment.list.loadMore"
+        >Plus de commentaires</span
+      >
     </button>
   }
 </div>

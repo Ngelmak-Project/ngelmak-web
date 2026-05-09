@@ -5,7 +5,7 @@ import PostResolve from './nk-post-routing-resolve.service';
 
 const postRoute: Routes = [
   {
-    path: ':id',
+    path: ':id/view',
     component: PostDetailComponent,
     resolve: {
       post: PostResolve,

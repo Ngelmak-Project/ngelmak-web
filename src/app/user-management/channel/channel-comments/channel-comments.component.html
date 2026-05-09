@@ -6,7 +6,7 @@
     Mes commentaires
   </h2>
 
-  <div class="flex flex-col gap-6 divide-y divide-gray-200 dark:divide-gray-700">
+  <div class="flex flex-col gap-6">
     @for (comment of comments(); track $index) {
       <app-comment-item @fadeInUp [comment]="comment"></app-comment-item>
     }

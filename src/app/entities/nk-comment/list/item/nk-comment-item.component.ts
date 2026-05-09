@@ -7,14 +7,13 @@ import { ICommentDTO } from 'app/entities/models/nk-comment.model';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
-import { CommentReactionDialogComponent } from 'app/entities/nk-comment-reaction/dialog/nk-comment-reaction-dialog.component';
+import { TicketDialogComponent } from 'app/entities/nk-ticket/dialog/nk-ticket-dialog.component';
 import { AlertService } from 'app/shared/alert/alert.service';
-import { ConfirmDialogComponent } from 'app/shared/confirm-dialog/confirm-dialog.component';
 import { DurationPipe } from 'app/shared/date';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
-import { finalize } from 'rxjs';
-import { TicketDialogComponent } from 'app/entities/nk-ticket/dialog/nk-ticket-dialog.component';
+import { ShowForChannelDirective } from "app/shared/directives/show-for-channel";
 import SharedModule from 'app/shared/shared.module';
+import { finalize } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -26,11 +25,10 @@ import SharedModule from 'app/shared/shared.module';
     SharedModule,
     DurationPipe,
     CommentUpdateComponent,
-    CommentReactionDialogComponent,
     ClickOutsideDirective,
-    ConfirmDialogComponent,
     TicketDialogComponent,
-  ],
+    ShowForChannelDirective
+],
 })
 export class CommentItemComponent {
   comment = input<ICommentDTO>();
