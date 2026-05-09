@@ -13,6 +13,7 @@
         </div>
       </div>
       <h2
+        translate="ngelmakTranslation.shared.trending.header"
         class="text-lg font-bold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent"
       >
         What's Trending
@@ -138,10 +139,14 @@
   <div class="px-4 py-6 border-t border-gray-200/30 dark:border-gray-700/30">
     <div class="flex items-center gap-2 mb-4">
       <div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
-      <h3 class="text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-300">
+      <h3
+        translate="ngelmakTranslation.shared.trending.mostDiscussed.title"
+        class="text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-300"
+      >
         Most Discussed
       </h3>
       <span
+        translate="ngelmakTranslation.shared.trending.mostDiscussed.badge"
         class="ml-auto text-xs px-2 py-1 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-full"
         >Hot</span
       >
@@ -174,11 +179,17 @@
                   </p>
                   <div class="flex items-center gap-2 mt-2">
                     <span
+                      translate="ngelmakTranslation.shared.trending.mostDiscussed.comments"
+                      [translateParams]="{ count: post.commentCount }"
                       class="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded text-xs font-medium"
                     >
                       💬 {{ post.commentCount }}
                     </span>
-                    <span class="text-xs text-gray-500 dark:text-gray-500">20% engaged</span>
+                    <span
+                      translate="ngelmakTranslation.shared.trending.mostDiscussed.engaged"
+                      class="text-xs text-gray-500 dark:text-gray-500"
+                      >20% engaged</span
+                    >
                   </div>
                 </div>
               </div>
@@ -251,7 +262,10 @@
           ></span>
           <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
         </span>
-        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-300">
+        <h3
+          class="text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-300"
+          translate="ngelmakTranslation.shared.trending.activeCommunities.title"
+        >
           Active Communities
         </h3>
       </div>
@@ -277,13 +291,18 @@
                   ></span>
                   <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500"></span>
                 </span>
-                <span class="text-gray-600 dark:text-gray-400">
+                <span
+                  translate="ngelmakTranslation.shared.trending.activeCommunities.postsThisWeek"
+                  [translateParams]="{ count: channel.postCount }"
+                  class="text-gray-600 dark:text-gray-400"
+                >
                   {{ channel.postCount }} posts this week
                 </span>
               </div>
             </div>
 
             <button
+              translate="ngelmakTranslation.shared.trending.activeCommunities.follow"
               class="text-xs px-3 py-1.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 font-semibold hover:shadow-lg hover:shadow-green-500/30 whitespace-nowrap"
             >
               + Follow

@@ -262,7 +262,7 @@
             "followers": "{{ value }} Followers",
             "following": "{{ value }} Following"
           },
-          "seeMore": "See more",
+          "viewProfile": "View profile",
           "create": {
             "name": {
               "label": "Channel name",
@@ -341,7 +341,8 @@
             "publish": "Publish",
             "update": "Update",
             "cancel": "Cancel",
-            "loginToPost": "Log in to publish."
+            "loginToPost": "Sign in to publish your thoughts and engage with the community.",
+            "signIn": "Sign In"
           }
         }
       },
@@ -663,6 +664,18 @@
           "medium": "D MMM YYYY HH:mm",
           "short": "D MMM HH:mm"
         }
+      },
+      "trending": {
+        "header": "What's Trending",
+        "reactions": "🔥 {{count}}",
+        "timeAgo": "{{time}} ago",
+        "mostDiscussed.title": "Most Discussed",
+        "mostDiscussed.badge": "Hot",
+        "mostDiscussed.comments": "💬 {{count}}",
+        "mostDiscussed.engaged": "20% engaged",
+        "activeCommunities.title": "Active Communities",
+        "activeCommunities.postsThisWeek": "{{count}} posts this week",
+        "activeCommunities.follow": "+ Follow"
       }
     },
     "pages": {

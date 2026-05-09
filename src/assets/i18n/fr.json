@@ -265,7 +265,7 @@
             "followers": "{{ value }} Abonnés",
             "following": "{{ value }} Suivis"
           },
-          "seeMore": "Voir plus",
+          "viewProfile": "Voir le profil",
           "create": {
             "name": {
               "label": "Nom de la chaîne",
@@ -344,7 +344,8 @@
             "publish": "Publier",
             "update": "Modifier",
             "cancel": "Annuler",
-            "loginToPost": "Connectez-vous pour publier."
+            "loginToPost": "Connectez-vous pour publier vos idées et interagir avec la communauté.",
+            "signIn": "Se connecter"
           }
         }
       },
@@ -666,6 +667,18 @@
           "medium": "D MMM YYYY HH:mm",
           "short": "D MMM HH:mm"
         }
+      },
+      "trending": {
+        "header": "Tendances du moment",
+        "reactions": "🔥 {{count}}",
+        "timeAgo": "il y a {{time}}",
+        "mostDiscussed.title": "Les plus discutés",
+        "mostDiscussed.badge": "Chaud",
+        "mostDiscussed.comments": "💬 {{count}}",
+        "mostDiscussed.engaged": "20% d'engagement",
+        "activeCommunities.title": "Communautés actives",
+        "activeCommunities.postsThisWeek": "{{count}} publications cette semaine",
+        "activeCommunities.follow": "+ Suivre"
       }
     },
     "pages": {

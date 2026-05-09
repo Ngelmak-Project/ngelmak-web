@@ -4,10 +4,11 @@ import { ITrending, IPostDTO } from 'app/entities/models/nk-post.model';
 import { PostService } from 'app/entities/nk-post/nk-post.service';
 import { finalize } from 'rxjs';
 import { DurationPipe } from '../date';
+import SharedModule from '../shared.module';
 
 @Component({
   selector: 'app-trending',
-  imports: [DurationPipe],
+  imports: [SharedModule, DurationPipe],
   templateUrl: './trending.component.html',
 })
 export class TrendingComponent {
@@ -33,7 +34,7 @@ export class TrendingComponent {
   trendingCarouselIndex = signal(0);
   commentedCarouselIndex = signal(0);
   autoplayEnabled = signal(true);
-  autoplayInterval = 5000; // 5 seconds
+  autoplayInterval = 10000; // 10 seconds
 
   constructor() {
     // Auto-play trending carousel
@@ -53,7 +54,7 @@ export class TrendingComponent {
 
       const interval = setInterval(() => {
         this.nextCommentedSlide();
-      }, this.autoplayInterval);
+      }, this.autoplayInterval, );
 
       return () => clearInterval(interval);
     });
@@ -89,7 +90,7 @@ export class TrendingComponent {
   goToTrendingSlide(index: number) {
     this.trendingCarouselIndex.set(index);
     this.pauseAutoplay();
-    setTimeout(() => this.resumeAutoplay(), 3000); // Resume after 3 seconds
+    setTimeout(() => this.resumeAutoplay(), this.autoplayInterval * 2); // Resume after twice the interval to give users enough time to interact
   }
 
   nextCommentedSlide() {
@@ -113,8 +114,6 @@ export class TrendingComponent {
   goToCommentedSlide(index: number) {
     this.commentedCarouselIndex.set(index);
     this.pauseAutoplay();
-    setTimeout(() => this.resumeAutoplay(), 3000); // Resume after 3 seconds
+    setTimeout(() => this.resumeAutoplay(), this.autoplayInterval * 2); // Resume after twice the interval to give users enough time to interact
   }
-
 }
-
