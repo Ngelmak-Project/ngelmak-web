@@ -9,12 +9,7 @@ import { PostCardComponent } from '../card/nk-post-card.component';
   standalone: true,
   selector: 'app-post-detail',
   templateUrl: './nk-post-detail.component.html',
-  imports: [
-    RouterModule,
-    FormsModule,
-    SharedModule,
-    PostCardComponent,
-  ],
+  imports: [RouterModule, FormsModule, SharedModule, PostCardComponent],
 })
 export class PostDetailComponent {
   post = input.required<IPostDTO>(); // The post to display

@@ -1,23 +1,18 @@
-import { Directive, TemplateRef, ViewContainerRef, effect, inject, input } from '@angular/core';
+import { Directive, TemplateRef, ViewContainerRef, effect, inject } from '@angular/core';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 
 /**
  * Structural directive that conditionally renders its host template
- * only when the current user's channel ID matches the provided one.
+ * only when the current user's has a channel.
  *
  * Usage:
- *   <div *showForChannel="abc123">Visible only for channel abc123</div>
+ *   <div *hasChannel>Visible only when has a channel</div>
  */
 @Directive({
-  selector: '[showForChannel]',
+  selector: '[hasChannel]',
   standalone: true,
 })
-export class ShowForChannelDirective {
-  /**
-   * Required input for the channel ID
-   */
-  showForChannel = input.required<number>();
-
+export class HasChannelDirective {
   /** Template reference for the content to be conditionally rendered */
   private templateRef = inject(TemplateRef<any>);
 
@@ -29,12 +24,12 @@ export class ShowForChannelDirective {
     const activeChannel = inject(ChannelService).channel;
 
     effect(() => {
-      // Check if channel exists and matches the required channel ID
-      if (activeChannel() && activeChannel().id === this.showForChannel()) {
-        // Render the template view if channel matches
+      // Check if channel exists
+      if (activeChannel()) {
+        // Render the template view if channel exists
         this.viewContainerRef.createEmbeddedView(this.templateRef);
       } else {
-        // Clear the view container if channel doesn't match
+        // Clear the view container if channel doesn't exist
         this.viewContainerRef.clear();
       }
     });

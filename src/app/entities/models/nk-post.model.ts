@@ -48,5 +48,5 @@ interface ActiveChannel {
 export interface ITrending {
   topActiveChannels?: ActiveChannel[];
   trendingPosts?: IPostDTO[];
-  mostCommentedPosts?: IPostDTO[];
+  mostEngagedPosts?: IPostDTO[];
 }

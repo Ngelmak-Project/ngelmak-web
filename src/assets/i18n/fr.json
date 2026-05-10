@@ -675,7 +675,7 @@
         "mostDiscussed.title": "Les plus discutés",
         "mostDiscussed.badge": "Chaud",
         "mostDiscussed.comments": "💬 {{count}}",
-        "mostDiscussed.engaged": "20% d'engagement",
+        "mostDiscussed.engaged": "{{percentage}}% d'engagement",
         "activeCommunities.title": "Communautés actives",
         "activeCommunities.postsThisWeek": "{{count}} publications cette semaine",
         "activeCommunities.follow": "+ Suivre"

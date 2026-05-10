@@ -672,7 +672,7 @@
         "mostDiscussed.title": "Most Discussed",
         "mostDiscussed.badge": "Hot",
         "mostDiscussed.comments": "💬 {{count}}",
-        "mostDiscussed.engaged": "20% engaged",
+        "mostDiscussed.engaged": "{{percentage}}% engaged",
         "activeCommunities.title": "Active Communities",
         "activeCommunities.postsThisWeek": "{{count}} posts this week",
         "activeCommunities.follow": "+ Follow"
