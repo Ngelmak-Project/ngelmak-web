@@ -67,7 +67,8 @@ export class CommentItemComponent {
     this.showReplies.set(!this.showReplies());
     if (this.replies().length == 0) {
       this.isLoading.set(true);
-      this.commentService.findRepliesByComment(this.commentSig().id).subscribe({
+      const storedReplyCount = this.commentSig().replyCount || 0;
+      this.commentService.findRepliesByComment(this.commentSig().id, storedReplyCount).subscribe({
         next: (res) => this.replies.set(res.body),
         complete: () => this.isLoading.set(false),
       });

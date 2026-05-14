@@ -4,7 +4,7 @@ import { TranslationService } from '../translation/translation.service';
 @Pipe({
   name: 'duration',
   standalone: true,
-  pure: false, // IMPORTANT: makes pipe reactive
+  pure: false, // makes pipe reactive
 })
 export default class DurationPipe implements PipeTransform {
   private lastValue = '';

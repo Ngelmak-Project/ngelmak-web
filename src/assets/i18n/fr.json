@@ -138,7 +138,7 @@
           "passwordsDoNotMatch": "Les deux mots de passes ne correspondent pas."
         },
         "passwordStrength": {
-          "title": "Dois contenir au moins {{ minLength() }} caractères",
+          "title": "Dois contenir au moins {{ minLength }} caractères",
           "preferable": "Préférable d'avoir :",
           "upperLower": "Des lettres majuscules et minuscules",
           "symbol": "Un symbole (#$&)",

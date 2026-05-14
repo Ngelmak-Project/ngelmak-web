@@ -58,8 +58,26 @@ export class CommentService {
     });
   }
 
-  findRepliesByComment(id: number): Observable<HttpResponse<ICommentDTO[]>> {
+  /**
+   * Retrieve replies for a given comment.
+   *
+   * The client may pass its locally stored replyCount (storedReplyCount).
+   * The backend will compare this value with the actual number of replies
+   * in the database. If they differ, the backend may trigger a background
+   * repair action to correct the stored replyCount.
+   *
+   * @param id The ID of the comment whose replies should be fetched.
+   * @param storedReplyCount The reply count currently known by the client.
+   *                         If omitted, no consistency check is performed.
+   *
+   * @returns An HttpResponse containing the list of replies.
+   */
+  findRepliesByComment(
+    id: number,
+    storedReplyCount?: number,
+  ): Observable<HttpResponse<ICommentDTO[]>> {
     return this.http.get<ICommentDTO[]>(`${this.publicResourceUrl}/reply/${id}`, {
+      params: { storedReplyCount },
       observe: 'response',
     });
   }
