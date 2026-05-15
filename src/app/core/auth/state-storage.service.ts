@@ -1,53 +1,146 @@
 import { Injectable } from '@angular/core';
 
+/**
+ * Service for managing application state persistence across storage layers.
+ *
+ * Handles storage and retrieval of:
+ * - Previous navigation URL (session-only)
+ * - Authentication tokens (session or persistent)
+ * - User locale preference (session-only)
+ * - Theme preference (persistent)
+ *
+ * Uses sessionStorage for temporary data and localStorage for persistent user preferences.
+ */
 @Injectable({ providedIn: 'root' })
 export class StateStorageService {
-  private previousUrlKey = 'previousUrl';
-  private authenticationKey = 'authenticationToken';
-  private localeKey = 'locale';
+  /**
+   * Storage key constants for application state persistence.
+   */
+  private readonly StorageKeys = {
+    PREVIOUS_URL: 'previousUrl',
+    AUTHENTICATION_TOKEN: 'authenticationToken',
+    LOCALE: 'locale',
+    THEME: 'theme',
+  } as const;
 
+  // URL Management
+
+  /**
+   * Stores the previous URL in session storage.
+   * @param url - The URL to store
+   */
   storeUrl(url: string): void {
-    sessionStorage.setItem(this.previousUrlKey, JSON.stringify(url));
+    sessionStorage.setItem(this.StorageKeys.PREVIOUS_URL, url);
   }
 
+  /**
+   * Retrieves the previously stored URL.
+   * @returns The stored URL or null if not found
+   */
   getUrl(): string | null {
-    const previousUrl = sessionStorage.getItem(this.previousUrlKey);
-    return previousUrl ? (JSON.parse(previousUrl) as string | null) : previousUrl;
+    return sessionStorage.getItem(this.StorageKeys.PREVIOUS_URL);
   }
 
+  /**
+   * Clears the stored URL.
+   */
   clearUrl(): void {
-    sessionStorage.removeItem(this.previousUrlKey);
+    sessionStorage.removeItem(this.StorageKeys.PREVIOUS_URL);
   }
 
-  storeAuthenticationToken(authenticationToken: string, rememberMe: boolean): void {
-    authenticationToken = JSON.stringify(authenticationToken);
+  // Authentication Management
+
+  /**
+   * Stores authentication token in session or local storage based on rememberMe flag.
+   * @param token - The authentication token to store
+   * @param rememberMe - If true, persists token in localStorage; otherwise uses sessionStorage
+   */
+  storeAuthenticationToken(token: string, rememberMe: boolean): void {
     this.clearAuthenticationToken();
-    if (rememberMe) {
-      localStorage.setItem(this.authenticationKey, authenticationToken);
-    } else {
-      sessionStorage.setItem(this.authenticationKey, authenticationToken);
-    }
+    const storage = rememberMe ? localStorage : sessionStorage;
+    storage.setItem(this.StorageKeys.AUTHENTICATION_TOKEN, token);
   }
 
+  /**
+   * Retrieves the authentication token from storage.
+   * Checks localStorage first (persistent), then sessionStorage.
+   * @returns The stored authentication token or null if not found
+   */
   getAuthenticationToken(): string | null {
-    const authenticationToken = localStorage.getItem(this.authenticationKey) ?? sessionStorage.getItem(this.authenticationKey);
-    return authenticationToken ? (JSON.parse(authenticationToken) as string | null) : authenticationToken;
+    return (
+      localStorage.getItem(this.StorageKeys.AUTHENTICATION_TOKEN) ??
+      sessionStorage.getItem(this.StorageKeys.AUTHENTICATION_TOKEN)
+    );
   }
 
+  /**
+   * Clears the authentication token from all storage layers.
+   */
   clearAuthenticationToken(): void {
-    sessionStorage.removeItem(this.authenticationKey);
-    localStorage.removeItem(this.authenticationKey);
+    sessionStorage.removeItem(this.StorageKeys.AUTHENTICATION_TOKEN);
+    localStorage.removeItem(this.StorageKeys.AUTHENTICATION_TOKEN);
   }
 
+  // Locale Management
+
+  /**
+   * Stores the user's locale preference in session storage.
+   * @param locale - The locale code (e.g., 'en-US', 'de-DE')
+   */
   storeLocale(locale: string): void {
-    sessionStorage.setItem(this.localeKey, locale);
+    sessionStorage.setItem(this.StorageKeys.LOCALE, locale);
   }
 
+  /**
+   * Retrieves the stored locale preference.
+   * @returns The locale code or null if not found
+   */
   getLocale(): string | null {
-    return sessionStorage.getItem(this.localeKey);
+    return sessionStorage.getItem(this.StorageKeys.LOCALE);
   }
 
+  /**
+   * Clears the stored locale preference.
+   */
   clearLocale(): void {
-    sessionStorage.removeItem(this.localeKey);
+    sessionStorage.removeItem(this.StorageKeys.LOCALE);
+  }
+
+  // Theme Management
+
+  /**
+   * Stores the user's theme preference persistently in localStorage.
+   * @param theme - The theme identifier (e.g., 'light', 'dark', 'auto')
+   */
+  storeTheme(theme: string): void {
+    localStorage.setItem(this.StorageKeys.THEME, theme);
+  }
+
+  /**
+   * Retrieves the stored theme preference.
+   * @returns The theme identifier or null if not set
+   */
+  getTheme(): string | null {
+    return localStorage.getItem(this.StorageKeys.THEME);
+  }
+
+  /**
+   * Clears the stored theme preference, reverting to default behavior.
+   */
+  clearTheme(): void {
+    localStorage.removeItem(this.StorageKeys.THEME);
+  }
+
+  // Utility Methods
+
+  /**
+   * Clears all stored data from both session and local storage.
+   * Useful for logout or reset scenarios.
+   */
+  clearAll(): void {
+    this.clearUrl();
+    this.clearAuthenticationToken();
+    this.clearLocale();
+    this.clearTheme();
   }
 }

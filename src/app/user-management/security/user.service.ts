@@ -1,5 +1,5 @@
 import { EmailUpdateDTO, LoginUpdateDTO, PasswordChangeDTO, UserUpdateDTO } from './user.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -12,6 +12,15 @@ export class UserService {
   protected applicationConfigService = inject(ApplicationConfigService);
 
   protected resourceUrl = this.applicationConfigService.getEndpointFor('auth/user');
+
+  /**
+   * Get user profile information of the connected user.
+   */
+  profile(): Observable<HttpResponse<Authentication>> {
+    return this.http.get<Authentication>(`${this.resourceUrl}/profile`, {
+      observe: 'response',
+    });
+  }
 
   /**
    * Updates user profile information through a dedicated endpoint.
@@ -114,6 +123,9 @@ export class UserService {
    * @param message content of the contact message.
    */
   contactUs(name: string, email: string, subject: string, message: string): Observable<void> {
-    return this.http.post<void>(`${this.applicationConfigService.getEndpointFor('auth/public')}/support/contact`, { name, email, subject, message });
+    return this.http.post<void>(
+      `${this.applicationConfigService.getEndpointFor('auth/public')}/support/contact`,
+      { name, email, subject, message },
+    );
   }
 }

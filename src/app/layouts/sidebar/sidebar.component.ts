@@ -16,7 +16,7 @@ import { NavbarService } from '../navbar/navbar.component';
 })
 export class SidebarComponent {
   private sidebarBehavior = inject(NavbarService);
-  translateService = inject(TranslationService);
+  private translateService = inject(TranslationService);
 
   showNgelmakSubMenu = signal(false);
   showLangKeyOptions = signal(false);
@@ -27,7 +27,6 @@ export class SidebarComponent {
     return this.sidebarBehavior.state();
   });
 
-
   changeLanguage(lang: string): void {
     this.translateService.setLanguage(lang);
     this.showLangKeyOptions.set(true);
@@ -36,5 +35,10 @@ export class SidebarComponent {
   // Close the sidebar when clicking outside of it.
   closeSidebar(): void {
     this.sidebarBehavior.state.set(false);
+  }
+
+  toggleNgelmakMenu(event: Event) {
+    event.stopPropagation();
+    this.showNgelmakSubMenu.set(!this.showNgelmakSubMenu());
   }
 }

@@ -1,13 +1,15 @@
-import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { Authentication } from 'app/core/auth/auth.model';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { UserUpdateDTO } from 'app/user-management/security/user.model';
+import { UserService } from 'app/user-management/security/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
+  private stateStorage = inject(StateStorageService);
+  private userService = inject(UserService);
+
   /**
    * Holds the current authenticated user.
    * Null means "not authenticated".
@@ -20,14 +22,15 @@ export class AuthenticationService {
    */
   readonly authentication = this._auth.asReadonly();
 
-  private http = inject(HttpClient);
-  private router = inject(Router);
-  private stateStorage = inject(StateStorageService);
-  private applicationConfigService = inject(ApplicationConfigService);
-
   constructor() {
     // Automatically load authentication on startup
     this.loadAuthentication();
+  }
+
+  updateUser(user: UserUpdateDTO): void {
+    if (!this.isAuthenticated()) return;
+
+    this.userService.update(user).subscribe(({ body }) => this._auth.set(body));
   }
 
   /**
@@ -44,17 +47,13 @@ export class AuthenticationService {
    * This is automatically called on service creation.
    */
   loadAuthentication(): void {
-    this.http
-      .get<Authentication>(this.applicationConfigService.getEndpointFor('auth/user/profile'), {
-        observe: 'response',
-      })
-      .subscribe({
-        next: ({ body }) => {
-          this._auth.set(body);
-          this.navigateToStoredUrl();
-        },
-        error: () => this._auth.set(null),
-      });
+    this.userService.profile().subscribe({
+      next: ({ body }) => {
+        this._auth.set(body);
+        this.navigateToStoredUrl();
+      },
+      error: () => this._auth.set(null),
+    });
   }
 
   /**
@@ -82,7 +81,7 @@ export class AuthenticationService {
     const previousUrl = this.stateStorage.getUrl();
     if (previousUrl) {
       this.stateStorage.clearUrl();
-      this.router.navigateByUrl(previousUrl);
+      inject(Router).navigateByUrl(previousUrl);
     }
   }
 }

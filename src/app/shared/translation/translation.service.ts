@@ -1,9 +1,11 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
+import { AuthenticationService } from 'app/core/auth/auth.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
   private stateStorageService = inject(StateStorageService);
+  private authService = inject(AuthenticationService);
 
   //Current active language (reactive signal).
   private primaryLang = signal<string>('fr');
@@ -20,6 +22,10 @@ export class TranslationService {
   constructor() {
     const lang = this.stateStorageService.getLocale();
     this.load(lang || this.primaryLang());
+    effect(() => {
+      const langKey = this.authService.authentication()?.langKey;
+      this.load(langKey || this.primaryLang());
+    });
   }
 
   /**
@@ -50,6 +56,7 @@ export class TranslationService {
   async setLanguage(lang: string) {
     await this.load(lang);
     this.stateStorageService.storeLocale(lang);
+    this.authService.updateUser({ langKey: lang });
   }
 
   /**

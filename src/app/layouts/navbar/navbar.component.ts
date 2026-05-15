@@ -26,8 +26,9 @@ export class NavbarService {
 export default class NavbarComponent {
   private sidebarBehavior = inject(NavbarService);
   private signInService = inject(SignInService);
-  private router = inject(Router);
-  translateService = inject(TranslationService);
+  private translateService = inject(TranslationService);
+  private authService = inject(AuthenticationService);
+
   user = inject(AuthenticationService).authentication;
   activeChannel = inject(ChannelService).channel;
   inProduction?: boolean = environment.production;
@@ -41,16 +42,36 @@ export default class NavbarComponent {
   showNotifications = signal(false);
   isSidebarOpened = computed(() => this.sidebarBehavior.state());
 
-  toggleDarkMode() {
-    const html = document.documentElement;
+  constructor() {
+    effect(() => {
+      const userPreference = this.user()?.darkModeEnabled;
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    if (html.classList.contains('dark')) {
-      html.classList.remove('dark');
-      this.isDarkMode.set(false);
+      // User preference takes priority; fall back to system theme
+      const shouldBeDark = userPreference ?? systemPrefersDark;
+
+      if (shouldBeDark) {
+        this.isDarkMode.set(true);
+        document.documentElement.classList.add('dark');
+      } else {
+        this.isDarkMode.set(false);
+        document.documentElement.classList.remove('dark');
+      }
+    });
+  }
+
+  toggleDarkMode() {
+    const isDark = !this.isDarkMode();
+    this.isDarkMode.set(isDark);
+
+    if (isDark) {
+      document.documentElement.classList.add('dark');
     } else {
-      html.classList.add('dark');
-      this.isDarkMode.set(true);
+      document.documentElement.classList.remove('dark');
     }
+
+    // Sync to backend
+    this.authService.updateUser({ darkModeEnabled: isDark });
   }
 
   toggleSidebar() {
@@ -69,7 +90,7 @@ export default class NavbarComponent {
   logout(): void {
     this.collapseNavbar();
     this.signInService.signOut();
-    this.router.navigate(['']);
+    inject(Router).navigate(['']);
   }
 
   toggleNavbar(): void {
