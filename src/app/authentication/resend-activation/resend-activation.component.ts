@@ -23,10 +23,10 @@ export class ResendActivationComponent {
   });
 
   protected emailForm = form(this.emailModel, (p) => {
-    required(p.email, { message: "L'adresse e-mail est obligatoire." });
-    minLength(p.email, 4, { message: "L'adresse e-mail doit contenir au moins 4 caractères." });
-    maxLength(p.email, 254, { message: "L'adresse e-mail ne peut pas dépasser 254 caractères." });
-    email(p.email, { message: "L'adresse e-mail n'est pas valide." });
+    required(p.email, { message: 'ngelmakTranslation.auth.resendActivation.email.required' });
+    minLength(p.email, 5, { message: 'ngelmakTranslation.auth.resendActivation.email.minLength' });
+    maxLength(p.email, 254, { message: 'ngelmakTranslation.auth.resendActivation.email.maxLength' });
+    email(p.email, { message: 'ngelmakTranslation.auth.resendActivation.email.email' });
   });
 
   isResetting = signal(false);

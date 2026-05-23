@@ -7,7 +7,7 @@ import { AuthenticationService } from 'app/core/auth/auth.service';
 import { AlertService } from 'app/shared/alert/alert.service';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
-import { LanguageSwitcherComponent } from "app/shared/language-switcher/language-switcher.component";
+import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language-switcher.component';
 
 @Component({
   standalone: true,
@@ -30,8 +30,8 @@ export class SignInComponent implements OnInit {
   });
 
   protected loginForm = form(this.loginModel, (schemaPath) => {
-    required(schemaPath.login, { message: 'Username is required' });
-    required(schemaPath.password, { message: 'Password is required' });
+    required(schemaPath.login, { message: 'ngelmakTranslation.auth.signIn.username.required' });
+    required(schemaPath.password, { message: 'ngelmakTranslation.auth.signIn.password.required' });
   });
 
   ngOnInit(): void {
@@ -58,12 +58,14 @@ export class SignInComponent implements OnInit {
           }
           this.alertService.addAlert({
             type: 'success',
+            translationKey: 'ngelmakTranslation.auth.signIn.alerts.success',
             message: 'Connexion avec succès!',
           });
         },
         error: () => {
           this.alertService.addAlert({
             type: 'error',
+            translationKey: 'ngelmakTranslation.auth.signIn.alerts.error',
             message:
               "<strong>Erreur d'authentification !</strong> Veuillez vérifier vos identifiants de connexion.",
           });

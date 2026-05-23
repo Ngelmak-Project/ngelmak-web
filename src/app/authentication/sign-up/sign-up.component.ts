@@ -18,12 +18,19 @@ import { finalize } from 'rxjs';
 import { PasswordStrengthBarComponent } from './password-strength-bar/password-strength-bar.component';
 import { SignupModel } from './sign-up.model';
 import { SignUpService } from './sign-up.service';
-import { LanguageSwitcherComponent } from "app/shared/language-switcher/language-switcher.component";
+import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language-switcher.component';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  imports: [CommonModule, RouterModule, Field, PasswordStrengthBarComponent, SharedModule, LanguageSwitcherComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    Field,
+    PasswordStrengthBarComponent,
+    SharedModule,
+    LanguageSwitcherComponent,
+  ],
 })
 export class SignUpComponent {
   private registerService = inject(SignUpService);
@@ -48,33 +55,35 @@ export class SignUpComponent {
 
   signupForm = form(this.signupModel, (p) => {
     // Login
-    required(p.login, { message: "Le nom d'utilisateur est obligatoire." });
-    minLength(p.login, 4, { message: "Le nom d'utilisateur doit contenir au moins 4 caractères." });
-    maxLength(p.login, 50, { message: "Le nom d'utilisateur ne peut pas dépasser 50 caractères." });
+    required(p.login, { message: 'ngelmakTranslation.auth.signUp.login.required' });
+    minLength(p.login, 4, { message: 'ngelmakTranslation.auth.signUp.login.minLength' });
+    maxLength(p.login, 50, { message: 'ngelmakTranslation.auth.signUp.login.maxLength' });
     pattern(
       p.login,
       /^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$/,
-      { message: "Le nom d'utilisateur n'a pas un format valide." },
+      { message: 'ngelmakTranslation.auth.signUp.login.pattern' },
     );
 
     // Email
-    required(p.email, { message: "L'adresse e-mail est obligatoire." });
-    minLength(p.email, 4, { message: "L'adresse e-mail doit contenir au moins 4 caractères." });
-    maxLength(p.email, 254, { message: "L'adresse e-mail ne peut pas dépasser 254 caractères." });
-    email(p.email, { message: "L'adresse e-mail n'est pas valide." });
+    required(p.email, { message: 'ngelmakTranslation.auth.signUp.email.required' });
+    minLength(p.email, 4, { message: 'ngelmakTranslation.auth.signUp.email.minLength' });
+    maxLength(p.email, 254, { message: 'ngelmakTranslation.auth.signUp.email.maxLength' });
+    email(p.email, { message: 'ngelmakTranslation.auth.signUp.email.invalid' });
 
     // Password
-    required(p.password, { message: 'Le mot de passe est obligatoire.' });
-    minLength(p.password, 8, { message: 'Le mot de passe doit contenir au moins 8 caractères.' });
-    maxLength(p.password, 20, { message: 'Le mot de passe ne peut pas dépasser 20 caractères.' });
+    required(p.password, { message: 'ngelmakTranslation.auth.signUp.password.required' });
+    minLength(p.password, 8, { message: 'ngelmakTranslation.auth.signUp.password.minLength' });
+    maxLength(p.password, 20, { message: 'ngelmakTranslation.auth.signUp.password.maxLength' });
 
     // Password confirmation
-    required(p.confirmPassword, { message: 'La confirmation du mot de passe est obligatoire.' });
+    required(p.confirmPassword, {
+      message: 'ngelmakTranslation.auth.signUp.confirmPassword.required',
+    });
     minLength(p.confirmPassword, 8, {
-      message: 'La confirmation doit contenir au moins 8 caractères.',
+      message: 'ngelmakTranslation.auth.signUp.confirmPassword.minLength',
     });
     maxLength(p.confirmPassword, 20, {
-      message: 'La confirmation ne peut pas dépasser 20 caractères.',
+      message: 'ngelmakTranslation.auth.signUp.confirmPassword.maxLength',
     });
   });
 
@@ -97,7 +106,11 @@ export class SignUpComponent {
       .pipe(finalize(() => this.isRegistering.set(false)))
       .subscribe({
         next: () => {
-          this.alertService.addAlert({ type: 'success', message: 'Bienvenue à Ngelmak !' });
+          this.alertService.addAlert({
+            type: 'success',
+            translationKey: 'ngelmakTranslation.auth.signUp.alerts.success',
+            message: 'Bienvenue à Ngelmak !',
+          });
           this.route.navigate(['']); // return to home
         },
         error: (err: HttpErrorResponse) => {
@@ -106,17 +119,20 @@ export class SignUpComponent {
             this.errorUserExists.set(true);
             this.alertService.addAlert({
               type: 'error',
+              translationKey: 'ngelmakTranslation.auth.signUp.alerts.loginExists',
               message: "Ce nom d'utilisateur est déjà utilisé",
             });
           } else if (apiError.errorKey === 'emailExists') {
             this.errorEmailExists.set(true);
             this.alertService.addAlert({
               type: 'error',
+              translationKey: 'ngelmakTranslation.auth.signUp.alerts.emailExists',
               message: 'Cette adresse email est déjà utilisée',
             });
           } else {
             this.alertService.addAlert({
               type: 'error',
+              translationKey: 'ngelmakTranslation.auth.signUp.alerts.error',
               message: 'Une erreur est survenue lors de linscription',
             });
           }

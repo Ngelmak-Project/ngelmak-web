@@ -9,7 +9,7 @@ import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { PasswordStrengthBarComponent } from '../sign-up/password-strength-bar/password-strength-bar.component';
 import { ResetPasswordService } from './reset-password.service';
-import { LanguageSwitcherComponent } from "app/shared/language-switcher/language-switcher.component";
+import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language-switcher.component';
 
 const initPassword = {
   key: '',
@@ -21,7 +21,14 @@ const initPassword = {
   standalone: true,
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  imports: [CommonModule, RouterModule, Field, PasswordStrengthBarComponent, SharedModule, LanguageSwitcherComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    Field,
+    PasswordStrengthBarComponent,
+    SharedModule,
+    LanguageSwitcherComponent,
+  ],
 })
 export class ResetPasswordComponent {
   protected resetPasswordService = inject(ResetPasswordService);
@@ -32,30 +39,34 @@ export class ResetPasswordComponent {
 
   passwordForm = form(this.passwordModel, (p) => {
     // Key field validation
-    required(p.key, { message: 'La clé est requise.' });
+    required(p.key, { message: 'ngelmakTranslation.auth.resetPassword.key.required' });
     minLength(p.key, 4, {
-      message: 'La clé doit contenir au moins 4 caractères.',
+      message: 'ngelmakTranslation.auth.resetPassword.key.minLength',
     });
     maxLength(p.key, 20, {
-      message: 'La clé ne peut pas dépasser 20 caractères.',
+      message: 'ngelmakTranslation.auth.resetPassword.key.maxLength',
     });
 
     // New password
-    required(p.newPassword, { message: 'Le nouveau mot de passe est requis.' });
+    required(p.newPassword, {
+      message: 'ngelmakTranslation.auth.resetPassword.password.newPasswordLabel',
+    });
     minLength(p.newPassword, 8, {
-      message: 'Le nouveau mot de passe doit contenir au moins 8 caractères.',
+      message: 'ngelmakTranslation.auth.resetPassword.password.minLength',
     });
     maxLength(p.newPassword, 20, {
-      message: 'Le nouveau mot de passe ne peut pas dépasser 20 caractères.',
+      message: 'ngelmakTranslation.auth.resetPassword.password.maxLength',
     });
 
     // Confirm password
-    required(p.confirmPassword, { message: 'La confirmation du mot de passe est requise.' });
+    required(p.confirmPassword, {
+      message: 'ngelmakTranslation.auth.resetPassword.password.confirmPasswordLabel',
+    });
     minLength(p.confirmPassword, 8, {
-      message: 'La confirmation du mot de passe doit contenir au moins 8 caractères.',
+      message: 'ngelmakTranslation.auth.resetPassword.password.minLength',
     });
     maxLength(p.confirmPassword, 20, {
-      message: 'La confirmation du mot de passe ne peut pas dépasser 20 caractères.',
+      message: 'ngelmakTranslation.auth.resetPassword.password.maxLength',
     });
   });
 
@@ -89,6 +100,7 @@ export class ResetPasswordComponent {
           this.passwordForm().reset(initPassword);
           this.alertService.addAlert({
             type: 'success',
+            translationKey: 'ngelmakTranslation.auth.resetPassword.alerts.success',
             message: 'Votre mot de passe est mis à jour avec succès!',
           });
         },
@@ -97,11 +109,13 @@ export class ResetPasswordComponent {
           if (apiError.errorKey === 'userNotFound') {
             this.alertService.addAlert({
               type: 'error',
+              translationKey: 'ngelmakTranslation.auth.resetPassword.alerts.invalidKey',
               message: 'La clé fournie est invalide ou expirée.',
             });
           } else {
             this.alertService.addAlert({
               type: 'error',
+              translationKey: 'ngelmakTranslation.auth.resetPassword.alerts.error',
               message: "Une erreur s'est produite.",
             });
           }

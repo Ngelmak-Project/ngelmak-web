@@ -8,7 +8,7 @@ import { AlertService } from 'app/shared/alert/alert.service';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { ForgetPasswordService } from './forgot-password.service';
-import { LanguageSwitcherComponent } from "app/shared/language-switcher/language-switcher.component";
+import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language-switcher.component';
 
 @Component({
   standalone: true,
@@ -27,10 +27,10 @@ export class ForgotPasswordComponent {
   });
 
   protected resetForm = form(this.resetModel, (p) => {
-    required(p.email, { message: "L'adresse e-mail est obligatoire." });
-    minLength(p.email, 4, { message: "L'adresse e-mail doit contenir au moins 4 caractères." });
-    maxLength(p.email, 254, { message: "L'adresse e-mail ne peut pas dépasser 254 caractères." });
-    email(p.email, { message: "L'adresse e-mail n'est pas valide." });
+    required(p.email, { message: 'ngelmakTranslation.auth.forgotPassword.email.required' });
+    minLength(p.email, 5, { message: 'ngelmakTranslation.auth.forgotPassword.email.minLength' });
+    maxLength(p.email, 254, { message: 'ngelmakTranslation.auth.forgotPassword.email.maxLength' });
+    email(p.email, { message: 'ngelmakTranslation.auth.forgotPassword.email.email' });
   });
 
   reset() {
@@ -43,6 +43,7 @@ export class ForgotPasswordComponent {
         next: () =>
           this.alertService.addAlert({
             type: 'info',
+            translationKey: 'ngelmakTranslation.auth.forgotPassword.alerts.success',
             message:
               'Si cette adresse est liée à un compte, un email de réinitialisation vous sera transmis.',
           }),
@@ -51,6 +52,7 @@ export class ForgotPasswordComponent {
           if (apiError.status === 500)
             this.alertService.addAlert({
               type: 'error',
+              translationKey: 'ngelmakTranslation.auth.forgotPassword.alerts.error',
               message: 'Une erreur interne est survenue. Veuillez réessayer plus tard.',
             });
         },
