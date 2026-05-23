@@ -90,48 +90,61 @@
         "privacy": "For your security, we never confirm whether an email address is registered."
       },
       "signIn": {
-        "pageTitle": "Ngelmak — Connect to an account",
+        "pageTitle": "Ngelmak — Sign In",
         "brandTagline": "Sign in to your Ngelmak account.",
         "title": "Sign in to your account",
         "username": "Username",
+        "username.required": "Username is required.",
         "password": "Password",
+        "password.required": "Password is required.",
         "rememberMe": "Remember me",
         "forgotPassword": "Forgot password?",
         "submit": "Sign in",
         "noAccount": "Don't have an account yet?",
-        "createAccount": "Create an account"
+        "createAccount": "Create an account",
+        "alerts": {
+          "success": "Successfully signed in.",
+          "invalidCredentials": "Incorrect username or password.",
+          "accountNotActivated": "Your account is not yet activated.\nPlease check your inbox for the activation link.",
+          "error": "<strong>Authentication error!</strong>\nPlease check your login credentials."
+        }
       },
       "signUp": {
-        "pageTitle": "Ngelmak — Create an account",
+        "pageTitle": "Ngelmak — Create an Account",
         "brandTitle": "Ngelmak",
         "brandSubtitle": "Create your account to access your personal space.",
         "title": "Create an account",
         "login": {
           "label": "Username",
           "placeholder": "Choose a username",
-          "loginAlreadyUsed": "Username already in use.",
+          "loginAlreadyUsed": "Username already taken.",
           "required": "Username is required.",
-          "minLength": "Username must be at least 3 characters long.",
-          "maxLength": "Username cannot exceed 50 characters.",
-          "pattern": "Username may contain only letters, numbers, and hyphens."
+          "minLength": "The username must be at least 4 characters long.",
+          "maxLength": "The username cannot exceed 50 characters.",
+          "pattern": "The username can only contain letters, numbers, and hyphens."
         },
         "email": {
           "label": "Email",
           "placeholder": "Enter your email address",
-          "emailAlreadyUsed": "Email already in use.",
+          "emailAlreadyUsed": "Email already used.",
           "required": "Email address is required.",
-          "invalid": "The email address is not valid."
+          "invalid": "The email address is not valid.",
+          "minLength": "The email address must be at least 4 characters long.",
+          "maxLength": "The email address cannot exceed 254 characters."
         },
         "password": {
           "label": "New password",
           "placeholder": "Enter your new password",
           "required": "Password is required.",
-          "minLength": "Password must be at least 6 characters long."
+          "minLength": "The password must be at least 8 characters long.",
+          "maxLength": "The password cannot exceed 20 characters."
         },
         "confirmPassword": {
           "label": "Confirm password",
           "placeholder": "Confirm your password",
           "required": "Password confirmation is required.",
+          "minLength": "The password must be at least 8 characters long.",
+          "maxLength": "The password cannot exceed 20 characters.",
           "passwordsDoNotMatch": "The two passwords do not match."
         },
         "passwordStrength": {
@@ -144,33 +157,46 @@
         "submit": "Create my account",
         "navigation": {
           "alreadyHaveAccount": "Already have an account?",
-          "backToSignIn": "Back to login",
+          "backToSignIn": "Back to sign in",
           "contactSupport": "Need help? Contact support"
         },
-        "privacy": "Your email address will only be used to create your account and secure your access."
+        "privacy": "Your email address will only be used for creating your account and securing your access.",
+        "alerts": {
+          "success": "Your account has been successfully created. An activation email has been sent to you.",
+          "loginExists": "This username is already taken.",
+          "emailExists": "This email address is already used.",
+          "error": "An error occurred while creating your account.\nPlease try again."
+        }
       },
       "forgotPassword": {
         "pageTitle": "Ngelmak — Password Reset",
         "brandTitle": "Ngelmak",
         "brandSubtitle": "Reset your password.",
         "title": "Forgot your password?",
-        "subtitle": "No worries. Enter your email address and we will send you a link to reset your password.",
+        "subtitle": "No worries. Enter your email address and we’ll send you a link to reset your password.",
         "email": {
           "label": "Email address",
           "placeholder": "Enter your email address",
-          "required": "Email address is required."
+          "required": "Email address is required.",
+          "minLength": "The email address must be at least 5 characters long.",
+          "maxLength": "The email address cannot exceed 254 characters.",
+          "email": "The email address is not valid."
         },
-        "submit": "Send reset link",
-        "backToSignIn": "Back to login",
+        "submit": "Send link",
+        "backToSignIn": "Back to sign in",
         "alreadyHaveAccount": "Already have an account?",
         "contactSupport": "Need help? Contact support",
-        "securityNotice": "For your security, we never confirm whether an email address is registered."
+        "securityNotice": "For your security, we never confirm whether an email address is registered.",
+        "alerts": {
+          "success": "If this address is associated with an account, a reset email will be sent.",
+          "error": "An internal error occurred. Please try again later."
+        }
       },
       "resendActivation": {
-        "pageTitle": "Resend activation link",
+        "pageTitle": "Resend Activation Link",
         "brandTitle": "Ngelmak",
         "brandSubtitle": "Receive a new activation link.",
-        "title": "Resend activation link",
+        "title": "Resend Activation Link",
         "description": "Enter your email address and we will send you a new link to activate your account.",
         "alreadyActivated": {
           "message": "<strong>Your account is already activated.</strong><br />You can sign in immediately.",
@@ -182,46 +208,56 @@
         "error": {
           "message": "<strong>Unable to send the link.</strong><br />The provided address is invalid or does not match any account."
         },
-        "form": {
-          "email": {
-            "label": "Email address",
-            "placeholder": "Enter your email address",
-            "required": "The email address is required."
-          },
-          "submit": "Send the link"
+        "email": {
+          "label": "Email address",
+          "placeholder": "Enter your email address",
+          "required": "Email address is required.",
+          "minLength": "The email address must be at least 5 characters long.",
+          "maxLength": "The email address cannot exceed 254 characters.",
+          "email": "The email address is not valid."
         },
+        "submit": "Send link",
         "navigation": {
-          "backToSignIn": "Back to login",
+          "backToSignIn": "Back to sign in",
           "alreadyHaveAccount": "Already have an account?",
-          "backToSignInLink": "Back to login",
+          "backToSignInLink": "Back to sign in",
           "contactSupport": "Need help? Contact support"
         },
         "privacy": "For your security, we never confirm whether an email address is registered."
       },
       "resetPassword": {
-        "pageTitle": "Password change",
+        "pageTitle": "Password Change",
         "brandTitle": "Ngelmak",
         "brandSubtitle": "Set your new password.",
-        "title": "Password change",
+        "title": "Password Change",
         "key": {
           "info": "We have sent a validation key to your email address. Please copy and paste it into the field below.",
           "label": "Validation key",
           "placeholder": "Enter the validation key",
-          "required": "The validation key is required."
+          "required": "The validation key is required.",
+          "minLength": "The key must contain at least 4 characters.",
+          "maxLength": "The key cannot exceed 20 characters."
         },
         "password": {
           "newPasswordLabel": "New password",
           "confirmPasswordLabel": "Confirm password",
           "passwordsDoNotMatch": "The two passwords do not match.",
-          "required": "The password is required."
+          "required": "Password is required.",
+          "minLength": "The password must be at least 8 characters long.",
+          "maxLength": "The password cannot exceed 20 characters."
         },
         "submit": "Update password",
         "navigation": {
           "requestNewLink": "Request a new reset link",
-          "backToSignIn": "Back to login",
+          "backToSignIn": "Back to sign in",
           "contactSupport": "Need help? Contact support"
         },
-        "privacy": "For your security, we never confirm whether an email address is registered."
+        "privacy": "For your security, we never confirm whether an email address is registered.",
+        "alerts": {
+          "success": "Your password has been updated.",
+          "error": "An error occurred.\nPlease try again.",
+          "invalidKey": "The validation key is invalid or has expired.\nPlease request a new reset link."
+        }
       }
     },
     "entities": {
@@ -229,19 +265,25 @@
         "update": {
           "pageTitle": "Ngelmak — New Channel",
           "brandTitle": "Ngelmak",
-          "title": "Create a new channel",
+          "title": "Create a New Channel",
           "subtitle": "Give your channel a name and a description. This information will help users understand its purpose.",
           "name": {
             "label": "Channel name",
             "placeholder": "Enter your channel name",
-            "required": "The channel name is required."
+            "required": "Channel name is required.",
+            "maxLength": "The maximum number of characters is 100."
           },
           "description": {
             "label": "Description",
-            "placeholder": "Enter your channel description"
+            "placeholder": "Enter your channel description",
+            "maxLength": "The maximum number of characters is 1000."
           },
           "cancel": "Cancel",
-          "save": "Save"
+          "save": "Save",
+          "alerts": {
+            "success": "Channel successfully created.",
+            "error": "An error occurred while creating the channel.\nPlease try again."
+          }
         },
         "details": {
           "pageTitle": "Ngelmak — Channel Details",
@@ -253,7 +295,10 @@
             "posts": "Posts"
           },
           "follow": "Follow",
-          "unfollow": "Unfollow"
+          "unfollow": "Unfollow",
+          "alerts": {
+            "avataruploadError": "An error occurred while uploading the avatar.\nPlease try again."
+          }
         },
         "overview": {
           "avatarFallback": "Avatar",
@@ -263,13 +308,16 @@
             "following": "{{ value }} Following"
           },
           "viewProfile": "View profile",
-          "create": {
-            "name": {
-              "label": "Channel name",
-              "placeholder": "Enter your channel name",
-              "required": "The channel name is required."
-            },
-            "save": "Save"
+          "name": {
+            "label": "Channel name",
+            "placeholder": "Enter your channel name",
+            "required": "Channel name is required.",
+            "maxLength": "The maximum number of characters is 100."
+          },
+          "save": "Save",
+          "alerts": {
+            "success": "Channel successfully created.",
+            "error": "An error occurred while creating the channel.\nPlease try again."
           }
         }
       },
@@ -280,6 +328,9 @@
             "placeholder": "Search posts...",
             "clear": "Clear",
             "submit": "Search"
+          },
+          "alerts": {
+            "error": "Loading error."
           }
         },
         "card": {
@@ -298,11 +349,14 @@
               "delete": "Delete",
               "hide": "Hide"
             }
+          },
+          "alerts": {
+            "error": "An error occurred while deleting."
           }
         },
         "channelFeed": {
-          "title": "Channel Publications",
-          "noPosts": "No posts yet. Come back later or explore other channels to discover interesting content."
+          "title": "Channel posts",
+          "noPosts": "No posts yet. Check back later or explore other channels to discover interesting content."
         },
         "details": {
           "pageTitle": "Ngelmak — Post Details",
@@ -322,7 +376,7 @@
           }
         },
         "update": {
-          "pageTitle": "Ngelmak — Update Post",
+          "pageTitle": "Ngelmak — Post Update",
           "replyContext": {
             "replyingTo": "Replying to"
           },
@@ -334,94 +388,138 @@
             "maxLength": "Post content cannot exceed 10000 characters."
           },
           "files": {
-            "imageAlt": "Imported image",
+            "imageAlt": "Uploaded image",
             "remove": "Remove file"
           },
           "actions": {
             "publish": "Publish",
-            "update": "Update",
+            "update": "Edit",
             "cancel": "Cancel",
-            "loginToPost": "Sign in to publish your thoughts and engage with the community.",
-            "signIn": "Sign In"
+            "loginToPost": "Log in to share your ideas and interact with the community.",
+            "signIn": "Sign in"
+          },
+          "alerts": {
+            "created": "Post published.",
+            "updated": "Post updated.",
+            "deleted": "Post deleted.",
+            "error": "An error occurred while saving your post.\nPlease try again.",
+            "videoNotSupported": "Video media is not supported yet."
           }
         }
       },
       "comment": {
         "list": {
-          "signInToComment": "Log in to comment.",
+          "signInToComment": "Sign in to comment.",
           "noComments": "No comments yet.",
           "loadMore": "Load more comments",
           "item": {
-            "report": {
-              "label": "Report",
-              "privacy": "Your identity will remain confidential."
-            },
-            "update": "Update",
-            "delete": "Delete",
-            "deleteConfirmTitle": "Delete confirmation",
-            "deleteConfirmMessage": "Are you sure you want to delete this comment?",
             "reply": "Reply",
-            "replies": "replies"
+            "replies": "{{count}} reply(ies)",
+            "menu": {
+              "reply": "Reply",
+              "update": "Edit",
+              "delete": "Delete",
+              "admin": {
+                "blockUser": "Block user",
+                "delete": "Delete",
+                "hide": "Hide"
+              },
+              "report": {
+                "label": "Report",
+                "privacy": "Your identity will remain confidential."
+              }
+            },
+            "deleteConfirmTitle": "Delete confirmation",
+            "deleteConfirmMessage": "Are you sure you want to delete this comment?"
+          },
+          "alerts": {
+            "deleteSuccess": "Comment deleted.",
+            "deleteError": "An error occurred while deleting the comment."
           }
         },
         "update": {
           "content": {
-            "label": "Write your comment",
-            "placeholder": "Write your comment",
+            "label": "Type your comment!",
+            "placeholder": "Type your comment!",
             "required": "Comment content is required.",
             "maxLength": "Comment content cannot exceed 5000 characters."
           },
           "removeImage": "Remove image",
           "saveUpdate": "Update",
           "savePublish": "Publish",
-          "cancel": "Cancel"
+          "cancel": "Cancel",
+          "alerts": {
+            "created": "Comment published.",
+            "updated": "Comment updated.",
+            "deleted": "Comment deleted.",
+            "error": "An error occurred while saving your comment.\nPlease try again.",
+            "videoNotSupported": "Video media is not supported yet."
+          }
         }
       },
       "review": {
         "dialog": {
-          "replyTitle": "Reply to discussion thread",
-          "replySubtitle": "Ticket #{{id}} — User Report",
-          "reviewTitle": "Review Ticket #{{id}}",
-          "reviewSubtitle": "User Report",
+          "replyTitle": "Reply to the discussion thread",
+          "replySubtitle": "Ticket #{{id}} — User report",
+          "reviewTitle": "Review of ticket #{{id}}",
+          "reviewSubtitle": "User report",
           "content": {
             "label": "Explain",
             "placeholder": " ",
-            "required": "Review content is required."
+            "required": "Review content is required.",
+            "maxLength": "The maximum number of characters is 1000."
           },
           "cancel": "Cancel",
-          "send": "Send"
+          "send": "Send",
+          "alerts": {
+            "created": "Your message has been sent.",
+            "updated": "Your message has been updated.",
+            "error": "An error occurred while sending your message.\nPlease try again.",
+            "videoNotSupported": "Video media is not supported yet."
+          }
         },
         "list": {
           "addReview": "Add a comment",
           "item": {
-            "replyTo": "Replying to",
+            "replyTo": "In reply to",
             "reply": "Reply",
-            "update": "Update",
+            "update": "Edit",
             "delete": "Delete",
-            "deleteConfirmTitle": "Delete confirmation",
-            "deleteConfirmMessage": "Are you sure you want to delete this comment?"
+            "deleteConfirmTitle": "Delete a message",
+            "deleteConfirmMessage": "Do you want to delete your message?"
+          },
+          "alerts": {
+            "deleteSuccess": "Message deleted.",
+            "deleteError": "An error occurred while deleting your message.\nPlease try again."
           }
         },
         "update": {
           "title": "Your response",
-          "description": "You can explain the context, contest the report or provide additional information. Your response will be visible to the moderation team.",
+          "description": "You may explain the context, contest the report, or provide additional information. Your response will be visible to the moderation team.",
           "content": {
             "label": "Explain",
             "placeholder": " ",
-            "required": "Review content is required."
+            "required": "Review content is required.",
+            "maxLength": "The maximum number of characters is 1000."
           },
-          "send": "Send your message"
+          "send": "Send your message",
+          "alerts": {
+            "created": "Your message has been sent.",
+            "updated": "Your message has been updated.",
+            "error": "An error occurred while sending your message.\nPlease try again.",
+            "videoNotSupported": "Video media is not supported yet."
+          }
         }
       },
       "ticket": {
         "details": {
-          "pageTitle": "Ngelmak — Report details",
+          "pageTitle": "Ngelmak — Report Details",
           "title": "Report #{{id}}",
-          "subtitle": "This report concerns one of your contents.",
+          "subtitle": "This report concerns one of your pieces of content.",
           "statusResolved": "Resolved",
           "statusPending": "Under review",
           "close": "Close",
-          "infoBanner": "This report was submitted by another user or a moderator. You can review the details below and, if needed, provide additional information to explain or defend your position.",
+          "infoBanner": "This report was submitted by another user or a moderator. You can review the details below and, if necessary, provide additional information to explain or defend your position.",
           "receivedAtTitle": "Report received on",
           "statusTitle": "Status",
           "statusResolvedText": "This report has been processed.",
@@ -446,12 +544,17 @@
             "label": "Briefly describe the issue or situation.",
             "placeholder": " ",
             "required": "Report content is required.",
-            "maxLength": "Report content cannot exceed 5000 characters."
+            "maxLength": "Report content cannot exceed 1000 characters."
           },
           "attachEvidence": "Attach evidence (optional)",
           "removeEvidence": "Remove evidence",
           "cancel": "Cancel",
-          "send": "Send"
+          "send": "Send",
+          "alerts": {
+            "created": "Your report has been submitted to the moderation team.",
+            "error": "An error occurred while sending your report.\nPlease try again.",
+            "videoNotSupported": "Video media is not supported yet."
+          }
         },
         "open": {
           "title": "Ticket #{{id}}",
@@ -473,8 +576,8 @@
           "markResolved": "Mark as resolved"
         },
         "userActivityReport": {
-          "pageTitle": "Ngelmak — Ticket list",
-          "title": "Ticket list",
+          "pageTitle": "Ngelmak — Ticket List",
+          "title": "Ticket List",
           "filter": {
             "last30Days": "Last 30 days",
             "lastDay": "Last day",
@@ -505,6 +608,13 @@
             "pageSize": "Page size",
             "page": "Page",
             "perPage": "{{size}} / page"
+          }
+        }
+      },
+      "reaction": {
+        "dialog": {
+          "alerts": {
+            "error": "An error occurred."
           }
         }
       }
@@ -606,13 +716,21 @@
           }
         },
         "password": {
-          "title": "Password management",
-          "description": "Your password is stored securely and never shared. To change your password, you must confirm the old one and choose a new one.",
+          "title": "Password Management",
+          "description": "Your password is stored securely and is never shared. To change your password, you must confirm the current one and choose a new one.",
           "edit": "Change password",
           "fields": {
             "current": "Current password",
             "new": "New password",
-            "confirm": "Confirm password"
+            "confirm": "Confirm password",
+            "required": "This field is required.",
+            "minLength": "The password must be at least 8 characters long.",
+            "maxLength": "The password cannot exceed 20 characters."
+          },
+          "alerts": {
+            "success": "Your password has been updated.",
+            "invalidCurrentPassword": "The current password is incorrect.",
+            "error": "An error occurred while updating your password.\nPlease try again."
           },
           "errors": {
             "doNotMatch": "The two passwords do not match."
@@ -837,24 +955,26 @@
         "writeToUs": "Write to us",
         "form": {
           "name": {
-            "label": "Full name (or pseudonym)",
+            "label": "Full name (or nickname)",
             "placeholder": "Enter your name",
-            "required": "The name is required."
+            "required": "Name is required."
           },
           "email": {
             "label": "Email address (optional)",
             "placeholder": "Enter your email address",
-            "invalid": "The email address is invalid."
+            "invalid": "The email address is not valid."
           },
           "subject": {
             "label": "Subject",
             "placeholder": "Enter the subject",
-            "required": "The subject is required."
+            "required": "Subject is required.",
+            "maxLength": "The subject must not exceed 100 characters."
           },
           "message": {
             "label": "Message",
             "placeholder": "Enter your message",
-            "required": "The message is required."
+            "required": "Message is required.",
+            "maxLength": "The message must not exceed 1000 characters."
           },
           "submit": "Send"
         }
@@ -936,6 +1056,7 @@
         "apply.fullName": "Full name",
         "apply.motivation.label": "Why do you want to become a moderator?",
         "apply.motivation.required": "This field is required.",
+        "apply.motivation.maxLength": "The motivation must not exceed 500 characters.",
         "apply.submit": "Submit request",
         "apply.alreadyModerator": "You are already a moderator."
       },
