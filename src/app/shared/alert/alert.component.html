@@ -32,7 +32,7 @@
           }
           <div
             class="flex-grow ps-4 text-md font-normal text-gray-800"
-            [innerHTML]="alert.message"
+            [innerHTML]="alert.translationKey ? (alert.translationKey | translate) : alert.message"
           ></div>
         </div>
         @if (alert.showCloseButton) {

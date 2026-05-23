@@ -25,11 +25,11 @@ export class ContactFormComponent {
   alertService = inject(AlertService);
 
   contactForm = form(this.contactModel, (p) => {
-    email(p.email, { message: 'Veuillez entrer une adresse e-mail valide.' });
+    email(p.email, { message: 'ngelmakTranslation.pages.contact.form.email.invalid' });
     required(p.subject);
-    maxLength(p.subject, 255, { message: 'Le sujet ne peut pas dépasser 255 caractères.' });
-    required(p.message, { message: 'Le contenu du message est requis.' });
-    maxLength(p.message, 1000, { message: 'Le message ne peut pas dépasser 1000 caractères.' });
+    maxLength(p.subject, 255, { message: 'ngelmakTranslation.pages.contact.form.subject.maxLength' });
+    required(p.message, { message: 'ngelmakTranslation.pages.contact.form.message.required' });
+    maxLength(p.message, 1000, { message: 'ngelmakTranslation.pages.contact.form.message.maxLength' });
   });
 
   isSubmitting = signal(false);

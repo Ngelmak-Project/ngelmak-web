@@ -29,25 +29,37 @@ export class SecurityPasswordComponent {
 
   passwordForm = form(this.passwordModel, (p) => {
     // Current password
-    required(p.currentPassword, { message: 'Current password is required.' });
-    minLength(p.currentPassword, 8, {
-      message: 'Current password must be at least 8 characters long.',
+    required(p.currentPassword, {
+      message: 'ngelmakTranslation.userManagement.security.password.fields.required',
     });
-    maxLength(p.currentPassword, 20, { message: 'Current password cannot exceed 20 characters.' });
+    minLength(p.currentPassword, 8, {
+      message: 'ngelmakTranslation.userManagement.security.password.fields.minLength',
+    });
+    maxLength(p.currentPassword, 20, {
+      message: 'ngelmakTranslation.userManagement.security.password.fields.maxLength',
+    });
 
     // Confirm password
-    required(p.confirmPassword, { message: 'Password confirmation is required.' });
+    required(p.confirmPassword, {
+      message: 'ngelmakTranslation.userManagement.security.password.fields.required',
+    });
     minLength(p.confirmPassword, 8, {
-      message: 'Password confirmation must be at least 8 characters long.',
+      message: 'ngelmakTranslation.userManagement.security.password.fields.minLength',
     });
     maxLength(p.confirmPassword, 20, {
-      message: 'Password confirmation cannot exceed 20 characters.',
+      message: 'ngelmakTranslation.userManagement.security.password.fields.maxLength',
     });
 
     // New password
-    required(p.newPassword, { message: 'New password is required.' });
-    minLength(p.newPassword, 8, { message: 'New password must be at least 8 characters long.' });
-    maxLength(p.newPassword, 20, { message: 'New password cannot exceed 20 characters.' });
+    required(p.newPassword, {
+      message: 'ngelmakTranslation.userManagement.security.password.fields.required',
+    });
+    minLength(p.newPassword, 8, {
+      message: 'ngelmakTranslation.userManagement.security.password.fields.minLength',
+    });
+    maxLength(p.newPassword, 20, {
+      message: 'ngelmakTranslation.userManagement.security.password.fields.maxLength',
+    });
   });
 
   doNotMatch = signal(false);
@@ -74,6 +86,7 @@ export class SecurityPasswordComponent {
           this.passwordForm().reset(initPassword);
           this.alertService.addAlert({
             type: 'success',
+            translationKey: 'ngelmakTranslation.userManagement.security.password.alerts.success',
             message: 'Votre mot de passe est mis à jour avec succès!',
           });
         },
@@ -82,11 +95,14 @@ export class SecurityPasswordComponent {
           if (apiError.errorKey === 'invalidPassword') {
             this.alertService.addAlert({
               type: 'error',
+              translationKey:
+                'ngelmakTranslation.userManagement.security.password.alerts.invalidCurrentPassword',
               message: 'Le mot de passe actuel ne correspond pas.',
             });
           } else {
             this.alertService.addAlert({
               type: 'error',
+              translationKey: 'ngelmakTranslation.userManagement.security.password.alerts.error',
               message: "Une erreur s'est produite.",
             });
           }

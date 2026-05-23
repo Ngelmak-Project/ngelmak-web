@@ -2,6 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Authentication } from 'app/core/auth/auth.model';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { AlertService } from 'app/shared/alert/alert.service';
 import { UserUpdateDTO } from 'app/user-management/security/user.model';
 import { UserService } from 'app/user-management/security/user.service';
 
@@ -51,6 +52,15 @@ export class AuthenticationService {
       next: ({ body }) => {
         this._auth.set(body);
         this.navigateToStoredUrl();
+        if (body.activated === false) {
+          inject(AlertService).addAlert({
+            type: 'warning',
+            translationKey: 'ngelmakTranslation.auth.signIn.alerts.accountNotActivated',
+            message:
+              "Votre compte n'est pas encore activé.\nVeuillez vérifier votre boîte mail pour le lien d'activation.",
+            timeout: 10000,
+          });
+        }
       },
       error: () => this._auth.set(null),
     });

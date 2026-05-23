@@ -33,8 +33,8 @@ export class ModerationComponent {
   });
 
   authorityForm = form(this.authRequestModel, (p) => {
-    required(p.motivation);
-    maxLength(p.motivation, 500);
+    required(p.motivation, { message: 'ngelmakTranslation.pages.moderation.apply.motivation.required' });
+    maxLength(p.motivation, 500, { message: 'ngelmakTranslation.pages.moderation.apply.motivation.maxLength' });
   });
 
   authRequest = signal<AuthorityRequestDTO>(undefined);

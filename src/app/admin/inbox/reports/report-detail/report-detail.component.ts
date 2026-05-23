@@ -58,7 +58,8 @@ export class ReportDetailComponent {
           });
         },
         error: () =>
-          this.alertService.addAlert({ type: 'error', message: "Une error s'est produite." }),
+          this.alertService.addAlert({ type: 'error',
+            message: "Une error s'est produite." }),
       });
   }
 
