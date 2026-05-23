@@ -6,7 +6,7 @@ import {
   Input,
   OnInit,
   signal,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { AlertService } from 'app/shared/alert/alert.service';
 
@@ -133,11 +133,6 @@ export class CommentReactionDialogComponent implements OnInit {
         callback(body);
         this.update();
       },
-      error: () =>
-        this.alertService.addAlert({
-          type: 'error',
-          message: 'Une erreur est survenue lors de la sauvegarde.',
-        }),
     });
   }
 

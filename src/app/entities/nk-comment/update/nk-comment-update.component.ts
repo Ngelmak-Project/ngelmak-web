@@ -36,8 +36,10 @@ export class CommentUpdateComponent implements OnInit {
   commentModel = signal<IComment | ICommentDTO>(initComment);
 
   commentForm = form(this.commentModel, (p) => {
-    required(p.content, { message: 'Le contenu de votre commentaire est requis.' });
-    maxLength(p.content, 1000, { message: 'Nombre maximum de caractères est 1000.' });
+    required(p.content, { message: 'nkTranslation.entities.comment.update.content.required' });
+    maxLength(p.content, 1000, {
+      message: 'nkTranslation.entities.comment.update.content.maxLength',
+    });
   });
 
   ngOnInit(): void {
@@ -83,14 +85,16 @@ export class CommentUpdateComponent implements OnInit {
         this.commentForm().reset({ ...initComment, file: null }); // reset post values.
         this.alertService.addAlert({
           type: 'success',
-          translationKey: 'nkApp.comment.updated',
+          translationKey: this.comment().id
+            ? 'ngelmakTranslation.entities.comment.update.alerts.created'
+            : 'ngelmakTranslation.entities.comment.update.alerts.updated',
           message: 'Commentaire sauvegardé.',
         });
       },
       error: () =>
         this.alertService.addAlert({
           type: 'error',
-          translationKey: 'nkApp.comment.error',
+          translationKey: 'ngelmakTranslation.entities.comment.update.alerts.error',
           message: "Une erreur s'est produite lors de la sauvegarde.",
         }),
     });
@@ -105,6 +109,7 @@ export class CommentUpdateComponent implements OnInit {
       } else {
         this.alertService.addAlert({
           type: 'warning',
+          translationKey: 'ngelmakTranslation.entities.comment.update.alerts.videoNotSupported',
           message: 'Seulement les images sont prises en charge.',
         });
       }

@@ -23,7 +23,6 @@ const initPost: IPost = {
   selector: 'app-post-update',
   templateUrl: './nk-post-update.component.html',
   imports: [RouterModule, Field, SharedModule],
-
   encapsulation: ViewEncapsulation.None, // Disable encapsulation
 })
 export class PostUpdateComponent {
@@ -97,7 +96,9 @@ export class PostUpdateComponent {
       next: (res) => {
         this.alertService.addAlert({
           type: 'success',
-          translationKey: 'ngelmakApp.post.created',
+          translationKey: this.post()?.id
+            ? 'ngelmakTranslation.entities.post.update.alerts.updated'
+            : 'ngelmakTranslation.entities.post.update.alerts.created',
           message: 'Publié avec succès.',
         });
         this.postForm().reset({ ...initPost, files: [] }); // reset post values.
@@ -106,6 +107,7 @@ export class PostUpdateComponent {
       error: () =>
         this.alertService.addAlert({
           type: 'error',
+          translationKey: 'ngelmakTranslation.entities.post.update.alerts.error',
           message: "Une erreur s'est produite lors de l'enregistrement.",
         }),
     });
@@ -178,6 +180,7 @@ export class PostUpdateComponent {
         // Notify user that videos are not supported yet
         this.alertService.addAlert({
           type: 'info',
+          translationKey: 'ngelmakTranslation.entities.post.update.alerts.videoNotSupported',
           message: 'Les médias vidéos ne sont pas encore prise en charge.',
         });
       } else {
@@ -208,9 +211,10 @@ export class PostUpdateComponent {
    * Returns the placeholder text for the content textarea based on the current state.
    */
   get contentPlaceholder(): string {
-    const root = 'ngelmakTranslation.entities.post.update.content.';
-    if (this.post()?.id) return root + 'onUpdatePlaceholder';
-    if (this.postReply()) return root + 'onReplyPlaceholder';
-    return root + 'placeholder';
+    if (this.post()?.id)
+      return 'ngelmakTranslation.entities.post.update.content.onUpdatePlaceholder';
+    if (this.postReply())
+      return 'ngelmakTranslation.entities.post.update.content.onReplyPlaceholder';
+    return 'ngelmakTranslation.entities.post.update.content.placeholder';
   }
 }

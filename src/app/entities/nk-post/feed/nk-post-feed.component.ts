@@ -150,6 +150,7 @@ export class PostFeedComponent implements OnInit, OnDestroy {
         error: () =>
           this.alertService.addAlert({
             type: 'warning',
+            translationKey: 'ngelmakTranslation.entities.post.feed.alerts.error',
             message: 'Problème de chargement',
           }),
       });

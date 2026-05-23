@@ -125,14 +125,14 @@ export class CommentItemComponent {
             this.ondelete.emit(this.commentSig());
             this.alertService.addAlert({
               type: 'success',
-              translationKey: 'nkApp.comment.deleted',
+              translationKey: 'ngelmakTranslation.entities.comment.list.alerts.deleteSuccess',
               message: 'Commentaire supprimé.',
             });
           },
           error: () =>
             this.alertService.addAlert({
               type: 'error',
-              translationKey: 'nkApp.comment.deleteError',
+              translationKey: 'ngelmakTranslation.entities.comment.list.alerts.deleteError',
               message: "Une erreur s'est produite lors de la suppression du commentaire.",
             }),
         });

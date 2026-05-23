@@ -15,7 +15,14 @@ import { FormatMediumDatetimePipe } from 'app/shared/date';
   standalone: true,
   selector: 'app-channel-details',
   templateUrl: './nk-channel-details.component.html',
-  imports: [CommonModule, RouterModule, ChannelUpdateComponent, ChannelFeedComponent, FormatMediumDatetimePipe, SharedModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ChannelUpdateComponent,
+    ChannelFeedComponent,
+    FormatMediumDatetimePipe,
+    SharedModule,
+  ],
   animations: [fadeInRight400ms],
 })
 export class ChannelDetailComponent {
@@ -91,6 +98,7 @@ export class ChannelDetailComponent {
         error: () =>
           this.alertService.addAlert({
             type: 'error',
+            translationKey: 'ngelmakTranslation.entities.channel.details.alerts.avataruploadError',
             message: "Une erreur s'est produite lors de la mise à jour.",
           }),
       });

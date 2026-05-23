@@ -33,8 +33,8 @@ export class ReviewDialogComponent {
     content: '',
   });
   reviewForm = form(this.reviewModel, (r) => {
-    required(r.content, { message: 'Le contenu de la revue ne peut pas être vide.' });
-    maxLength(r.content, 1000, { message: 'Le nombre maximum de caractères est 1000.' });
+    required(r.content, { message: 'ngelmakTranslation.entities.review.dialog.content.required' });
+    maxLength(r.content, 1000, { message: 'ngelmakTranslation.entities.review.dialog.content.maxLength' });
   });
 
   constructor() {
@@ -63,12 +63,19 @@ export class ReviewDialogComponent {
       next: ({ body }) => {
         this.alertService.addAlert({
           type: 'success',
+          translationKey: this.review()
+            ? 'ngelmakTranslation.entities.review.dialog.alerts.updated'
+            : 'ngelmakTranslation.entities.review.dialog.alerts.created',
           message: "L'enregistrement a été effectué avec succès.",
         });
         this.close(body);
       },
       error: () => {
-        this.alertService.addAlert({ type: 'error', message: "Une erreur s'est produite." });
+        this.alertService.addAlert({
+          type: 'error',
+          translationKey: 'ngelmakTranslation.entities.review.dialog.alerts.error',
+          message: "Une erreur s'est produite.",
+        });
       },
     });
   }

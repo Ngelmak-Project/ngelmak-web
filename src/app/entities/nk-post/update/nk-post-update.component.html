@@ -306,23 +306,22 @@
       *hasNoAuthority="'ROLE_USER'"
       class="relative z-10 px-6 py-4 bg-gradient-to-r from-amber-50/80 to-orange-50/80 dark:from-amber-900/30 dark:to-orange-900/30 border-t border-amber-200/50 dark:border-amber-800/50 transition-all duration-300"
     >
-      <div class="flex items-center gap-3">
-        <svg
-          class="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-            clip-rule="evenodd"
-          />
-        </svg>
-        <p
-          translate="ngelmakTranslation.entities.post.update.actions.loginToPost"
-          class="text-sm font-medium text-amber-900 dark:text-amber-200"
-        >
-          Sign in to publish your thoughts and engage with the community.
+      <div class="flex flex-col md:flex-row items-center gap-3">
+        <p class="inline-flex items-center space-x-1 text-sm font-medium text-amber-900 dark:text-amber-200">
+          <svg
+            class="w-6 h-6 text-amber-600 dark:text-amber-400 flex-shrink-0"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <span translate="ngelmakTranslation.entities.post.update.actions.loginToPost">
+            Sign in to publish your thoughts and engage with the community.
+          </span>
         </p>
         <a
           translate="ngelmakTranslation.entities.post.update.actions.signIn"

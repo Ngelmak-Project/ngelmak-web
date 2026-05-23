@@ -39,8 +39,8 @@ export class TicketDialogComponent {
   ticketModel = signal<ITicket>(initTicket);
 
   ticketForm = form(this.ticketModel, (p) => {
-    required(p.description, { message: 'Le contenu est requis.' });
-    maxLength(p.description, 1000, { message: 'Nombre maximum de caractères est 1000.' });
+    required(p.description, { message: 'ngelmakTranslation.entities.ticket.dialog.content.required' });
+    maxLength(p.description, 1000, { message: 'ngelmakTranslation.entities.ticket.dialog.content.maxLength' });
   });
 
   save() {
@@ -69,15 +69,14 @@ export class TicketDialogComponent {
           this.ticketForm().reset(initTicket); // reset post values.
           this.alertService.addAlert({
             type: 'success',
-            translationKey: 'nkApp.ticket.updated',
-            // “Merci, votre ticket a bien été soumis.”
+            translationKey: 'ngelmakTranslation.entities.ticket.dialog.alerts.created',
             message: "Votre signalement a été transmis à l'équipe de modération.",
           });
         },
         error: () =>
           this.alertService.addAlert({
             type: 'error',
-            translationKey: 'nkApp.ticket.error',
+            translationKey: 'ngelmakTranslation.entities.ticket.dialog.alerts.error',
             message: 'La création du ticket a échoué.',
           }),
       });
@@ -102,6 +101,7 @@ export class TicketDialogComponent {
       } else {
         this.alertService.addAlert({
           type: 'warning',
+          translationKey: 'ngelmakTranslation.entities.ticket.dialog.alerts.videoNotSupported',
           message: 'Seulement les images sont prises en charge.',
         });
       }

@@ -134,6 +134,7 @@ export class PostCardComponent {
         error: () =>
           this.alertService.addAlert({
             type: 'error',
+            translationKey: 'ngelmakTranslation.entities.post.card.alerts.error',
             message: "Une error s'est produit lors de la suppression.",
           }),
       });

@@ -15,11 +15,10 @@ import { ChannelService } from '../nk-channel.service';
   imports: [SharedModule, Field, SharedModule],
 })
 export class ChannelUpdateComponent implements OnInit {
-  channel = input<IChannel>(null);
-  onComplete = output<IChannel>();
-
   protected channelService = inject(ChannelService);
   protected alertService = inject(AlertService);
+  channel = input<IChannel>(null);
+  onComplete = output<IChannel>();
   isSaving = signal(false);
 
   channelModel = signal<IChannel>({
@@ -28,9 +27,11 @@ export class ChannelUpdateComponent implements OnInit {
   });
 
   channelForm = form(this.channelModel, (p) => {
-    required(p.name, { message: 'Le nom du compte est requis.' });
-    maxLength(p.name, 100, { message: 'Le nombre maximum de caractères est 100.' });
-    maxLength(p.description, 1000, { message: 'Le nombre maximum de caractères est 1000.' });
+    required(p.name, { message: 'ngelmakTranslation.entities.channel.update.name.required' });
+    maxLength(p.name, 100, { message: 'ngelmakTranslation.entities.channel.update.name.maxLength' });
+    maxLength(p.description, 1000, {
+      message: 'ngelmakTranslation.entities.channel.update.description.maxLength',
+    });
   });
 
   ngOnInit(): void {
@@ -59,6 +60,7 @@ export class ChannelUpdateComponent implements OnInit {
       error: () =>
         this.alertService.addAlert({
           type: 'error',
+          translationKey: 'ngelmakTranslation.entities.channel.update.alerts.error',
           message: "Une erreur s'est produite.",
         }),
     });

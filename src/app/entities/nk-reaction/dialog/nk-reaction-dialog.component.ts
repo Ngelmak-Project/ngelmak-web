@@ -55,7 +55,7 @@ export class ReactionDialogComponent {
   });
 
   toggle() {
-    this.isOpen.update(v => !v);
+    this.isOpen.update((v) => !v);
   }
 
   select(emoji: string) {
@@ -84,13 +84,10 @@ export class ReactionDialogComponent {
       ? this.reactionService.update(reaction)
       : this.reactionService.create(reaction);
 
-    this.save(req$, r => this.applyUpsert(r));
+    this.save(req$, (r) => this.applyUpsert(r));
   }
 
-  private save(
-    result: Observable<HttpResponse<IReaction>>,
-    onSuccess: (r: IReaction) => void
-  ) {
+  private save(result: Observable<HttpResponse<IReaction>>, onSuccess: (r: IReaction) => void) {
     this.isSaving.set(true);
 
     result.pipe(finalize(() => this.isSaving.set(false))).subscribe({
@@ -98,6 +95,7 @@ export class ReactionDialogComponent {
       error: () =>
         this.alertService.addAlert({
           type: 'error',
+          translationKey: 'ngelmakTranslation.entities.reaction.dialog.alerts.error',
           message: 'Une erreur est survenue lors de la sauvegarde.',
         }),
     });

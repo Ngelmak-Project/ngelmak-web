@@ -27,8 +27,8 @@ export class ChannelOverviewComponent {
   });
 
   protected channelForm = form(this.channelModel, (p) => {
-    required(p.name, { message: 'Le nom de la chaine est obligatoire.' });
-    max(p.name, 100, { message: 'Le nom ne doit pas dépasser 100 caractères.' });
+    required(p.name, { message: 'ngelmakTranslation.entities.channel.overview.name.required' });
+    max(p.name, 100, { message: 'ngelmakTranslation.entities.channel.overview.name.maxLength' });
   });
 
   save(): void {
@@ -40,6 +40,7 @@ export class ChannelOverviewComponent {
         next: (res) => {
           this.alertService.addAlert({
             type: 'success',
+            translationKey: 'ngelmakTranslation.entities.channel.overview.alerts.success',
             message: 'Chaine créée avec succès!',
           });
           this.channelService.updateLocalChannel(res.body);
@@ -47,6 +48,7 @@ export class ChannelOverviewComponent {
         error: () =>
           this.alertService.addAlert({
             type: 'error',
+            translationKey: 'ngelmakTranslation.entities.channel.overview.alerts.error',
             message: 'Une erreur lors de la création.',
           }),
       });
