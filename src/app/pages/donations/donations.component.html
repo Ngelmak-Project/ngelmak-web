@@ -8,60 +8,307 @@
     Soutenir Ngelmak
   </h1>
 
-  <p translate="ngelmakTranslation.pages.donations.intro1" class="font-normal text-gray-700 dark:text-gray-400 mb-4">
+  <p
+    translate="ngelmakTranslation.pages.donations.intro1"
+    class="font-normal text-gray-700 dark:text-gray-400 mb-4"
+  >
     Ngelmak est un projet entièrement gratuit, indépendant et sans volonté de profit. Les dons
     permettent de couvrir les frais techniques essentiels et de garantir que la plateforme reste
     souveraine, éthique et libre de toute influence extérieure.
   </p>
 
-  <p translate="ngelmakTranslation.pages.donations.intro2" class="font-normal text-gray-700 dark:text-gray-400 mb-6">
+  <p
+    translate="ngelmakTranslation.pages.donations.intro2"
+    class="font-normal text-gray-700 dark:text-gray-400 mb-6"
+  >
     Contribuer est un acte volontaire. Chaque don, quel que soit son montant, aide à renforcer un
     espace numérique africain construit par et pour sa communauté.
   </p>
 
+  <!-- DONATION METHODS SECTION -->
   <h2
-    translate="ngelmakTranslation.pages.donations.form.title"
+    translate="ngelmakTranslation.pages.donations.methods.title"
     class="text-2xl font-semibold mt-10 mb-4 tracking-tight text-gray-900 dark:text-white"
   >
-    Faire un don
+    Moyens de donation
   </h2>
 
-  <form class="space-y-4">
-    <div>
-      <label
-        translate="ngelmakTranslation.pages.donations.form.amount.label"
-        class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300"
-      >
-        Montant du don (€)
-      </label>
-      <input
-        type="number"
-        min="1"
-        class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-        placeholder="{{ 'pages.donations.form.amount.placeholder' | translate }}"
+  <!-- DONATION PLATFORMS -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- Buy Me A Coffee -->
+    <a
+      [href]="buyMeCoffeeLink"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="p-6 bg-gradient-to-br from-yellow-50 to-amber-100 dark:from-amber-900 dark:to-amber-800 rounded-lg border-2 border-amber-300 dark:border-amber-700 hover:shadow-lg transition-all transform hover:scale-105 text-center"
+    >
+      <img
+        class="h-10 mx-auto mb-3"
+        src="assets/svg/buy-me-a-coffee.svg"
+        alt="Buy Me A Coffee Logo"
       />
+      <h3
+        translate="ngelmakTranslation.pages.donations.methods.buyMeCoffee"
+        class="font-bold text-gray-900 dark:text-white mb-1 text-lg"
+      >
+        Buy Me A Coffee
+      </h3>
+      <p
+        translate="ngelmakTranslation.pages.donations.methods.buyMeCoffeeDescription"
+        class="text-sm text-gray-700 dark:text-gray-300 mb-3"
+      >
+        Don flexible, simple et rapide
+      </p>
+      <span
+        translate="ngelmakTranslation.pages.donations.methods.buyMeCoffeeAccess"
+        class="inline-block px-3 py-1 bg-amber-300 dark:bg-amber-600 text-gray-900 dark:text-white text-xs font-semibold rounded-full"
+      >
+        Accès immédiat
+      </span>
+    </a>
+
+    <!-- Stripe -->
+    <a
+      [href]="stripeLink"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="p-6 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 rounded-lg border-2 border-purple-300 dark:border-purple-700 hover:shadow-lg transition-all transform hover:scale-105 text-center"
+    >
+      <img class="h-10 mx-auto mb-3" src="assets/svg/stripe.svg" alt="Stripe Logo" />
+      <h3
+        translate="ngelmakTranslation.pages.donations.methods.stripe"
+        class="font-bold text-gray-900 dark:text-white mb-1 text-lg"
+      >
+        Stripe
+      </h3>
+      <p
+        translate="ngelmakTranslation.pages.donations.methods.stripeDescription"
+        class="text-sm text-gray-700 dark:text-gray-300 mb-3"
+      >
+        Carte bancaire sécurisée
+      </p>
+      <span
+        translate="ngelmakTranslation.pages.donations.methods.stripeAccess"
+        class="inline-block px-3 py-1 bg-purple-300 dark:bg-purple-600 text-gray-900 dark:text-white text-xs font-semibold rounded-full"
+      >
+        Sûr & rapide
+      </span>
+    </a>
+
+    <!-- PayPal -->
+    <a
+      [href]="paypalLink"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="p-6 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-lg border-2 border-blue-300 dark:border-blue-700 hover:shadow-lg transition-all transform hover:scale-105 text-center"
+    >
+      <img class="h-10 mx-auto mb-3" src="assets/svg/paypal.svg" alt="PayPal Logo" />
+      <h3
+        translate="ngelmakTranslation.pages.donations.methods.paypal"
+        class="font-bold text-gray-900 dark:text-white mb-1 text-lg"
+      >
+        PayPal
+      </h3>
+      <p
+        translate="ngelmakTranslation.pages.donations.methods.paypalDescription"
+        class="text-sm text-gray-700 dark:text-gray-300 mb-3"
+      >
+        Compte PayPal
+      </p>
+      <span
+        translate="ngelmakTranslation.pages.donations.methods.paypalAccess"
+        class="inline-block px-3 py-1 bg-blue-300 dark:bg-blue-600 text-gray-900 dark:text-white text-xs font-semibold rounded-full"
+      >
+        Facile
+      </span>
+    </a>
+
+    <!-- Liberapay -->
+    <a
+      [href]="liberapayLink"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="p-6 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 rounded-lg border-2 border-orange-300 dark:border-orange-700 hover:shadow-lg transition-all transform hover:scale-105 text-center"
+    >
+      <img class="h-10 mx-auto mb-3" src="assets/svg/liberapay.svg" alt="Liberapay Logo" />
+      <h3
+        translate="ngelmakTranslation.pages.donations.methods.liberapay"
+        class="font-bold text-gray-900 dark:text-white mb-1 text-lg"
+      >
+        Liberapay
+      </h3>
+      <p
+        translate="ngelmakTranslation.pages.donations.methods.liberapayDescription"
+        class="text-sm text-gray-700 dark:text-gray-300 mb-3"
+      >
+        Soutien régulier récurrent
+      </p>
+      <span
+        translate="ngelmakTranslation.pages.donations.methods.liberapayAccess"
+        class="inline-block px-3 py-1 bg-orange-300 dark:bg-orange-600 text-gray-900 dark:text-white text-xs font-semibold rounded-full"
+      >
+        Mensuel
+      </span>
+    </a>
+
+    <!-- Patreon -->
+    <a
+      [href]="patreonLink"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="p-6 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900 dark:to-red-800 rounded-lg border-2 border-red-300 dark:border-red-700 hover:shadow-lg transition-all transform hover:scale-105 text-center"
+    >
+      <img class="h-10 mx-auto mb-3" src="assets/svg/patreon.svg" alt="Patreon Logo" />
+      <h3
+        translate="ngelmakTranslation.pages.donations.methods.patreon"
+        class="font-bold text-gray-900 dark:text-white mb-1 text-lg"
+      >
+        Patreon
+      </h3>
+      <p
+        translate="ngelmakTranslation.pages.donations.methods.patreonDescription"
+        class="text-sm text-gray-700 dark:text-gray-300 mb-3"
+      >
+        Adhésion mensuelle
+      </p>
+      <span
+        translate="ngelmakTranslation.pages.donations.methods.patreonAccess"
+        class="inline-block px-3 py-1 bg-red-300 dark:bg-red-600 text-gray-900 dark:text-white text-xs font-semibold rounded-full"
+      >
+        Exclusif
+      </span>
+    </a>
+  </div>
+
+  <!-- ADMIN FORM SECTION -->
+  <h2
+    *hasAnyAuthority="'ROLE_ADMIN'"
+    translate="ngelmakTranslation.pages.donations.form.title"
+    id="donation-form"
+    class="text-2xl font-semibold mt-10 mb-4 tracking-tight text-gray-900 dark:text-white"
+  >
+    Enregistrer un don
+  </h2>
+
+  <form class="grid grid-cols-1 md:grid-cols-2 gap-4" *hasAnyAuthority="'ROLE_ADMIN'">
+    <div class="relative">
+      <input
+        type="text"
+        [field]="donationForm.name"
+        id="floating_filled"
+        class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-200 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder=" "
+      />
+      <label
+        translate="ngelmakTranslation.pages.donations.form.name.label"
+        for="floating_filled"
+        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+        >Nom</label
+      >
+      @if (donationForm.name().dirty()) {
+        @for (error of donationForm.name().errors(); track error) {
+          <p class="text-sm text-red-600 dark:text-red-500">
+            <span class="font-medium">{{ error.message | translate }}</span>
+          </p>
+        }
+      }
     </div>
 
-    <div>
+    <div class="relative">
+      <input
+        type="number"
+        [field]="donationForm.amount"
+        id="floating_filled"
+        class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-200 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder=" "
+      />
+      <label
+        translate="ngelmakTranslation.pages.donations.form.amount.label"
+        for="floating_filled"
+        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+        >Montant du don (€)</label
+      >
+      @if (donationForm.amount().dirty()) {
+        @for (error of donationForm.amount().errors(); track error) {
+          <p class="text-sm text-red-600 dark:text-red-500">
+            <span class="font-medium">{{ error.message | translate }}</span>
+          </p>
+        }
+      }
+    </div>
+
+    <div class="col-span-2 relative">
+      <textarea
+        id="message"
+        rows="3"
+        [field]="donationForm.message"
+        placeholder=" "
+        class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-200 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 dark:focus:border-blue-500 peer resize-none"
+      ></textarea>
+
       <label
         translate="ngelmakTranslation.pages.donations.form.message.label"
-        class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300"
+        for="message"
+        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
       >
-        Message (optionnel)
+        Message
       </label>
-      <textarea
-        rows="3"
-        class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-        placeholder="{{ 'pages.donations.form.message.placeholder' | translate }}"
-      ></textarea>
+
+      <!-- Wrapper: puts counter on left and errors on right -->
+      <div class="flex justify-between items-start mt-1 text-xs w-full">
+        <!-- Errors (left side) -->
+        <div class="text-left flex-1">
+          @if (donationForm.message().dirty()) {
+            @for (error of donationForm.message().errors(); track error) {
+              <p
+                translate="ngelmakTranslation.pages.moderation.title"
+                class="text-red-600 dark:text-red-500 text-xs leading-tight"
+              >
+                {{ error.message | translate }}
+              </p>
+            }
+          }
+        </div>
+        <!-- Character counter -->
+        <div
+          class="whitespace-nowrap ml-4"
+          [class.text-red-600]="
+            donationForm.message().value().length >= donationForm.message().maxLength()
+          "
+          [class.text-gray-500]="
+            donationForm.message().value().length < donationForm.message().maxLength()
+          "
+        >
+          {{ donationForm.message().value().length }} /
+          {{ donationForm.message().maxLength() }}
+        </div>
+      </div>
     </div>
 
     <button
-      translate="ngelmakTranslation.pages.donations.form.submit"
-      type="submit"
-      class="px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700"
+      type="button"
+      (click)="registerDonation()"
+      [disabled]="donationForm().invalid() || isSaving()"
+      class="px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
     >
-      Envoyer le don
+      @if (isSaving()) {
+        <svg
+          class="inline w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
+          viewBox="0 0 100 101"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+            fill="currentColor"
+          />
+          <path
+            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+            fill="currentFill"
+          />
+        </svg>
+      }
+      <span translate="ngelmakTranslation.pages.donations.form.submit">Envoyer le don</span>
     </button>
   </form>
 
@@ -76,10 +323,15 @@
     <div
       class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
     >
-      <p translate="ngelmakTranslation.pages.donations.stats.total" class="text-sm text-gray-500 dark:text-gray-300">
+      <p
+        translate="ngelmakTranslation.pages.donations.stats.total"
+        class="text-sm text-gray-500 dark:text-gray-300"
+      >
         Total des dons
       </p>
-      <p class="text-xl font-bold text-gray-900 dark:text-white">0 €</p>
+      <p class="text-xl font-bold text-gray-900 dark:text-white">
+        {{ donatonStats()?.totalAmount || 0 }} €
+      </p>
     </div>
 
     <div
@@ -91,27 +343,37 @@
       >
         Contributeurs
       </p>
-      <p class="text-xl font-bold text-gray-900 dark:text-white">0</p>
+      <p class="text-xl font-bold text-gray-900 dark:text-white">
+        {{ donatonStats()?.count || 0 }}
+      </p>
     </div>
 
     <div
       class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
     >
-      <p translate="ngelmakTranslation.pages.donations.stats.average" class="text-sm text-gray-500 dark:text-gray-300">
+      <p
+        translate="ngelmakTranslation.pages.donations.stats.average"
+        class="text-sm text-gray-500 dark:text-gray-300"
+      >
         Don moyen
       </p>
       <p class="text-xl font-bold text-gray-900 dark:text-white">
-        0 €
+        {{ donatonStats()?.averageAmount || 0 }} €
       </p>
     </div>
 
     <div
       class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
     >
-      <p translate="ngelmakTranslation.pages.donations.stats.last" class="text-sm text-gray-500 dark:text-gray-300">
+      <p
+        translate="ngelmakTranslation.pages.donations.stats.last"
+        class="text-sm text-gray-500 dark:text-gray-300"
+      >
         Dernier don
       </p>
-      <p class="text-xl font-bold text-gray-900 dark:text-white">—</p>
+      <p class="text-xl font-bold text-gray-900 dark:text-white">
+        {{ donatonStats()?.lastDonationAmount || '—' }} €
+      </p>
     </div>
   </div>
 
@@ -131,21 +393,25 @@
   </p>
 
   <ul class="space-y-3">
-    <li
-      class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
-    >
-      <p
-        translate="ngelmakTranslation.pages.donations.history.emptyAmount"
-        class="text-gray-900 dark:text-white font-medium"
+    @for (donation of recentDonations(); track donation.id) {
+      <li
+        class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
       >
-        — €
-      </p>
-      <p
-        translate="ngelmakTranslation.pages.donations.history.emptyMessage"
-        class="text-sm text-gray-500 dark:text-gray-300"
-      >
-        Aucun don pour le moment
-      </p>
-    </li>
+        <p
+          translate="ngelmakTranslation.pages.donations.history.emptyAmount"
+          class="text-gray-900 dark:text-white font-medium"
+        >
+          {{ donation.amount }} €
+        </p>
+      </li>
+    }
   </ul>
+  @if (recentDonations().length === 0) {
+    <p
+      translate="ngelmakTranslation.pages.donations.history.emptyMessage"
+      class="text-sm text-gray-500 dark:text-gray-300"
+    >
+      Aucun don pour le moment
+    </p>
+  }
 </section>
