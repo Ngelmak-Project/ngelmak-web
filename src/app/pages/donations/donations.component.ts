@@ -1,13 +1,15 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { Field, form, maxLength, min, required } from '@angular/forms/signals';
 import SharedModule from 'app/shared/shared.module';
-import { DonationService, IDonation, IDonationStats } from './donations.service';
 import { finalize } from 'rxjs';
+import { DonationService, IDonation, IDonationStats } from './donations.service';
+import { CommonModule } from '@angular/common';
+import { FormatMediumDatetimePipe } from 'app/shared/date';
 
 @Component({
   selector: 'app-donations',
   templateUrl: './donations.component.html',
-  imports: [Field, SharedModule],
+  imports: [CommonModule, Field, SharedModule, FormatMediumDatetimePipe],
 })
 export class DonationsComponent implements OnInit {
   donationService = inject(DonationService);
@@ -48,7 +50,11 @@ export class DonationsComponent implements OnInit {
 
     this.donationService
       .getRecentDonations()
-      .subscribe((donations) => this.recentDonations.set(donations.body));
+      .subscribe((res) => this.recentDonations.set(res.body));
+
+    this.donationService
+      .getRecentDonations()
+      .subscribe((res) => console.log(res.body));
   }
 
   registerDonation(): void {
