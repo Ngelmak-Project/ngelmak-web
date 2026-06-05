@@ -115,8 +115,9 @@ export class PostFeedComponent implements OnInit, OnDestroy {
    * Infinite scroll handler
    */
   handleScrollEnd(): void {
-    if (this.isLoading()) return;
-    if (!this.hasNext()) return;
+    if (this.isLoading()) return; // Prevent multiple simultaneous loads
+    if (this.feeds().length === 0) return; // Don't load next if feed is empty (initial load)
+    if (!this.hasNext()) return; // No more pages to load
     this.loadNext();
   }
 

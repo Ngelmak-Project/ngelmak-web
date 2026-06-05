@@ -68,7 +68,7 @@ export class PostUpdateComponent {
 
   save(): void {
     this.isSaving.set(true);
-    const post: IPost = this.postModel();
+    const post: IPost = { ...this.postModel() }; // Create a copy of the post model to modify before sending to backend
     if (this.postReply()) {
       post.postReply = { id: this.postReply().id } as IPost; // Only ID is needed for postReply when sending to backend
     }
