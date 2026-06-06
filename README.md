@@ -60,57 +60,22 @@ For more information on using the Angular CLI, including detailed command refere
 
 ---
 
-Perfect — now that you want:
-
-- **Angular served at** `https://ngelmak.org`
-- **Gateway served at** `https://api.ngelmak.org`
-- **Nginx itself terminating HTTPS**
-- **Cloudflare still in front (Full or Full Strict)**
-
-…we can build a clean, production‑grade setup.
-
-Below is a fully documented Nginx configuration and the reasoning behind every part. This will give you a secure, maintainable architecture.
-
----
-
-# 🌐 Final Architecture Overview
+## 📁 File Structure
 
 ```
-Browser (HTTPS)
-   ↓
-Cloudflare (proxy + SSL Full/Strict)
-   ↓
-Nginx (HTTPS termination)
-   ↓
-Spring Gateway (HTTP or HTTPS)
-```
-
-### Why this is good
-
-- Angular and API are cleanly separated by subdomains.
-- No mixed content.
-- No need for Angular to proxy through the same Nginx.
-- Nginx handles HTTPS directly using a certificate (Let's Encrypt or Cloudflare Origin Cert).
-- Cloudflare adds DDoS protection, caching, and hides the server IP.
-
----
-
-# 📁 File Structure
-
-```
-/nginx
-   ├── nginx.conf
-   ├── ssl/
-   │     ├── ngelmak.org.pem
-   │     └── ngelmak.org.key
-   ├── Dockerfile
+/web
+  ├── nginx.conf
+  ├── ssl/
+  │     ├── ngelmak.org.pem
+  │     └── ngelmak.org.key
+  ├── Dockerfile
 ```
 
 You can use **Cloudflare Origin Certificates** (recommended) or **Let's Encrypt**.
 
 ---
 
-# 🛠️ Nginx Configuration (Fully Documented)
+## 🛠️ Nginx Configuration
 
 This config assumes:
 
@@ -120,7 +85,7 @@ This config assumes:
 
 Create `nginx.conf`:
 
-```nginx
+```
 # -------------------------------------------------------
 # 🌐 HTTPS Server for Angular Frontend (ngelmak.org)
 # -------------------------------------------------------
@@ -183,7 +148,7 @@ server {
 
 ---
 
-# 🧱 Dockerfile (Updated for HTTPS)
+## 🧱 Dockerfile
 
 ```dockerfile
 FROM nginx:alpine AS runner

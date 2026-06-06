@@ -1,6 +1,6 @@
-import { RouterModule } from '@angular/router';
 import { Component, effect, inject, input, output, signal, ViewEncapsulation } from '@angular/core';
 import { Field, form, maxLength, required } from '@angular/forms/signals';
+import { RouterModule } from '@angular/router';
 import { AttachmentType } from 'app/entities/enumerations/attachment-type.model';
 import { IFile } from 'app/entities/models/nk-file.model';
 import { IPost, IPostDTO } from 'app/entities/models/nk-post.model';
@@ -9,7 +9,6 @@ import { AlertService } from 'app/shared/alert/alert.service';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs/operators';
 import { PostService } from './../nk-post.service';
-import { MainModule } from 'app/layouts/main/main.module';
 
 const initPost: IPost = {
   id: null,
@@ -63,8 +62,6 @@ export class PostUpdateComponent {
       }
     });
   }
-
-  // Sadio Camara est présenté comme l’un des artisans majeurs de la révolution malienne, un homme qui a consacré sa vie à la souveraineté du pays et à la refondation de ses forces armées. Il est considèrent comme un martyr tombé pour la patrie, symbole d’un Mali qui reprend son destin en main.
 
   save(): void {
     this.isSaving.set(true);
