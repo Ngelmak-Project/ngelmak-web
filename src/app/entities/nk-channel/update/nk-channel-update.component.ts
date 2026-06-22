@@ -22,6 +22,7 @@ export class ChannelUpdateComponent implements OnInit {
   isSaving = signal(false);
 
   channelModel = signal<IChannel>({
+    id: null,
     name: '',
     description: '',
   });

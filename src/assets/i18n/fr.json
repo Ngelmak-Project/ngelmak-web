@@ -797,6 +797,10 @@
         "activeCommunities.title": "Communautés actives",
         "activeCommunities.postsThisWeek": "{{count}} publications cette semaine",
         "activeCommunities.follow": "+ Suivre"
+      },
+      "textCollapse" : {
+        "showMore": "Lire la suite",
+        "showLess": "Masquer"
       }
     },
     "pages": {

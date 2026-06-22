@@ -12,7 +12,9 @@ import { ConfirmDialogComponent } from 'app/shared/confirm-dialog/confirm-dialog
 import { DurationPipe } from 'app/shared/date';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import { ShowForChannelDirective } from 'app/shared/directives/show-for-channel';
+import { ImageCarouselComponent } from 'app/shared/image-carousel/image-carousel.component';
 import SharedModule from 'app/shared/shared.module';
+import { TextCollapseComponent } from 'app/shared/text-collapse/text-collapse.component';
 import { finalize } from 'rxjs';
 import { PostService } from '../nk-post.service';
 import { PostUpdateComponent } from '../update/nk-post-update.component';
@@ -32,6 +34,8 @@ import { PostUpdateComponent } from '../update/nk-post-update.component';
     ConfirmDialogComponent,
     ReactionDialogComponent,
     ShowForChannelDirective,
+    ImageCarouselComponent,
+    TextCollapseComponent,
     TicketDialogComponent,
   ],
 })
@@ -55,12 +59,12 @@ export class PostCardComponent {
   isSignalPost = signal(false); // Signal emit when user wanna signal a post.
   isSubscriptionToggling = signal(false);
 
-  content = computed(() => {
+  urls = computed<string[]>(() => {
     const post = this.postSig();
-    if (!post || !post.content) {
-      return '';
+    if (!post || !post.files) {
+      return [];
     }
-    return post.content.replace(/\\n/g, '\n');
+    return post.files.map(f => f.url);
   });
 
   /**

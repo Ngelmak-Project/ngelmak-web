@@ -1,26 +1,52 @@
-import { Pipe, PipeTransform, effect } from '@angular/core';
+import { ChangeDetectorRef, effect, inject, NgZone, Pipe, PipeTransform } from '@angular/core';
 import { TranslationService } from '../translation/translation.service';
 
 @Pipe({
   name: 'duration',
   standalone: true,
-  pure: false, // makes pipe reactive
+  pure: false,
 })
 export default class DurationPipe implements PipeTransform {
-  private lastValue = '';
+  private i18n = inject(TranslationService);
+  private ngZone = inject(NgZone);
+  private cdr = inject(ChangeDetectorRef);
 
-  constructor(private translate: TranslationService) {
-    // Re-run pipe when dictionary updates
+  private lastTime: any;
+  private lastValue = '';
+  private lastComputeTime = 0;
+  private updateInterval: any;
+
+  constructor() {
+    // React to language changes
     effect(() => {
-      this.lastValue = this.compute(this.lastTime);
+      this.i18n.lang(); // Subscribe to language signal
+      if (this.lastTime !== undefined) {
+        this.lastValue = this.compute(this.lastTime);
+        this.cdr.markForCheck();
+      }
     });
   }
 
-  private lastTime: any;
-
   transform(time: any): string {
     this.lastTime = time;
-    this.lastValue = this.compute(time);
+
+    // Only recompute if enough time has passed (e.g., 1 second)
+    const now = Date.now();
+    if (now - this.lastComputeTime >= 1000) {
+      this.lastValue = this.compute(time);
+      this.lastComputeTime = now;
+
+      // Schedule next update outside Angular zone to avoid triggering change detection
+      this.ngZone.runOutsideAngular(() => {
+        if (this.updateInterval) clearTimeout(this.updateInterval);
+        this.updateInterval = setTimeout(() => {
+          this.ngZone.run(() => {
+            this.cdr.markForCheck();
+          });
+        }, 1000);
+      });
+    }
+
     return this.lastValue;
   }
 
@@ -28,7 +54,7 @@ export default class DurationPipe implements PipeTransform {
     const seconds = Math.floor((Date.now() - new Date(time).getTime()) / 1000);
 
     if (seconds < 29) {
-      return this.translate.translate('ngelmakTranslation.shared.date.duration.justNow');
+      return this.i18n.translate('ngelmakTranslation.shared.date.duration.justNow');
     }
 
     const intervals: Record<string, number> = {
@@ -45,15 +71,17 @@ export default class DurationPipe implements PipeTransform {
       const counter = Math.floor(seconds / intervals[unit]);
 
       if (counter > 0) {
-        const translatedUnit = this.translate.translate(`ngelmakTranslation.shared.date.duration.units.${unit}`);
+        const translatedUnit = this.i18n.translate(
+          `ngelmakTranslation.shared.date.duration.units.${unit}`,
+        );
         if (counter === 1) {
-          return this.translate.translate('ngelmakTranslation.shared.date.duration.singular', {
+          return this.i18n.translate('ngelmakTranslation.shared.date.duration.singular', {
             count: counter,
             unit: translatedUnit,
           });
         }
 
-        return this.translate.translate('ngelmakTranslation.shared.date.duration.plural', {
+        return this.i18n.translate('ngelmakTranslation.shared.date.duration.plural', {
           count: counter,
           unit: translatedUnit,
         });
@@ -61,5 +89,9 @@ export default class DurationPipe implements PipeTransform {
     }
 
     return '';
+  }
+
+  ngOnDestroy() {
+    if (this.updateInterval) clearTimeout(this.updateInterval);
   }
 }
