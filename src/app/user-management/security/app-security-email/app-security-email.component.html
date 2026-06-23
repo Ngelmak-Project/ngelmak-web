@@ -39,7 +39,9 @@
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                <span translate="ngelmakTranslation.userManagement.security.email.verified">Vérifié</span>
+                <span translate="ngelmakTranslation.userManagement.security.email.verified"
+                  >Vérifié</span
+                >
               </span>
             } @else {
               <span
@@ -54,7 +56,9 @@
                     d="M12 9v4m0 4h.01M12 3a9 9 0 110 18 9 9 0 010-18z"
                   />
                 </svg>
-                <span translate="ngelmakTranslation.userManagement.security.email.unverified">Non vérifié</span>
+                <span translate="ngelmakTranslation.userManagement.security.email.unverified"
+                  >Non vérifié</span
+                >
               </span>
             }
           </div>
@@ -96,12 +100,14 @@
           @if (emailForm.email().dirty()) {
             @for (error of emailForm.email().errors(); track error) {
               <p class="text-sm text-red-600 dark:text-red-500">
-                <span class="font-medium">{{ error.message }}</span>
+                <span class="font-medium">{{ error.message | translate }}</span>
               </p>
             }
             @if (errorEmailExists()) {
               <p class="text-sm text-red-600 dark:text-red-500">
-                <span translate="ngelmakTranslation.userManagement.security.email.errorExists" class="font-medium"
+                <span
+                  translate="ngelmakTranslation.userManagement.security.email.errorExists"
+                  class="font-medium"
                   >Email déjà utilisé.</span
                 >
               </p>
@@ -133,7 +139,9 @@
               />
             </svg>
 
-            <span translate="ngelmakTranslation.userManagement.security.email.actions.cancel">Annuler</span>
+            <span translate="ngelmakTranslation.userManagement.security.email.actions.cancel"
+              >Annuler</span
+            >
           </button>
           <button
             (click)="updateEmail()"
@@ -157,7 +165,9 @@
                 />
               </svg>
             }
-            <span translate="ngelmakTranslation.userManagement.security.email.actions.save">Enregister</span>
+            <span translate="ngelmakTranslation.userManagement.security.email.actions.save"
+              >Enregister</span
+            >
           </button>
         </div>
       </div>

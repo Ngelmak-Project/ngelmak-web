@@ -13,7 +13,10 @@
         </span>
       </a>
 
-      <p translate="ngelmakTranslation.auth.signIn.brandTagline" class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+      <p
+        translate="ngelmakTranslation.auth.signIn.brandTagline"
+        class="text-sm text-gray-500 dark:text-gray-400 mt-1"
+      >
         Connexion à votre compte Ngelmak.
       </p>
     </div>
@@ -46,7 +49,7 @@
             @if (loginForm.login().dirty()) {
               @for (error of loginForm.login().errors(); track error) {
                 <p class="text-sm text-red-600 dark:text-red-500">
-                  <span class="font-medium">{{ error.message }}</span>
+                  <span class="font-medium">{{ error.message | translate }}</span>
                 </p>
               }
             }
@@ -111,7 +114,7 @@
             @if (loginForm.password().dirty()) {
               @for (error of loginForm.password().errors(); track error) {
                 <p class="text-sm text-red-600 dark:text-red-500">
-                  <span class="font-medium">{{ error.message }}</span>
+                  <span class="font-medium">{{ error.message | translate }}</span>
                 </p>
               }
             }
@@ -172,7 +175,9 @@
           </button>
 
           <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-            <span translate="ngelmakTranslation.auth.signIn.noAccount">Vous n'avez pas encore de compte ?</span>
+            <span translate="ngelmakTranslation.auth.signIn.noAccount"
+              >Vous n'avez pas encore de compte ?</span
+            >
             <a
               translate="ngelmakTranslation.auth.signIn.createAccount"
               routerLink="/sign-up"

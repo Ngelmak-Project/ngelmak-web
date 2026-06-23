@@ -13,7 +13,7 @@ import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language
   standalone: true,
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  imports: [SharedModule, RouterModule, Field, SharedModule, LanguageSwitcherComponent],
+  imports: [RouterModule, Field, SharedModule, LanguageSwitcherComponent],
 })
 export class SignInComponent implements OnInit {
   private signInService = inject(SignInService);

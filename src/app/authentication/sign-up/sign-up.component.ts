@@ -13,12 +13,13 @@ import {
 import { Router, RouterModule } from '@angular/router';
 import { ApiError } from 'app/core/auth/auth.model';
 import { AlertService } from 'app/shared/alert/alert.service';
+import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language-switcher.component';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
+import { TranslationService } from './../../shared/translation/translation.service';
 import { PasswordStrengthBarComponent } from './password-strength-bar/password-strength-bar.component';
 import { SignupModel } from './sign-up.model';
 import { SignUpService } from './sign-up.service';
-import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language-switcher.component';
 
 @Component({
   selector: 'app-sign-up',
@@ -33,6 +34,7 @@ import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language
   ],
 })
 export class SignUpComponent {
+  private langKey = inject(TranslationService).lang;
   private registerService = inject(SignUpService);
   private route = inject(Router);
   private alertService = inject(AlertService);
@@ -101,6 +103,7 @@ export class SignUpComponent {
     this.errorEmailExists.set(false);
     this.errorUserExists.set(false);
     const value = this.signupModel();
+    value.langKey = this.langKey(); // Update user language preference.
     this.registerService
       .save(value)
       .pipe(finalize(() => this.isRegistering.set(false)))

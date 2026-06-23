@@ -1,7 +1,9 @@
 <div class="relative w-full max-w-4xl mx-auto select-none group">
   <!-- Index indicator with subtle design -->
   @if (urls().length > 1) {
-    <div class="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full z-20 font-medium">
+    <div
+      class="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full z-20 font-medium"
+    >
       {{ index() + 1 }}<span class="text-gray-400">/{{ urls().length }}</span>
     </div>
   }
@@ -15,33 +17,38 @@
     >
       @for (url of urls(); track $index) {
         <div class="min-w-full h-72 sm:h-96 md:h-[500px] relative bg-gray-900">
-          <img
-            [src]="url"
-            class="w-full h-full object-cover"
-            [alt]="'Image ' + ($index + 1)"
-          />
+          <img [src]="url" class="w-full h-full object-cover" [alt]="'Image ' + ($index + 1)" />
         </div>
       }
     </div>
 
     <!-- Edge gradients -->
     @if (index() > 0) {
-      <div class="absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-black/30 to-transparent pointer-events-none"></div>
+      <div
+        class="absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-black/30 to-transparent pointer-events-none"
+      ></div>
     }
     @if (index() < urls().length - 1) {
-      <div class="absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-black/30 to-transparent pointer-events-none"></div>
+      <div
+        class="absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-black/30 to-transparent pointer-events-none"
+      ></div>
     }
   </div>
 
-  <!-- Navigation buttons (hidden until hover on mobile) -->
+  <!-- Navigation buttons -->
   @if (index() > 0) {
     <button
       (click)="prev()"
       [attr.aria-label]="'Previous image'"
-      class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-2.5 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100 sm:opacity-100 z-10"
+      class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2.5 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100 sm:opacity-100 z-10"
     >
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m15 19-7-7 7-7" />
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2.5"
+          d="m15 19-7-7 7-7"
+        />
       </svg>
     </button>
   }
@@ -50,7 +57,7 @@
     <button
       (click)="next()"
       [attr.aria-label]="'Next image'"
-      class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-2.5 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100 sm:opacity-100 z-10"
+      class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2.5 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100 sm:opacity-100 z-10"
     >
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m9 5 7 7-7 7" />
@@ -58,7 +65,7 @@
     </button>
   }
 
-  <!-- Dot indicators (optional) -->
+  <!-- Dot indicators -->
   @if (urls().length > 1) {
     <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
       @for (url of urls(); track $index) {
@@ -66,8 +73,8 @@
           (click)="goTo($index)"
           [attr.aria-label]="'Go to image ' + ($index + 1)"
           [class.bg-white]="index() === $index"
-          [class.bg-white/50]="index() !== $index"
-          class="w-2 h-2 rounded-full transition-all duration-200 hover:bg-white"
+          [class.bg-white/70]="index() !== $index"
+          class="w-2.5 h-2.5 rounded-full transition-all duration-200 hover:bg-white shadow-md ring-1 ring-black/20"
         ></button>
       }
     </div>
