@@ -16,8 +16,19 @@
       [style.transform]="'translateX(-' + index() * 100 + '%)'"
     >
       @for (url of urls(); track $index) {
-        <div class="min-w-full h-72 sm:h-96 md:h-[500px] relative bg-gray-900">
-          <img [src]="url" class="w-full h-full object-cover" [alt]="'Image ' + ($index + 1)" />
+        <div
+          class="min-w-full relative bg-gray-900 flex items-center justify-center"
+          [ngClass]="{
+            'h-48 sm:h-72 md:h-96': $index === 0,
+            'h-72 sm:h-96 md:h-[500px]': $index !== 0,
+          }"
+        >
+          <img
+            [src]="url"
+            class="max-w-full max-h-full object-contain cursor-pointer transition-opacity duration-200 hover:opacity-90"
+            [alt]="'Image ' + ($index + 1)"
+            (click)="openLightbox($index)"
+          />
         </div>
       }
     </div>
@@ -72,11 +83,105 @@
         <button
           (click)="goTo($index)"
           [attr.aria-label]="'Go to image ' + ($index + 1)"
-          [class.bg-white]="index() === $index"
-          [class.bg-white/70]="index() !== $index"
+          [ngClass]="{
+            'bg-white': index() === $index,
+            'bg-white/70': index() !== $index,
+          }"
           class="w-2.5 h-2.5 rounded-full transition-all duration-200 hover:bg-white shadow-md ring-1 ring-black/20"
         ></button>
       }
     </div>
   }
 </div>
+
+<!-- Lightbox Modal -->
+@if (isLightboxOpen()) {
+  <div
+    class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center"
+    (click)="closeLightbox()"
+  >
+    <!-- Close button -->
+    <button
+      (click)="closeLightbox()"
+      class="absolute top-4 right-4 bg-black/60 hover:bg-black/80 text-white p-2 rounded-full transition-colors z-[60] shadow-lg"
+      aria-label="Close lightbox"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
+
+    <!-- Image count -->
+    <div
+      class="absolute top-4 left-4 bg-black/60 text-white text-sm px-3 py-1.5 rounded-full backdrop-blur-sm shadow-lg z-[60]"
+    >
+      {{ lightboxIndex() + 1 }}/{{ urls().length }}
+    </div>
+
+    <!-- Main image container -->
+    <div class="relative w-full h-full flex items-center justify-center px-4 z-0">
+      <img
+        [src]="urls()[lightboxIndex()]"
+        [alt]="'Fullscreen image ' + (lightboxIndex() + 1)"
+        class="max-w-full max-h-[90vh] object-contain"
+      />
+      <!-- Navigation arrows in lightbox -->
+      @if (lightboxIndex() > 0) {
+        <button
+          (click)="lightboxPrev($event)"
+          class="absolute left-4 bg-black/60 hover:bg-black/80 text-white p-2 rounded-full transition-colors z-[60] shadow-lg"
+          aria-label="Previous image"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m15 19-7-7 7-7"
+            />
+          </svg>
+        </button>
+      }
+      @if (lightboxIndex() < urls().length - 1) {
+        <button
+          (click)="lightboxNext($event)"
+          class="absolute right-4 bg-black/60 hover:bg-black/80 text-white p-2 rounded-full transition-colors z-[60] shadow-lg"
+          aria-label="Next image"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m9 5 7 7-7 7"
+            />
+          </svg>
+        </button>
+      }
+    </div>
+
+    <!-- Lightbox thumbnails -->
+    @if (urls().length > 1) {
+      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-[60]">
+        @for (url of urls(); track $index) {
+          <button
+            (click)="lightboxGoTo($index, $event)"
+            class="w-12 h-12 rounded-lg overflow-hidden border-2 transition-all hover:opacity-100"
+            [ngClass]="{
+              'border-white opacity-100': lightboxIndex() === $index,
+              'border-white/40 opacity-60': lightboxIndex() !== $index,
+            }"
+            [attr.aria-label]="'Go to image ' + ($index + 1)"
+          >
+            <img [src]="url" class="w-full h-full object-cover" />
+          </button>
+        }
+      </div>
+    }
+  </div>
+}
