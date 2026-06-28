@@ -105,7 +105,10 @@
         "alerts": {
           "success": "Successfully signed in.",
           "invalidCredentials": "Incorrect username or password.",
-          "accountNotActivated": "Your account is not yet activated.\nPlease check your inbox for the activation link.",
+          "userNotActivated": "Account Pending Activation",
+          "userNotActivated.description": "Check your email (including Spam folder) and click the activation link.",
+          "userNotActivated.resendEmail": "Resend Email",
+          "userNotActivated.support": "Support",
           "error": "<strong>Authentication error!</strong>\nPlease check your login credentials."
         }
       },
@@ -397,6 +400,10 @@
             "cancel": "Cancel",
             "loginToPost": "Log in to share your ideas and interact with the community.",
             "signIn": "Sign in"
+          },
+          "noChannel": {
+            "message": "No channel created yet. Create a new channel to get started.",
+            "create": "Create Channel"
           },
           "alerts": {
             "created": "Post published.",

@@ -5,7 +5,7 @@ import adminRoutes from 'app/admin/admin.routes';
 import { Authority } from 'app/config/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import entityRoutes from 'app/entities/entity.routes';
-import { ChannelOverviewComponent } from 'app/entities/nk-channel/overview/nk-channel-overview.component';
+import { EngagementStatsComponent } from 'app/entities/nk-channel/overview/nk-channel-overview.component';
 import { PostFeedComponent } from 'app/entities/nk-post/feed/nk-post-feed.component';
 import HomeComponent from 'app/home/home.component';
 import { errorRoute } from 'app/layouts/error/error.route';
@@ -53,7 +53,7 @@ const routes: Routes = [
     SidebarComponent,
     FooterComponent,
     PostFeedComponent,
-    ChannelOverviewComponent,
+    EngagementStatsComponent,
     ContactFormComponent,
   ],
   exports: [RouterModule],

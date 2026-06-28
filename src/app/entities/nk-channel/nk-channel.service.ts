@@ -6,7 +6,7 @@ import { createRequestOption } from 'app/core/request/request-util';
 import {
   IChannel,
   ISubscriptionDTO,
-  ISubscriptionStatsDTO,
+  IEngagementStats,
 } from 'app/entities/models/nk-channel.model';
 import { Observable } from 'rxjs';
 
@@ -165,8 +165,8 @@ export class ChannelService {
    * Retrieve subscription statistics for a given channel.
    * @param channelId the ID of the channel to make the stats.
    */
-  getStats(channelId: number): Observable<HttpResponse<ISubscriptionStatsDTO>> {
-    return this.http.get<ISubscriptionStatsDTO>(`${this.resourceUrl}/stats/${channelId}`, {
+  getStats(channelId: number): Observable<HttpResponse<IEngagementStats>> {
+    return this.http.get<IEngagementStats>(`${this.resourceUrl}/stats/${channelId}`, {
       observe: 'response',
     });
   }

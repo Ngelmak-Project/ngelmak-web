@@ -28,6 +28,7 @@ export default class NavbarComponent {
   private signInService = inject(SignInService);
   private translateService = inject(TranslationService);
   private authService = inject(AuthenticationService);
+  private routerService = inject(Router);
 
   user = inject(AuthenticationService).authentication;
   activeChannel = inject(ChannelService).channel;
@@ -90,7 +91,7 @@ export default class NavbarComponent {
   logout(): void {
     this.collapseNavbar();
     this.signInService.signOut();
-    inject(Router).navigate(['']);
+    this.routerService.navigate(['']);
   }
 
   toggleNavbar(): void {

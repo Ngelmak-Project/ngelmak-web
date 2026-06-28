@@ -1,12 +1,12 @@
-<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+<section class="flex flex-col gap-4">
   <h2
     translate="ngelmakTranslation.entities.post.channelFeed.title"
-    class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white"
+    class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white"
   >
     Publications
   </h2>
 
-  <div class="flex flex-col gap-6 divide-y divide-gray-200 dark:divide-gray-700">
+  <div class="flex flex-col gap-3 md:gap-6">
     @for (post of posts(); track $index) {
       <app-post-card @fadeInUp [post]="post" [hideFollwing]="true"></app-post-card>
     }
@@ -75,4 +75,4 @@
       </article>
     }
   </div>
-</div>
+</section>

@@ -9,8 +9,9 @@ export interface ISubscription {
   subscriber?: Pick<IChannel, 'id'> | null;
 }
 
-export interface ISubscriptionStatsDTO {
+export interface IEngagementStats {
   channelId?: number;
+  postCount?: number;
   followersCount?: number;
   followingCount?: number;
   followers?: ISubscriptionDTO[];
@@ -35,7 +36,7 @@ export interface IChannel {
   createdAt?: Date | null;
   configuration?: IConfig;
   user?: number;
-  stats?: ISubscriptionStatsDTO;
+  stats?: IEngagementStats;
 }
 
 export interface IChannelDTO {
@@ -44,5 +45,5 @@ export interface IChannelDTO {
   name?: string;
   avatar?: string;
   userId?: number;
-  stats?: ISubscriptionStatsDTO;
+  stats?: IEngagementStats;
 }

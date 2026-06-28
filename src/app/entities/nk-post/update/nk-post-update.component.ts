@@ -9,6 +9,7 @@ import { AlertService } from 'app/shared/alert/alert.service';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs/operators';
 import { PostService } from './../nk-post.service';
+import { ChannelUpdateComponent } from "app/entities/nk-channel/update/nk-channel-update.component";
 
 const initPost: IPost = {
   id: null,

@@ -14,7 +14,7 @@ import { ChannelService } from '../nk-channel.service';
   templateUrl: './nk-channel-overview.component.html',
   imports: [CommonModule, RouterModule, Field, SharedModule],
 })
-export class ChannelOverviewComponent {
+export class EngagementStatsComponent {
   isLoading = signal(false);
   isSaving = signal(false);
   activeChannel = inject(ChannelService).channel;

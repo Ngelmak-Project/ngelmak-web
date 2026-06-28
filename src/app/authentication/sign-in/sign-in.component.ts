@@ -8,6 +8,8 @@ import { AlertService } from 'app/shared/alert/alert.service';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language-switcher.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ApiError } from 'app/core/auth/auth.model';
 
 @Component({
   standalone: true,
@@ -21,6 +23,7 @@ export class SignInComponent implements OnInit {
   private router = inject(Router);
   private alertService = inject(AlertService);
   protected isLoging = signal(false);
+  errorUserNotActivated = signal(false);
   hide = signal(true);
 
   protected loginModel = signal<SignInModel>({
@@ -62,13 +65,18 @@ export class SignInComponent implements OnInit {
             message: 'Connexion avec succès!',
           });
         },
-        error: () => {
-          this.alertService.addAlert({
-            type: 'error',
-            translationKey: 'ngelmakTranslation.auth.signIn.alerts.error',
-            message:
-              "<strong>Erreur d'authentification !</strong> Veuillez vérifier vos identifiants de connexion.",
-          });
+        error: (err: HttpErrorResponse) => {
+          const apiError = err.error as ApiError;
+          if (apiError.errorKey === 'userNotActivated') {
+            this.errorUserNotActivated.set(true);
+          } else {
+            this.alertService.addAlert({
+              type: 'error',
+              translationKey: 'ngelmakTranslation.auth.signIn.alerts.error',
+              message:
+                "<strong>Erreur d'authentification !</strong> Veuillez vérifier vos identifiants de connexion.",
+            });
+          }
         },
       });
   }

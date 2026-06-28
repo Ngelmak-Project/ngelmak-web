@@ -1,12 +1,11 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
+import { IFile } from 'app/entities/models/nk-file.model';
 import { IPost, IPostDTO, ITrending } from 'app/entities/models/nk-post.model';
 import { IPage } from 'app/shared/pagination/pagination.model';
-import { IFile } from '../models/nk-file.model';
+import { Observable } from 'rxjs';
 
 export type EntityResponseType = HttpResponse<IPostDTO>;
 export type EntityArrayResponseType = HttpResponse<IPostDTO[]>;

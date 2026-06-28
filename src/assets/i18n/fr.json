@@ -108,7 +108,10 @@
         "alerts": {
           "success": "Connexion réussie.",
           "invalidCredentials": "Identifiant ou mot de passe incorrect.",
-          "accountNotActivated": "Votre compte n'est pas encore activé.\nVeuillez vérifier votre boîte mail pour le lien d'activation.",
+          "userNotActivated": "Compte en attente d'activation",
+          "userNotActivated.description": "Vérifiez votre e-mail (y compris le dossier Spam) et cliquez sur le lien d'activation.",
+          "userNotActivated.resendEmail": "Renvoyer l'e-mail",
+          "userNotActivated.support": "Support",
           "error": "<strong>Erreur d'authentification !</strong>\nVeuillez vérifier vos identifiants de connexion."
         }
       },
@@ -400,6 +403,10 @@
             "cancel": "Annuler",
             "loginToPost": "Connectez-vous pour publier vos idées et interagir avec la communauté.",
             "signIn": "Se connecter"
+          },
+          "noChannel": {
+            "message": "Aucune chaîne créée pour l'instant. Créez une nouvelle chaîne pour commencer.",
+            "create": "Créer une chaîne"
           },
           "alerts": {
             "created": "Post publié.",
@@ -798,7 +805,7 @@
         "activeCommunities.postsThisWeek": "{{count}} publications cette semaine",
         "activeCommunities.follow": "+ Suivre"
       },
-      "textCollapse" : {
+      "textCollapse": {
         "showMore": "Lire la suite",
         "showLess": "Masquer"
       }

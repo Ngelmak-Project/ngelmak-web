@@ -5,11 +5,11 @@ import { IChannel, ISubscriptionDTO } from 'app/entities/models/nk-channel.model
 import { ChannelFeedComponent } from 'app/entities/nk-post/channel-feed/channel-feed.component';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInRight400ms } from 'app/shared/animations/fade-in-right.animation';
+import { FormatMediumDatetimePipe } from 'app/shared/date';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { ChannelService } from '../nk-channel.service';
 import { ChannelUpdateComponent } from '../update/nk-channel-update.component';
-import { FormatMediumDatetimePipe } from 'app/shared/date';
 
 @Component({
   standalone: true,

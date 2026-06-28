@@ -100,7 +100,11 @@ export class PostFeedComponent implements OnInit, OnDestroy {
    * Add newly created post to the top of the feed.
    */
   handlePostSaved(newPost: IPostDTO): void {
-    this.feeds.update((list) => [{ id: null, post: newPost }, ...list]);
+    this.feeds.update((list) => [newPost, ...list]);
+  }
+
+  handlePostDeleted(deletedPost: IPostDTO): void {
+    this.feeds.update((list) => list.filter((p) => p.id != deletedPost.id));
   }
 
   /**
