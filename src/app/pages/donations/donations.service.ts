@@ -1,8 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { ApiConfigService } from 'app/core/config/api-config.service';
 import { Observable } from 'rxjs';
-
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
 
 export interface IDonation {
   id?: number;
@@ -23,10 +22,7 @@ export interface IDonationStats {
 @Injectable({ providedIn: 'root' })
 export class DonationService {
   protected http = inject(HttpClient);
-  protected applicationConfigService = inject(ApplicationConfigService);
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('auth/donation');
-  protected publicResourceUrl =
-    this.applicationConfigService.getEndpointFor('auth/public/donation');
+  protected resourceUrl = inject(ApiConfigService).buildApiUrl('auth', 'donation');
 
   /**
    * Save a donation.
@@ -43,7 +39,7 @@ export class DonationService {
    * @returns An observable containing the HTTP response with donation stats
    */
   getStats(): Observable<HttpResponse<IDonationStats>> {
-    return this.http.get<IDonationStats>(`${this.publicResourceUrl}/stats`, {
+    return this.http.get<IDonationStats>(`${this.resourceUrl}/stats`, {
       observe: 'response',
     });
   }
@@ -53,7 +49,7 @@ export class DonationService {
    * @returns An observable containing the HTTP response with recent donations
    */
   getRecentDonations(): Observable<HttpResponse<IDonation[]>> {
-    return this.http.get<IDonation[]>(`${this.publicResourceUrl}/recent`, {
+    return this.http.get<IDonation[]>(`${this.resourceUrl}/recent`, {
       observe: 'response',
     });
   }

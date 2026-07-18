@@ -1,19 +1,14 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { effect, inject, Injectable, signal } from '@angular/core';
 import { AuthenticationService } from 'app/core/auth/auth.service';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { ApiConfigService } from 'app/core/config/api-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import {
-  IChannel,
-  ISubscriptionDTO,
-  IEngagementStats,
-} from 'app/entities/models/nk-channel.model';
+import { IChannel, IEngagementStats, ISubscriptionDTO } from 'app/entities/models/nk-channel.model';
 import { Observable } from 'rxjs';
 
 export type EntityResponseType = HttpResponse<IChannel>;
 export type EntityArrayResponseType = HttpResponse<IChannel[]>;
-
-// [TODO] Make sure the channel of the current user is saved locally to avoid back and forth fetch from the server.
 
 @Injectable({ providedIn: 'root' })
 export class ChannelService {
@@ -28,6 +23,10 @@ export class ChannelService {
    */
   readonly channel = this._channel.asReadonly();
   private authService = inject(AuthenticationService);
+
+  private http = inject(HttpClient);
+  private resourceUrl = inject(ApiConfigService).buildApiUrl('core', 'channels');
+  private stateStorageService = inject(StateStorageService);
 
   constructor() {
     /**
@@ -50,6 +49,13 @@ export class ChannelService {
    * Called automatically when authentication changes.
    */
   private loadChannel(): void {
+    const cachedChannel = this.stateStorageService.getChannel();
+
+    if (cachedChannel) {
+      this._channel.set(cachedChannel);
+      return;
+    }
+
     this.http.get<IChannel>(`${this.resourceUrl}/me`).subscribe({
       next: (acc) => this.updateLocalChannel(acc),
       error: () => this.updateLocalChannel(null),
@@ -61,6 +67,11 @@ export class ChannelService {
    */
   updateLocalChannel(channel: IChannel): void {
     this._channel.set(channel);
+    if (channel) {
+      this.stateStorageService.storeChannel(channel);
+    } else {
+      this.stateStorageService.clearChannel();
+    }
   }
 
   /**
@@ -87,11 +98,6 @@ export class ChannelService {
 
   // API
 
-  private http = inject(HttpClient);
-  protected applicationConfigService = inject(ApplicationConfigService);
-  private resourceUrl = this.applicationConfigService.getEndpointFor('core/channels');
-  private publicResourceUrl = this.applicationConfigService.getEndpointFor('core/r/channels');
-
   /**
    * CRUD operations for channels (admin or profile editing).
    */
@@ -108,7 +114,7 @@ export class ChannelService {
   }
 
   find(id: number): Observable<EntityResponseType> {
-    return this.http.get<IChannel>(`${this.publicResourceUrl}/${id}`, { observe: 'response' });
+    return this.http.get<IChannel>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   findByUser(id: number): Observable<EntityResponseType> {

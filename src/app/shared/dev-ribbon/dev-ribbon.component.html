@@ -1,17 +1,7 @@
-<!-- @if (dev()) {
-} -->
-<div
-  class="
-    fixed bottom-20 left-0 z-[9999]
-    pointer-events-none
-    bg-red-600/40 dark:bg-red-500/40
-    text-white dark:text-red-100
-    font-semibold text-xs text-center
-    p-2 w-40
-    rotate-45 origin-top-left
-    backdrop-blur-md tracking-wider
-    shadow-lg shadow-red-900/30 dark:shadow-red-500/20
-  "
->
-  {{ lang() === 'fr' ? 'DÉVELOPPEMENT' : 'DEVELOPMENT' }}
-</div>
+@if (dev()) {
+  <div
+    class="fixed bottom-20 left-0 z-[9999] pointer-events-none bg-red-600/40 dark:bg-red-500/40 text-white dark:text-red-100 font-semibold text-xs text-center p-2 w-40 rotate-45 origin-top-left backdrop-blur-md tracking-wider shadow-lg shadow-red-900/30 dark:shadow-red-500/20"
+  >
+    {{ lang() === 'fr' ? 'DÉVELOPPEMENT' : 'DEVELOPMENT' }}
+  </div>
+}

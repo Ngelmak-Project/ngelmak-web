@@ -44,7 +44,7 @@ export class ResendActivationComponent {
         next: () => this.success.set(true),
         error: (err: HttpErrorResponse) => {
           const apiError = err.error as ApiError;
-          if (apiError.errorKey === 'userAlreadyActivated') {
+          if (apiError?.errorKey === 'userAlreadyActivated') {
             this.alreadyActivated.set(true);
           } else if (apiError.status === 500) this.error.set(true);
         },

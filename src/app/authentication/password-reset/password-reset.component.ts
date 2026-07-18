@@ -8,7 +8,7 @@ import { AlertService } from 'app/shared/alert/alert.service';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { PasswordStrengthBarComponent } from '../sign-up/password-strength-bar/password-strength-bar.component';
-import { ResetPasswordService } from './reset-password.service';
+import { PasswordResetService } from './password-reset.service';
 import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language-switcher.component';
 
 const initPassword = {
@@ -19,8 +19,8 @@ const initPassword = {
 
 @Component({
   standalone: true,
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
+  selector: 'app-password-reset',
+  templateUrl: './password-reset.component.html',
   imports: [
     CommonModule,
     RouterModule,
@@ -30,8 +30,8 @@ const initPassword = {
     LanguageSwitcherComponent,
   ],
 })
-export class ResetPasswordComponent {
-  protected resetPasswordService = inject(ResetPasswordService);
+export class PasswordResetComponent {
+  protected PasswordResetService = inject(PasswordResetService);
   protected alertService = inject(AlertService);
   private route = inject(ActivatedRoute);
 
@@ -39,34 +39,34 @@ export class ResetPasswordComponent {
 
   passwordForm = form(this.passwordModel, (p) => {
     // Key field validation
-    required(p.key, { message: 'ngelmakTranslation.auth.resetPassword.key.required' });
+    required(p.key, { message: 'ngelmakTranslation.auth.PasswordReset.key.required' });
     minLength(p.key, 4, {
-      message: 'ngelmakTranslation.auth.resetPassword.key.minLength',
+      message: 'ngelmakTranslation.auth.PasswordReset.key.minLength',
     });
     maxLength(p.key, 20, {
-      message: 'ngelmakTranslation.auth.resetPassword.key.maxLength',
+      message: 'ngelmakTranslation.auth.PasswordReset.key.maxLength',
     });
 
     // New password
     required(p.newPassword, {
-      message: 'ngelmakTranslation.auth.resetPassword.password.newPasswordLabel',
+      message: 'ngelmakTranslation.auth.PasswordReset.password.newPasswordLabel',
     });
     minLength(p.newPassword, 8, {
-      message: 'ngelmakTranslation.auth.resetPassword.password.minLength',
+      message: 'ngelmakTranslation.auth.PasswordReset.password.minLength',
     });
     maxLength(p.newPassword, 20, {
-      message: 'ngelmakTranslation.auth.resetPassword.password.maxLength',
+      message: 'ngelmakTranslation.auth.PasswordReset.password.maxLength',
     });
 
     // Confirm password
     required(p.confirmPassword, {
-      message: 'ngelmakTranslation.auth.resetPassword.password.confirmPasswordLabel',
+      message: 'ngelmakTranslation.auth.PasswordReset.password.confirmPasswordLabel',
     });
     minLength(p.confirmPassword, 8, {
-      message: 'ngelmakTranslation.auth.resetPassword.password.minLength',
+      message: 'ngelmakTranslation.auth.PasswordReset.password.minLength',
     });
     maxLength(p.confirmPassword, 20, {
-      message: 'ngelmakTranslation.auth.resetPassword.password.maxLength',
+      message: 'ngelmakTranslation.auth.PasswordReset.password.maxLength',
     });
   });
 
@@ -89,10 +89,10 @@ export class ResetPasswordComponent {
     });
   }
 
-  resetPassword() {
+  PasswordReset() {
     this.isUpdating.set(true);
     const { key, newPassword } = this.passwordModel();
-    this.resetPasswordService
+    this.PasswordResetService
       .updatePasswor(key, newPassword)
       .pipe(finalize(() => this.isUpdating.set(false)))
       .subscribe({
@@ -100,22 +100,22 @@ export class ResetPasswordComponent {
           this.passwordForm().reset(initPassword);
           this.alertService.addAlert({
             type: 'success',
-            translationKey: 'ngelmakTranslation.auth.resetPassword.alerts.success',
+            translationKey: 'ngelmakTranslation.auth.PasswordReset.alerts.success',
             message: 'Votre mot de passe est mis à jour avec succès!',
           });
         },
         error: (err: HttpErrorResponse) => {
           const apiError = err.error as ApiError;
-          if (apiError.errorKey === 'userNotFound') {
+          if (apiError?.errorKey === 'userNotFound') {
             this.alertService.addAlert({
               type: 'error',
-              translationKey: 'ngelmakTranslation.auth.resetPassword.alerts.invalidKey',
+              translationKey: 'ngelmakTranslation.auth.PasswordReset.alerts.invalidKey',
               message: 'La clé fournie est invalide ou expirée.',
             });
           } else {
             this.alertService.addAlert({
               type: 'error',
-              translationKey: 'ngelmakTranslation.auth.resetPassword.alerts.error',
+              translationKey: 'ngelmakTranslation.auth.PasswordReset.alerts.error',
               message: "Une erreur s'est produite.",
             });
           }

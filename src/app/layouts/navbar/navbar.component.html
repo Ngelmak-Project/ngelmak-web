@@ -399,7 +399,7 @@
                 <span class="text-sm text-gray-500 truncate dark:text-gray-400">
                   {{ user()?.email }}
                 </span>
-                @if (!user()?.email || !user()?.activated) {
+                @if (!user()?.email || !user()?.isActivated) {
                   <a
                     translate="ngelmakTranslation.layouts.navbar.updateInfo"
                     routerLink="/user/security"

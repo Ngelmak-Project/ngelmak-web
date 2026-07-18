@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { IChannel } from 'app/entities/models/nk-channel.model';
 
 /**
  * Service for managing application state persistence across storage layers.
@@ -19,6 +20,7 @@ export class StateStorageService {
   private readonly StorageKeys = {
     PREVIOUS_URL: 'previousUrl',
     AUTHENTICATION_TOKEN: 'authenticationToken',
+    CHANNEL_CACHE_KEY: 'cachedUserChannel',
     LOCALE: 'locale',
     THEME: 'theme',
   } as const;
@@ -76,9 +78,10 @@ export class StateStorageService {
   /**
    * Clears the authentication token from all storage layers.
    */
-  clearAuthenticationToken(): void {
+  private clearAuthenticationToken(): void {
     sessionStorage.removeItem(this.StorageKeys.AUTHENTICATION_TOKEN);
     localStorage.removeItem(this.StorageKeys.AUTHENTICATION_TOKEN);
+    this.clearChannel();
   }
 
   // Locale Management
@@ -131,6 +134,74 @@ export class StateStorageService {
     localStorage.removeItem(this.StorageKeys.THEME);
   }
 
+  /**
+   * Stores the user's channel data in localStorage.
+   * @param channel - The channel data to cache
+   */
+  storeChannel(channel: IChannel): void {
+    try {
+      const tokenInSession = sessionStorage.getItem(this.StorageKeys.AUTHENTICATION_TOKEN);
+
+      if (tokenInSession) {
+        // Token is session-based → channel must also be session-based
+        sessionStorage.setItem(this.StorageKeys.CHANNEL_CACHE_KEY, JSON.stringify(channel));
+        localStorage.removeItem(this.StorageKeys.CHANNEL_CACHE_KEY);
+      } else {
+        // Token is persistent → channel can be persistent
+        localStorage.setItem(this.StorageKeys.CHANNEL_CACHE_KEY, JSON.stringify(channel));
+        sessionStorage.removeItem(this.StorageKeys.CHANNEL_CACHE_KEY);
+      }
+    } catch (error) {
+      console.warn('Failed to cache channel:', error);
+    }
+  }
+
+  /**
+   * Retrieves the cached channel data from localStorage.
+   * @returns The cached channel or null if not found
+   */
+  getChannel(): IChannel | null {
+    if (!this.validateTokenAndChannel()) {
+      return null;
+    }
+
+    try {
+      const cached =
+        sessionStorage.getItem(this.StorageKeys.CHANNEL_CACHE_KEY) ??
+        localStorage.getItem(this.StorageKeys.CHANNEL_CACHE_KEY);
+
+      return cached ? JSON.parse(cached) : null;
+    } catch (error) {
+      console.warn('Failed to retrieve cached channel:', error);
+      return null;
+    }
+  }
+
+  validateTokenAndChannel(): boolean {
+    const token =
+      sessionStorage.getItem(this.StorageKeys.AUTHENTICATION_TOKEN) ??
+      localStorage.getItem(this.StorageKeys.AUTHENTICATION_TOKEN);
+
+    if (!token || token.trim() === '') {
+      this.clearChannel();
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Clears the cached channel from localStorage.
+   */
+  clearChannel(): void {
+    try {
+      sessionStorage.removeItem(this.StorageKeys.CHANNEL_CACHE_KEY);
+      localStorage.removeItem(this.StorageKeys.CHANNEL_CACHE_KEY);
+    } catch (error) {
+      console.warn('Failed to clear channel cache:', error);
+    }
+  }
+
   // Utility Methods
 
   /**
@@ -138,9 +209,7 @@ export class StateStorageService {
    * Useful for logout or reset scenarios.
    */
   clearAll(): void {
-    this.clearUrl();
-    this.clearAuthenticationToken();
-    this.clearLocale();
-    this.clearTheme();
+    sessionStorage.clear();
+    localStorage.clear();
   }
 }

@@ -30,6 +30,10 @@ export class SecurityEmailComponent {
   loginAlreadyInUse = signal(false);
   errorEmailExists = signal(false);
 
+  constructor() {
+    console.log(this.user());
+  }
+
   updateEmail() {
     this.isUpdating.set(true);
     const value = this.emailModel();
@@ -48,7 +52,7 @@ export class SecurityEmailComponent {
         },
         error: (err: HttpErrorResponse) => {
           const apiError = err.error as ApiError;
-          if (apiError.errorKey === 'emailExists') {
+          if (apiError?.errorKey === 'emailExists') {
             this.alertService.addAlert({
               type: 'error',
               message: "L'adresse e-mail est déjà utilisée !.",

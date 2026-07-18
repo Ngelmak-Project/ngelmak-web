@@ -1,6 +1,3 @@
-# -------------------------------------------------------
-# 🏗️ Build Stage — Compile Angular App
-# -------------------------------------------------------
 # Using a lightweight Node image reduces build time and image size
 FROM node:22-alpine AS builder
 
@@ -21,20 +18,20 @@ COPY . .
 RUN npm run build --prod
 
 
-# -------------------------------------------------------
-# 🚀 Runtime Stage — Serve with Nginx
-# -------------------------------------------------------
+# Runtime Stage — Serve with Nginx
 FROM nginx:alpine AS runner
 
-# Copy built Angular files from the builder stage to Nginx's public folder
-# Angular 17+ outputs to dist/<project>/browser
+# Prepare directories for rootless operation
+RUN mkdir -p /var/cache/nginx /var/run/nginx /run \
+    && touch /run/nginx.pid \
+    && chown -R 1000:1000 /var/cache/nginx /var/run/nginx /etc/nginx /run/nginx.pid
+
+# Copy Angular build
 COPY --from=builder /app/dist/ngelmak-web/browser /usr/share/nginx/html
 
 # Copy custom nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose ports
-EXPOSE 80 443
+USER 1000:1000
 
-# Start Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]

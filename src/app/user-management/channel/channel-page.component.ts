@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
-import { EngagementStatsComponent } from 'app/entities/nk-channel/overview/nk-channel-overview.component';
+import { ChannelOverviewComponent } from 'app/entities/nk-channel/overview/nk-channel-overview.component';
 import { ChannelUpdateComponent } from 'app/entities/nk-channel/update/nk-channel-update.component';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInRight400ms } from 'app/shared/animations/fade-in-right.animation';
@@ -16,9 +16,9 @@ import { finalize } from 'rxjs';
   imports: [
     CommonModule,
     RouterModule,
-    ChannelUpdateComponent,
-    EngagementStatsComponent,
     SharedModule,
+    ChannelUpdateComponent,
+    ChannelOverviewComponent,
   ],
   animations: [fadeInRight400ms],
 })

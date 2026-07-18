@@ -69,7 +69,8 @@ export class PostFeedComponent implements OnInit, OnDestroy {
   /**
    * Computed boolean: search is allowed only if query length >= 5
    */
-  hasMinimumQueryLength = computed(() => !this.isLoading() && this.query().length >= 5);
+  validForSearch = computed(() => !this.isLoading() && this.query().length >= 5);
+  isSearching = computed(() => this.isLoading() && this.query().length >= 5);
 
   ngOnInit(): void {
     /**
@@ -166,7 +167,7 @@ export class PostFeedComponent implements OnInit, OnDestroy {
    * Only updates the URL with the query (NOT page/size).
    */
   search(): void {
-    if (!this.hasMinimumQueryLength()) return;
+    if (!this.validForSearch()) return;
     this.handleNavigation(this.query());
   }
 

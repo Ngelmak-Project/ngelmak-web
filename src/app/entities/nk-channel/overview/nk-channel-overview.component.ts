@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { Field, form, max, required } from '@angular/forms/signals';
+import { Field, form, max, maxLength, minLength, pattern, required } from '@angular/forms/signals';
 import { RouterModule } from '@angular/router';
 import { IChannel } from 'app/entities/models/nk-channel.model';
 import { AlertService } from 'app/shared/alert/alert.service';
@@ -14,12 +14,12 @@ import { ChannelService } from '../nk-channel.service';
   templateUrl: './nk-channel-overview.component.html',
   imports: [CommonModule, RouterModule, Field, SharedModule],
 })
-export class EngagementStatsComponent {
-  isLoading = signal(false);
-  isSaving = signal(false);
+export class ChannelOverviewComponent {
   activeChannel = inject(ChannelService).channel;
   channelService = inject(ChannelService);
   alertService = inject(AlertService);
+  isLoading = signal(false);
+  isSaving = signal(false);
 
   protected channelModel = signal<IChannel>({
     name: '',
@@ -28,11 +28,22 @@ export class EngagementStatsComponent {
 
   protected channelForm = form(this.channelModel, (p) => {
     required(p.name, { message: 'ngelmakTranslation.entities.channel.overview.name.required' });
-    max(p.name, 100, { message: 'ngelmakTranslation.entities.channel.overview.name.maxLength' });
+    minLength(p.name, 3, {
+      message: 'ngelmakTranslation.entities.channel.overview.name.minLength',
+    });
+    maxLength(p.name, 100, {
+      message: 'ngelmakTranslation.entities.channel.overview.name.maxLength',
+    });
+    pattern(p.name, /^[a-zA-Z0-9_\- ]+$/, {
+      message: 'ngelmakTranslation.entities.channel.overview.name.pattern',
+    });
   });
 
   save(): void {
+    this.isSaving.set(true);
     const channel = this.channelForm().value();
+    channel.name = channel.name.trim();
+    channel.description = channel.description.trim();
     this.channelService
       .create(channel)
       .pipe(finalize(() => this.isSaving.set(false)))

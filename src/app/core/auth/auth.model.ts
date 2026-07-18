@@ -17,7 +17,7 @@ export class Authentication {
   firstName?: string;
   lastName?: string;
   email?: string;
-  activated?: boolean;
+  isActivated?: boolean;
   imageUrl?: string;
   langKey?: string;
   darkModeEnabled?: boolean;

@@ -125,6 +125,7 @@
           "placeholder": "Choisissez un nom d'utilisateur",
           "loginAlreadyUsed": "Nom d'utilisateur déjà utilisé.",
           "required": "Le nom d'utilisateur est requis.",
+          "noSpaces": "Le nom d'utilisateur ne peut pas contenir d'espaces.",
           "minLength": "Le nom d'utilisateur doit comporter au moins 4 caractères.",
           "maxLength": "Le nom d'utilisateur ne peut pas dépasser 50 caractères.",
           "pattern": "Le nom d'utilisateur ne peut contenir que des lettres, des chiffres et des tirets."
@@ -231,7 +232,7 @@
         },
         "privacy": "Pour votre sécurité, nous ne confirmons jamais si une adresse email est enregistrée."
       },
-      "resetPassword": {
+      "PasswordReset": {
         "pageTitle": "Changement de mot de passe",
         "brandTitle": "Ngelmak",
         "brandSubtitle": "Définissez votre nouveau mot de passe.",
@@ -277,7 +278,9 @@
             "label": "Nom de la chaîne",
             "placeholder": "Entrez le nom de votre chaîne",
             "required": "Le nom de la chaîne est requis.",
-            "maxLength": "Le nombre maximum de caractères est 100."
+            "minLength": "Le nombre minimum de caractères est 3.",
+            "maxLength": "Le nombre maximum de caractères est 100.",
+            "pattern": "Le nom de la chaîne ne peut contenir que des lettres, des chiffres, des tirets et des espaces."
           },
           "description": {
             "label": "Description",
@@ -288,6 +291,7 @@
           "save": "Enregistrer",
           "alerts": {
             "success": "Chaîne créée avec succès.",
+            "channelAlreadyExists": "Vous avez déjà une chaîne. Rafraîchissez la page ou reconnectez-vous.",
             "error": "Une erreur s'est produite lors de la création de la chaîne.\nVeuillez réessayer."
           }
         },
@@ -318,7 +322,9 @@
             "label": "Nom de la chaîne",
             "placeholder": "Entrez le nom de votre chaîne",
             "required": "Le nom de la chaîne est requis.",
-            "maxLength": "Le nombre maximum de caractères est 100."
+            "minLength": "Le nombre minimum de caractères est 3.",
+            "maxLength": "Le nombre maximum de caractères est 100.",
+            "pattern": "Le nom de la chaîne ne peut contenir que des lettres, des chiffres, des tirets et des espaces."
           },
           "save": "Enregistrer",
           "alerts": {

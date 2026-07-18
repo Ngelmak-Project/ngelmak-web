@@ -15,8 +15,8 @@ import { ApiError } from 'app/core/auth/auth.model';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language-switcher.component';
 import SharedModule from 'app/shared/shared.module';
+import { TranslationService } from 'app/shared/translation/translation.service';
 import { finalize } from 'rxjs';
-import { TranslationService } from './../../shared/translation/translation.service';
 import { PasswordStrengthBarComponent } from './password-strength-bar/password-strength-bar.component';
 import { SignupModel } from './sign-up.model';
 import { SignUpService } from './sign-up.service';
@@ -39,13 +39,14 @@ export class SignUpComponent {
   private route = inject(Router);
   private alertService = inject(AlertService);
 
-  // $2a$10$Ruqb0Q5NYwtK3SynZT8NYejh76iitDLodyeUovNwbcTgeh.n0NaO2
   doNotMatch = signal(false);
   showPassword = signal(false);
   error = signal(false);
   errorEmailExists = signal(false);
   errorUserExists = signal(false);
   isRegistering = signal(false);
+
+  loginPatternErrorMessage = signal('ngelmakTranslation.auth.signUp.login.pattern');
 
   signupModel = signal<SignupModel>({
     login: '',
@@ -63,7 +64,7 @@ export class SignUpComponent {
     pattern(
       p.login,
       /^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$/,
-      { message: 'ngelmakTranslation.auth.signUp.login.pattern' },
+      { message: () => this.loginPatternErrorMessage() },
     );
 
     // Email
@@ -96,6 +97,16 @@ export class SignUpComponent {
         this.doNotMatch.set(match);
       }
     });
+
+    // Space detection effect
+    effect(() => {
+      const loginValue = this.signupModel().login;
+      if (loginValue && loginValue.includes(' ')) {
+        this.loginPatternErrorMessage.set('ngelmakTranslation.auth.signUp.login.noSpaces');
+      } else {
+        this.loginPatternErrorMessage.set('ngelmakTranslation.auth.signUp.login.pattern');
+      }
+    });
   }
 
   register(): void {
@@ -118,14 +129,14 @@ export class SignUpComponent {
         },
         error: (err: HttpErrorResponse) => {
           const apiError = err.error as ApiError;
-          if (apiError.errorKey === 'loginExists') {
+          if (apiError?.errorKey === 'loginExists') {
             this.errorUserExists.set(true);
             this.alertService.addAlert({
               type: 'error',
               translationKey: 'ngelmakTranslation.auth.signUp.alerts.loginExists',
               message: "Ce nom d'utilisateur est déjà utilisé",
             });
-          } else if (apiError.errorKey === 'emailExists') {
+          } else if (apiError?.errorKey === 'emailExists') {
             this.errorEmailExists.set(true);
             this.alertService.addAlert({
               type: 'error',

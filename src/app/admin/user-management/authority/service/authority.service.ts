@@ -1,10 +1,9 @@
-import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-import { isPresent } from 'app/core/util/operators';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { inject, Injectable } from '@angular/core';
+import { ApiConfigService } from 'app/core/config/api-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
+import { isPresent } from 'app/core/util/operators';
+import { Observable } from 'rxjs';
 import { IAuthority } from '../authority.model';
 
 export type EntityResponseType = HttpResponse<IAuthority>;
@@ -13,9 +12,7 @@ export type EntityArrayResponseType = HttpResponse<IAuthority[]>;
 @Injectable({ providedIn: 'root' })
 export class AuthorityService {
   protected http = inject(HttpClient);
-  protected applicationConfigService = inject(ApplicationConfigService);
-
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/authorities');
+  protected resourceUrl = inject(ApiConfigService).buildApiUrl('api', 'authorities');
 
   create(authority: IAuthority): Observable<EntityResponseType> {
     return this.http.post<IAuthority>(this.resourceUrl, authority, { observe: 'response' });
@@ -38,8 +35,13 @@ export class AuthorityService {
     return authority.name;
   }
 
-  compareAuthority(o1: Pick<IAuthority, 'name'> | null, o2: Pick<IAuthority, 'name'> | null): boolean {
-    return o1 && o2 ? this.getAuthorityIdentifier(o1) === this.getAuthorityIdentifier(o2) : o1 === o2;
+  compareAuthority(
+    o1: Pick<IAuthority, 'name'> | null,
+    o2: Pick<IAuthority, 'name'> | null,
+  ): boolean {
+    return o1 && o2
+      ? this.getAuthorityIdentifier(o1) === this.getAuthorityIdentifier(o2)
+      : o1 === o2;
   }
 
   addAuthorityToCollectionIfMissing<Type extends Pick<IAuthority, 'name'>>(
@@ -48,8 +50,10 @@ export class AuthorityService {
   ): Type[] {
     const authorities: Type[] = authoritiesToCheck.filter(isPresent);
     if (authorities.length > 0) {
-      const authorityCollectionIdentifiers = authorityCollection.map(authorityItem => this.getAuthorityIdentifier(authorityItem));
-      const authoritiesToAdd = authorities.filter(authorityItem => {
+      const authorityCollectionIdentifiers = authorityCollection.map((authorityItem) =>
+        this.getAuthorityIdentifier(authorityItem),
+      );
+      const authoritiesToAdd = authorities.filter((authorityItem) => {
         const authorityIdentifier = this.getAuthorityIdentifier(authorityItem);
         if (authorityCollectionIdentifiers.includes(authorityIdentifier)) {
           return false;

@@ -18,7 +18,7 @@ export class AuthExpiredInterceptor implements HttpInterceptor {
       tap({
         error: (err: HttpErrorResponse) => {
           // [TODO] filter not unauthorized response
-          if (err.status === 401 && err.url && !err.url.includes('api/account')) {
+          if (err.status === 401 && err.url && !err.url.includes('auth')) {
             console.log("ERROR", err);
             console.log("REQUEST", request);
             this.stateStorageService.storeUrl(this.router.routerState.snapshot.url);

@@ -9,7 +9,6 @@ import { AlertService } from 'app/shared/alert/alert.service';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs/operators';
 import { PostService } from './../nk-post.service';
-import { ChannelUpdateComponent } from "app/entities/nk-channel/update/nk-channel-update.component";
 
 const initPost: IPost = {
   id: null,
@@ -81,9 +80,8 @@ export class PostUpdateComponent {
         id: file.id,
         url: file.url,
       }));
-      this.subscribeToSaveResponse(
-        this.postService.update(post, deletedFiles, newMedias, deletedFiles),
-      );
+
+      this.subscribeToSaveResponse(this.postService.update(post, deletedFiles, newMedias, covers));
     } else {
       this.subscribeToSaveResponse(this.postService.create(post, newMedias, covers));
     }

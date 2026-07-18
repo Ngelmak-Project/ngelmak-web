@@ -1,10 +1,9 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { ApiConfigService } from 'app/core/config/api-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IFile } from 'app/entities/models/nk-file.model';
+import { Observable } from 'rxjs';
 
 export type EntityResponseType = HttpResponse<IFile>;
 export type EntityArrayResponseType = HttpResponse<IFile[]>;
@@ -12,9 +11,7 @@ export type EntityArrayResponseType = HttpResponse<IFile[]>;
 @Injectable({ providedIn: 'root' })
 export class FileService {
   protected http = inject(HttpClient);
-  protected applicationConfigService = inject(ApplicationConfigService);
-
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/files');
+  protected resourceUrl = inject(ApiConfigService).buildApiUrl('api', 'files');
 
   create(file: IFile): Observable<EntityResponseType> {
     return this.http.post<IFile>(this.resourceUrl, file, { observe: 'response' });

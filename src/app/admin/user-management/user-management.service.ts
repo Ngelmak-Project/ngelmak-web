@@ -1,28 +1,25 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { ApiConfigService } from 'app/core/config/api-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { Pagination } from 'app/core/request/request.model';
 import { IPage } from 'app/shared/pagination/pagination.model';
-import { IContactMessage, UserManagementModel } from './user-management.model';
+import { Observable } from 'rxjs';
+import { IContactMessage, IUser } from './user-management.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserManagementService {
   private http = inject(HttpClient);
-  private applicationConfigService = inject(ApplicationConfigService);
-
-  private userResourceUrl = this.applicationConfigService.getEndpointFor('auth/admin/users');
-  private managementResourceUrl =
-    this.applicationConfigService.getEndpointFor('auth/admin/management');
+  private applicationConfigService = inject(ApiConfigService);
+  private userResourceUrl = this.applicationConfigService.buildApiUrl('auth', 'admin/users');
+  private managementResourceUrl = this.applicationConfigService.buildApiUrl('auth', 'admin');
 
   /**
    * Find a user by id.
    * @param id of user to find.
    */
-  find(id: number): Observable<HttpResponse<UserManagementModel>> {
-    return this.http.get<UserManagementModel>(`${this.userResourceUrl}/${id}`, {
+  find(id: number): Observable<HttpResponse<IUser>> {
+    return this.http.get<IUser>(`${this.userResourceUrl}/${id}`, {
       observe: 'response',
     });
   }
@@ -31,9 +28,9 @@ export class UserManagementService {
    * Query for a list of users with pagination and sorting.
    * @param req Pagination and sorting information
    */
-  query(req?: Pagination): Observable<HttpResponse<IPage<UserManagementModel>>> {
+  query(req?: Pagination): Observable<HttpResponse<IPage<IUser>>> {
     const options = createRequestOption(req);
-    return this.http.get<IPage<UserManagementModel>>(this.userResourceUrl, {
+    return this.http.get<IPage<IUser>>(this.userResourceUrl, {
       params: options,
       observe: 'response',
     });
@@ -43,9 +40,9 @@ export class UserManagementService {
    * Search for users whose name, login or email contains the query string, with pagination and sorting.
    * @param req Pagination and sorting information
    */
-  search(req?: Pagination): Observable<HttpResponse<IPage<UserManagementModel>>> {
+  search(req?: Pagination): Observable<HttpResponse<IPage<IUser>>> {
     const options = createRequestOption(req);
-    return this.http.get<IPage<UserManagementModel>>(this.userResourceUrl, {
+    return this.http.get<IPage<IUser>>(this.userResourceUrl, {
       params: options,
       observe: 'response',
     });
@@ -56,8 +53,8 @@ export class UserManagementService {
    * @param id of the user to activate or deactivate
    * @param activated whether the user should be activated or deactivated
    */
-  setActive(id: number, activated: boolean): Observable<HttpResponse<UserManagementModel>> {
-    return this.http.put<UserManagementModel>(
+  setActive(id: number, activated: boolean): Observable<HttpResponse<IUser>> {
+    return this.http.put<IUser>(
       `${this.userResourceUrl}/active`,
       { id, activated },
       {
@@ -75,9 +72,9 @@ export class UserManagementService {
   grantAuthorities(
     id: number,
     authorityNames: string[],
-  ): Observable<HttpResponse<UserManagementModel>> {
-    return this.http.put<UserManagementModel>(
-      `${this.userResourceUrl}/grant-authorities`,
+  ): Observable<HttpResponse<IUser>> {
+    return this.http.put<IUser>(
+      `${this.userResourceUrl}/authorities/grant`,
       { id, authorityNames },
       {
         observe: 'response',
@@ -94,9 +91,9 @@ export class UserManagementService {
   revokeAuthorities(
     id: number,
     authorityNames: string[],
-  ): Observable<HttpResponse<UserManagementModel>> {
-    return this.http.put<UserManagementModel>(
-      `${this.userResourceUrl}/revoke-authorities`,
+  ): Observable<HttpResponse<IUser>> {
+    return this.http.put<IUser>(
+      `${this.userResourceUrl}/authorities/revoke`,
       { id, authorityNames },
       {
         observe: 'response',
@@ -107,10 +104,10 @@ export class UserManagementService {
   /**
    * Block a user.
    */
-  blockUser(id: number): Observable<HttpResponse<UserManagementModel>> {
-    return this.http.put<UserManagementModel>(
-      `${this.userResourceUrl}/block/${id}`,
-      {},
+  blockUser(id: number): Observable<HttpResponse<IUser>> {
+    return this.http.put<IUser>(
+      `${this.userResourceUrl}/block`,
+      { id },
       {
         observe: 'response',
       },
@@ -120,10 +117,10 @@ export class UserManagementService {
   /**
    * Unblock a user.
    */
-  unblockUser(id: number): Observable<HttpResponse<UserManagementModel>> {
-    return this.http.put<UserManagementModel>(
-      `${this.userResourceUrl}/unblock/${id}`,
-      {},
+  unblockUser(id: number): Observable<HttpResponse<IUser>> {
+    return this.http.put<IUser>(
+      `${this.userResourceUrl}/unblock`,
+      { id },
       {
         observe: 'response',
       },
@@ -137,8 +134,8 @@ export class UserManagementService {
     id: number,
     docType: string,
     docIdentification: string,
-  ): Observable<HttpResponse<UserManagementModel>> {
-    return this.http.put<UserManagementModel>(
+  ): Observable<HttpResponse<IUser>> {
+    return this.http.put<IUser>(
       `${this.userResourceUrl}/certification`,
       { id, docType, docIdentification },
       {
@@ -151,8 +148,8 @@ export class UserManagementService {
    * Withdraw certification for a user.
    * @param id of the user for which to withdraw certification
    */
-  certificationWithdrawal(id: number): Observable<HttpResponse<UserManagementModel>> {
-    return this.http.put<UserManagementModel>(
+  certificationWithdrawal(id: number): Observable<HttpResponse<IUser>> {
+    return this.http.put<IUser>(
       `${this.userResourceUrl}/certification/withdrawal/${id}`,
       {},
       { observe: 'response' },
@@ -176,9 +173,9 @@ export class UserManagementService {
    * @param id of the message to close.
    */
   closeContact(id: number): Observable<HttpResponse<IContactMessage>> {
-    return this.http.post<IContactMessage>(
-      `${this.managementResourceUrl}/close`,
-      { id },
+    return this.http.put<IContactMessage>(
+      `${this.managementResourceUrl}/contacts/close/${id}`,
+      {},
       { observe: 'response' },
     );
   }

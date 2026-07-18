@@ -10,6 +10,7 @@ import { UserService } from 'app/user-management/security/user.service';
 export class AuthenticationService {
   private stateStorage = inject(StateStorageService);
   private userService = inject(UserService);
+  private alertServie = inject(AlertService);
 
   /**
    * Holds the current authenticated user.
@@ -52,10 +53,10 @@ export class AuthenticationService {
       next: ({ body }) => {
         this._auth.set(body);
         this.navigateToStoredUrl();
-        if (body.activated === false) {
-          inject(AlertService).addAlert({
+        if (body.isActivated === false) {
+          this.alertServie.addAlert({
             type: 'warning',
-            translationKey: 'ngelmakTranslation.auth.signIn.alerts.accountNotActivated',
+            translationKey: 'ngelmakTranslation.auth.signIn.alerts.userNotActivated',
             message:
               "Votre compte n'est pas encore activé.\nVeuillez vérifier votre boîte mail pour le lien d'activation.",
             timeout: 10000,

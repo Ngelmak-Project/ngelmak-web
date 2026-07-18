@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { ApiConfigService } from 'app/core/config/api-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ITicket } from 'app/entities/models/nk-ticket.model';
 import { IPage } from 'app/shared/pagination/pagination.model';
@@ -12,9 +12,7 @@ export type EntityArrayResponseType = HttpResponse<ITicket[]>;
 @Injectable({ providedIn: 'root' })
 export class TicketService {
   protected http = inject(HttpClient);
-  protected applicationConfigService = inject(ApplicationConfigService);
-
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('core/tickets');
+  protected resourceUrl = inject(ApiConfigService).buildApiUrl('core', 'tickets');
 
   /**
    * Method to create a new ticket.

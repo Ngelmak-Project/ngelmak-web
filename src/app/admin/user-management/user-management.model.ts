@@ -1,23 +1,35 @@
-import { CertificationStatus } from "app/core/auth/auth.model";
+import { CertificationStatus } from 'app/core/auth/auth.model';
 
-export interface UserManagementModel {
+export interface IUser {
   id: number;
-  login?: string;
+  login: string;
+  email: string;
   firstName?: string;
   lastName?: string;
-  email?: string;
-  activated?: boolean;
-  blocked?: boolean;
-  imageUrl?: string;
+  activated: boolean;
+  blocked: boolean;
   langKey?: string;
-  darkModeEnabled?: boolean;
-  createdDate?: Date;
-  lastModifiedBy?: string;
-  certificationStatus?: CertificationStatus;
-  lastModifiedDate?: Date;
-  authorities?: string[];
+  imageUrl?: string;
+  lastModifiedDate?: string; // ISO 8601 format
+  createdDate?: string;
+  deletedDate?: string | null;
+  certifiedDate?: string | null;
+  certificationStatus: CertificationStatus;
+  docType?: DocType;
+  timezone?: string;
+  darkModeEnabled: boolean;
+  authorities: Authority[];
 }
 
+export interface Authority {
+  name: string;
+}
+
+export enum DocType {
+  PASSPORT = 'PASSPORT',
+  ID_CARD = 'ID_CARD',
+  DRIVER_LICENSE = 'DRIVER_LICENSE',
+}
 
 /**
  * The ContactStatus enumeration.

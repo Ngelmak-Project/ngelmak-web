@@ -92,7 +92,7 @@ export class SecurityPasswordComponent {
         },
         error: (err: HttpErrorResponse) => {
           const apiError = err.error as ApiError;
-          if (apiError.errorKey === 'invalidPassword') {
+          if (apiError?.errorKey === 'invalidPassword') {
             this.alertService.addAlert({
               type: 'error',
               translationKey:

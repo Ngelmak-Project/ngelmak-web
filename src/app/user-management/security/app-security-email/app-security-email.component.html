@@ -19,14 +19,14 @@
     </p>
 
     @if (!editEmail()) {
-      <div class="flex items-center flex-wrap gap-2">
+      <div class="flex items-center justify-between flex-wrap gap-2">
         @if (user().email) {
           <div class="flex items-center gap-2">
             <p class="text-lg text-gray-900 dark:text-white">
               {{ user().email }}
             </p>
 
-            @if (user().activated) {
+            @if (user().isActivated) {
               <span
                 class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 rounded-full"
               >

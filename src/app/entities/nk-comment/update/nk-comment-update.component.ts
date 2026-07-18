@@ -8,6 +8,7 @@ import { AlertService } from 'app/shared/alert/alert.service';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { CommentService } from '../nk-comment.service';
+import { AttachmentType } from 'app/entities/enumerations/attachment-type.model';
 
 const initComment: IComment = {
   id: null,
@@ -33,11 +34,13 @@ export class CommentUpdateComponent implements OnInit {
   alertService = inject(AlertService);
 
   isSaving = signal(false);
-  commentModel = signal<IComment | ICommentDTO>(initComment);
+  protected deletedFile: IFile = null;
+
+  commentModel = signal<IComment>(initComment);
 
   commentForm = form(this.commentModel, (p) => {
     required(p.content, { message: 'nkTranslation.entities.comment.update.content.required' });
-    maxLength(p.content, 1000, {
+    maxLength(p.content, 5000, {
       message: 'nkTranslation.entities.comment.update.content.maxLength',
     });
   });
@@ -58,11 +61,12 @@ export class CommentUpdateComponent implements OnInit {
 
     // Trim content to remove leading and trailing whitespace.
     comment.content = comment.content.trim();
+    const newMedia = comment.file?.data || null;
     comment.file = null; // [TODO] handle file selection
     if (comment.id) {
-      this.subscribeToSaveResponse(this.commentService.update(comment, null));
+      this.subscribeToSaveResponse(this.commentService.update(comment, newMedia, this.deletedFile));
     } else {
-      this.subscribeToSaveResponse(this.commentService.create(comment, null));
+      this.subscribeToSaveResponse(this.commentService.create(comment, newMedia));
     }
   }
 
@@ -85,7 +89,7 @@ export class CommentUpdateComponent implements OnInit {
         this.commentForm().reset({ ...initComment, file: null }); // reset post values.
         this.alertService.addAlert({
           type: 'success',
-          translationKey: this.comment().id
+          translationKey: this.comment()?.id
             ? 'ngelmakTranslation.entities.comment.update.alerts.created'
             : 'ngelmakTranslation.entities.comment.update.alerts.updated',
           message: 'Commentaire sauvegardé.',
@@ -100,23 +104,75 @@ export class CommentUpdateComponent implements OnInit {
     });
   }
 
-  handleFile(event) {
+  isImage(file: IFile): boolean {
+    return file.type.startsWith('image/');
+  }
+
+  isVideo(file: IFile): boolean {
+    return file.type.startsWith('video/');
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
+
+    const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const index = Math.floor(Math.log(bytes) / Math.log(1024));
+    const size = bytes / Math.pow(1024, index);
+
+    return `${size.toFixed(2)} ${units[index]}`;
+  }
+
+  extention(file: IFile): string {
+    return file.type.split('/').pop()?.toUpperCase();
+  }
+
+  /**
+   * Handles a file selected by the user.
+   * Creates an IFile object, generates a preview URL for images,
+   * warns the user if the file is a video, and stores the file in the post model.
+   */
+  handleFile(event): void {
+    if (!this.withAttach()) return;
+
+    // Extract the first selected file
     const obj: File = event.target.files[0];
+
     if (obj) {
-      if (obj.type.startsWith('image/')) {
-        const file: IFile = { filename: obj.name, size: obj.size, type: obj.type, data: obj };
+      // Build the internal file representation
+      const file: IFile = {
+        filename: obj.name,
+        size: obj.size,
+        type: obj.type,
+        data: obj,
+      };
+
+      if (this.isImage(file)) {
+        // Generate a preview URL for images
         file.url = URL.createObjectURL(obj);
-      } else {
+      } else if (this.isVideo(file)) {
+        // Notify user that videos are not supported yet
         this.alertService.addAlert({
-          type: 'warning',
+          type: 'info',
           translationKey: 'ngelmakTranslation.entities.comment.update.alerts.videoNotSupported',
-          message: 'Seulement les images sont prises en charge.',
+          message: 'Les médias vidéos ne sont pas prise en compte pour les commentaires.',
         });
+      } else {
+        // Nothing need to be done for other media files.
       }
+
+      // Add the file to the post model
+      this.commentModel.update((c) => ({ ...c, file: file }));
     }
   }
 
-  remove() {
-    this.commentModel().file = null;
+  remove(): void {
+    const file = this.commentModel().file;
+    if (file.type == AttachmentType.IMAGE) {
+      URL.revokeObjectURL(file.url);
+    }
+    this.commentModel.update((c) => ({ ...c, file: null }));
+    if (file.id) {
+      this.deletedFile = file;
+    }
   }
 }

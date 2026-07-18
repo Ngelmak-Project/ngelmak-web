@@ -1,17 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { ApiConfigService } from 'app/core/config/api-config.service';
 import { Observable } from 'rxjs';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-
 @Injectable({ providedIn: 'root' })
-export class ResetPasswordService {
+export class PasswordResetService {
   private http = inject(HttpClient);
-  private applicationConfigService = inject(ApplicationConfigService);
+  private resourceUrl = inject(ApiConfigService).buildApiUrl('auth', 'password-reset/finish');
 
   updatePasswor(key: string, newPassword: string): Observable<void> {
     return this.http.post<void>(
-      this.applicationConfigService.getEndpointFor('auth/public/auth/reset-password/finish'),
+      this.resourceUrl,
       { key, newPassword },
     );
   }

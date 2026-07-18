@@ -122,6 +122,7 @@
           "placeholder": "Choose a username",
           "loginAlreadyUsed": "Username already taken.",
           "required": "Username is required.",
+          "noSpaces": "The username cannot contain spaces.",
           "minLength": "The username must be at least 4 characters long.",
           "maxLength": "The username cannot exceed 50 characters.",
           "pattern": "The username can only contain letters, numbers, and hyphens."
@@ -228,7 +229,7 @@
         },
         "privacy": "For your security, we never confirm whether an email address is registered."
       },
-      "resetPassword": {
+      "PasswordReset": {
         "pageTitle": "Password Change",
         "brandTitle": "Ngelmak",
         "brandSubtitle": "Set your new password.",
@@ -274,7 +275,9 @@
             "label": "Channel name",
             "placeholder": "Enter your channel name",
             "required": "Channel name is required.",
-            "maxLength": "The maximum number of characters is 100."
+            "minLength": "The minimum number of characters is 3.",
+            "maxLength": "The maximum number of characters is 100.",
+            "pattern": "The channel name can only contain letters, numbers, hyphens, and spaces."
           },
           "description": {
             "label": "Description",
@@ -285,6 +288,7 @@
           "save": "Save",
           "alerts": {
             "success": "Channel successfully created.",
+            "channelAlreadyExists": "You already have a channel. Please refresh the page or log in again.",
             "error": "An error occurred while creating the channel.\nPlease try again."
           }
         },
@@ -315,7 +319,9 @@
             "label": "Channel name",
             "placeholder": "Enter your channel name",
             "required": "Channel name is required.",
-            "maxLength": "The maximum number of characters is 100."
+            "minLength": "The minimum number of characters is 3.",
+            "maxLength": "The maximum number of characters is 100.",
+            "pattern": "The channel name can only contain letters, numbers, hyphens, and spaces."
           },
           "save": "Save",
           "alerts": {

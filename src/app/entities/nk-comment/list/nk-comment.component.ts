@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
@@ -20,6 +20,7 @@ import { CommentItemComponent } from './item/nk-comment-item.component';
 })
 export class CommentComponent implements OnInit {
   post = input.required<IPostDTO>();
+  oncomment = output<ICommentDTO>();
   postSig = signal<IPostDTO>(null);
 
   protected commentService = inject(CommentService);
@@ -96,5 +97,7 @@ export class CommentComponent implements OnInit {
     this.postSig.update((p) => ({ ...p, commentCount: p.commentCount + 1 }));
     // add the new comment to the beginning of the current list
     this.comments.update((list) => [newComment, ...list]);
+
+    this.oncomment.emit(newComment);
   }
 }

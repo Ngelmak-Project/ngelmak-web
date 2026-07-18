@@ -3,9 +3,9 @@ import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { StateStorageService } from './state-storage.service';
 import { SignInModel } from 'app/authentication/sign-in/sign-in.model';
+import { ApiConfigService } from 'app/core/config/api-config.service';
+import { StateStorageService } from './state-storage.service';
 
 type JwtToken = {
   id_token: string;
@@ -15,7 +15,7 @@ type JwtToken = {
 export class AuthServerProvider {
   private http = inject(HttpClient);
   private storage = inject(StateStorageService);
-  private config = inject(ApplicationConfigService);
+  private resourceUrl = inject(ApiConfigService).buildApiUrl('auth', 'login');
 
   /**
    * Returns the stored JWT token or an empty string if none exists.
@@ -29,14 +29,12 @@ export class AuthServerProvider {
    * Stores the JWT token on success.
    */
   signIn(credentials: SignInModel): Observable<void> {
-    return this.http
-      .post<JwtToken>(this.config.getEndpointFor('auth/public/auth/authenticate'), credentials)
-      .pipe(
-        tap(({ id_token }) =>
-          this.storage.storeAuthenticationToken(id_token, credentials.rememberMe),
-        ),
-        map(() => void 0),
-      );
+    return this.http.post<JwtToken>(this.resourceUrl, credentials).pipe(
+      tap(({ id_token }) =>
+        this.storage.storeAuthenticationToken(id_token, credentials.rememberMe)
+      ),
+      map(() => void 0),
+    );
   }
 
   /**
@@ -44,7 +42,7 @@ export class AuthServerProvider {
    * Returns an observable for guard compatibility.
    */
   signOut(): Observable<void> {
-    this.storage.clearAuthenticationToken();
+    this.storage.clearAll();
     return of(void 0);
   }
 }

@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { email, Field, form, maxLength, required } from '@angular/forms/signals';
+import { ApiConfigService } from 'app/core/config/api-config.service';
 import { AlertService } from 'app/shared/alert/alert.service';
 import SharedModule from 'app/shared/shared.module';
 import { UserService } from 'app/user-management/security/user.service';
@@ -23,13 +25,19 @@ export class ContactFormComponent {
   userService = inject(UserService);
   contactModel = signal(initContactModel);
   alertService = inject(AlertService);
+  private http = inject(HttpClient);
+  private resourceUrl = inject(ApiConfigService).buildApiUrl('auth', 'contact');
 
   contactForm = form(this.contactModel, (p) => {
     email(p.email, { message: 'ngelmakTranslation.pages.contact.form.email.invalid' });
     required(p.subject);
-    maxLength(p.subject, 255, { message: 'ngelmakTranslation.pages.contact.form.subject.maxLength' });
+    maxLength(p.subject, 255, {
+      message: 'ngelmakTranslation.pages.contact.form.subject.maxLength',
+    });
     required(p.message, { message: 'ngelmakTranslation.pages.contact.form.message.required' });
-    maxLength(p.message, 1000, { message: 'ngelmakTranslation.pages.contact.form.message.maxLength' });
+    maxLength(p.message, 1000, {
+      message: 'ngelmakTranslation.pages.contact.form.message.maxLength',
+    });
   });
 
   isSubmitting = signal(false);
@@ -37,8 +45,16 @@ export class ContactFormComponent {
   submit(): void {
     this.isSubmitting.set(true);
     const { name, email, subject, message } = this.contactModel();
-    this.userService
-      .contactUs(name, email, subject, message)
+    this.userService;
+    /**
+     * Contact us form submission, allowing users to send messages to the support team or administrators.
+     * @param name of the user sending the message.
+     * @param email of the user sending the message.
+     * @param subject of the contact message.
+     * @param message content of the contact message.
+     */
+    this.http
+      .post(this.resourceUrl, { name, email, subject, message })
       .pipe(finalize(() => this.isSubmitting.set(false)))
       .subscribe({
         next: () => {

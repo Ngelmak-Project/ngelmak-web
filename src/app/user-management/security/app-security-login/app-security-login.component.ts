@@ -5,9 +5,9 @@ import { Field, form } from '@angular/forms/signals';
 import { ApiError } from 'app/core/auth/auth.model';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { AlertService } from 'app/shared/alert/alert.service';
-import { finalize, share } from 'rxjs';
-import { UserService } from '../user.service';
 import SharedModule from 'app/shared/shared.module';
+import { finalize } from 'rxjs';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-security-login',
@@ -47,7 +47,7 @@ export class SecurityLoginComponent {
         },
         error: (err: HttpErrorResponse) => {
           const apiError = err.error as ApiError;
-          if (apiError.errorKey === 'loginExists') {
+          if (apiError?.errorKey === 'loginExists') {
             this.alertService.addAlert({
               type: 'error',
               message: "L'adresse e-mail est déjà utilisée !.",

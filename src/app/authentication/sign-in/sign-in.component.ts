@@ -67,7 +67,7 @@ export class SignInComponent implements OnInit {
         },
         error: (err: HttpErrorResponse) => {
           const apiError = err.error as ApiError;
-          if (apiError.errorKey === 'userNotActivated') {
+          if (apiError?.errorKey === 'userNotActivated') {
             this.errorUserNotActivated.set(true);
           } else {
             this.alertService.addAlert({

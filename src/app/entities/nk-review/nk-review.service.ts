@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { ApiConfigService } from 'app/core/config/api-config.service';
 import { IReview } from 'app/entities/models/nk-review.model';
 import { Observable } from 'rxjs';
 
@@ -52,8 +52,7 @@ export class ReviewService {
   // API
 
   protected http = inject(HttpClient);
-  protected applicationConfigService = inject(ApplicationConfigService);
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('core/reviews');
+  protected resourceUrl = inject(ApiConfigService).buildApiUrl('core', 'reviews');
 
   create(review: IReview): Observable<EntityResponseType> {
     return this.http.post<IReview>(this.resourceUrl, review, { observe: 'response' });

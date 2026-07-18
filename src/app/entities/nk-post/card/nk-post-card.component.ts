@@ -1,6 +1,7 @@
 import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ICommentDTO } from 'app/entities/models/nk-comment.model';
 import { IFile } from 'app/entities/models/nk-file.model';
 import { IPostDTO } from 'app/entities/models/nk-post.model';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
@@ -64,7 +65,7 @@ export class PostCardComponent {
     if (!post || !post.files) {
       return [];
     }
-    return post.files.map(f => f.url);
+    return post.files.map((f) => f.url);
   });
 
   /**
@@ -171,5 +172,9 @@ export class PostCardComponent {
         }
       },
     });
+  }
+
+  onComment(newComment: ICommentDTO): void {
+    this.postSig.update((p) => ({ ...p, commentCount: p.commentCount + 1 }));
   }
 }

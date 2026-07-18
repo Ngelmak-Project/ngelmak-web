@@ -1,23 +1,22 @@
-import { EmailUpdateDTO, LoginUpdateDTO, PasswordChangeDTO, UserUpdateDTO } from './user.model';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-
 import { Authentication } from 'app/core/auth/auth.model';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { ApiConfigService } from 'app/core/config/api-config.service';
+import { Observable } from 'rxjs';
+import { EmailUpdateDTO, LoginUpdateDTO, PasswordChangeDTO, UserUpdateDTO } from './user.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
   protected http = inject(HttpClient);
-  protected applicationConfigService = inject(ApplicationConfigService);
+  protected applicationConfigService = inject(ApiConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('auth/user');
+  protected resourceUrl = this.applicationConfigService.buildApiUrl('auth', 'me');
 
   /**
    * Get user profile information of the connected user.
    */
   profile(): Observable<HttpResponse<Authentication>> {
-    return this.http.get<Authentication>(`${this.resourceUrl}/profile`, {
+    return this.http.get<Authentication>(this.resourceUrl, {
       observe: 'response',
     });
   }
@@ -29,7 +28,7 @@ export class UserService {
    * @returns
    */
   update(userUpdate: UserUpdateDTO): Observable<any> {
-    return this.http.put<Authentication>(`${this.resourceUrl}/update`, userUpdate, {
+    return this.http.put<Authentication>(this.resourceUrl, userUpdate, {
       observe: 'response',
     });
   }
@@ -41,13 +40,9 @@ export class UserService {
    * @returns
    */
   changePassword(passwordChangeDTO: PasswordChangeDTO): Observable<any> {
-    return this.http.post<Authentication>(
-      `${this.resourceUrl}/change-password`,
-      passwordChangeDTO,
-      {
-        observe: 'response',
-      },
-    );
+    return this.http.post<Authentication>(`${this.resourceUrl}/password`, passwordChangeDTO, {
+      observe: 'response',
+    });
   }
 
   /**
@@ -69,7 +64,7 @@ export class UserService {
    * @returns
    */
   updateLogin(loginUpdateDTO: LoginUpdateDTO): Observable<any> {
-    return this.http.post<Authentication>(`${this.resourceUrl}/update-login`, loginUpdateDTO, {
+    return this.http.post<Authentication>(`${this.resourceUrl}/login`, loginUpdateDTO, {
       observe: 'response',
     });
   }
@@ -78,7 +73,9 @@ export class UserService {
    * Delete connected user channel.
    */
   delete(): Observable<any> {
-    return this.http.delete(`${this.resourceUrl}/delete`);
+    return this.http.delete(this.resourceUrl, {
+      observe: 'response',
+    });
   }
 
   /**
@@ -90,7 +87,7 @@ export class UserService {
   uploadImage(file: File): Observable<any> {
     const data: FormData = new FormData();
     data.append('file', file);
-    return this.http.put<Authentication>(`${this.resourceUrl}/upload-avatar`, data, {
+    return this.http.put<Authentication>(`${this.resourceUrl}/avatar`, data, {
       observe: 'response',
     });
   }
@@ -102,7 +99,7 @@ export class UserService {
    */
   requestAuthority(authorityName: string, motivation: string): Observable<any> {
     return this.http.post(
-      `${this.resourceUrl}/authorities/request`,
+      `${this.resourceUrl}/authorities`,
       { authorityName, motivation },
       { observe: 'response' },
     );
@@ -112,20 +109,6 @@ export class UserService {
    * Retrieves a list of authorities/roles that the connected user has requested but have not yet been granted or denied.
    */
   findRequestedAuthorities(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.resourceUrl}/authorities/requests`);
-  }
-
-  /**
-   * Contact us form submission, allowing users to send messages to the support team or administrators.
-   * @param name of the user sending the message.
-   * @param email of the user sending the message.
-   * @param subject of the contact message.
-   * @param message content of the contact message.
-   */
-  contactUs(name: string, email: string, subject: string, message: string): Observable<void> {
-    return this.http.post<void>(
-      `${this.applicationConfigService.getEndpointFor('auth/public')}/support/contact`,
-      { name, email, subject, message },
-    );
+    return this.http.get<any[]>(`${this.resourceUrl}/authorities`);
   }
 }

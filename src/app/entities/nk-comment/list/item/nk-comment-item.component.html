@@ -1,5 +1,5 @@
 <article
-  class="group flex flex-col gap-2 md:gap-4 py-4 px-4 rounded-xl bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 shadow-md hover:shadow-lg transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600"
+  class="group flex flex-col gap-2 md:gap-4 py-4 px-4 rounded-xl bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border-transparent border-gray-200 dark:border-gray-700 shadow-md hover:shadow-lg transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600"
   [ngClass]="{
     'ml-3 md:ml-6': level() === 1,
     'ml-6 md:ml-12': level() >= 2,
@@ -325,15 +325,17 @@
         </span>
         <span class="text-gray-400 dark:text-gray-600 mx-1">•</span>
       }
-      <span
+      <!-- <span
         class="text-gray-800 dark:text-gray-100 whitespace-pre-line leading-relaxed text-base font-medium [&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:hover:underline"
         [innerHTML]="commentSig().content"
-      ></span>
+      ></span> -->
+      <app-text-collapse [text]="commentSig().content" />
+      <app-image-carousel [urls]="url()" />
     </div>
   }
 
   <!-- FOOTER ACTIONS -->
-  <footer class="flex flex-wrap items-center gap-3 pt-2">
+  <footer class="flex flex-wrap items-center gap-3">
     <button
       *hasChannel
       translate="ngelmakTranslation.entities.comment.list.item.reply"
@@ -387,10 +389,7 @@
 
   <!-- REPORT DIALOG -->
   @if (isSignalComment()) {
-    <app-ticket-dialog
-      [comment]="commentSig()"
-      (onclose)="isSignalComment.set(false)"
-    ></app-ticket-dialog>
+    <app-ticket-dialog [comment]="commentSig()" (onclose)="isSignalComment.set(false)" />
   }
 
   <!-- REPLY FORM -->
@@ -400,7 +399,7 @@
       [replyTo]="commentSig()"
       (oncomment)="handleReplyOrUpdate($event)"
       (oncancel)="handleCancelReplyOrUpdate()"
-    ></app-comment-update>
+    />
   }
 
   <!-- REPLIES LIST -->
@@ -412,7 +411,7 @@
           [replyTo]="commentSig()"
           [level]="level() + 1"
           (ondelete)="onDeletedReply($event)"
-        ></app-comment-item>
+        />
       }
     </div>
   }

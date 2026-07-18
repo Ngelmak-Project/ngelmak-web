@@ -11,7 +11,9 @@ import { DurationPipe } from 'app/shared/date';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import { HasChannelDirective } from 'app/shared/directives/has-channel';
 import { ShowForChannelDirective } from 'app/shared/directives/show-for-channel';
+import { ImageCarouselComponent } from 'app/shared/image-carousel/image-carousel.component';
 import SharedModule from 'app/shared/shared.module';
+import { TextCollapseComponent } from 'app/shared/text-collapse/text-collapse.component';
 import { finalize } from 'rxjs';
 
 @Component({
@@ -28,6 +30,8 @@ import { finalize } from 'rxjs';
     TicketDialogComponent,
     ShowForChannelDirective,
     HasChannelDirective,
+    ImageCarouselComponent,
+    TextCollapseComponent,
   ],
 })
 export class CommentItemComponent {
@@ -154,5 +158,10 @@ export class CommentItemComponent {
     this.commentSig.update((c) => ({ ...c, replyCount: c.replyCount - 1 }));
     // Update the reactive replies signal with the new list
     this.replies.update((list) => list.filter((c) => c.id !== deleteComment.id));
+  }
+
+  url(): string[] {
+    if (this.commentSig().file) return [this.commentSig().file.url];
+    return [];
   }
 }

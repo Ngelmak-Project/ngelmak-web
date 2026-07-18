@@ -4,7 +4,7 @@ import { SignInComponent } from 'app/authentication/sign-in/sign-in.component';
 import { SignUpComponent } from 'app/authentication/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
 import { ResendActivationComponent } from './authentication/resend-activation/resend-activation.component';
-import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
+import { PasswordResetComponent } from './authentication/password-reset/password-reset.component';
 
 export const routes: Routes = [
   {
@@ -28,14 +28,14 @@ export const routes: Routes = [
     title: 'ngelmakTranslation.auth.resendActivation.pageTitle',
   },
   {
-    path: 'reset-password',
+    path: 'password-reset',
     component: ForgotPasswordComponent,
     title: 'ngelmakTranslation.auth.forgotPassword.pageTitle',
   },
   {
-    path: 'reset-password-finish',
-    component: ResetPasswordComponent,
-    title: 'ngelmakTranslation.auth.resetPassword.pageTitle',
+    path: 'password-reset-finish',
+    component: PasswordResetComponent,
+    title: 'ngelmakTranslation.auth.PasswordReset.pageTitle',
   },
   {
     path: '',

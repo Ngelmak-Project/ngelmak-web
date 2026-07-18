@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { ApiConfigService } from 'app/core/config/api-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IFile } from 'app/entities/models/nk-file.model';
 import { IPost, IPostDTO, ITrending } from 'app/entities/models/nk-post.model';
@@ -13,9 +13,7 @@ export type EntityArrayResponseType = HttpResponse<IPostDTO[]>;
 @Injectable({ providedIn: 'root' })
 export class PostService {
   protected http = inject(HttpClient);
-  protected applicationConfigService = inject(ApplicationConfigService);
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('core/posts');
-  protected publicResourceUrl = this.applicationConfigService.getEndpointFor('core/r/posts');
+  protected resourceUrl = inject(ApiConfigService).buildApiUrl('core', 'posts');
 
   /**
    * Creates a new post with the given data, including handling file attachments for medias and covers.
@@ -29,12 +27,12 @@ export class PostService {
     data.append('post', new Blob([JSON.stringify(post)], { type: 'application/json' }));
 
     medias.forEach((m) => {
-      data.append('_medias', m.data);
+      data.append('medias', m.data);
     });
 
-    const emptyFile = new File([''], 'empty', { type: 'application/octet-stream' });
+    const emptyFile = new File([''], 'empty.png', { type: 'image/png' });
     covers.forEach((c) => {
-      data.append('_covers', c?.data ?? emptyFile);
+      data.append('covers', c?.data ?? emptyFile);
     });
 
     return this.http.post<IPostDTO>(this.resourceUrl, data, {
@@ -42,6 +40,14 @@ export class PostService {
     });
   }
 
+  /**
+   * Updates an existing post with the given data, including handling file attachments for medias and covers.
+   * @param post
+   * @param deletedFiles
+   * @param medias
+   * @param covers
+   * @returns
+   */
   update(
     post: IPost,
     deletedFiles: IFile[],
@@ -51,18 +57,21 @@ export class PostService {
     const data: FormData = new FormData();
     post.files = [];
     data.append('post', new Blob([JSON.stringify(post)], { type: 'application/json' }));
+
     data.append(
       'deletedFiles',
       new Blob([JSON.stringify(deletedFiles)], { type: 'application/json' }),
     );
-    data.append(
-      'medias',
-      new Blob([JSON.stringify(medias.map((e) => e.data))], { type: 'application/json' }),
-    );
-    data.append(
-      'covers',
-      new Blob([JSON.stringify(covers.map((e) => e.data))], { type: 'application/json' }),
-    );
+
+    medias.forEach((m) => {
+      data.append('medias', m.data);
+    });
+
+    const emptyFile = new File([''], 'empty.png', { type: 'image/png' });
+    covers.forEach((c) => {
+      data.append('covers', c?.data ?? emptyFile);
+    });
+
     return this.http.put<IPostDTO>(this.resourceUrl, data, {
       observe: 'response',
     });
@@ -75,14 +84,14 @@ export class PostService {
   }
 
   find(id: number): Observable<EntityResponseType> {
-    return this.http.get<IPostDTO>(`${this.publicResourceUrl}/${id}`, {
+    return this.http.get<IPostDTO>(`${this.resourceUrl}/${id}`, {
       observe: 'response',
     });
   }
 
   findByChannel(id: number, req?: any): Observable<HttpResponse<IPage<IPostDTO>>> {
     const options = createRequestOption(req);
-    return this.http.get<IPage<IPostDTO>>(`${this.publicResourceUrl}/channel/${id}`, {
+    return this.http.get<IPage<IPostDTO>>(`${this.resourceUrl}/channel/${id}`, {
       params: options,
       observe: 'response',
     });
@@ -98,7 +107,7 @@ export class PostService {
 
   search(req?: any): Observable<HttpResponse<IPage<IPost>>> {
     const options = createRequestOption(req);
-    return this.http.get<IPage<IPost>>(`${this.publicResourceUrl}/search`, {
+    return this.http.get<IPage<IPost>>(`${this.resourceUrl}/search`, {
       params: options,
       observe: 'response',
     });
@@ -106,7 +115,7 @@ export class PostService {
 
   // query(req?: any): Observable<HttpResponse<IPage<IPost>>> {
   //   const options = createRequestOption(req);
-  //   return this.http.get<IPage<IPost>>(this.publicResourceUrl, {
+  //   return this.http.get<IPage<IPost>>(this.resourceUrl, {
   //     params: options,
   //     observe: 'response',
   //   });
@@ -114,14 +123,14 @@ export class PostService {
 
   feeds(req?: any): Observable<HttpResponse<IPage<IPost>>> {
     const options = createRequestOption(req);
-    return this.http.get<IPage<IPost>>(`${this.publicResourceUrl}/feeds`, {
+    return this.http.get<IPage<IPost>>(`${this.resourceUrl}/feeds`, {
       params: options,
       observe: 'response',
     });
   }
 
   trending(): Observable<HttpResponse<ITrending>> {
-    return this.http.get<ITrending>(`${this.publicResourceUrl}/trending`, {
+    return this.http.get<ITrending>(`${this.resourceUrl}/trending`, {
       observe: 'response',
     });
   }
