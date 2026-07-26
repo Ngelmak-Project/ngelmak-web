@@ -359,6 +359,8 @@
               "hide": "Hide"
             }
           },
+          "deleteConfirm.title": "Delete confirmation",
+          "deleteConfirm.message": "Are you sure you want to delete this post?",
           "alerts": {
             "error": "An error occurred while deleting."
           }
@@ -442,8 +444,8 @@
                 "privacy": "Your identity will remain confidential."
               }
             },
-            "deleteConfirmTitle": "Delete confirmation",
-            "deleteConfirmMessage": "Are you sure you want to delete this comment?"
+            "deleteConfirm.title": "Delete confirmation",
+            "deleteConfirm.message": "Are you sure you want to delete this comment?"
           },
           "alerts": {
             "deleteSuccess": "Comment deleted.",
@@ -498,8 +500,8 @@
             "reply": "Reply",
             "update": "Edit",
             "delete": "Delete",
-            "deleteConfirmTitle": "Delete a message",
-            "deleteConfirmMessage": "Do you want to delete your message?"
+            "deleteConfirm.title": "Delete a message",
+            "deleteConfirm.message": "Do you want to delete your message?"
           },
           "alerts": {
             "deleteSuccess": "Message deleted.",
@@ -661,7 +663,14 @@
           "channelComment": "My comments",
           "subscriptions": "My subscriptions",
           "reports": "Reports about me"
-        }
+        },
+        "connections.title": "My Connections",
+        "connections.following": "Following",
+        "connections.followers": "Followers",
+        "connections.follow": "Follow",
+        "connections.posts": "Post(s)",
+        "connections.emptyFollowing": "You're not following anyone yet",
+        "connections.emptyFollowers": "No followers yet"
       },
       "security": {
         "profile": {
@@ -794,6 +803,12 @@
         "format": {
           "medium": "D MMM YYYY HH:mm",
           "short": "D MMM HH:mm"
+        }
+      },
+      "confirmDialog": {
+        "actions": {
+          "confirm": "Confirm",
+          "cancel": "Cancel"
         }
       },
       "trending": {

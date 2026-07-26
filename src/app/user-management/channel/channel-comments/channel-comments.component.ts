@@ -138,6 +138,10 @@ export class ChannelCommentsComponent {
     });
   }
 
+  onDeleted(deleteComment: ICommentDTO) {
+    this.comments.update((list) => list.filter((c) => c.id !== deleteComment.id));
+  }
+
   search(query: string): void {
     this.handleNavigation(1, query);
   }

@@ -18,6 +18,12 @@ PREFIX = "ngelmakTranslation."
 # Regex: match keys starting with ngelmakTranslation.
 KEY_PATTERN = rf"{PREFIX}[A-Za-z0-9_.-]+"
 
+# Keys to exclude from validation (dynamically constructed keys, etc.)
+EXCEPTION_KEYS = {
+    "ngelmakTranslation.shared.date.duration.short.",
+    "ngelmakTranslation.shared.date.duration.units.",
+}
+
 def extract_used_keys():
     keys = set()
 
@@ -32,6 +38,13 @@ def extract_used_keys():
                         keys.update(matches)
 
     return sorted(keys)
+
+def is_exception_key(key):
+    """Check if a key matches any exception pattern."""
+    for exception in EXCEPTION_KEYS:
+        if key.startswith(exception.rstrip(".")):
+            return True
+    return False
 
 def load_translations():
     translations = {}
@@ -60,7 +73,7 @@ def main():
         available = set(flatten_json(data))
 
         for key in used_keys:
-            if key not in available:
+            if key not in available and not is_exception_key(key):
                 missing[lang].append(key)
 
     has_errors = False

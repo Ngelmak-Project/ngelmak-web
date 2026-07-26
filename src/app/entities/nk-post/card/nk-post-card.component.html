@@ -1,5 +1,5 @@
 <article
-  class="group flex flex-col py-4 px-4 space-y-2 rounded-2xl bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-2xl transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600"
+  class="group flex flex-col py-4 px-4 space-y-2 rounded-none md:rounded-xl lg:rounded-2xl bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 md:border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-2xl transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600"
 >
   <!-- HEADER -->
   <header class="flex items-start justify-between gap-4">
@@ -451,8 +451,8 @@
   @if (confirmDeleteOpen()) {
     <app-confirm-dialog
       variant="danger"
-      title="Confirmation de suppression"
-      message="Êtes-vous sûr de vouloir supprimer votre publication ?"
+      title="ngelmakTranslation.entities.post.card.deleteConfirm.title"
+      message="ngelmakTranslation.entities.post.card.deleteConfirm.message"
       (confirm)="handleDeleteConfirm($event)"
     />
   }

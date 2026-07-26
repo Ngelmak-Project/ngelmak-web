@@ -362,6 +362,8 @@
               "hide": "Masquer"
             }
           },
+          "deleteConfirm.title": "Confirmation de suppression",
+          "deleteConfirm.message": "Êtes-vous sûr de vouloir supprimer cette publication ?",
           "alerts": {
             "error": "Une error s'est produit lors de la suppression."
           }
@@ -445,8 +447,8 @@
                 "privacy": "Votre identité restera confidentielle."
               }
             },
-            "deleteConfirmTitle": "Confirmation de suppression",
-            "deleteConfirmMessage": "Êtes-vous sûr de vouloir supprimer ce commentaire ?"
+            "deleteConfirm.title": "Confirmation de suppression",
+            "deleteConfirm.message": "Êtes-vous sûr de vouloir supprimer ce commentaire ?"
           },
           "alerts": {
             "deleteSuccess": "Commentaire supprimé.",
@@ -501,8 +503,8 @@
             "reply": "Répondre",
             "update": "Modifier",
             "delete": "Supprimer",
-            "deleteConfirmTitle": "Suppression d'un message",
-            "deleteConfirmMessage": "Voulez-vous supprimer votre message ?"
+            "deleteConfirm.title": "Suppression d'un message",
+            "deleteConfirm.message": "Voulez-vous supprimer votre message ?"
           },
           "alerts": {
             "deleteSuccess": "Message supprimé.",
@@ -664,7 +666,14 @@
           "channelComment": "Mes commentaires",
           "subscriptions": "Mes abonnements",
           "reports": "Signalements me concernant"
-        }
+        },
+        "connections.title": "Mes connexions",
+        "connections.following": "Abonnements",
+        "connections.followers": "Abonnés",
+        "connections.follow": "Suivre",
+        "connections.posts": "Publication(s)",
+        "connections.emptyFollowing": "Vous ne suivez encore personne",
+        "connections.emptyFollowers": "Aucun abonné pour le moment"
       },
       "security": {
         "profile": {
@@ -797,6 +806,12 @@
         "format": {
           "medium": "D MMM YYYY HH:mm",
           "short": "D MMM HH:mm"
+        }
+      },
+      "confirmDialog": {
+        "actions": {
+          "confirm": "Confirmer",
+          "cancel": "Annuler"
         }
       },
       "trending": {

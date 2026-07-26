@@ -9,7 +9,7 @@
   <div class="flex flex-col gap-6">
     <!-- POST LIST FOR CHANNEL -->
     @for (post of posts(); track $index) {
-      <app-post-card @fadeInUp [post]="post"></app-post-card>
+      <app-post-card @fadeInUp [post]="post" (ondeleted)="handlePostDeleted($event)" />
     }
 
     <!-- LOADING SPINNER -->

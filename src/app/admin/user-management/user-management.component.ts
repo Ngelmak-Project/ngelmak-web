@@ -209,7 +209,6 @@ export default class IUserManagementComponent implements OnInit {
 
           this.totalItems.set(Number(body.totalElements));
           this.users.set(body.content);
-          console.log(body.content);
 
           // Update next-page availability
           const totalPages = Math.ceil(body.totalElements / this.pageSize());

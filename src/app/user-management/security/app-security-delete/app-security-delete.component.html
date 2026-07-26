@@ -74,8 +74,8 @@
     @if (openDeleteModal()) {
       <app-confirm-dialog
         variant="danger"
-        title="{{ 'userManagement.security.deletion.modal.title' | translate }}"
-        message="{{ 'userManagement.security.deletion.modal.message' | translate }}"
+        title="userManagement.security.deletion.modal.title"
+        message="userManagement.security.deletion.modal.message"
         (confirm)="deleteUserAccount($event); openDeleteModal.set(false)"
       ></app-confirm-dialog>
     }

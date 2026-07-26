@@ -4,7 +4,12 @@ import { AuthenticationService } from 'app/core/auth/auth.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { ApiConfigService } from 'app/core/config/api-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IChannel, IEngagementStats, ISubscriptionDTO } from 'app/entities/models/nk-channel.model';
+import {
+  IChannel,
+  IEngagementStats,
+  ISubscriptionDetailDTO,
+  ISubscriptionDTO,
+} from 'app/entities/models/nk-channel.model';
 import { Observable } from 'rxjs';
 
 export type EntityResponseType = HttpResponse<IChannel>;
@@ -71,7 +76,49 @@ export class ChannelService {
       this.stateStorageService.storeChannel(channel);
     } else {
       this.stateStorageService.clearChannel();
+      this.createDefaultChannel(); // Create a default channel if none exists.
     }
+  }
+
+  /**
+   * Creates a default channel for the user if none exists.
+   * The default channel name is generated based on the app name, current month/day,
+   * and a random mixed-case alphanumeric suffix.
+   */
+  private createDefaultChannel() {
+    const defaultChannel: IChannel = {
+      name: this.generateChannelName('Ngelmak', 3),
+      description: '',
+      visibility: 'PUBLIC',
+    };
+
+    // Update the local channel signal after creation
+    this.create(defaultChannel).subscribe(({ body }) => this.updateLocalChannel(body));
+  }
+
+  /**
+   * Generates a channel name using the app name, current month/day,
+   * and a random mixed-case alphanumeric suffix of the given length.
+   *
+   * @param {string} appName - The application name prefix
+   * @param {number} suffixLength - The number of random alphanumeric characters to append
+   * @return {string} The generated channel name
+   */
+  private generateChannelName(appName, suffixLength) {
+    const now = new Date();
+
+    // Format month/day (e.g., "Jan01" for January 1st)
+    const monthFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit' });
+    const monthDay = monthFormatter.format(now).replace(' ', '');
+
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let suffix = '';
+
+    for (let i = 0; i < suffixLength; i++) {
+      suffix += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    return `${appName}-${monthDay}-${suffix}`;
   }
 
   /**
@@ -145,6 +192,15 @@ export class ChannelService {
     const data: FormData = new FormData();
     data.append('file', file);
     return this.http.put<IChannel>(`${this.resourceUrl}/upload-banner`, data, {
+      observe: 'response',
+    });
+  }
+
+  /**
+   * Get all subscriptions for the authenticated user.
+   */
+  getSubscriptions(): Observable<HttpResponse<ISubscriptionDetailDTO[]>> {
+    return this.http.get<ISubscriptionDetailDTO[]>(`${this.resourceUrl}/subscriptions`, {
       observe: 'response',
     });
   }

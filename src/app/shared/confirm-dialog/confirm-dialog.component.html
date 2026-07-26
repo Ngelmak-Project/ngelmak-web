@@ -2,7 +2,7 @@
   @fadeInUp
   clickOutside
   (onClickOutside)="close(false)"
-  class="fixed inset-0 bg-black/40  flex items-center justify-center z-40"
+  class="fixed inset-0 bg-black/40 flex items-center justify-center z-40"
 >
   <div
     class="bg-white dark:bg-gray-800 rounded-xl shadow-xl p-3 md:p-6 w-full max-w-sm border"
@@ -11,13 +11,13 @@
     <!-- TITLE + ICON -->
     <div class="flex items-center gap-2 mb-2">
       <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100">
-        {{ title() }}
+        {{ title() | translate }}
       </h2>
     </div>
 
     <!-- MESSAGE -->
     <p class="text-sm leading-relaxed mb-6 dark:text-gray-300" [ngClass]="style().color">
-      {{ message() }}
+      {{ message() | translate }}
     </p>
 
     <!-- ACTIONS -->
@@ -26,6 +26,7 @@
       <button
         type="button"
         (click)="close(false)"
+        translate="ngelmakTranslation.shared.confirmDialog.actions.cancel"
         class="px-4 py-2 text-sm rounded-lg border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600"
       >
         Annuler
@@ -35,6 +36,7 @@
       <button
         type="button"
         (click)="close(true)"
+        translate="ngelmakTranslation.shared.confirmDialog.actions.confirm"
         class="px-5 py-2.5 text-sm rounded-lg font-medium text-white"
         [ngClass]="style().confirmBtn"
       >

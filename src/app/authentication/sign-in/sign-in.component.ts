@@ -1,15 +1,16 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { Field, form, required } from '@angular/forms/signals';
 import { Router, RouterModule } from '@angular/router';
 import { SignInModel } from 'app/authentication/sign-in/sign-in.model';
 import { SignInService } from 'app/authentication/sign-in/sign-in.service';
+import { ApiError } from 'app/core/auth/auth.model';
 import { AuthenticationService } from 'app/core/auth/auth.service';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { AlertService } from 'app/shared/alert/alert.service';
+import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language-switcher.component';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
-import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language-switcher.component';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ApiError } from 'app/core/auth/auth.model';
 
 @Component({
   standalone: true,
@@ -20,6 +21,7 @@ import { ApiError } from 'app/core/auth/auth.model';
 export class SignInComponent implements OnInit {
   private signInService = inject(SignInService);
   private authService = inject(AuthenticationService);
+  private stateStorage = inject(StateStorageService);
   private router = inject(Router);
   private alertService = inject(AlertService);
   protected isLoging = signal(false);
@@ -53,11 +55,14 @@ export class SignInComponent implements OnInit {
       .pipe(finalize(() => this.isLoging.set(false)))
       .subscribe({
         next: () => {
-          // There were no routing during signIn (eg from navigationToStoredUrl)
-          if (!this.router.currentNavigation()) {
-            this.router.navigate(['']);
+          // Authentication successful
+          const intendedUrl = this.stateStorage.getUrl();
+          this.stateStorage.clearUrl();
+          // Navigate to the intended URL or home page
+          if (intendedUrl) {
+            this.router.navigateByUrl(intendedUrl);
           } else {
-            console.log('Current Navigation', this.router.currentNavigation());
+            this.router.navigate(['']);
           }
           this.alertService.addAlert({
             type: 'success',

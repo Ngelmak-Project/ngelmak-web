@@ -39,9 +39,9 @@ export class CommentUpdateComponent implements OnInit {
   commentModel = signal<IComment>(initComment);
 
   commentForm = form(this.commentModel, (p) => {
-    required(p.content, { message: 'nkTranslation.entities.comment.update.content.required' });
+    required(p.content, { message: 'ngelmakTranslation.entities.comment.update.content.required' });
     maxLength(p.content, 5000, {
-      message: 'nkTranslation.entities.comment.update.content.maxLength',
+      message: 'ngelmakTranslation.entities.comment.update.content.maxLength',
     });
   });
 

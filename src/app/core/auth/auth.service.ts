@@ -1,14 +1,11 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Router } from '@angular/router';
 import { Authentication } from 'app/core/auth/auth.model';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { UserUpdateDTO } from 'app/user-management/security/user.model';
 import { UserService } from 'app/user-management/security/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private stateStorage = inject(StateStorageService);
   private userService = inject(UserService);
   private alertServie = inject(AlertService);
 
@@ -52,7 +49,6 @@ export class AuthenticationService {
     this.userService.profile().subscribe({
       next: ({ body }) => {
         this._auth.set(body);
-        this.navigateToStoredUrl();
         if (body.isActivated === false) {
           this.alertServie.addAlert({
             type: 'warning',
@@ -83,16 +79,5 @@ export class AuthenticationService {
 
     const required = Array.isArray(authorities) ? authorities : [authorities];
     return auth.authorities.some((a) => required.includes(a));
-  }
-
-  /**
-   * Navigates to the URL stored before authentication.
-   */
-  private navigateToStoredUrl(): void {
-    const previousUrl = this.stateStorage.getUrl();
-    if (previousUrl) {
-      this.stateStorage.clearUrl();
-      inject(Router).navigateByUrl(previousUrl);
-    }
   }
 }

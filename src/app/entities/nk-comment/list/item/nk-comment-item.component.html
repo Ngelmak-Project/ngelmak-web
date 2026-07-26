@@ -254,6 +254,7 @@
 
             <li>
               <button
+                (click)="confirmDeleteOpen.set(true)"
                 class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
               >
                 <span translate="ngelmakTranslation.entities.comment.list.item.menu.admin.delete"
@@ -414,5 +415,15 @@
         />
       }
     </div>
+  }
+
+  <!-- Post deletion -->
+  @if (confirmDeleteOpen()) {
+    <app-confirm-dialog
+      variant="danger"
+      title="ngelmakTranslation.entities.comment.list.item.deleteConfirm.title"
+      message="ngelmakTranslation.entities.comment.list.item.deleteConfirm.message"
+      (confirm)="handleDeleteConfirm($event)"
+    />
   }
 </article>

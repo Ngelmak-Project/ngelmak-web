@@ -79,7 +79,7 @@ export class PostCardComponent {
     if (!this.activeChannel()) return null;
 
     // Find the subscription where this channel follows the post's channel
-    return this.activeChannel().stats.following.find(
+    return this.activeChannel().stats?.following.find(
       (e) => e.subscribedToId === this.post().channel?.id,
     );
   });

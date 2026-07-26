@@ -1,1 +1,139 @@
-<p>app-channel-stats works!</p>
+<!-- user-connections.component.html -->
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+  <h2
+    translate="ngelmakTranslation.userManagement.channel.connections.title"
+    class="mb-6 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white"
+  >
+    My Connections
+  </h2>
+
+  <!-- TAB NAVIGATION -->
+  <div class="flex gap-2 mb-6 border-b border-gray-200 dark:border-gray-700">
+    <!-- Following Tab -->
+    <button
+      (click)="activeTab.set('following')"
+      class="relative px-4 py-3 font-semibold text-sm md:text-base transition-all duration-200"
+      [ngClass]="{
+        'text-blue-600 dark:text-blue-400': activeTab() === 'following',
+        'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300':
+          activeTab() !== 'following',
+      }"
+    >
+      <span translate="ngelmakTranslation.userManagement.channel.connections.following">Following</span>
+      <span
+        class="ml-2 text-xs font-bold bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full"
+      >
+        {{ following().length }}
+      </span>
+      @if (activeTab() === 'following') {
+        <div
+          class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-t-full"
+        ></div>
+      }
+    </button>
+
+    <!-- Followers Tab -->
+    <button
+      (click)="activeTab.set('followers')"
+      class="relative px-4 py-3 font-semibold text-sm md:text-base transition-all duration-200"
+      [ngClass]="{
+        'text-blue-600 dark:text-blue-400': activeTab() === 'followers',
+        'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300':
+          activeTab() !== 'followers',
+      }"
+    >
+      <span translate="ngelmakTranslation.userManagement.channel.connections.followers">Followers</span>
+      <span
+        class="ml-2 text-xs font-bold bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded-full"
+      >
+        {{ followers().length }}
+      </span>
+      @if (activeTab() === 'followers') {
+        <div
+          class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-400 to-purple-600 rounded-t-full"
+        ></div>
+      }
+    </button>
+  </div>
+
+  <!-- CONTENT CONTAINER -->
+  <div class="flex flex-col gap-4">
+    <!-- FOLLOWING TAB -->
+    @if (activeTab() === 'following') {
+      @if (following().length > 0) {
+        @for (subscription of following(); track subscription.id) {
+          <connection-card
+            [subscription]="subscription"
+            [isFollowing]="true"
+            [isToggling]="isChannelToggling(subscription.subscribedTo.id!)"
+            (toggleSubscription)="toggleSubscription(subscription.subscribedTo.id!, true)"
+          />
+        }
+      } @else if (!followingIsLoading()) {
+        <div class="text-center py-12">
+          <svg
+            class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600 mb-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 20h5v-2a3 3 0 00-5.856-1.487M15 10a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+          <p class="text-gray-500 dark:text-gray-400 font-medium">
+            You're not following anyone yet
+          </p>
+        </div>
+      }
+
+      <!-- LOADING STATE -->
+      @if (followingIsLoading()) {
+        @for (i of [1, 2, 3]; track i) {
+          <!-- <connection-skeleton /> -->
+        }
+      }
+    }
+
+    <!-- FOLLOWERS TAB -->
+    @if (activeTab() === 'followers') {
+      @if (followers().length > 0) {
+        @for (subscription of followers(); track subscription.id) {
+          <connection-card
+            [subscription]="subscription"
+            [isFollowing]="false"
+            [isToggling]="isChannelToggling(subscription.subscriber.id!)"
+            (toggleSubscription)="toggleSubscription(subscription.subscriber.id!, false)"
+          />
+        }
+      } @else if (!followersIsLoading()) {
+        <div class="text-center py-12">
+          <svg
+            class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600 mb-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 20h5v-2a3 3 0 00-5.856-1.487M15 10a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+          <p class="text-gray-500 dark:text-gray-400 font-medium">No followers yet</p>
+        </div>
+      }
+
+      <!-- LOADING STATE -->
+      @if (followersIsLoading()) {
+        <!-- @for (i of [1, 2, 3]; track i) {
+          <connection-skeleton />
+        } -->
+      }
+    }
+  </div>
+</div>

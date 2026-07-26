@@ -2,17 +2,18 @@ import { CommonModule } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { fadeInUp400ms } from '../animations/fade-in-up.animation';
 import { ClickOutsideDirective } from '../directives/click-outside.directive';
+import SharedModule from '../shared.module';
 
 @Component({
   standalone: true,
   selector: 'app-confirm-dialog',
   templateUrl: './confirm-dialog.component.html',
-  imports: [CommonModule, ClickOutsideDirective],
+  imports: [CommonModule, SharedModule, ClickOutsideDirective],
   animations: [fadeInUp400ms],
 })
 export class ConfirmDialogComponent {
-  title = input.required();
-  message = input.required();
+  title = input.required<string>();
+  message = input.required<string>();
   variant = input<'danger' | 'warning' | 'info' | 'success' | 'default'>('default');
 
   confirm = output<boolean>();

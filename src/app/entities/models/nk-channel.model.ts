@@ -18,6 +18,13 @@ export interface IEngagementStats {
   following?: ISubscriptionDTO[];
 }
 
+export interface ISubscriptionDetailDTO {
+  id: number;
+  subscribedAt: Date; // Date when the subscription was created
+  subscriber: IChannelDTO; // ID of the channel that is following
+  subscribedTo: IChannelDTO; // ID of the channel being followed
+}
+
 export interface ISubscriptionDTO {
   id: number;
   subscribedAt: Date; // Date when the subscription was created

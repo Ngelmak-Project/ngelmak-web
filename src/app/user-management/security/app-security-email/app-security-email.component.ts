@@ -30,10 +30,6 @@ export class SecurityEmailComponent {
   loginAlreadyInUse = signal(false);
   errorEmailExists = signal(false);
 
-  constructor() {
-    console.log(this.user());
-  }
-
   updateEmail() {
     this.isUpdating.set(true);
     const value = this.emailModel();

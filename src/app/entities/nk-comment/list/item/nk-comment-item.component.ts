@@ -15,6 +15,7 @@ import { ImageCarouselComponent } from 'app/shared/image-carousel/image-carousel
 import SharedModule from 'app/shared/shared.module';
 import { TextCollapseComponent } from 'app/shared/text-collapse/text-collapse.component';
 import { finalize } from 'rxjs';
+import { ConfirmDialogComponent } from "app/shared/confirm-dialog/confirm-dialog.component";
 
 @Component({
   standalone: true,
@@ -32,7 +33,8 @@ import { finalize } from 'rxjs';
     HasChannelDirective,
     ImageCarouselComponent,
     TextCollapseComponent,
-  ],
+    ConfirmDialogComponent
+],
 })
 export class CommentItemComponent {
   comment = input<ICommentDTO>();

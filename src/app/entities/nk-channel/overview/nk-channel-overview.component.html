@@ -84,7 +84,7 @@
             </svg>
             <span class="text-xs text-gray-600 dark:text-gray-400 font-medium">Followers</span>
             <span class="text-sm font-bold text-blue-600 dark:text-blue-400">{{
-              activeChannel().stats.followersCount | number
+              activeChannel().stats?.followersCount | number
             }}</span>
           </div>
           <div class="flex flex-col items-center flex-1">
@@ -97,7 +97,7 @@
             </svg>
             <span class="text-xs text-gray-600 dark:text-gray-400 font-medium">Following</span>
             <span class="text-sm font-bold text-purple-600 dark:text-purple-400">{{
-              activeChannel().stats.followingCount | number
+              activeChannel().stats?.followingCount | number
             }}</span>
           </div>
         </div>

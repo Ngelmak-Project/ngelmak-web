@@ -19,8 +19,6 @@ export class AuthExpiredInterceptor implements HttpInterceptor {
         error: (err: HttpErrorResponse) => {
           // [TODO] filter not unauthorized response
           if (err.status === 401 && err.url && !err.url.includes('auth')) {
-            console.log("ERROR", err);
-            console.log("REQUEST", request);
             this.stateStorageService.storeUrl(this.router.routerState.snapshot.url);
             this.signInService.signOut();
             this.router.navigate(['/sign-in']);

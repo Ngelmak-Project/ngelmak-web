@@ -115,6 +115,10 @@ export class ChannelPostsComponent {
     });
   }
 
+  handlePostDeleted(deletedPost: IPostDTO): void {
+    this.posts.update((list) => list.filter((p) => p.id != deletedPost.id));
+  }
+
   search(query: string): void {
     this.handleNavigation(1, query);
   }
