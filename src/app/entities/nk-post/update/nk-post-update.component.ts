@@ -36,7 +36,6 @@ export class PostUpdateComponent {
   private alertService = inject(AlertService);
   protected isSaving = signal(false);
   protected deletedFiles: IFile[] = [];
-  // protected files: IFile[] = [];
   activeChannel = inject(ChannelService).channel;
   expandedIndexes: Set<number> = new Set<number>();
 

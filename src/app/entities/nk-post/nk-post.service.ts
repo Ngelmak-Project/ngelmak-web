@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { ApiConfigService } from 'app/core/config/api-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IFile } from 'app/entities/models/nk-file.model';
-import { IPost, IPostDTO, ITrending } from 'app/entities/models/nk-post.model';
+import { IFeedPageDTO, IPost, IPostDTO, ITrending } from 'app/entities/models/nk-post.model';
 import { IPage } from 'app/shared/pagination/pagination.model';
 import { Observable } from 'rxjs';
 
@@ -121,9 +121,9 @@ export class PostService {
   //   });
   // }
 
-  feeds(req?: any): Observable<HttpResponse<IPage<IPost>>> {
+  feeds(req?: any): Observable<HttpResponse<IFeedPageDTO>> {
     const options = createRequestOption(req);
-    return this.http.get<IPage<IPost>>(`${this.resourceUrl}/feeds`, {
+    return this.http.get<IFeedPageDTO>(`${this.resourceUrl}/feeds`, {
       params: options,
       observe: 'response',
     });

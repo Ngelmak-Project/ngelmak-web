@@ -1,165 +1,36 @@
-import { HttpResponse } from '@angular/common/http';
-import { Component, computed, inject, NgZone, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
-import { AuthenticationService } from 'app/core/auth/auth.service';
-import { DataUtils } from 'app/core/util/data-util.service';
-import { IPostDTO } from 'app/entities/models/nk-post.model';
-import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
-import { PostCardComponent } from 'app/entities/nk-post/card/nk-post-card.component';
-import { PostService } from 'app/entities/nk-post/nk-post.service';
+import { Router, RouterModule } from '@angular/router';
 import { PostUpdateComponent } from 'app/entities/nk-post/update/nk-post-update.component';
-import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
-import { VisibleTriggerDirective } from 'app/shared/scrool-detection/visible-trigger.directive';
 import SharedModule from 'app/shared/shared.module';
-import { SortService, sortStateSignal } from 'app/shared/sort';
-import { finalize, Subscription, tap } from 'rxjs';
-
-interface IFeedPageDTO {
-  content: IPostDTO[];
-  sessionKey: string;
-  windowStart: Date;
-  number: number;
-  sorts: string[];
-}
+import { PostFeedStateService } from './nk-post-feed-state.service';
 
 @Component({
   standalone: true,
   selector: 'app-post-feed',
   templateUrl: './nk-post-feed.component.html',
-  imports: [
-    RouterModule,
-    FormsModule,
-    SharedModule,
-    PostCardComponent,
-    PostUpdateComponent,
-    VisibleTriggerDirective,
-  ],
+  imports: [RouterModule, FormsModule, SharedModule, PostUpdateComponent],
   animations: [fadeInUp400ms],
 })
-export class PostFeedComponent implements OnInit, OnDestroy {
+export class PostFeedComponent {
   private router = inject(Router);
-  protected postService = inject(PostService);
-  protected activatedRoute = inject(ActivatedRoute);
-  protected sortService = inject(SortService);
-  protected dataUtils = inject(DataUtils);
-  protected authService = inject(AuthenticationService);
-  protected alertService = inject(AlertService);
-  protected ngZone = inject(NgZone);
+  private state = inject(PostFeedStateService);
 
-  activeChannel = inject(ChannelService).channel;
-  private subs = new Subscription();
-
-  // Feed content
-  feeds = signal<IPostDTO[]>([]);
-  hasNext = signal(true);
   isLoading = signal(false);
-  // Sorting
-  sortState = sortStateSignal({});
-  // Internal pagination (NOT visible in URL)
-  itemsPerPage = ITEMS_PER_PAGE;
-  page = signal(1);
   // Search query (visible in URL)
   query = signal('');
-  // Session key for pagination continuity
-  sessionKey = signal<string | null>(null);
-
   /**
    * Computed boolean: search is allowed only if query length >= 5
    */
   validForSearch = computed(() => !this.isLoading() && this.query().length >= 5);
-  isSearching = computed(() => this.isLoading() && this.query().length >= 5);
-
-  ngOnInit(): void {
-    /**
-     * Read ONLY the search query from the URL.
-     * Page & size are now INTERNAL ONLY.
-     */
-    this.subs.add(
-      this.activatedRoute.queryParamMap
-        .pipe(
-          tap((params) => {
-            this.query.set(params.get('q') ?? '');
-          }),
-          tap(() => {
-            // Reset pagination when query changes
-            this.page.set(1);
-            this.loadAll(true);
-          }),
-        )
-        .subscribe(),
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.subs.unsubscribe();
-  }
+  isSearching = this.state.isSearching;
 
   /**
    * Add newly created post to the top of the feed.
    */
-  handlePostSaved(newPost: IPostDTO): void {
-    this.feeds.update((list) => [newPost, ...list]);
-  }
-
-  handlePostDeleted(deletedPost: IPostDTO): void {
-    this.feeds.update((list) => list.filter((p) => p.id != deletedPost.id));
-  }
-
-  /**
-   * Load next page internally (NOT in URL)
-   */
-  loadNext(): void {
-    this.page.update((value) => value + 1);
-    this.loadAll();
-  }
-
-  /**
-   * Infinite scroll handler
-   */
-  handleScrollEnd(): void {
-    if (this.isLoading()) return; // Prevent multiple simultaneous loads
-    if (this.feeds().length === 0) return; // Don't load next if feed is empty (initial load)
-    if (!this.hasNext()) return; // No more pages to load
-    this.loadNext();
-  }
-
-  /**
-   * Load feed data from API
-   */
-  loadAll(reset = false): void {
-    this.isLoading.set(true);
-
-    const req = {
-      page: this.page() - 1, // internal
-      size: this.itemsPerPage, // internal
-      sessionKey: this.sessionKey(),
-      q: this.query(),
-    };
-
-    this.postService
-      .feeds(req)
-      .pipe(finalize(() => this.isLoading.set(false)))
-      .subscribe({
-        next: (res: HttpResponse<IFeedPageDTO>) => {
-          const { body } = res;
-          this.hasNext.set(body.content.length > 0);
-          if (reset) {
-            this.sessionKey.set(body.sessionKey);
-            this.feeds.set(body.content ?? []);
-          } else {
-            this.feeds.update((e) => [...e, ...body.content]);
-          }
-        },
-        error: () =>
-          this.alertService.addAlert({
-            type: 'warning',
-            translationKey: 'ngelmakTranslation.entities.post.feed.alerts.error',
-            message: 'Problème de chargement',
-          }),
-      });
+  handlePostSaved(post: any) {
+    this.state.pushNewPost(post); // notify child
   }
 
   /**
@@ -168,19 +39,29 @@ export class PostFeedComponent implements OnInit, OnDestroy {
    */
   search(): void {
     if (!this.validForSearch()) return;
-    this.handleNavigation(this.query());
+
+    this.state.startSearch(); // parent sets searching=true
+
+    this.router.navigate(['/search'], {
+      queryParams: { q: this.query() },
+    });
   }
 
   /**
-   * Navigation that ONLY exposes the search query in the URL.
-   * Pagination stays internal.
+   * Navigates to the search page when a non‑empty query is provided.
+   * Falls back to the home route when the query is empty or whitespace.
+   *
+   * - Non‑empty query → /search?q=<query>
+   * - Empty query     → /
    */
   protected handleNavigation(query?: string): void {
-    this.ngZone.run(() => {
-      this.router.navigate(['/'], {
-        relativeTo: this.activatedRoute,
-        queryParams: { q: query || null }, // ONLY q is visible
-      });
-    });
+    const q = (query ?? '').trim();
+
+    if (q) {
+      this.router.navigate(['/search'], { queryParams: { q } });
+      return;
+    }
+
+    this.router.navigate(['/']);
   }
 }
