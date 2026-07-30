@@ -2,7 +2,12 @@
   "ngelmakTranslation": {
     "layouts": {
       "sidebar": {
-        "home": "Home",
+        "home": "Accueil",
+        "pageTitle.feed": "Feed | Ngelmak",
+        "pageTitle.week": "Week | Ngelmak",
+        "pageTitle.month": "Month | Ngelmak",
+        "pageTitle.trending": "Trending | Ngelmak",
+        "pageTitle.search": "Search | Ngelmak",
         "project": {
           "title": "The Ngelmak Project",
           "visionAndGoals": "Vision & Goals",
@@ -338,6 +343,10 @@
             "clear": "Clear",
             "submit": "Search"
           },
+          "navigation.feed": "Feed",
+          "navigation.week": "This Week",
+          "navigation.month": "This Month",
+          "navigation.trending": "Trending",
           "alerts": {
             "error": "Loading error."
           }

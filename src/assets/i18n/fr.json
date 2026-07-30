@@ -3,6 +3,11 @@
     "layouts": {
       "sidebar": {
         "home": "Accueil",
+        "pageTitle.feed": "Actualité | Ngelmak",
+        "pageTitle.week": "Semaine | Ngelmak",
+        "pageTitle.month": "Mois | Ngelmak",
+        "pageTitle.trending": "Tendances | Ngelmak",
+        "pageTitle.search": "Recherche | Ngelmak",
         "project": {
           "title": "Le Projet Ngelmak",
           "visionAndGoals": "Vision & Objectifs",
@@ -341,6 +346,10 @@
             "clear": "Effacer",
             "submit": "Rechercher"
           },
+          "navigation.feed": "Actualité",
+          "navigation.week": "Cette semaine",
+          "navigation.month": "Ce mois",
+          "navigation.trending": "Tendances",
           "alerts": {
             "error": "Problème de chargement."
           }
