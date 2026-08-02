@@ -7,15 +7,16 @@ import { CommentService } from 'app/entities/nk-comment/nk-comment.service';
 import { CommentUpdateComponent } from 'app/entities/nk-comment/update/nk-comment-update.component';
 import { TicketDialogComponent } from 'app/entities/nk-ticket/dialog/nk-ticket-dialog.component';
 import { AlertService } from 'app/shared/alert/alert.service';
+import { ConfirmDialogComponent } from 'app/shared/confirm-dialog/confirm-dialog.component';
 import { DurationPipe } from 'app/shared/date';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import { HasChannelDirective } from 'app/shared/directives/has-channel';
 import { ShowForChannelDirective } from 'app/shared/directives/show-for-channel';
 import { ImageCarouselComponent } from 'app/shared/image-carousel/image-carousel.component';
+import { ChannelInitialsPipe } from 'app/shared/pipes/channel-initials.pipe';
 import SharedModule from 'app/shared/shared.module';
 import { TextCollapseComponent } from 'app/shared/text-collapse/text-collapse.component';
 import { finalize } from 'rxjs';
-import { ConfirmDialogComponent } from "app/shared/confirm-dialog/confirm-dialog.component";
 
 @Component({
   standalone: true,
@@ -33,8 +34,9 @@ import { ConfirmDialogComponent } from "app/shared/confirm-dialog/confirm-dialog
     HasChannelDirective,
     ImageCarouselComponent,
     TextCollapseComponent,
-    ConfirmDialogComponent
-],
+    ConfirmDialogComponent,
+    ChannelInitialsPipe,
+  ],
 })
 export class CommentItemComponent {
   comment = input<ICommentDTO>();
@@ -123,7 +125,7 @@ export class CommentItemComponent {
           finalize(() => {
             this.isDeleting.set(false);
             this.showMenu.set(false);
-          }),
+          })
         )
         .subscribe({
           next: () => {

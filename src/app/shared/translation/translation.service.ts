@@ -1,6 +1,6 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
 import { AuthenticationService } from 'app/core/auth/auth.service';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { StateStorageService } from 'app/core/storage/state-storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
@@ -20,8 +20,13 @@ export class TranslationService {
   public dictionary = signal<Record<string, string>>({});
 
   constructor() {
-    const lang = this.stateStorageService.getLocale();
-    this.load(lang || this.primaryLang());
+    // Initialize with primary language synchronously
+    this.load(this.primaryLang());
+
+    // Load persisted locale asynchronously
+    this.stateStorageService.getLocale().then((lang) => {
+      if (lang) this.load(lang);
+    });
     effect(() => {
       const langKey = this.authService.authentication()?.langKey;
       this.load(langKey || this.primaryLang());
@@ -55,7 +60,7 @@ export class TranslationService {
    */
   async setLanguage(lang: string) {
     await this.load(lang);
-    this.stateStorageService.storeLocale(lang);
+    await this.stateStorageService.storeLocale(lang);
     this.authService.updateUser({ langKey: lang });
   }
 
@@ -98,7 +103,7 @@ export class TranslationService {
     if (!params) return value;
     return Object.keys(params).reduce(
       (acc, p) => acc.replace(new RegExp(`{{\\s*${p}\\s*}}`, 'g'), params[p]),
-      value,
+      value
     );
   }
 }

@@ -6,17 +6,18 @@ import { SignInModel } from 'app/authentication/sign-in/sign-in.model';
 import { SignInService } from 'app/authentication/sign-in/sign-in.service';
 import { ApiError } from 'app/core/auth/auth.model';
 import { AuthenticationService } from 'app/core/auth/auth.service';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { StateStorageService } from 'app/core/storage/state-storage.service';
 import { AlertService } from 'app/shared/alert/alert.service';
-import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language-switcher.component';
+import { PreferencesPanelComponent } from 'app/shared/preferences-panel/preferences-panel.component';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   standalone: true,
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  imports: [RouterModule, Field, SharedModule, LanguageSwitcherComponent],
+  imports: [RouterModule, Field, SharedModule, PreferencesPanelComponent],
 })
 export class SignInComponent implements OnInit {
   private signInService = inject(SignInService);
@@ -54,10 +55,10 @@ export class SignInComponent implements OnInit {
       .signIn(credentials)
       .pipe(finalize(() => this.isLoging.set(false)))
       .subscribe({
-        next: () => {
+        next: async () => {
           // Authentication successful
-          const intendedUrl = this.stateStorage.getUrl();
-          this.stateStorage.clearUrl();
+          const intendedUrl = await this.stateStorage.getUrl();
+          await this.stateStorage.clearUrl();
           // Navigate to the intended URL or home page
           if (intendedUrl) {
             this.router.navigateByUrl(intendedUrl);

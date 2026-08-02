@@ -8,15 +8,13 @@
         "pageTitle.month": "Month | Ngelmak",
         "pageTitle.trending": "Trending | Ngelmak",
         "pageTitle.search": "Search | Ngelmak",
-        "project": {
-          "title": "The Ngelmak Project",
-          "visionAndGoals": "Vision & Goals",
-          "foundationsAndPrinciples": "Foundations & Principles",
-          "governanceAndRights": "Governance & Rights",
-          "informationSharing": "Information Sharing",
-          "mobilitySoon": "Mobility (coming soon)",
-          "roadmap": "Roadmap"
-        },
+        "project.title": "The Ngelmak Project",
+        "project.visionAndGoals": "Vision & Goals",
+        "project.foundationsAndPrinciples": "Foundations & Principles",
+        "project.governanceAndRights": "Governance & Rights",
+        "project.informationSharing": "Information Sharing",
+        "project.mobilitySoon": "Mobility (coming soon)",
+        "project.roadmap": "Roadmap",
         "community": "Community",
         "reports": "Reports",
         "moderation": "Moderation",
@@ -24,24 +22,26 @@
         "about": "About",
         "contact": "Contact",
         "donations": "Donate",
-        "language": {
-          "fr": "French",
-          "en": "English"
-        }
+        "language.fr": "French",
+        "language.en": "English"
       },
       "navbar": {
-        "login": "Sign in",
-        "register": "Create account",
-        "logout": "Sign out",
-        "myAccount": "My account",
+        "account.label": "Account",
+        "account.desc": "Sign in or create an account",
+        "account.login": "Sign in",
+        "account.register": "Create an account",
+        "account.logout": "Sign out",
+        "myChannel": "My channel",
         "createChannel": "Create my channel",
         "security": "Security",
         "updateInfo": "Update my information",
-        "admin": {
-          "users": "Users",
-          "inbox": "Inbox",
-          "system": "System"
-        }
+        "language.label": "Language",
+        "language.desc": "Select your preference",
+        "admin.label": "Admin",
+        "admin.desc": "Administrator Area",
+        "admin.users": "Users",
+        "admin.inbox": "Inbox",
+        "admin.system": "System"
       },
       "notFound": {
         "hero": {
@@ -835,6 +835,13 @@
       "textCollapse": {
         "showMore": "Read more",
         "showLess": "Show less"
+      },
+      "preferencesPanel": {
+        "title": "Settings",
+        "description": "Language & appearance",
+        "theme.light": "Light",
+        "theme.dark": "Dark",
+        "theme.system": "System"
       }
     },
     "pages": {

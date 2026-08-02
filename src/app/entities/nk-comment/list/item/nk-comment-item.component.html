@@ -16,17 +16,17 @@
         class="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-md opacity-0 group-hover/avatar:opacity-50 transition-opacity duration-300"
       ></div>
       @if (commentSig().channel.avatar) {
-        <img
-          [src]="commentSig().channel.avatar"
-          alt="Avatar"
-          class="w-10 h-10 rounded-full object-cover ring-2 ring-white dark:ring-gray-800 shadow-md transition-transform duration-300 hover:scale-110"
-        />
+      <img
+        [src]="commentSig().channel.avatar"
+        alt="Avatar"
+        class="w-10 h-10 rounded-full object-cover ring-2 ring-white dark:ring-gray-800 shadow-md transition-transform duration-300 hover:scale-110"
+      />
       } @else {
-        <div
-          class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg shadow-md ring-2 ring-white dark:ring-gray-800"
-        >
-          {{ commentSig().channel.name.at(0) }}
-        </div>
+      <div
+        class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg shadow-md ring-2 ring-white dark:ring-gray-800"
+      >
+        {{ commentSig().channel | channelInitials }}
+      </div>
       }
     </a>
 
@@ -77,19 +77,124 @@
       </button>
       <!-- MENU ITEMS GO HERE -->
       @if (showMenu()) {
-        <div
-          class="absolute right-0 top-10 mt-2 w-48 rounded-2xl bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-2xl divide-y divide-gray-200 dark:divide-gray-700 transition-all duration-300 z-20 animate-fadeIn overflow-hidden"
-        >
-          <ul *showForChannel="comment().channel.id">
-            <!-- REPLY -->
-            <li>
-              <button
-                (click)="isReplying.set(true)"
-                [disabled]="isReplying()"
-                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 transition-all duration-200"
+      <div
+        class="absolute right-0 top-10 mt-2 w-48 rounded-2xl bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-2xl divide-y divide-gray-200 dark:divide-gray-700 transition-all duration-300 z-20 animate-fadeIn overflow-hidden"
+      >
+        <ul *showForChannel="comment().channel.id">
+          <!-- REPLY -->
+          <li>
+            <button
+              (click)="isReplying.set(true)"
+              [disabled]="isReplying()"
+              class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 transition-all duration-200"
+            >
+              <span translate="ngelmakTranslation.entities.comment.list.item.menu.reply"
+                >Répondre</span
               >
-                <span translate="ngelmakTranslation.entities.comment.list.item.menu.reply"
-                  >Répondre</span
+              <svg
+                class="w-4 h-4"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14.5 8.046H11V6.119c0-.921-.9-1.446-1.524-.894l-5.108 4.49a1.2 1.2 0 0 0 0 1.739l5.108 4.49c.624.556 1.524.027 1.524-.893v-1.928h2a3.023 3.023 0 0 1 3 3.046V19a5.593 5.593 0 0 0-1.5-10.954Z"
+                />
+              </svg>
+            </button>
+          </li>
+        </ul>
+
+        <ul *showForChannel="comment().channel.id">
+          <!-- UPDATE -->
+          <li>
+            <button
+              (click)="isUpdating.set(true)"
+              [disabled]="isUpdating()"
+              class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 transition-all duration-200"
+            >
+              <span translate="ngelmakTranslation.entities.comment.list.item.menu.update"
+                >Modifier</span
+              >
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
+                <path
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"
+                />
+              </svg>
+            </button>
+          </li>
+
+          <!-- DELETE -->
+          <li>
+            <button
+              (click)="confirmDeleteOpen.set(true)"
+              class="w-full px-4 py-2 text-left text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 flex items-center justify-between"
+            >
+              <span translate="ngelmakTranslation.entities.comment.list.item.menu.delete"
+                >Supprimer</span
+              >
+
+              @if (isDeleting()) {
+              <svg
+                aria-hidden="true"
+                class="inline w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
+                viewBox="0 0 100 101"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="currentFill"
+                />
+              </svg>
+              } @else {
+              <svg
+                class="w-4 h-4"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                />
+              </svg>
+              }
+            </button>
+          </li>
+        </ul>
+
+        <!-- ANY USER -->
+        <ul>
+          <li>
+            <button
+              (click)="isSignalComment.set(true)"
+              class="w-full flex flex-col px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 transition-all duration-200 text-left"
+            >
+              <p class="flex items-center justify-between text-sm text-gray-700 dark:text-gray-200">
+                <span translate="ngelmakTranslation.entities.comment.list.item.menu.report.label"
+                  >Signaler</span
                 >
                 <svg
                   class="w-4 h-4"
@@ -105,234 +210,127 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M14.5 8.046H11V6.119c0-.921-.9-1.446-1.524-.894l-5.108 4.49a1.2 1.2 0 0 0 0 1.739l5.108 4.49c.624.556 1.524.027 1.524-.893v-1.928h2a3.023 3.023 0 0 1 3 3.046V19a5.593 5.593 0 0 0-1.5-10.954Z"
+                    d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z"
                   />
                 </svg>
-              </button>
-            </li>
-          </ul>
-
-          <ul *showForChannel="comment().channel.id">
-            <!-- UPDATE -->
-            <li>
-              <button
-                (click)="isUpdating.set(true)"
-                [disabled]="isUpdating()"
-                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 transition-all duration-200"
+              </p>
+              <p
+                translate="ngelmakTranslation.entities.comment.list.item.menu.report.privacy"
+                class="text-xs text-gray-500 dark:text-gray-400"
               >
-                <span translate="ngelmakTranslation.entities.comment.list.item.menu.update"
-                  >Modifier</span
-                >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
-                  <path
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"
-                  />
-                </svg>
-              </button>
-            </li>
+                Votre identité restera confidentielle.
+              </p>
+            </button>
+          </li>
+        </ul>
 
-            <!-- DELETE -->
-            <li>
-              <button
-                (click)="confirmDeleteOpen.set(true)"
-                class="w-full px-4 py-2 text-left text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 flex items-center justify-between"
+        <!-- ADMIN ONLY -->
+        <ul *hasAnyAuthority="'ROLE_ADMIN'">
+          <li>
+            <button
+              class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition"
+            >
+              <span translate="ngelmakTranslation.entities.comment.list.item.menu.admin.blockUser"
+                >Bloquer l'utilisateur</span
               >
-                <span translate="ngelmakTranslation.entities.comment.list.item.menu.delete"
-                  >Supprimer</span
-                >
+              <svg
+                class="w-5 h-5"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 14v3m-3-6V7a3 3 0 1 1 6 0v4m-8 0h10a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"
+                />
+              </svg>
+            </button>
+          </li>
 
-                @if (isDeleting()) {
-                  <svg
-                    aria-hidden="true"
-                    class="inline w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentFill"
-                    />
-                  </svg>
-                } @else {
-                  <svg
-                    class="w-4 h-4"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                    />
-                  </svg>
-                }
-              </button>
-            </li>
-          </ul>
-
-          <!-- ANY USER -->
-          <ul>
-            <li>
-              <button
-                (click)="isSignalComment.set(true)"
-                class="w-full flex flex-col px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 transition-all duration-200 text-left"
+          <li>
+            <button
+              (click)="confirmDeleteOpen.set(true)"
+              class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
+            >
+              <span translate="ngelmakTranslation.entities.comment.list.item.menu.admin.delete"
+                >Supprimer</span
               >
-                <p
-                  class="flex items-center justify-between text-sm text-gray-700 dark:text-gray-200"
-                >
-                  <span translate="ngelmakTranslation.entities.comment.list.item.menu.report.label"
-                    >Signaler</span
-                  >
-                  <svg
-                    class="w-4 h-4"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z"
-                    />
-                  </svg>
-                </p>
-                <p
-                  translate="ngelmakTranslation.entities.comment.list.item.menu.report.privacy"
-                  class="text-xs text-gray-500 dark:text-gray-400"
-                >
-                  Votre identité restera confidentielle.
-                </p>
-              </button>
-            </li>
-          </ul>
-
-          <!-- ADMIN ONLY -->
-          <ul *hasAnyAuthority="'ROLE_ADMIN'">
-            <li>
-              <button
-                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition"
+              <svg
+                class="w-5 h-5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
               >
-                <span translate="ngelmakTranslation.entities.comment.list.item.menu.admin.blockUser"
-                  >Bloquer l'utilisateur</span
-                >
-                <svg
-                  class="w-5 h-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 14v3m-3-6V7a3 3 0 1 1 6 0v4m-8 0h10a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"
-                  />
-                </svg>
-              </button>
-            </li>
-
-            <li>
-              <button
-                (click)="confirmDeleteOpen.set(true)"
-                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                />
+              </svg>
+            </button>
+          </li>
+          <li>
+            <button
+              class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
+            >
+              <span translate="ngelmakTranslation.entities.comment.list.item.menu.admin.hide"
+                >Masquer</span
               >
-                <span translate="ngelmakTranslation.entities.comment.list.item.menu.admin.delete"
-                  >Supprimer</span
-                >
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                  />
-                </svg>
-              </button>
-            </li>
-            <li>
-              <button
-                class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
+              <svg
+                class="w-5 h-5"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
               >
-                <span translate="ngelmakTranslation.entities.comment.list.item.menu.admin.hide"
-                  >Masquer</span
-                >
-                <svg
-                  class="w-5 h-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                  />
-                </svg>
-              </button>
-            </li>
-          </ul>
-        </div>
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                />
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </div>
       }
     </div>
   </header>
 
   <!-- UPDATE FORM -->
   @if (isUpdating()) {
-    <app-comment-update
-      [comment]="commentSig()"
-      (oncomment)="handleReplyOrUpdate($event)"
-      (oncancel)="isUpdating.set(false)"
-    ></app-comment-update>
+  <app-comment-update
+    [comment]="commentSig()"
+    (oncomment)="handleReplyOrUpdate($event)"
+    (oncancel)="isUpdating.set(false)"
+  ></app-comment-update>
   } @else {
-    <!-- CONTENT -->
-    <div
-      class="text-gray-800 dark:text-gray-100 whitespace-pre-line leading-relaxed text-sm font-medium [&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:hover:underline"
-    >
-      @if (level() > 0 && replyTo) {
-        <span class="text-blue-600 dark:text-blue-400 font-semibold">
-          @{{ replyTo()?.channel?.name }}
-        </span>
-        <span class="text-gray-400 dark:text-gray-600 mx-1">•</span>
-      }
-      <!-- <span
+  <!-- CONTENT -->
+  <div
+    class="text-gray-800 dark:text-gray-100 whitespace-pre-line leading-relaxed text-sm font-medium [&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:hover:underline"
+  >
+    @if (level() > 0 && replyTo) {
+    <span class="text-blue-600 dark:text-blue-400 font-semibold">
+      @{{ replyTo()?.channel?.name }}
+    </span>
+    <span class="text-gray-400 dark:text-gray-600 mx-1">•</span>
+    }
+    <!-- <span
         class="text-gray-800 dark:text-gray-100 whitespace-pre-line leading-relaxed text-base font-medium [&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:hover:underline"
         [innerHTML]="commentSig().content"
       ></span> -->
-      <app-text-collapse [text]="commentSig().content" />
-      <app-image-carousel [urls]="url()" />
-    </div>
+    <app-text-collapse [text]="commentSig().content" />
+    <app-image-carousel [urls]="url()" />
+  </div>
   }
 
   <!-- FOOTER ACTIONS -->
@@ -347,83 +345,83 @@
     </button>
 
     @if (commentSig().replyCount > 0) {
-      <span class="text-gray-300 dark:text-gray-600">•</span>
+    <span class="text-gray-300 dark:text-gray-600">•</span>
 
-      <button
-        (click)="toggleReplies()"
-        [disabled]="isLoading()"
-        class="text-xs font-semibold text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:underline transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+    <button
+      (click)="toggleReplies()"
+      [disabled]="isLoading()"
+      class="text-xs font-semibold text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:underline transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+    >
+      @if (isLoading()) {
+      <svg class="w-3.5 h-3.5 animate-spin" fill="currentColor" viewBox="0 0 100 101">
+        <path
+          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908Z"
+          fill="currentColor"
+        />
+        <path
+          opacity="0.1"
+          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+          fill="currentFill"
+        />
+      </svg>
+      } @else {
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover/comment:text-blue-600 dark:group-hover/comment:text-blue-400 transition-colors"
       >
-        @if (isLoading()) {
-          <svg class="w-3.5 h-3.5 animate-spin" fill="currentColor" viewBox="0 0 100 101">
-            <path
-              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908Z"
-              fill="currentColor"
-            />
-            <path
-              opacity="0.1"
-              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-              fill="currentFill"
-            />
-          </svg>
-        } @else {
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover/comment:text-blue-600 dark:group-hover/comment:text-blue-400 transition-colors"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
-            />
-          </svg>
-        }
-        <span class="font-medium">{{ commentSig().replyCount }}</span>
-        <span translate="ngelmakTranslation.entities.comment.list.item.replies">Réponse</span>
-      </button>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
+        />
+      </svg>
+      }
+      <span class="font-medium">{{ commentSig().replyCount }}</span>
+      <span translate="ngelmakTranslation.entities.comment.list.item.replies">Réponse</span>
+    </button>
     }
   </footer>
 
   <!-- REPORT DIALOG -->
   @if (isSignalComment()) {
-    <app-ticket-dialog [comment]="commentSig()" (onclose)="isSignalComment.set(false)" />
+  <app-ticket-dialog [comment]="commentSig()" (onclose)="isSignalComment.set(false)" />
   }
 
   <!-- REPLY FORM -->
   @if (isReplying()) {
-    <app-comment-update
-      [withAttach]="false"
-      [replyTo]="commentSig()"
-      (oncomment)="handleReplyOrUpdate($event)"
-      (oncancel)="handleCancelReplyOrUpdate()"
-    />
+  <app-comment-update
+    [withAttach]="false"
+    [replyTo]="commentSig()"
+    (oncomment)="handleReplyOrUpdate($event)"
+    (oncancel)="handleCancelReplyOrUpdate()"
+  />
   }
 
   <!-- REPLIES LIST -->
   @if (showReplies() && replies().length > 0) {
-    <div class="flex flex-col gap-3 mt-4">
-      @for (replyComment of replies(); track $index) {
-        <app-comment-item
-          [comment]="replyComment"
-          [replyTo]="commentSig()"
-          [level]="level() + 1"
-          (ondelete)="onDeletedReply($event)"
-        />
-      }
-    </div>
+  <div class="flex flex-col gap-3 mt-4">
+    @for (replyComment of replies(); track $index) {
+    <app-comment-item
+      [comment]="replyComment"
+      [replyTo]="commentSig()"
+      [level]="level() + 1"
+      (ondelete)="onDeletedReply($event)"
+    />
+    }
+  </div>
   }
 
   <!-- Post deletion -->
   @if (confirmDeleteOpen()) {
-    <app-confirm-dialog
-      variant="danger"
-      title="ngelmakTranslation.entities.comment.list.item.deleteConfirm.title"
-      message="ngelmakTranslation.entities.comment.list.item.deleteConfirm.message"
-      (confirm)="handleDeleteConfirm($event)"
-    />
+  <app-confirm-dialog
+    variant="danger"
+    title="ngelmakTranslation.entities.comment.list.item.deleteConfirm.title"
+    message="ngelmakTranslation.entities.comment.list.item.deleteConfirm.message"
+    (confirm)="handleDeleteConfirm($event)"
+  />
   }
 </article>

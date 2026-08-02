@@ -6,94 +6,94 @@
     <!-- USER SECTION -->
     <section>
       @if (user()) {
-        <app-channel-overview></app-channel-overview>
+      <app-channel-overview></app-channel-overview>
       } @else {
-        <div class="pt-4 space-y-4">
-          <header>
-            <h3
-              translate="ngelmakTranslation.home.user.title"
-              class="text-lg font-semibold text-gray-900 dark:text-white mb-2"
-            >
-              Rejoignez la discussion
-            </h3>
-            <p
-              translate="ngelmakTranslation.home.user.description"
-              class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed"
-            >
-              Créer un compte ne prend que quelques instants...
-            </p>
-          </header>
+      <div class="pt-4 space-y-4">
+        <header>
+          <h3
+            translate="ngelmakTranslation.home.user.title"
+            class="text-lg font-semibold text-gray-900 dark:text-white mb-2"
+          >
+            Rejoignez la discussion
+          </h3>
+          <p
+            translate="ngelmakTranslation.home.user.description"
+            class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed"
+          >
+            Créer un compte ne prend que quelques instants...
+          </p>
+        </header>
 
-          <div class="flex flex-col gap-2">
-            <button
-              translate="ngelmakTranslation.home.user.signIn"
-              routerLink="/sign-in"
-              class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
-            >
-              Se connecter
-            </button>
+        <div class="flex flex-col gap-2">
+          <button
+            translate="ngelmakTranslation.home.user.signIn"
+            routerLink="/sign-in"
+            class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
+          >
+            Se connecter
+          </button>
 
-            <button
-              translate="ngelmakTranslation.home.user.signUp"
-              routerLink="/sign-up"
-              class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
-            >
-              Créer un compte
-            </button>
-          </div>
+          <button
+            translate="ngelmakTranslation.home.user.signUp"
+            routerLink="/sign-up"
+            class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm font-medium"
+          >
+            Créer un compte
+          </button>
         </div>
+      </div>
       }
     </section>
 
     <!-- HELP / CONTACT SECTION -->
     <section>
       @if (showContactForm()) {
-        <div class="flex flex-col gap-4">
-          <app-contact-form></app-contact-form>
+      <div class="flex flex-col gap-4">
+        <app-contact-form></app-contact-form>
 
-          <button
-            translate="ngelmakTranslation.home.help.cancel"
-            (click)="showContactForm.set(false)"
-            class="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm font-medium transition"
-          >
-            Annuler
-          </button>
-        </div>
+        <button
+          translate="ngelmakTranslation.home.help.cancel"
+          (click)="showContactForm.set(false)"
+          class="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm font-medium transition"
+        >
+          Annuler
+        </button>
+      </div>
       } @else {
-        <div class="pt-2 space-y-3">
-          <h3
-            translate="ngelmakTranslation.home.help.title"
-            class="text-lg font-semibold text-gray-900 dark:text-white"
-          >
-            Besoin d'aide ?
-          </h3>
+      <div class="pt-2 space-y-3">
+        <h3
+          translate="ngelmakTranslation.home.help.title"
+          class="text-lg font-semibold text-gray-900 dark:text-white"
+        >
+          Besoin d'aide ?
+        </h3>
 
-          <p
-            translate="ngelmakTranslation.home.help.description"
-            class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed"
-          >
-            Une question, un problème ou une suggestion. Notre équipe est là pour vous accompagner.
-          </p>
+        <p
+          translate="ngelmakTranslation.home.help.description"
+          class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed"
+        >
+          Une question, un problème ou une suggestion. Notre équipe est là pour vous accompagner.
+        </p>
 
-          <button
-            translate="ngelmakTranslation.home.help.contactSupport"
-            (click)="showContactForm.set(true)"
-            class="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm font-medium transition"
-          >
-            Contacter le support
-          </button>
-        </div>
+        <button
+          translate="ngelmakTranslation.home.help.contactSupport"
+          (click)="showContactForm.set(true)"
+          class="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm font-medium transition"
+        >
+          Contacter le support
+        </button>
+      </div>
       }
     </section>
   </aside>
 
   <!-- MAIN FEED (scrolls) -->
   <main class="flex-1 p-0 md:p-3 lg:p-6 bg-white dark:bg-gray-800 overflow-y-auto">
-    <app-post-feed></app-post-feed>
+    <router-outlet></router-outlet>
   </main>
 
   <!-- RIGHT SIDEBAR -->
-  <aside class="hidden md:flex flex-col w-1/4 bg-white dark:bg-gray-900 max-h-full overflow-y-auto">
+  <aside class="hidden lg:flex flex-col w-1/4 bg-white dark:bg-gray-900 max-h-full overflow-y-auto">
     <app-trending></app-trending>
   </aside>
 </div>

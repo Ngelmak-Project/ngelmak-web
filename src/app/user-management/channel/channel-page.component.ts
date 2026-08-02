@@ -6,6 +6,7 @@ import { ChannelOverviewComponent } from 'app/entities/nk-channel/overview/nk-ch
 import { ChannelUpdateComponent } from 'app/entities/nk-channel/update/nk-channel-update.component';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInRight400ms } from 'app/shared/animations/fade-in-right.animation';
+import { ChannelInitialsPipe } from 'app/shared/pipes/channel-initials.pipe';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 
@@ -19,6 +20,7 @@ import { finalize } from 'rxjs';
     SharedModule,
     ChannelUpdateComponent,
     ChannelOverviewComponent,
+    ChannelInitialsPipe,
   ],
   animations: [fadeInRight400ms],
 })
@@ -74,7 +76,7 @@ export class ChannelPageComponent {
         finalize(() => {
           this.isUploading.set(false);
           this.cancelEdit();
-        }),
+        })
       )
       .subscribe({
         next: (res) => {

@@ -11,10 +11,15 @@ export class ApiConfigService {
    * @param endpoint The specific endpoint for the service (e.g., 'me', 'channels').
    * @returns A complete URL string for the API call.
    */
-  buildApiUrl(serviceName: string, endpoint: string): string {
+  buildApiUrl(serviceName: string | null = null, endpoint: string | null = null): string {
     if (serviceName && endpoint) {
       return `${this.baseUrl}/${serviceName}/${endpoint}`;
     }
+
+    if (serviceName) {
+      return `${this.baseUrl}/${serviceName}`;
+    }
+
     return this.baseUrl;
   }
 }

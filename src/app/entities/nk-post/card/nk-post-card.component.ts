@@ -19,6 +19,7 @@ import { TextCollapseComponent } from 'app/shared/text-collapse/text-collapse.co
 import { finalize } from 'rxjs';
 import { PostService } from '../nk-post.service';
 import { PostUpdateComponent } from '../update/nk-post-update.component';
+import { ChannelInitialsPipe } from 'app/shared/pipes/channel-initials.pipe';
 
 @Component({
   standalone: true,
@@ -38,6 +39,7 @@ import { PostUpdateComponent } from '../update/nk-post-update.component';
     ImageCarouselComponent,
     TextCollapseComponent,
     TicketDialogComponent,
+    ChannelInitialsPipe
   ],
 })
 export class PostCardComponent {

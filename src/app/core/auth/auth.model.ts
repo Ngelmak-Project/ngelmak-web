@@ -28,6 +28,12 @@ export class Authentication {
   authorities?: string[];
 }
 
+export interface LoginResponseDTO {
+  accessToken?: string;
+  refreshToken?: string;
+  refreshTokenExpiresAt?: string;
+}
+
 export interface ApiError {
   timestamp: string;
   status: number;

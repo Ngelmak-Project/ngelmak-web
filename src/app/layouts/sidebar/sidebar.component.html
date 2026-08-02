@@ -1,403 +1,333 @@
 @if (showSidebar()) {
-  <aside
-    clickOutside
-    (onClickOutside)="closeSidebar()"
-    (click)="closeSidebar()"
-    @fadeInOutRight
-    class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 w-64 h-full pt-16 font-normal duration-75 lg:flex transition-width"
+<aside
+  clickOutside
+  (onClickOutside)="closeSidebar()"
+  (click)="closeSidebar()"
+  @fadeInOutRight
+  class="fixed top-0 left-0 z-[90] flex flex-col flex-shrink-0 w-full md:w-72 h-full pt-16 transition-width duration-75 lg:flex"
+>
+  <div
+    class="relative flex flex-col flex-1 min-h-0 pt-0 bg-white/60 backdrop-blur-md border-r border-gray-200/70 dark:bg-gray-900/50 dark:border-gray-700/60 shadow-sm"
   >
-    <div
-      class="relative flex flex-col flex-1 min-h-0 pt-0 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700"
-    >
-      <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
-        <div
-          class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700"
-        >
-          <!-- SECTION: COUR (MAIN AREA) -->
-          <ul class="pb-2 space-y-2">
-            <!-- Accueil -->
-            <li>
-              <a
-                routerLink="/"
-                class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700"
-                routerLinkActive="bg-gray-100 dark:bg-gray-700"
-                [routerLinkActiveOptions]="{ exact: true }"
+    <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
+      <div class="flex-1 px-3 space-y-2">
+        <!-- SECTION: COUR (MAIN AREA) -->
+        <ul class="pb-2 space-y-2">
+          <li>
+            <a
+              routerLink="/"
+              class="flex items-center gap-3 p-2.5 text-base text-gray-900 rounded-2xl hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
+              routerLinkActive="bg-gray-100/80 dark:bg-gray-800/70 ring-1 ring-gray-200/80 dark:ring-gray-700/80"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <svg
+                class="w-6 h-6 text-gray-800 dark:text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
               >
-                <svg
-                  class="w-6 h-6 text-gray-800 dark:text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"
-                  />
-                </svg>
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"
+                />
+              </svg>
+              <span translate="ngelmakTranslation.layouts.sidebar.home">Accueil</span>
+            </a>
+          </li>
+        </ul>
 
-                <span translate="ngelmakTranslation.layouts.sidebar.home" class="ml-3"
-                  >Accueil</span
-                >
-              </a>
-            </li>
-          </ul>
-
-          <!-- SECTION: PROJECT (SUBMENU) -->
-          <ul class="py-2 space-y-2">
-            <li class="relative" clickOutside (onClickOutside)="showNgelmakSubMenu.set(false)">
-              <button
-                type="button"
-                (click)="toggleNgelmakMenu($event)"
-                class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+        <!-- SECTION: PROJECT (SUBMENU) -->
+        <ul class="py-2 space-y-2 border-b border-gray-200/70 dark:border-gray-700/50">
+          <li class="relative" clickOutside (onClickOutside)="showNgelmakSubMenu.set(false)">
+            <button
+              type="button"
+              (click)="toggleNgelmakMenu($event)"
+              class="flex items-center gap-3 w-full p-2.5 text-base text-gray-900 rounded-2xl hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  class="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                <span
-                  translate="ngelmakTranslation.layouts.sidebar.project.title"
-                  class="flex-1 ml-3 text-left"
-                  >Le Projet</span
-                >
-                <svg
-                  class="w-6 h-6 transition-transform"
-                  [class.rotate-180]="showNgelmakSubMenu()"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </button>
+                <path
+                  fill-rule="evenodd"
+                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
 
-              @if (showNgelmakSubMenu()) {
-                <ul class="py-2 space-y-2">
-                  <li>
-                    <a
-                      translate="ngelmakTranslation.layouts.sidebar.project.visionAndGoals"
-                      routerLink="/project/vision"
-                      routerLinkActive="bg-gray-100 dark:bg-gray-700"
-                      class="flex items-center p-2 pl-11 text-base text-gray-900 rounded-lg hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                    >
-                      Vision & Objectifs
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      translate="ngelmakTranslation.layouts.sidebar.project.foundationsAndPrinciples"
-                      routerLink="/project/foundations"
-                      routerLinkActive="bg-gray-100 dark:bg-gray-700"
-                      class="flex items-center p-2 pl-11 text-base text-gray-900 rounded-lg hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                    >
-                      Fondements & Principes
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      translate="ngelmakTranslation.layouts.sidebar.project.governanceAndRights"
-                      routerLink="/project/governance"
-                      routerLinkActive="bg-gray-100 dark:bg-gray-700"
-                      class="flex items-center p-2 pl-11 text-base text-gray-900 rounded-lg hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                    >
-                      Gouvernance & Droits
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      translate="ngelmakTranslation.layouts.sidebar.project.informationSharing"
-                      routerLink="/project/information-sharing"
-                      routerLinkActive="bg-gray-100 dark:bg-gray-700"
-                      class="flex items-center p-2 pl-11 text-base text-gray-900 rounded-lg hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                    >
-                      Partage d'Information
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      translate="ngelmakTranslation.layouts.sidebar.project.mobilitySoon"
-                      routerLink="/project/mobility"
-                      class="flex items-center p-2 pl-11 text-base text-gray-900 rounded-lg hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                    >
-                      Mobilité (bientôt)
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      translate="ngelmakTranslation.layouts.sidebar.project.roadmap"
-                      routerLink="/project/roadmap"
-                      class="flex items-center p-2 pl-11 text-base text-gray-900 rounded-lg hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                    >
-                      Feuille de route
-                    </a>
-                  </li>
-                </ul>
-              }
-            </li>
-          </ul>
-
-          <!-- SECTION: COMMUNITY -->
-          <ul class="py-2 space-y-2">
-            <li>
-              <a
-                routerLink="/community"
-                routerLinkActive="bg-gray-100 dark:bg-gray-700"
-                class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700"
+              <span
+                translate="ngelmakTranslation.layouts.sidebar.project.title"
+                class="flex-1 text-left"
               >
-                <svg
-                  class="w-6 h-6 text-gray-800 dark:text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-width="2"
-                    d="M4.37 7.657c2.063.528 2.396 2.806 3.202 3.87 1.07 1.413 2.075 1.228 3.192 2.644 1.805 2.289 1.312 5.705 1.312 6.705M20 15h-1a4 4 0 0 0-4 4v1M8.587 3.992c0 .822.112 1.886 1.515 2.58 1.402.693 2.918.351 2.918 2.334 0 .276 0 2.008 1.972 2.008 2.026.031 2.026-1.678 2.026-2.008 0-.65.527-.9 1.177-.9H20M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                </svg>
+                Le Projet
+              </span>
 
-                <span translate="ngelmakTranslation.layouts.sidebar.community" class="ml-3"
-                  >Communauté</span
-                >
-              </a>
-            </li>
-
-            <li>
-              <a
-                routerLink="/reports"
-                routerLinkActive="bg-gray-100 dark:bg-gray-700"
-                class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700"
+              <svg
+                class="w-5 h-5 transition-transform"
+                [class.rotate-180]="showNgelmakSubMenu()"
+                fill="currentColor"
+                viewBox="0 0 20 20"
               >
-                <svg
-                  class="w-6 h-6 text-gray-800 dark:text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
+                <path
+                  fill-rule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </button>
+
+            @if (showNgelmakSubMenu()) {
+            <ul class="mt-1 space-y-1 pl-3">
+              <li>
+                <a
+                  translate="ngelmakTranslation.layouts.sidebar.project.visionAndGoals"
+                  routerLink="/project/vision"
+                  routerLinkActive="bg-gray-100/80 dark:bg-gray-800/70 ring-1 ring-gray-200/80 dark:ring-gray-700/80"
+                  class="flex items-center w-full p-2.5 pl-4 text-sm rounded-2xl text-gray-900 hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
                 >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z"
-                  />
-                </svg>
+                  Vision &amp; Objectifs
+                </a>
+              </li>
 
-                <span translate="ngelmakTranslation.layouts.sidebar.reports" class="ml-3"
-                  >Signalements</span
+              <li>
+                <a
+                  translate="ngelmakTranslation.layouts.sidebar.project.foundationsAndPrinciples"
+                  routerLink="/project/foundations"
+                  routerLinkActive="bg-gray-100/80 dark:bg-gray-800/70 ring-1 ring-gray-200/80 dark:ring-gray-700/80"
+                  class="flex items-center w-full p-2.5 pl-4 text-sm rounded-2xl text-gray-900 hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
                 >
-              </a>
-            </li>
+                  Fondements &amp; Principes
+                </a>
+              </li>
 
-            <li>
-              <a
-                routerLink="/moderation"
-                routerLinkActive="bg-gray-100 dark:bg-gray-700"
-                class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700"
-              >
-                <svg
-                  class="w-6 h-6 text-gray-800 dark:text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
+              <li>
+                <a
+                  translate="ngelmakTranslation.layouts.sidebar.project.governanceAndRights"
+                  routerLink="/project/governance"
+                  routerLinkActive="bg-gray-100/80 dark:bg-gray-800/70 ring-1 ring-gray-200/80 dark:ring-gray-700/80"
+                  class="flex items-center w-full p-2.5 pl-4 text-sm rounded-2xl text-gray-900 hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
                 >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5.5 21h13M12 21V7m0 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm2-1.8c3.073.661 2.467 2.8 5 2.8M5 8c3.359 0 2.192-2.115 5.012-2.793M7 9.556V7.75m0 1.806-1.95 4.393a.773.773 0 0 0 .37.962.785.785 0 0 0 .362.089h2.436a.785.785 0 0 0 .643-.335.776.776 0 0 0 .09-.716L7 9.556Zm10 0V7.313m0 2.243-1.95 4.393a.773.773 0 0 0 .37.962.786.786 0 0 0 .362.089h2.436a.785.785 0 0 0 .643-.335.775.775 0 0 0 .09-.716L17 9.556Z"
-                  />
-                </svg>
+                  Gouvernance &amp; Droits
+                </a>
+              </li>
 
-                <span translate="ngelmakTranslation.layouts.sidebar.moderation" class="ml-3"
-                  >Modération</span
+              <li>
+                <a
+                  translate="ngelmakTranslation.layouts.sidebar.project.informationSharing"
+                  routerLink="/project/information-sharing"
+                  routerLinkActive="bg-gray-100/80 dark:bg-gray-800/70 ring-1 ring-gray-200/80 dark:ring-gray-700/80"
+                  class="flex items-center w-full p-2.5 pl-4 text-sm rounded-2xl text-gray-900 hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
                 >
-              </a>
-            </li>
-          </ul>
+                  Partage d'Information
+                </a>
+              </li>
 
-          <!-- SECTION: RESOURCES -->
-          <ul class="py-2 space-y-2">
-            <li>
-              <a
-                routerLink="/policies"
-                routerLinkActive="bg-gray-100 dark:bg-gray-700"
-                class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700"
-              >
-                <svg
-                  class="w-6 h-6 text-gray-800 dark:text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
+              <li>
+                <a
+                  translate="ngelmakTranslation.layouts.sidebar.project.mobilitySoon"
+                  routerLink="/project/mobility"
+                  class="flex items-center w-full p-2.5 pl-4 text-sm rounded-2xl text-gray-900 hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
                 >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9.5 11.5 11 13l4-3.5M12 20a16.405 16.405 0 0 1-5.092-5.804A16.694 16.694 0 0 1 5 6.666L12 4l7 2.667a16.695 16.695 0 0 1-1.908 7.529A16.406 16.406 0 0 1 12 20Z"
-                  />
-                </svg>
+                  Mobilité (bientôt)
+                </a>
+              </li>
 
-                <span translate="ngelmakTranslation.layouts.sidebar.policies" class="ml-3"
-                  >Politiques</span
+              <li>
+                <a
+                  translate="ngelmakTranslation.layouts.sidebar.project.roadmap"
+                  routerLink="/project/roadmap"
+                  class="flex items-center w-full p-2.5 pl-4 text-sm rounded-2xl text-gray-900 hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
                 >
-              </a>
-            </li>
-
-            <li>
-              <a
-                routerLink="/about"
-                routerLinkActive="bg-gray-100 dark:bg-gray-700"
-                class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700"
-              >
-                <svg
-                  class="w-6 h-6 text-gray-800 dark:text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                </svg>
-
-                <span translate="ngelmakTranslation.layouts.sidebar.about" class="ml-3"
-                  >À propos</span
-                >
-              </a>
-            </li>
-
-            <li>
-              <a
-                routerLink="/contact"
-                routerLinkActive="bg-gray-100 dark:bg-gray-700"
-                class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700"
-              >
-                <svg
-                  class="w-6 h-6 text-gray-800 dark:text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-width="2"
-                    d="m3.5 5.5 7.893 6.036a1 1 0 0 0 1.214 0L20.5 5.5M4 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z"
-                  />
-                </svg>
-
-                <span translate="ngelmakTranslation.layouts.sidebar.contact" class="ml-3"
-                  >Contact</span
-                >
-              </a>
-            </li>
-
-            <li>
-              <a
-                routerLink="/donations"
-                routerLinkActive="bg-gray-100 dark:bg-gray-700"
-                class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700"
-              >
-                <svg
-                  class="w-6 h-6 text-gray-800 dark:text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M20 7h-.7c.229-.467.349-.98.351-1.5a3.5 3.5 0 0 0-3.5-3.5c-1.717 0-3.215 1.2-4.331 2.481C10.4 2.842 8.949 2 7.5 2A3.5 3.5 0 0 0 4 5.5c.003.52.123 1.033.351 1.5H4a2 2 0 0 0-2 2v2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V9a2 2 0 0 0-2-2Zm-9.942 0H7.5a1.5 1.5 0 0 1 0-3c.9 0 2 .754 3.092 2.122-.219.337-.392.635-.534.878Zm6.1 0h-3.742c.933-1.368 2.371-3 3.739-3a1.5 1.5 0 0 1 0 3h.003ZM13 14h-2v8h2v-8Zm-4 0H4v6a2 2 0 0 0 2 2h3v-8Zm6 0v8h3a2 2 0 0 0 2-2v-6h-5Z"
-                  />
-                </svg>
-
-                <span translate="ngelmakTranslation.layouts.sidebar.donations" class="ml-3"
-                  >Faire un don</span
-                >
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- FOOTER: LANGUAGE SELECTOR -->
-      <div
-        clickOutside
-        (onClickOutside)="showLangKeyOptions.set(false)"
-        class="absolute bottom-0 left-0 p-2 w-full flex items-center justify-center"
-      >
-        <!-- Your language dropdown kept exactly as is -->
-        <button
-          (click)="showLangKeyOptions.set(!showLangKeyOptions())"
-          type="button"
-          class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-        >
-          <svg
-            class="w-6 h-6 text-gray-800 dark:text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="m13 19 3.5-9 3.5 9m-6.125-2h5.25M3 7h7m0 0h2m-2 0c0 1.63-.793 3.926-2.239 5.655M7.5 6.818V5m.261 7.655C6.79 13.82 5.521 14.725 4 15m3.761-2.345L5 10m2.761 2.655L10.2 15"
-            />
-          </svg>
-        </button>
-
-        @if (showLangKeyOptions()) {
-          <div
-            class="absolute bottom-14 w-32 rounded-xl shadow-xl bg-white dark:bg-gray-800 flex flex-col divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-600 py-2 z-50 animate-fadeIn"
-          >
-            <ul class="flex flex-col space-y-1 py-1">
-              @for (language of languages; track $index) {
-                <li>
-                  <button
-                    type="button"
-                    (click)="changeLanguage(language.code)"
-                    class="flex items-center p-2 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-full"
-                    [ngClass]="{ 'bg-gray-100 dark:bg-gray-700': lang() === language.code }"
-                    [disabled]="lang() === language.code"
-                  >
-                    {{ language.label }}
-                  </button>
-                </li>
-              }
+                  Feuille de route
+                </a>
+              </li>
             </ul>
-          </div>
-        }
+            }
+          </li>
+        </ul>
+
+        <!-- SECTION: COMMUNITY -->
+        <ul class="py-2 space-y-2 border-b border-gray-200/70 dark:border-gray-700/50">
+          <li>
+            <a
+              routerLink="/community"
+              routerLinkActive="bg-gray-100 dark:bg-gray-700"
+              class="flex items-center gap-3 p-2.5 text-base text-gray-900 rounded-2xl hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
+            >
+              <svg
+                class="w-6 h-6 text-gray-800 dark:text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-width="2"
+                  d="M4.37 7.657c2.063.528 2.396 2.806 3.202 3.87 1.07 1.413 2.075 1.228 3.192 2.644 1.805 2.289 1.312 5.705 1.312 6.705M20 15h-1a4 4 0 0 0-4 4v1M8.587 3.992c0 .822.112 1.886 1.515 2.58 1.402.693 2.918.351 2.918 2.334 0 .276 0 2.008 1.972 2.008 2.026.031 2.026-1.678 2.026-2.008 0-.65.527-.9 1.177-.9H20M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+
+              <span translate="ngelmakTranslation.layouts.sidebar.community" class="ml-3"
+                >Communauté</span
+              >
+            </a>
+          </li>
+
+          <li>
+            <a
+              routerLink="/reports"
+              routerLinkActive="bg-gray-100 dark:bg-gray-700"
+              class="flex items-center gap-3 p-2.5 text-base text-gray-900 rounded-2xl hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
+            >
+              <svg
+                class="w-6 h-6 text-gray-800 dark:text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z"
+                />
+              </svg>
+
+              <span translate="ngelmakTranslation.layouts.sidebar.reports" class="ml-3"
+                >Signalements</span
+              >
+            </a>
+          </li>
+
+          <li>
+            <a
+              routerLink="/moderation"
+              routerLinkActive="bg-gray-100 dark:bg-gray-700"
+              class="flex items-center gap-3 p-2.5 text-base text-gray-900 rounded-2xl hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
+            >
+              <svg
+                class="w-6 h-6 text-gray-800 dark:text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5.5 21h13M12 21V7m0 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm2-1.8c3.073.661 2.467 2.8 5 2.8M5 8c3.359 0 2.192-2.115 5.012-2.793M7 9.556V7.75m0 1.806-1.95 4.393a.773.773 0 0 0 .37.962.785.785 0 0 0 .362.089h2.436a.785.785 0 0 0 .643-.335.776.776 0 0 0 .09-.716L7 9.556Zm10 0V7.313m0 2.243-1.95 4.393a.773.773 0 0 0 .37.962.786.786 0 0 0 .362.089h2.436a.785.785 0 0 0 .643-.335.775.775 0 0 0 .09-.716L17 9.556Z"
+                />
+              </svg>
+
+              <span translate="ngelmakTranslation.layouts.sidebar.moderation" class="ml-3"
+                >Modération</span
+              >
+            </a>
+          </li>
+        </ul>
+
+        <!-- SECTION: RESOURCES -->
+        <ul class="py-2 space-y-2">
+          <li>
+            <a
+              routerLink="/policies"
+              routerLinkActive="bg-gray-100/80 dark:bg-gray-800/70 ring-1 ring-gray-200/80 dark:ring-gray-700/80"
+              class="flex items-center gap-3 p-2.5 text-base rounded-2xl text-gray-900 hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
+            >
+              <svg
+                class="w-6 h-6 text-gray-800 dark:text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9.5 11.5 11 13l4-3.5M12 20a16.405 16.405 0 0 1-5.092-5.804A16.694 16.694 0 0 1 5 6.666L12 4l7 2.667a16.695 16.695 0 0 1-1.908 7.529A16.406 16.406 0 0 1 12 20Z"
+                />
+              </svg>
+              <span translate="ngelmakTranslation.layouts.sidebar.policies">Politiques</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              routerLink="/about"
+              routerLinkActive="bg-gray-100/80 dark:bg-gray-800/70 ring-1 ring-gray-200/80 dark:ring-gray-700/80"
+              class="flex items-center gap-3 p-2.5 text-base rounded-2xl text-gray-900 hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
+            >
+              <svg
+                class="w-6 h-6 text-gray-800 dark:text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+              <span translate="ngelmakTranslation.layouts.sidebar.about">À propos</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              routerLink="/contact"
+              routerLinkActive="bg-gray-100/80 dark:bg-gray-800/70 ring-1 ring-gray-200/80 dark:ring-gray-700/80"
+              class="flex items-center gap-3 p-2.5 text-base rounded-2xl text-gray-900 hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
+            >
+              <svg
+                class="w-6 h-6 text-gray-800 dark:text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-width="2"
+                  d="m3.5 5.5 7.893 6.036a1 1 0 0 0 1.214 0L20.5 5.5M4 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z"
+                />
+              </svg>
+              <span translate="ngelmakTranslation.layouts.sidebar.contact">Contact</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              routerLink="/donations"
+              routerLinkActive="bg-gray-100/80 dark:bg-gray-800/70 ring-1 ring-gray-200/80 dark:ring-gray-700/80"
+              class="flex items-center gap-3 p-2.5 text-base rounded-2xl text-gray-900 hover:bg-gray-100/70 dark:text-gray-200 dark:hover:bg-gray-800/60 ring-1 ring-transparent hover:ring-gray-200/70 dark:hover:ring-gray-700/60 transition-all duration-200 ease-out"
+            >
+              <svg
+                class="w-6 h-6 text-gray-800 dark:text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M20 7h-.7c.229-.467.349-.98.351-1.5a3.5 3.5 0 0 0-3.5-3.5c-1.717 0-3.215 1.2-4.331 2.481C10.4 2.842 8.949 2 7.5 2A3.5 3.5 0 0 0 4 5.5c.003.52.123 1.033.351 1.5H4a2 2 0 0 0-2 2v2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V9a2 2 0 0 0-2-2Zm-9.942 0H7.5a1.5 1.5 0 0 1 0-3c.9 0 2 .754 3.092 2.122-.219.337-.392.635-.534.878Zm6.1 0h-3.742c.933-1.368 2.371-3 3.739-3a1.5 1.5 0 0 1 0 3h.003ZM13 14h-2v8h2v-8Zm-4 0H4v6a2 2 0 0 0 2 2h3v-8Zm6 0v8h3a2 2 0 0 0 2-2v-6h-5Z"
+                />
+              </svg>
+              <span translate="ngelmakTranslation.layouts.sidebar.donations">Faire un don</span>
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
-  </aside>
+  </div>
+</aside>
 }
-
-<!-- <div
-  class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90"
-></div> -->

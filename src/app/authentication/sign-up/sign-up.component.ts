@@ -13,7 +13,7 @@ import {
 import { Router, RouterModule } from '@angular/router';
 import { ApiError } from 'app/core/auth/auth.model';
 import { AlertService } from 'app/shared/alert/alert.service';
-import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language-switcher.component';
+import { PreferencesPanelComponent } from 'app/shared/preferences-panel/preferences-panel.component';
 import SharedModule from 'app/shared/shared.module';
 import { TranslationService } from 'app/shared/translation/translation.service';
 import { finalize } from 'rxjs';
@@ -30,7 +30,7 @@ import { SignUpService } from './sign-up.service';
     Field,
     PasswordStrengthBarComponent,
     SharedModule,
-    LanguageSwitcherComponent,
+    PreferencesPanelComponent,
   ],
 })
 export class SignUpComponent {

@@ -9,6 +9,7 @@ import { TicketService } from 'app/entities/nk-ticket/nk-ticket.service';
 import { AlertService } from 'app/shared/alert/alert.service';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { FormatMediumDatetimePipe } from 'app/shared/date';
+import { ChannelInitialsPipe } from 'app/shared/pipes/channel-initials.pipe';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 
@@ -19,9 +20,10 @@ import { finalize } from 'rxjs';
   imports: [
     RouterModule,
     SharedModule,
-    FormatMediumDatetimePipe,
     ReviewComponent,
     ReviewDialogComponent,
+    ChannelInitialsPipe,
+    FormatMediumDatetimePipe,
   ],
   animations: [fadeInUp400ms],
 })

@@ -7,12 +7,13 @@ import { AlertService } from 'app/shared/alert/alert.service';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { ChannelService } from '../nk-channel.service';
+import { ChannelInitialsPipe } from 'app/shared/pipes/channel-initials.pipe';
 
 @Component({
   standalone: true,
   selector: 'app-channel-overview',
   templateUrl: './nk-channel-overview.component.html',
-  imports: [CommonModule, RouterModule, Field, SharedModule],
+  imports: [CommonModule, RouterModule, Field, SharedModule, ChannelInitialsPipe],
 })
 export class ChannelOverviewComponent {
   activeChannel = inject(ChannelService).channel;

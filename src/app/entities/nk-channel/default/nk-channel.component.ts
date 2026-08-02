@@ -4,14 +4,15 @@ import { CommonModule } from "@angular/common";
 import { ActivatedRoute, RouterModule } from "@angular/router";
 import { IPost } from "app/entities/models/nk-post.model";
 import { PostService } from "app/entities/nk-post/nk-post.service";
-import { finalize } from "rxjs";
 import { DurationPipe } from "app/shared/date";
+import { ChannelInitialsPipe } from "app/shared/pipes/channel-initials.pipe";
+import { finalize } from "rxjs";
 
 @Component({
   standalone: true,
   selector: "app-channel",
   templateUrl: "./nk-channel.component.html",
-  imports: [CommonModule, DurationPipe, RouterModule],
+  imports: [CommonModule, RouterModule, DurationPipe, ChannelInitialsPipe],
 })
 export class ChannelViewComponent implements OnInit {
   channel = signal(null);

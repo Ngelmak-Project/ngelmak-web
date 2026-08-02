@@ -1,7 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { effect, inject, Injectable, signal } from '@angular/core';
 import { AuthenticationService } from 'app/core/auth/auth.service';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { StateStorageService } from 'app/core/storage/state-storage.service';
 import { ApiConfigService } from 'app/core/config/api-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import {
@@ -42,7 +42,7 @@ export class ChannelService {
     effect(() => {
       const auth = this.authService.authentication();
       if (auth) {
-        this.loadChannel();
+        this.loadChannel().catch((error) => console.error('Failed to load channel:', error));
       } else {
         this._channel.set(null);
       }
@@ -53,8 +53,8 @@ export class ChannelService {
    * Fetches the current user's channel from the backend.
    * Called automatically when authentication changes.
    */
-  private loadChannel(): void {
-    const cachedChannel = this.stateStorageService.getChannel();
+  private async loadChannel(): Promise<void> {
+    const cachedChannel = await this.stateStorageService.getChannel();
 
     if (cachedChannel) {
       this._channel.set(cachedChannel);
@@ -70,12 +70,12 @@ export class ChannelService {
   /**
    * Allows manual updates to the channel (e.g., after editing profile).
    */
-  updateLocalChannel(channel: IChannel): void {
+  async updateLocalChannel(channel: IChannel | null): Promise<void> {
     this._channel.set(channel);
     if (channel) {
-      this.stateStorageService.storeChannel(channel);
+      await this.stateStorageService.storeChannel(channel);
     } else {
-      this.stateStorageService.clearChannel();
+      await this.stateStorageService.clearChannel();
       this.createDefaultChannel(); // Create a default channel if none exists.
     }
   }

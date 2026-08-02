@@ -1,453 +1,451 @@
 @if (ticketSig()) {
-  <div
-    class="flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full border border-gray-200 dark:border-gray-700"
-  >
-    <!-- HEADER -->
-    <div class="p-5 md:p-7 border-b dark:border-gray-700">
-      <div class="flex items-start justify-between">
-        <div>
-          <h2 class="text-2xl font-semibold text-gray-900 dark:text-white leading-tight">
-            Ticket #{{ ticketSig().id }}
-          </h2>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Signalement utilisateur</p>
-        </div>
+<div
+  class="flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full border border-gray-200 dark:border-gray-700"
+>
+  <!-- HEADER -->
+  <div class="p-5 md:p-7 border-b dark:border-gray-700">
+    <div class="flex items-start justify-between">
+      <div>
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white leading-tight">
+          Ticket #{{ ticketSig().id }}
+        </h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Signalement utilisateur</p>
+      </div>
 
-        <div class="flex space-x-2 md:space-x-4">
-          <span
-            class="inline-flex items-center px-2.5 py-1 text-sm rounded-full font-medium shadow-sm"
-            [ngClass]="{
+      <div class="flex space-x-2 md:space-x-4">
+        <span
+          class="inline-flex items-center px-2.5 py-1 text-sm rounded-full font-medium shadow-sm"
+          [ngClass]="{
               'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300':
                 ticketSig().resolved,
               'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300': !ticketSig().resolved,
             }"
-          >
-            {{ ticketSig().resolved ? 'Résolu' : 'Non résolu' }}
-          </span>
+        >
+          {{ ticketSig().resolved ? 'Résolu' : 'Non résolu' }}
+        </span>
 
-          <button
-            (click)="previousState()"
-            type="button"
-            class="px-4 py-2 text-sm rounded-full border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600"
-          >
-            Fermer
-          </button>
-        </div>
+        <button
+          (click)="previousState()"
+          type="button"
+          class="px-4 py-2 text-sm rounded-full border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600"
+        >
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCROLLABLE CONTENT -->
+  <div class="p-5 md:p-7 space-y-6 text-gray-700 dark:text-gray-300">
+    <!-- GRID INFO -->
+    <div class="grid grid-cols-2 gap-4">
+      <!-- Issuer -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Émis par</h3>
+        <p class="mt-1 font-medium text-base">{{ ticketSig().issuedBy }}</p>
+      </div>
+
+      <!-- Date -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Émis le</h3>
+        <p class="mt-1 text-base">{{ ticketSig().issuedAt | formatMediumDatetime }}</p>
+      </div>
+
+      <!-- Assigned to -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Assigné à</h3>
+        <p class="mt-1 text-base">{{ ticketSig().assignedTo ?? '—' }}</p>
+      </div>
+
+      <!-- Handled by -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Géré par</h3>
+        <p class="mt-1 text-base">{{ ticketSig().handledBy ?? '—' }}</p>
       </div>
     </div>
 
-    <!-- SCROLLABLE CONTENT -->
-    <div class="p-5 md:p-7 space-y-6 text-gray-700 dark:text-gray-300">
-      <!-- GRID INFO -->
-      <div class="grid grid-cols-2 gap-4">
-        <!-- Issuer -->
-        <div>
-          <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Émis par</h3>
-          <p class="mt-1 font-medium text-base">{{ ticketSig().issuedBy }}</p>
-        </div>
+    <!-- TARGET CONTENT -->
+    <div>
+      <div class="flex items-center gap-3">
+        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">
+          Contenu concerné
+        </h3>
 
-        <!-- Date -->
-        <div>
-          <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Émis le</h3>
-          <p class="mt-1 text-base">{{ ticketSig().issuedAt | formatMediumDatetime }}</p>
-        </div>
+        <!-- ACTION MENU -->
+        <div class="relative ml-auto">
+          <!-- ACTION BUTTON -->
+          <button
+            (click)="showMenu.set(!showMenu())"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+          >
+            Actions
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-width="2"
+                d="M6 9l6 6 6-6"
+              />
+            </svg>
+          </button>
 
-        <!-- Assigned to -->
-        <div>
-          <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Assigné à</h3>
-          <p class="mt-1 text-base">{{ ticketSig().assignedTo ?? '—' }}</p>
-        </div>
+          <!-- DROPDOWN -->
+          @if (showMenu()) {
+          <div
+            class="absolute right-0 mt-2 flex flex-col divide-y divide-gray-200 dark:divide-gray-700 w-56 rounded-xl shadow-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 py-2 z-20 animate-fadeIn"
+          >
+            <!-- ADMIN/MODERATOR ACTIONS -->
+            <ul *hasAnyAuthority="['ROLE_ADMIN', 'ROLE_MODERATOR']">
+              <!-- VIEW DETAILS -->
+              <li>
+                <button
+                  class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 text-left"
+                >
+                  Voir les détails
+                  <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-width="2"
+                      d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
+                    />
+                    <path
+                      stroke="currentColor"
+                      stroke-width="2"
+                      d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                </button>
+              </li>
 
-        <!-- Handled by -->
-        <div>
-          <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Géré par</h3>
-          <p class="mt-1 text-base">{{ ticketSig().handledBy ?? '—' }}</p>
+              <!-- REVIEW / EXAMINE THE REPORT -->
+              <li>
+                <button
+                  (click)="openReview.set(true)"
+                  class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  Examiner le signalement
+                  <svg
+                    class="w-5 h-5 text-gray-800 dark:text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 17h6l3 3v-3h2V9h-2M4 4h11v8H9l-3 3v-3H4V4Z"
+                    />
+                  </svg>
+                </button>
+              </li>
+
+              <!-- BLOCK / MASK CONTENT -->
+              <li>
+                <button
+                  class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  Masquer
+                  {{
+                    ticketSig().post
+                      ? 'le post'
+                      : ticketSig().comment
+                      ? 'le commentaire'
+                      : 'la chaine'
+                  }}
+                  <svg
+                    class="w-5 h-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+
+            <ul>
+              <!-- USER ACTIONS -->
+              <li>
+                <button
+                  class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                >
+                  Voir l'utilisateur
+
+                  <svg
+                    class="w-5 h-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+
+            <!-- DANGER ZONE (ADMIN ONLY) -->
+            <ul *hasAnyAuthority="'ROLE_ADMIN'">
+              <li>
+                <button
+                  class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition"
+                >
+                  Bloquer l'utilisateur
+                  <svg
+                    class="w-5 h-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 14v3m-3-6V7a3 3 0 1 1 6 0v4m-8 0h10a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"
+                    />
+                  </svg>
+                </button>
+              </li>
+
+              <li>
+                <button
+                  class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
+                >
+                  Supprimer le
+                  {{ ticketSig().post ? 'post' : ticketSig().comment ? 'commentaire' : 'channel' }}
+                  <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+          </div>
+          }
         </div>
       </div>
 
-      <!-- TARGET CONTENT -->
-      <div>
-        <div class="flex items-center gap-3">
-          <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">
-            Contenu concerné
-          </h3>
+      <div class="mt-1 text-base space-y-3">
+        <!-- CHANNEL -->
+        @if (ticketSig().channel) {
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="font-medium">Type :</span>
+          <span class="px-2 py-1 text-xs"> Chaîne </span>
 
-          <!-- ACTION MENU -->
-          <div class="relative ml-auto">
-            <!-- ACTION BUTTON -->
-            <button
-              (click)="showMenu.set(!showMenu())"
-              class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+          <a
+            [routerLink]="[
+              '/channel',
+              ticketSig().channel.id + '-' + ticketSig().channel.identifier,
+              'view'
+            ]"
+            target="_blank"
+            class="text-blue-600 dark:text-blue-400 font-medium hover:underline"
+          >
+            {{ ticketSig().channel.name }}
+          </a>
+
+          <!-- Avatar -->
+          <div class="shrink-0">
+            @if (ticketSig().channel.avatar) {
+            <img
+              [src]="ticketSig().channel.avatar"
+              alt="Avatar de la chaîne"
+              class="rounded-full w-10 h-10"
+            />
+            } @else {
+            <div
+              class="flex items-center justify-center rounded-full w-10 h-10 text-xl uppercase text-black bg-gray-50 dark:bg-gray-300"
             >
-              Actions
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-width="2"
-                  d="M6 9l6 6 6-6"
-                />
-              </svg>
-            </button>
-
-            <!-- DROPDOWN -->
-            @if (showMenu()) {
-              <div
-                class="absolute right-0 mt-2 flex flex-col divide-y divide-gray-200 dark:divide-gray-700 w-56 rounded-xl shadow-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 py-2 z-20 animate-fadeIn"
-              >
-                <!-- ADMIN/MODERATOR ACTIONS -->
-                <ul *hasAnyAuthority="['ROLE_ADMIN', 'ROLE_MODERATOR']">
-                  <!-- VIEW DETAILS -->
-                  <li>
-                    <button
-                      class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 text-left"
-                    >
-                      Voir les détails
-                      <svg
-                        class="w-5 h-5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-width="2"
-                          d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
-                        />
-                        <path
-                          stroke="currentColor"
-                          stroke-width="2"
-                          d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                        />
-                      </svg>
-                    </button>
-                  </li>
-
-                  <!-- REVIEW / EXAMINE THE REPORT -->
-                  <li>
-                    <button
-                      (click)="openReview.set(true)"
-                      class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                    >
-                      Examiner le signalement
-                      <svg
-                        class="w-5 h-5 text-gray-800 dark:text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M9 17h6l3 3v-3h2V9h-2M4 4h11v8H9l-3 3v-3H4V4Z"
-                        />
-                      </svg>
-                    </button>
-                  </li>
-
-                  <!-- BLOCK / MASK CONTENT -->
-                  <li>
-                    <button
-                      class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                    >
-                      Masquer
-                      {{
-                        ticketSig().post
-                          ? 'le post'
-                          : ticketSig().comment
-                            ? 'le commentaire'
-                            : 'la chaine'
-                      }}
-                      <svg
-                        class="w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                        />
-                      </svg>
-                    </button>
-                  </li>
-                </ul>
-
-                <ul>
-                  <!-- USER ACTIONS -->
-                  <li>
-                    <button
-                      class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-                    >
-                      Voir l'utilisateur
-
-                      <svg
-                        class="w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                        />
-                      </svg>
-                    </button>
-                  </li>
-                </ul>
-
-                <!-- DANGER ZONE (ADMIN ONLY) -->
-                <ul *hasAnyAuthority="'ROLE_ADMIN'">
-                  <li>
-                    <button
-                      class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition"
-                    >
-                      Bloquer l'utilisateur
-                      <svg
-                        class="w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 14v3m-3-6V7a3 3 0 1 1 6 0v4m-8 0h10a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"
-                        />
-                      </svg>
-                    </button>
-                  </li>
-
-                  <li>
-                    <button
-                      class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
-                    >
-                      Supprimer le
-                      {{ ticketSig().post ? 'post' : ticketSig().comment ? 'commentaire' : 'channel' }}
-                      <svg
-                        class="w-5 h-5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                        />
-                      </svg>
-                    </button>
-                  </li>
-                </ul>
-              </div>
+              {{ ticketSig().channel | channelInitials }}
+            </div>
             }
           </div>
         </div>
+        }
 
-        <div class="mt-1 text-base space-y-3">
-          <!-- CHANNEL -->
-          @if (ticketSig().channel) {
-            <div class="flex flex-wrap items-center gap-3">
-              <span class="font-medium">Type :</span>
-              <span class="px-2 py-1 text-xs"> Chaîne </span>
+        <!-- POST -->
+        @else if (ticketSig().post) {
+        <div class="space-y-2">
+          <div class="flex items-center gap-3">
+            <span class="font-medium">Type :</span>
+            <span class="px-2 py-1 text-xs"> Post </span>
 
-              <a
-                [routerLink]="[
-                  '/channel',
-                  ticketSig().channel.id + '-' + ticketSig().channel.identifier,
-                  'view',
-                ]"
-                target="_blank"
-                class="text-blue-600 dark:text-blue-400 font-medium hover:underline"
-              >
-                {{ ticketSig().channel.name }}
-              </a>
+            <a
+              [routerLink]="['/post', ticketSig().post.id]"
+              target="_blank"
+              class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/40 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/60 transition-colors"
+            >
+              Voir le post #{{ ticketSig().post.id }}
+            </a>
+          </div>
 
-              <!-- Avatar -->
-              <div class="shrink-0">
-                @if (ticketSig().channel.avatar) {
-                  <img
-                    [src]="ticketSig().channel.avatar"
-                    alt="Avatar de la chaîne"
-                    class="rounded-full w-10 h-10"
-                  />
-                } @else {
-                  <div
-                    class="flex items-center justify-center rounded-full w-10 h-10 text-xl uppercase text-black bg-gray-50 dark:bg-gray-300"
-                  >
-                    {{ ticketSig().channel.name.at(0) }}
-                  </div>
-                }
-              </div>
-            </div>
-          }
+          <div
+            class="mt-1 text-gray-900 dark:text-white whitespace-pre-line border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-900/40"
+            [innerHTML]="ticketSig().post.content"
+          ></div>
 
-          <!-- POST -->
-          @else if (ticketSig().post) {
-            <div class="space-y-2">
-              <div class="flex items-center gap-3">
-                <span class="font-medium">Type :</span>
-                <span class="px-2 py-1 text-xs"> Post </span>
-
-                <a
-                  [routerLink]="['/post', ticketSig().post.id]"
-                  target="_blank"
-                  class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/40 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/60 transition-colors"
-                >
-                  Voir le post #{{ ticketSig().post.id }}
-                </a>
-              </div>
-
-              <div
-                class="mt-1 text-gray-900 dark:text-white whitespace-pre-line border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-900/40"
-                [innerHTML]="ticketSig().post.content"
-              ></div>
-
-              <!-- Attachments -->
-              @if (ticketSig().post.files?.length) {
-                <div
-                  class="grid gap-4 mt-2"
-                  [ngClass]="{
+          <!-- Attachments -->
+          @if (ticketSig().post.files?.length) {
+          <div
+            class="grid gap-4 mt-2"
+            [ngClass]="{
                     'grid-cols-1': ticketSig().post.files.length === 1,
                     'grid-cols-1 md:grid-cols-2': ticketSig().post.files.length > 1,
                   }"
-                >
-                  @for (file of ticketSig().post.files; track file; let idx = $index) {
-                    <img
-                      class="h-auto rounded-lg shadow-xl dark:shadow-gray-800"
-                      [src]="file.url"
-                      alt="Image liée au post"
-                    />
-                  }
-                </div>
-              }
-            </div>
-          }
-
-          <!-- COMMENT -->
-          @else if (ticketSig().comment) {
-            <div class="space-y-2">
-              <div class="flex items-center gap-3">
-                <span class="font-medium">Type :</span>
-                <span class="px-2 py-1 text-xs"> Commentaire </span>
-
-                <a
-                  [routerLink]="[]"
-                  fragment="comment-{{ ticketSig().comment.id }}"
-                  target="_blank"
-                  class="text-blue-600 dark:text-blue-400 font-semibold hover:underline"
-                >
-                  Voir le commentaire #{{ ticketSig().comment.id }}
-                </a>
-              </div>
-
-              <div
-                class="mt-1 text-gray-900 dark:text-white whitespace-pre-line border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-900/40"
-                [innerHTML]="ticketSig().comment.content"
-              ></div>
-
-              @if (ticketSig().comment.file) {
-                <img
-                  class="h-auto rounded-lg shadow-xl dark:shadow-gray-800 mt-2"
-                  [src]="ticketSig().comment.file.url"
-                  alt="Image liée au commentaire"
-                />
-              }
-            </div>
-          } @else {
-            <p class="text-sm text-gray-500 dark:text-gray-400">
-              Le contenu concerné n'est plus disponible.
-            </p>
+          >
+            @for (file of ticketSig().post.files; track file; let idx = $index) {
+            <img
+              class="h-auto rounded-lg shadow-xl dark:shadow-gray-800"
+              [src]="file.url"
+              alt="Image liée au post"
+            />
+            }
+          </div>
           }
         </div>
-      </div>
-
-      <!-- REASON / DESCRIPTION -->
-      <div>
-        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">
-          Raison du signalement
-        </h3>
-        <div
-          class="mt-2 whitespace-pre-line leading-relaxed text-base border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-900/40"
-        >
-          {{ ticketSig().description }}
-        </div>
-      </div>
-
-      <!-- EVIDENCE -->
-      @if (ticket().evidence) {
-        <div>
-          <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Preuve</h3>
-          <a
-            [href]="ticket().evidence.url"
-            target="_blank"
-            class="mt-2 inline-block text-blue-600 dark:text-blue-400 underline text-sm"
-          >
-            Voir la pièce jointe
-          </a>
-        </div>
-      }
-    </div>
-
-    <!-- TIMELINE REVIEW -->
-    <app-review [ticket]="ticketSig()" />
-
-    <!-- DIALOG FOR MANAGING EXCHANGE -->
-    @if (openReview()) {
-      <app-review-dialog [ticket]="ticketSig()" (onclose)="onReviewed($event)" />
-    }
-
-    <!-- ACTIONS -->
-    <div class="p-5 md:p-7 border-t dark:border-gray-700 flex justify-end gap-3">
-      <button
-        (click)="previousState()"
-        [disabled]="isResolving()"
-        type="button"
-        class="px-4 py-2 text-sm rounded-lg border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        Fermer
-      </button>
-
-      <button
-        (click)="resolve()"
-        [disabled]="isResolving()"
-        type="button"
-        class="flex gap-2 items-center text-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        @if (isResolving()) {
-          <svg
-            class="inline w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
-            viewBox="0 0 100 101"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-              fill="currentColor"
-            />
-            <path
-              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-              fill="currentFill"
-            />
-          </svg>
         }
-        {{ ticketSig().resolved ? 'Rouvrir le ticket' : 'Marquer comme résolu' }}
-      </button>
+
+        <!-- COMMENT -->
+        @else if (ticketSig().comment) {
+        <div class="space-y-2">
+          <div class="flex items-center gap-3">
+            <span class="font-medium">Type :</span>
+            <span class="px-2 py-1 text-xs"> Commentaire </span>
+
+            <a
+              [routerLink]="[]"
+              fragment="comment-{{ ticketSig().comment.id }}"
+              target="_blank"
+              class="text-blue-600 dark:text-blue-400 font-semibold hover:underline"
+            >
+              Voir le commentaire #{{ ticketSig().comment.id }}
+            </a>
+          </div>
+
+          <div
+            class="mt-1 text-gray-900 dark:text-white whitespace-pre-line border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-900/40"
+            [innerHTML]="ticketSig().comment.content"
+          ></div>
+
+          @if (ticketSig().comment.file) {
+          <img
+            class="h-auto rounded-lg shadow-xl dark:shadow-gray-800 mt-2"
+            [src]="ticketSig().comment.file.url"
+            alt="Image liée au commentaire"
+          />
+          }
+        </div>
+        } @else {
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          Le contenu concerné n'est plus disponible.
+        </p>
+        }
+      </div>
     </div>
+
+    <!-- REASON / DESCRIPTION -->
+    <div>
+      <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Raison du signalement</h3>
+      <div
+        class="mt-2 whitespace-pre-line leading-relaxed text-base border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-900/40"
+      >
+        {{ ticketSig().description }}
+      </div>
+    </div>
+
+    <!-- EVIDENCE -->
+    @if (ticket().evidence) {
+    <div>
+      <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Preuve</h3>
+      <a
+        [href]="ticket().evidence.url"
+        target="_blank"
+        class="mt-2 inline-block text-blue-600 dark:text-blue-400 underline text-sm"
+      >
+        Voir la pièce jointe
+      </a>
+    </div>
+    }
   </div>
+
+  <!-- TIMELINE REVIEW -->
+  <app-review [ticket]="ticketSig()" />
+
+  <!-- DIALOG FOR MANAGING EXCHANGE -->
+  @if (openReview()) {
+  <app-review-dialog [ticket]="ticketSig()" (onclose)="onReviewed($event)" />
+  }
+
+  <!-- ACTIONS -->
+  <div class="p-5 md:p-7 border-t dark:border-gray-700 flex justify-end gap-3">
+    <button
+      (click)="previousState()"
+      [disabled]="isResolving()"
+      type="button"
+      class="px-4 py-2 text-sm rounded-lg border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600 disabled:cursor-not-allowed disabled:opacity-50"
+    >
+      Fermer
+    </button>
+
+    <button
+      (click)="resolve()"
+      [disabled]="isResolving()"
+      type="button"
+      class="flex gap-2 items-center text-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 disabled:cursor-not-allowed disabled:opacity-50"
+    >
+      @if (isResolving()) {
+      <svg
+        class="inline w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
+        viewBox="0 0 100 101"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+          fill="currentColor"
+        />
+        <path
+          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+          fill="currentFill"
+        />
+      </svg>
+      }
+      {{ ticketSig().resolved ? 'Rouvrir le ticket' : 'Marquer comme résolu' }}
+    </button>
+  </div>
+</div>
 }

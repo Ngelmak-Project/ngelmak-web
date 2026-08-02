@@ -10,6 +10,7 @@ import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { ChannelService } from '../nk-channel.service';
 import { ChannelUpdateComponent } from '../update/nk-channel-update.component';
+import { ChannelInitialsPipe } from 'app/shared/pipes/channel-initials.pipe';
 
 @Component({
   standalone: true,
@@ -18,10 +19,11 @@ import { ChannelUpdateComponent } from '../update/nk-channel-update.component';
   imports: [
     CommonModule,
     RouterModule,
+    SharedModule,
     ChannelUpdateComponent,
     ChannelFeedComponent,
     FormatMediumDatetimePipe,
-    SharedModule,
+    ChannelInitialsPipe,
   ],
   animations: [fadeInRight400ms],
 })

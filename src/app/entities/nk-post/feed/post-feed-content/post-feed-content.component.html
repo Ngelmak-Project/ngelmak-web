@@ -2,14 +2,13 @@
   <!-- POST CARDS -->
   <div class="flex flex-col gap-2 md:gap-4 mt-6">
     @for (post of feeds(); track $index) {
-      <app-post-card [post]="post" (ondeleted)="handlePostDeleted($event)" />
+    <app-post-card [post]="post" (ondeleted)="handlePostDeleted($event)" />
+    }
+    <!-- LOADING SPINNER -->
+    @if (isLoading()) {
+    <app-skeleton />
     }
   </div>
-
-  <!-- LOADING SPINNER -->
-  @if (isLoading()) {
-    <app-skeleton></app-skeleton>
-  }
 
   <!-- SENTINEL (invisible) -->
   <div class="h-1" appVisibleTrigger (visible)="handleScrollEnd()"></div>

@@ -21,8 +21,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        title: 'Ngelmak Project',
-        component: HomeComponent,
+        loadChildren: () => import('app/home/home.routes'),
       },
       {
         path: 'admin',

@@ -9,7 +9,7 @@ import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { PasswordStrengthBarComponent } from '../sign-up/password-strength-bar/password-strength-bar.component';
 import { PasswordResetService } from './password-reset.service';
-import { LanguageSwitcherComponent } from 'app/shared/language-switcher/language-switcher.component';
+import { PreferencesPanelComponent } from 'app/shared/preferences-panel/preferences-panel.component';
 
 const initPassword = {
   key: '',
@@ -27,7 +27,7 @@ const initPassword = {
     Field,
     PasswordStrengthBarComponent,
     SharedModule,
-    LanguageSwitcherComponent,
+    PreferencesPanelComponent,
   ],
 })
 export class PasswordResetComponent {

@@ -66,12 +66,13 @@ ios/build/
 ios/Pods/
 ios/DerivedData/
 
-# Visual Studio Code
-.vscode/*
+# VS Code
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
 
 # VS Code workspace history
 .history/

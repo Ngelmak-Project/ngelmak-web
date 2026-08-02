@@ -36,14 +36,14 @@
                 <span
                   class="fallback hidden w-full h-full items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white font-bold text-xl"
                 >
-                  {{ activeChannel().name.at(0) }}
+                  {{ activeChannel() | channelInitials}}
                 </span>
               } @else {
                 <!-- No avatar -->
                 <span
                   class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white font-bold text-xl"
                 >
-                  {{ activeChannel().name.at(0) }}
+                  {{ activeChannel() | channelInitials}}
                 </span>
               }
             </div>

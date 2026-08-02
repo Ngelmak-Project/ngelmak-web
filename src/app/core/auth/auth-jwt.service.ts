@@ -1,39 +1,46 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-
 import { SignInModel } from 'app/authentication/sign-in/sign-in.model';
 import { ApiConfigService } from 'app/core/config/api-config.service';
-import { StateStorageService } from './state-storage.service';
-
-type JwtToken = {
-  id_token: string;
-};
+import { from, Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { StateStorageService } from '../storage/state-storage.service';
+import { LoginResponseDTO } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthServerProvider {
   private http = inject(HttpClient);
   private storage = inject(StateStorageService);
-  private resourceUrl = inject(ApiConfigService).buildApiUrl('auth', 'login');
-
-  /**
-   * Returns the stored JWT token or an empty string if none exists.
-   */
-  getToken(): string {
-    return this.storage.getAuthenticationToken() ?? '';
-  }
+  private resourceUrl = inject(ApiConfigService).buildApiUrl('auth');
 
   /**
    * Authenticates the user with the backend.
    * Stores the JWT token on success.
    */
   signIn(credentials: SignInModel): Observable<void> {
-    return this.http.post<JwtToken>(this.resourceUrl, credentials).pipe(
-      tap(({ id_token }) =>
-        this.storage.storeAuthenticationToken(id_token, credentials.rememberMe)
+    return this.http
+      .post<LoginResponseDTO>(`${this.resourceUrl}/login`, credentials, { withCredentials: true })
+      .pipe(
+        switchMap(({ accessToken, refreshToken }) =>
+          from(this.storage.storeAuthenticationToken(accessToken, refreshToken))
+        ),
+        map(() => void 0)
+      );
+  }
+
+  refreshToken(): Observable<void> {
+    return from(this.storage.getRefreshToken()).pipe(
+      switchMap((refreshToken) =>
+        this.http.post<LoginResponseDTO>(
+          `${this.resourceUrl}/refresh`,
+          { refreshToken },
+          { withCredentials: true }
+        )
       ),
-      map(() => void 0),
+      switchMap(({ accessToken, refreshToken }) =>
+        from(this.storage.storeAuthenticationToken(accessToken, refreshToken))
+      ),
+      map(() => void 0)
     );
   }
 
@@ -42,7 +49,7 @@ export class AuthServerProvider {
    * Returns an observable for guard compatibility.
    */
   signOut(): Observable<void> {
-    this.storage.clearAll();
+    this.storage.clearAll().catch((error) => console.error('Failed to clear:', error));
     return of(void 0);
   }
 }

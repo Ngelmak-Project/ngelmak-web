@@ -8,15 +8,13 @@
         "pageTitle.month": "Mois | Ngelmak",
         "pageTitle.trending": "Tendances | Ngelmak",
         "pageTitle.search": "Recherche | Ngelmak",
-        "project": {
-          "title": "Le Projet Ngelmak",
-          "visionAndGoals": "Vision & Objectifs",
-          "foundationsAndPrinciples": "Fondements & Principes",
-          "governanceAndRights": "Gouvernance & Droits",
-          "informationSharing": "Partage d'Information",
-          "mobilitySoon": "Mobilité (bientôt)",
-          "roadmap": "Feuille de route"
-        },
+        "project.title": "Le Projet Ngelmak",
+        "project.visionAndGoals": "Vision & Objectifs",
+        "project.foundationsAndPrinciples": "Fondements & Principes",
+        "project.governanceAndRights": "Gouvernance & Droits",
+        "project.informationSharing": "Partage d'Information",
+        "project.mobilitySoon": "Mobilité (bientôt)",
+        "project.roadmap": "Feuille de route",
         "community": "Communauté",
         "reports": "Signalements",
         "moderation": "Modération",
@@ -24,24 +22,26 @@
         "about": "À propos",
         "contact": "Contact",
         "donations": "Faire un don",
-        "language": {
-          "fr": "Français",
-          "en": "English"
-        }
+        "language.fr": "Français",
+        "language.en": "English"
       },
       "navbar": {
-        "login": "Se connecter",
-        "register": "Créer un compte",
-        "logout": "Se déconnecter",
-        "myAccount": "Mon compte",
+        "account.label": "Compte",
+        "account.desc": "Se connecter ou créer un compte",
+        "account.login": "Se connecter",
+        "account.register": "Créer un compte",
+        "account.logout": "Se déconnecter",
+        "myChannel": "Ma chaîne",
         "createChannel": "Créer ma chaîne",
         "security": "Sécurité",
         "updateInfo": "Mettre à jour mes informations",
-        "admin": {
-          "users": "Utilisateurs",
-          "inbox": "Boîte de réception",
-          "system": "Système"
-        }
+        "language.label": "Langue",
+        "language.desc": "Sélectionner votre préférence",
+        "admin.label": "Admin",
+        "admin.desc": "Espace Administrateur",
+        "admin.users": "Utilisateurs",
+        "admin.inbox": "Boîte de réception",
+        "admin.system": "Système"
       },
       "notFound": {
         "title": "Page introuvable",
@@ -51,13 +51,11 @@
           "description": "Oups… Cette page n'existe pas ou n'est plus disponible. Vous pouvez revenir à l'accueil ou poursuivre votre navigation.",
           "backHome": "Retour à l'accueil"
         },
-
         "why": {
           "title": "Pourquoi cette page n'existe pas",
           "p1": "Ngelmak évolue constamment. Certaines pages peuvent être déplacées, renommées ou retirées au fil du développement. Il est possible que le lien que vous avez suivi ne soit plus valide.",
           "p2": "Notre objectif est de vous offrir une expérience fluide, souveraine et accessible. Si vous pensez qu'il s'agit d'une erreur ou si vous souhaitez contribuer à l'amélioration de la plateforme, vous pouvez nous le signaler."
         },
-
         "continue": {
           "title": "Continuer votre navigation",
           "description": "Vous pouvez revenir à la page d'accueil, explorer les sections principales ou découvrir les fonctionnalités en cours de développement par la communauté."
@@ -838,6 +836,13 @@
       "textCollapse": {
         "showMore": "Lire la suite",
         "showLess": "Masquer"
+      },
+      "preferencesPanel": {
+        "title": "Paramètres",
+        "description": "Langue et apparence",
+        "theme.light": "Clair",
+        "theme.dark": "Sombre",
+        "theme.system": "Système"
       }
     },
     "pages": {

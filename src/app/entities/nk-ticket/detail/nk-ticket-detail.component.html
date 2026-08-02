@@ -1,314 +1,329 @@
 @if (ticket()) {
-  <div
-    class="flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full border border-gray-200 dark:border-gray-700"
-  >
-    <!-- HEADER -->
-    <div class="p-5 md:p-7 border-b dark:border-gray-700">
-      <div class="flex items-start justify-between gap-4">
-        <div>
-          <h2
-            translate="ngelmakTranslation.entities.ticket.details.title"
-            [translateParams]="{ id: ticket().id }"
-            class="text-2xl font-semibold text-gray-900 dark:text-white leading-tight"
-          >
-            Signalement #{{ ticket().id }}
-          </h2>
-          <p
-            translate="ngelmakTranslation.entities.ticket.details.subtitle"
-            class="text-sm text-gray-500 dark:text-gray-400 mt-0.5"
-          >
-            Ce signalement concerne l'un de vos contenus.
-          </p>
-        </div>
+<div
+  class="flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full border border-gray-200 dark:border-gray-700"
+>
+  <!-- HEADER -->
+  <div class="p-5 md:p-7 border-b dark:border-gray-700">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <h2
+          translate="ngelmakTranslation.entities.ticket.details.title"
+          [translateParams]="{ id: ticket().id }"
+          class="text-2xl font-semibold text-gray-900 dark:text-white leading-tight"
+        >
+          Signalement #{{ ticket().id }}
+        </h2>
+        <p
+          translate="ngelmakTranslation.entities.ticket.details.subtitle"
+          class="text-sm text-gray-500 dark:text-gray-400 mt-0.5"
+        >
+          Ce signalement concerne l'un de vos contenus.
+        </p>
+      </div>
 
-        <div class="flex space-x-2 md:space-x-4">
-          <span
-            class="px-2.5 py-1 text-sm rounded-full font-medium shadow-sm"
-            [ngClass]="{
+      <div class="flex space-x-2 md:space-x-4">
+        <span
+          class="px-2.5 py-1 text-sm rounded-full font-medium shadow-sm"
+          [ngClass]="{
               'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300':
                 ticket().resolved,
               'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300':
                 !ticket().resolved,
             }"
-          >
-            {{
-              (ticket().resolved
-                ? 'ngelmakTranslation.entities.ticket.details.statusResolved'
-                : 'ngelmakTranslation.entities.ticket.details.statusPending'
-              ) | translate
-            }}
-          </span>
+        >
+          {{
+            (ticket().resolved
+              ? 'ngelmakTranslation.entities.ticket.details.statusResolved'
+              : 'ngelmakTranslation.entities.ticket.details.statusPending'
+            ) | translate
+          }}
+        </span>
 
-          <button
-            translate="ngelmakTranslation.entities.ticket.details.close"
-            (click)="previousState()"
-            type="button"
-            class="px-4 py-2 text-sm rounded-full border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600"
-          >
-            Fermer
-          </button>
-        </div>
+        <button
+          translate="ngelmakTranslation.entities.ticket.details.close"
+          (click)="previousState()"
+          type="button"
+          class="px-4 py-2 text-sm rounded-full border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600"
+        >
+          Fermer
+        </button>
+      </div>
+    </div>
+
+    <!-- INFO BANNER -->
+    <div
+      class="mt-4 flex items-start gap-3 rounded-xl bg-blue-50 dark:bg-blue-900/30 px-4 py-3 text-sm text-blue-900 dark:text-blue-100"
+    >
+      <svg
+        class="w-5 h-5 mt-0.5 shrink-0"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 9v4m0 4h.01M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z"
+        />
+      </svg>
+      <p translate="ngelmakTranslation.entities.ticket.details.infoBanner">
+        Ce signalement a été déposé par un autre utilisateur ou un modérateur. Vous pouvez consulter
+        les détails ci-dessous et, si nécessaire, fournir des informations supplémentaires pour
+        expliquer ou défendre votre position.
+      </p>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="p-5 md:p-7 space-y-8 text-gray-700 dark:text-gray-300">
+    <!-- BASIC INFO -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Date -->
+      <div>
+        <h3
+          translate="ngelmakTranslation.entities.ticket.details.receivedAtTitle"
+          class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+        >
+          Signalement reçu le
+        </h3>
+        <p class="mt-1 text-base">
+          {{ ticket().issuedAt | formatMediumDatetime }}
+        </p>
       </div>
 
-      <!-- INFO BANNER -->
-      <div
-        class="mt-4 flex items-start gap-3 rounded-xl bg-blue-50 dark:bg-blue-900/30 px-4 py-3 text-sm text-blue-900 dark:text-blue-100"
-      >
-        <svg
-          class="w-5 h-5 mt-0.5 shrink-0"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
+      <!-- STATUS -->
+      <div>
+        <h3
+          translate="ngelmakTranslation.entities.ticket.details.statusTitle"
+          class="text-sm font-semibold text-gray-500 dark:text-gray-400"
         >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 9v4m0 4h.01M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z"
-          />
-        </svg>
-        <p translate="ngelmakTranslation.entities.ticket.details.infoBanner">
-          Ce signalement a été déposé par un autre utilisateur ou un modérateur. Vous pouvez
-          consulter les détails ci-dessous et, si nécessaire, fournir des informations
-          supplémentaires pour expliquer ou défendre votre position.
+          Statut
+        </h3>
+        <p class="mt-1 text-base">
+          {{
+            (ticket().resolved
+              ? 'ngelmakTranslation.entities.ticket.details.statusResolvedText'
+              : 'ngelmakTranslation.entities.ticket.details.statusPendingText'
+            ) | translate
+          }}
+        </p>
+      </div>
+
+      <!-- HANDLED BY (OPTIONAL, NEUTRAL) -->
+      <div>
+        <h3
+          translate="ngelmakTranslation.entities.ticket.details.handledTitle"
+          class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+        >
+          Traitement
+        </h3>
+        <p class="mt-1 text-base">
+          {{
+            (ticket().handledBy
+              ? 'ngelmakTranslation.entities.ticket.details.handledYes'
+              : 'ngelmakTranslation.entities.ticket.details.handledNo'
+            ) | translate
+          }}
         </p>
       </div>
     </div>
 
-    <!-- CONTENT -->
-    <div class="p-5 md:p-7 space-y-8 text-gray-700 dark:text-gray-300">
-      <!-- BASIC INFO -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Date -->
-        <div>
-          <h3
-            translate="ngelmakTranslation.entities.ticket.details.receivedAtTitle"
-            class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+    <!-- TARGET CONTENT -->
+    <div>
+      <h3
+        translate="ngelmakTranslation.entities.ticket.details.targetContentTitle"
+        class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2"
+      >
+        Contenu concerné
+      </h3>
+
+      <div class="mt-1 text-base space-y-3">
+        <!-- CHANNEL -->
+        @if (ticket().channel) {
+        <div class="flex flex-wrap items-center gap-3">
+          <span translate="ngelmakTranslation.entities.ticket.details.type" class="font-medium"
+            >Type :</span
           >
-            Signalement reçu le
-          </h3>
-          <p class="mt-1 text-base">
-            {{ ticket().issuedAt | formatMediumDatetime }}
-          </p>
-        </div>
-
-        <!-- STATUS -->
-        <div>
-          <h3
-            translate="ngelmakTranslation.entities.ticket.details.statusTitle"
-            class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+          <span
+            translate="ngelmakTranslation.entities.ticket.details.typeChannel"
+            class="px-2 py-1 text-xs"
           >
-            Statut
-          </h3>
-          <p class="mt-1 text-base">
-            {{
-              (ticket().resolved
-                ? 'ngelmakTranslation.entities.ticket.details.statusResolvedText'
-                : 'ngelmakTranslation.entities.ticket.details.statusPendingText'
-              ) | translate
-            }}
-          </p>
-        </div>
+            Chaîne
+          </span>
 
-        <!-- HANDLED BY (OPTIONAL, NEUTRAL) -->
-        <div>
-          <h3
-            translate="ngelmakTranslation.entities.ticket.details.handledTitle"
-            class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+          <a
+            [routerLink]="[
+              '/channel',
+              ticket().channel.id + '-' + ticket().channel.identifier,
+              'view'
+            ]"
+            target="_blank"
+            class="text-blue-600 dark:text-blue-400 font-medium hover:underline"
           >
-            Traitement
-          </h3>
-          <p class="mt-1 text-base">
-            {{
-              (ticket().handledBy
-                ? 'ngelmakTranslation.entities.ticket.details.handledYes'
-                : 'ngelmakTranslation.entities.ticket.details.handledNo'
-              ) | translate
-            }}
-          </p>
-        </div>
-      </div>
+            {{ ticket().channel.name }}
+          </a>
 
-      <!-- TARGET CONTENT -->
-      <div>
-        <h3
-          translate="ngelmakTranslation.entities.ticket.details.targetContentTitle"
-          class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2"
-        >
-          Contenu concerné
-        </h3>
-
-        <div class="mt-1 text-base space-y-3">
-          <!-- CHANNEL -->
-          @if (ticket().channel) {
-            <div class="flex flex-wrap items-center gap-3">
-              <span translate="ngelmakTranslation.entities.ticket.details.type" class="font-medium">Type :</span>
-              <span translate="ngelmakTranslation.entities.ticket.details.typeChannel" class="px-2 py-1 text-xs">
-                Chaîne
-              </span>
-
-              <a
-                [routerLink]="[
-                  '/channel',
-                  ticket().channel.id + '-' + ticket().channel.identifier,
-                  'view',
-                ]"
-                target="_blank"
-                class="text-blue-600 dark:text-blue-400 font-medium hover:underline"
-              >
-                {{ ticket().channel.name }}
-              </a>
-
-              <!-- Avatar -->
-              <div class="shrink-0">
-                @if (ticket().channel.avatar) {
-                  <img
-                    [src]="ticket().channel.avatar"
-                    alt="Avatar de la chaîne"
-                    class="rounded-full w-10 h-10"
-                  />
-                } @else {
-                  <div
-                    class="flex items-center justify-center rounded-full w-10 h-10 text-xl uppercase text-black bg-gray-50 dark:bg-gray-300"
-                  >
-                    {{ ticket().channel.name.at(0) }}
-                  </div>
-                }
-              </div>
+          <!-- Avatar -->
+          <div class="shrink-0">
+            @if (ticket().channel.avatar) {
+            <img
+              [src]="ticket().channel.avatar"
+              alt="Avatar de la chaîne"
+              class="rounded-full w-10 h-10"
+            />
+            } @else {
+            <div
+              class="flex items-center justify-center rounded-full w-10 h-10 text-xl uppercase text-black bg-gray-50 dark:bg-gray-300"
+            >
+              {{ ticket().channel | channelInitials }}
             </div>
-          }
+            }
+          </div>
+        </div>
+        }
 
-          <!-- POST -->
-          @else if (ticket().post) {
-            <div class="space-y-2">
-              <div class="flex items-center gap-3">
-                <span translate="ngelmakTranslation.entities.ticket.details.type" class="font-medium">Type :</span>
-                <span translate="ngelmakTranslation.entities.ticket.details.typePost" class="px-2 py-1 text-xs">
-                  Post
-                </span>
+        <!-- POST -->
+        @else if (ticket().post) {
+        <div class="space-y-2">
+          <div class="flex items-center gap-3">
+            <span translate="ngelmakTranslation.entities.ticket.details.type" class="font-medium"
+              >Type :</span
+            >
+            <span
+              translate="ngelmakTranslation.entities.ticket.details.typePost"
+              class="px-2 py-1 text-xs"
+            >
+              Post
+            </span>
 
-                <a
-                  translate="ngelmakTranslation.entities.ticket.details.viewPost"
-                  [translateParams]="{ id: ticket().post.id }"
-                  [routerLink]="['/post', ticket().post.id]"
-                  target="_blank"
-                  class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/40 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/60 transition-colors"
-                >
-                  Voir le post #{{ ticket().post.id }}
-                </a>
-              </div>
+            <a
+              translate="ngelmakTranslation.entities.ticket.details.viewPost"
+              [translateParams]="{ id: ticket().post.id }"
+              [routerLink]="['/post', ticket().post.id]"
+              target="_blank"
+              class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/40 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/60 transition-colors"
+            >
+              Voir le post #{{ ticket().post.id }}
+            </a>
+          </div>
 
-              <div
-                class="mt-1 text-gray-900 dark:text-white whitespace-pre-line border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-900/40"
-                [innerHTML]="ticket().post.content"
-              ></div>
+          <div
+            class="mt-1 text-gray-900 dark:text-white whitespace-pre-line border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-900/40"
+            [innerHTML]="ticket().post.content"
+          ></div>
 
-              <!-- Attachments -->
-              @if (ticket().post.files?.length) {
-                <div
-                  class="grid gap-4 mt-2"
-                  [ngClass]="{
+          <!-- Attachments -->
+          @if (ticket().post.files?.length) {
+          <div
+            class="grid gap-4 mt-2"
+            [ngClass]="{
                     'grid-cols-1': ticket().post.files.length === 1,
                     'grid-cols-1 md:grid-cols-2': ticket().post.files.length > 1,
                   }"
-                >
-                  @for (file of ticket().post.files; track file; let idx = $index) {
-                    <img
-                      class="h-auto rounded-lg shadow-xl dark:shadow-gray-800"
-                      [src]="file.url"
-                      alt="Image liée au post"
-                    />
-                  }
-                </div>
-              }
-            </div>
+          >
+            @for (file of ticket().post.files; track file; let idx = $index) {
+            <img
+              class="h-auto rounded-lg shadow-xl dark:shadow-gray-800"
+              [src]="file.url"
+              alt="Image liée au post"
+            />
+            }
+          </div>
           }
+        </div>
+        }
 
-          <!-- COMMENT -->
-          @else if (ticket().comment) {
-            <div class="space-y-2">
-              <div class="flex items-center gap-3">
-                <span translate="ngelmakTranslation.entities.ticket.details.type" class="font-medium">Type :</span>
-                <span translate="ngelmakTranslation.entities.ticket.details.typeComment" class="px-2 py-1 text-xs">
-                  Commentaire
-                </span>
-
-                <a
-                  translate="ngelmakTranslation.entities.ticket.details.viewComment"
-                  [translateParams]="{ id: ticket().comment.id }"
-                  [routerLink]="[]"
-                  fragment="comment-{{ ticket().comment.id }}"
-                  target="_blank"
-                  class="text-blue-600 dark:text-blue-400 font-semibold hover:underline"
-                >
-                  Voir le commentaire #{{ ticket().comment.id }}
-                </a>
-              </div>
-
-              <div
-                class="mt-1 text-gray-900 dark:text-white whitespace-pre-line border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-900/40"
-                [innerHTML]="ticket().comment.content"
-              ></div>
-
-              @if (ticket().comment.file) {
-                <img
-                  class="h-auto rounded-lg shadow-xl dark:shadow-gray-800 mt-2"
-                  [src]="ticket().comment.file.url"
-                  alt="Image liée au commentaire"
-                />
-              }
-            </div>
-          } @else {
-            <p
-              translate="ngelmakTranslation.entities.ticket.details.contentNotAvailable"
-              class="text-sm text-gray-500 dark:text-gray-400"
+        <!-- COMMENT -->
+        @else if (ticket().comment) {
+        <div class="space-y-2">
+          <div class="flex items-center gap-3">
+            <span translate="ngelmakTranslation.entities.ticket.details.type" class="font-medium"
+              >Type :</span
             >
-              Le contenu concerné n'est plus disponible.
-            </p>
+            <span
+              translate="ngelmakTranslation.entities.ticket.details.typeComment"
+              class="px-2 py-1 text-xs"
+            >
+              Commentaire
+            </span>
+
+            <a
+              translate="ngelmakTranslation.entities.ticket.details.viewComment"
+              [translateParams]="{ id: ticket().comment.id }"
+              [routerLink]="[]"
+              fragment="comment-{{ ticket().comment.id }}"
+              target="_blank"
+              class="text-blue-600 dark:text-blue-400 font-semibold hover:underline"
+            >
+              Voir le commentaire #{{ ticket().comment.id }}
+            </a>
+          </div>
+
+          <div
+            class="mt-1 text-gray-900 dark:text-white whitespace-pre-line border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-900/40"
+            [innerHTML]="ticket().comment.content"
+          ></div>
+
+          @if (ticket().comment.file) {
+          <img
+            class="h-auto rounded-lg shadow-xl dark:shadow-gray-800 mt-2"
+            [src]="ticket().comment.file.url"
+            alt="Image liée au commentaire"
+          />
           }
         </div>
-      </div>
-
-      <!-- REASON / DESCRIPTION -->
-      <div>
-        <h3
-          translate="ngelmakTranslation.entities.ticket.details.reasonTitle"
-          class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+        } @else {
+        <p
+          translate="ngelmakTranslation.entities.ticket.details.contentNotAvailable"
+          class="text-sm text-gray-500 dark:text-gray-400"
         >
-          Raison du signalement
-        </h3>
-        <div
-          class="mt-2 whitespace-pre-line leading-relaxed text-base border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-900/40"
-        >
-          {{ ticket().description }}
-        </div>
-      </div>
-
-      <!-- EVIDENCE (IF ANY) -->
-      @if (ticket().evidence) {
-        <div>
-          <h3
-            translate="ngelmakTranslation.entities.ticket.details.evidenceTitle"
-            class="text-sm font-semibold text-gray-500 dark:text-gray-400"
-          >
-            Pièce jointe du signalement
-          </h3>
-          <a
-            translate="ngelmakTranslation.entities.ticket.details.openEvidence"
-            [routerLink]="ticket().evidence.url"
-            target="_blank"
-            class="mt-2 inline-block text-blue-600 dark:text-blue-400 underline text-sm"
-          >
-            Ouvrir la pièce jointe
-          </a>
-        </div>
-      }
-
-      <!-- USER RESPONSE SECTION -->
-      <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
-        <app-review [ticket]="ticket()"></app-review>
+          Le contenu concerné n'est plus disponible.
+        </p>
+        }
       </div>
     </div>
+
+    <!-- REASON / DESCRIPTION -->
+    <div>
+      <h3
+        translate="ngelmakTranslation.entities.ticket.details.reasonTitle"
+        class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+      >
+        Raison du signalement
+      </h3>
+      <div
+        class="mt-2 whitespace-pre-line leading-relaxed text-base border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-900/40"
+      >
+        {{ ticket().description }}
+      </div>
+    </div>
+
+    <!-- EVIDENCE (IF ANY) -->
+    @if (ticket().evidence) {
+    <div>
+      <h3
+        translate="ngelmakTranslation.entities.ticket.details.evidenceTitle"
+        class="text-sm font-semibold text-gray-500 dark:text-gray-400"
+      >
+        Pièce jointe du signalement
+      </h3>
+      <a
+        translate="ngelmakTranslation.entities.ticket.details.openEvidence"
+        [routerLink]="ticket().evidence.url"
+        target="_blank"
+        class="mt-2 inline-block text-blue-600 dark:text-blue-400 underline text-sm"
+      >
+        Ouvrir la pièce jointe
+      </a>
+    </div>
+    }
+
+    <!-- USER RESPONSE SECTION -->
+    <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+      <app-review [ticket]="ticket()"></app-review>
+    </div>
   </div>
+</div>
 }

@@ -35,6 +35,14 @@ export interface IPostDTO {
   postReply?: IPostDTO;
 }
 
+export interface IFeedPageDTO {
+  content: IPostDTO[];
+  sessionKey: string;
+  windowStart: Date;
+  number: number;
+  sorts: string[];
+}
+
 interface ActiveChannel {
   id?: number;
 	name?: String;
