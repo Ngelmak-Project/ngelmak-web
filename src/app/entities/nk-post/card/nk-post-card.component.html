@@ -195,7 +195,14 @@
     </div>
 
     <!-- MENU (RIGHT) -->
-    <div *hasAnyAuthority="'ROLE_USER'" class="relative ml-auto">
+    <div *hasAnyAuthority="'ROLE_USER'" class="relative inline-flex items-center gap-2 ml-auto">
+      @if (!postSig().visible) {
+      <span
+        class="w-5 h-5 text-base leading-none inline-flex items-center justify-center transition-transform duration-300 hover:scale-110"
+      >
+        🔒
+      </span>
+      }
       <button
         clickOutside
         (onClickOutside)="showMenu.set(false)"

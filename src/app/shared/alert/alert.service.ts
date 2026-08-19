@@ -6,7 +6,7 @@ export interface IAlert {
   id?: number;
   type: AlertType;
   message?: string;
-  translationKey?: string;
+  translationKey: string;
   translationParams?: { [key: string]: unknown };
   timeout?: number;
   showIcon?: boolean;

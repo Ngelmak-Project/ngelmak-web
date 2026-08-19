@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { SignInModel } from 'app/authentication/sign-in/sign-in.model';
 import { ApiConfigService } from 'app/core/config/api-config.service';
-import { from, Observable, of } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { StateStorageService } from '../storage/state-storage.service';
 import { LoginResponseDTO } from './auth.model';
@@ -49,7 +49,16 @@ export class AuthServerProvider {
    * Returns an observable for guard compatibility.
    */
   signOut(): Observable<void> {
-    this.storage.clearAll().catch((error) => console.error('Failed to clear:', error));
-    return of(void 0);
+    return from(this.storage.getRefreshToken()).pipe(
+      switchMap((refreshToken) =>
+        this.http.post<LoginResponseDTO>(
+          `${this.resourceUrl}/logout`,
+          { refreshToken },
+          { withCredentials: true }
+        )
+      ),
+      switchMap(() => from(this.storage.clearAll())),
+      map(() => void 0)
+    );
   }
 }

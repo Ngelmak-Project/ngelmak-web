@@ -427,8 +427,7 @@
             "created": "Post publié.",
             "updated": "Post mis à jour.",
             "deleted": "Post supprimé.",
-            "error": "Une erreur s'est produite lors de l'enregistrement de votre poste.\nVeuillez réessayer.",
-            "videoNotSupported": "Les médias vidéos ne sont pas encore prise en charge."
+            "error": "Une erreur s'est produite lors de l'enregistrement de votre poste.\nVeuillez réessayer."
           }
         }
       },
@@ -437,49 +436,41 @@
           "signInToComment": "Connectez-vous pour commenter.",
           "noComments": "Aucun commentaire pour le moment.",
           "loadMore": "Plus de commentaires",
-          "item": {
+          "item.reply": "Répondre",
+          "item.replies": "{{count}} réponse(s)",
+          "item.menu": {
             "reply": "Répondre",
-            "replies": "{{count}} réponse(s)",
-            "menu": {
-              "reply": "Répondre",
-              "update": "Modifier",
+            "update": "Modifier",
+            "delete": "Supprimer",
+            "admin": {
+              "blockUser": "Bloquer l'utilisateur",
               "delete": "Supprimer",
-              "admin": {
-                "blockUser": "Bloquer l'utilisateur",
-                "delete": "Supprimer",
-                "hide": "Masquer"
-              },
-              "report": {
-                "label": "Signaler",
-                "privacy": "Votre identité restera confidentielle."
-              }
+              "hide": "Masquer"
             },
-            "deleteConfirm.title": "Confirmation de suppression",
-            "deleteConfirm.message": "Êtes-vous sûr de vouloir supprimer ce commentaire ?"
+            "report": {
+              "label": "Signaler",
+              "privacy": "Votre identité restera confidentielle."
+            }
           },
-          "alerts": {
-            "deleteSuccess": "Commentaire supprimé.",
-            "deleteError": "Une erreur s'est produite lors de la suppression du commentaire."
-          }
+          "item.deleteConfirm.title": "Confirmation de suppression",
+          "item.deleteConfirm.message": "Êtes-vous sûr de vouloir supprimer ce commentaire ?",
+          "alerts.deleteSuccess": "Commentaire supprimé.",
+          "alerts.deleteError": "Une erreur s'est produite lors de la suppression du commentaire."
         },
         "update": {
-          "content": {
-            "label": "Tapez votre commentaire!",
-            "placeholder": "Tapez votre commentaire!",
-            "required": "Le contenu du commentaire est requis.",
-            "maxLength": "Le contenu du commentaire ne peut pas dépasser 5000 caractères."
-          },
+          "content.label": "Tapez votre commentaire!",
+          "content.placeholder": "Tapez votre commentaire!",
+          "content.required": "Le contenu du commentaire est requis.",
+          "content.maxLength": "Le contenu du commentaire ne peut pas dépasser 5000 caractères.",
           "removeImage": "Supprimer l'image",
           "saveUpdate": "Modifier",
           "savePublish": "Publier",
           "cancel": "Annuler",
-          "alerts": {
-            "created": "Commentaire publié.",
-            "updated": "Commentaire mis à jour.",
-            "deleted": "Commentaire supprimé.",
-            "error": "Une erreur s'est produite lors de l'enregistrement de votre commentaire.\nVeuillez réessayer.",
-            "videoNotSupported": "Les médias vidéos ne sont pas encore prise en charge."
-          }
+          "alerts.created": "Commentaire publié.",
+          "alerts.updated": "Commentaire mis à jour.",
+          "alerts.deleted": "Commentaire supprimé.",
+          "alerts.error": "Une erreur s'est produite lors de l'enregistrement de votre commentaire.\nVeuillez réessayer.",
+          "alerts.videoNotSupported": "Les médias vidéos ne sont pas encore prise en charge."
         }
       },
       "review": {
@@ -642,146 +633,149 @@
             "error": "Une erreur s'est produite."
           }
         }
+      },
+      "file": {
+        "imageViewer": {
+          "message": "Vous avez sélectionné {{count}} élément(s)."
+        },
+        "filePicker": {
+          "alerts": {
+            "videoNotSupported": "Les vidéos ne peuvent pas être ajoutées pour le moment.",
+            "totalSizeExceeded": "La taille totale dépasse la limite autorisée.",
+            "invalidType": "Ce type de fichier n'est pas autorisé.",
+            "fileTooLarge": "Ce fichier dépasse la taille maximale autorisée.",
+            "genericError": "Une erreur est survenue lors de la sélection.",
+            "emptyFile": "Ce fichier est vide et ne peut pas être ajouté."
+          }
+        }
       }
     },
     "userManagement": {
       "channel": {
         "pageTitle": "Ngelmak — Gestion de la chaîne",
-        "banner": {
-          "edit": "Modifier la bannière",
-          "remove": "Supprimer la bannière",
-          "validate": "Valider",
-          "cancel": "Annuler"
-        },
-        "avatar": {
-          "fallback": "Avatar",
-          "upload": "Téléverser un avatar",
-          "validate": "Valider",
-          "cancel": "Annuler",
-          "loading": "Téléversement en cours..."
-        },
+        "banner.edit": "Modifier la bannière",
+        "banner.remove": "Supprimer la bannière",
+        "banner.validate": "Valider",
+        "banner.cancel": "Annuler",
+        "avatar.fallback": "Avatar",
+        "avatar.upload": "Téléverser un avatar",
+        "avatar.validate": "Valider",
+        "avatar.cancel": "Annuler",
+        "avatar.loading": "Téléversement en cours...",
         "emptyDescription": "Aucune description pour le moment...",
         "updateButton": "Modifier la chaîne",
-        "tabs": {
-          "posts": "Publications",
-          "comments": "Commentaires",
-          "subscriptions": "Abonnements",
-          "reports": "Signalements"
-        },
-        "channelRelated": {
-          "channelPost": "Mes publications",
-          "channelComment": "Mes commentaires",
-          "subscriptions": "Mes abonnements",
-          "reports": "Signalements me concernant"
-        },
+        "tabs.posts": "Publications",
+        "tabs.comments": "Commentaires",
+        "tabs.subscriptions": "Abonnements",
+        "tabs.reports": "Signalements",
+        "channelRelated.channelPost": "Mes publications",
+        "channelRelated.channelComment": "Mes commentaires",
+        "channelRelated.subscriptions": "Mes abonnements",
+        "channelRelated.reports": "Signalements me concernant",
         "connections.title": "Mes connexions",
         "connections.following": "Abonnements",
         "connections.followers": "Abonnés",
         "connections.follow": "Suivre",
         "connections.posts": "Publication(s)",
         "connections.emptyFollowing": "Vous ne suivez encore personne",
-        "connections.emptyFollowers": "Aucun abonné pour le moment"
+        "connections.emptyFollowers": "Aucun abonné pour le moment",
+        "alerts.channelUpdateError": "Une erreur s'est produite lors de la mise à jour."
       },
       "security": {
         "profile": {
           "title": "Informations personnelles",
-          "fields": {
-            "firstName": {
-              "label": "Prénom",
-              "empty": "Prénom non renseigné"
-            },
-            "lastName": {
-              "label": "Nom",
-              "empty": "Nom non renseigné"
-            },
-            "langKey": {
-              "label": "Langue préférée",
-              "empty": "Langue non définie",
-              "options": {
-                "fr": "Français",
-                "en": "English"
-              }
-            },
-            "theme": {
-              "label": "Thème",
-              "dark": "Sombre",
-              "light": "Clair",
-              "empty": "Thème non définie"
-            }
-          },
-          "actions": {
-            "edit": "Modifier mes informations",
-            "cancel": "Annuler",
-            "save": "Enregister"
-          },
-          "image": {
-            "validate": "Valider",
-            "cancel": "Annuler",
-            "upload": "Charger une image"
-          }
+          "form.title": "Modifier le profil",
+          "form.firstName.label": "Prénom",
+          "form.firstName.empty": "Prénom non renseigné",
+          "form.firstName.maxLength": "Le prénom ne peut pas dépasser 50 caractères",
+          "form.lastName.label": "Nom",
+          "form.lastName.empty": "Nom non renseigné",
+          "form.lastName.maxLength": "Le nom ne peut pas dépasser 50 caractères",
+          "form.langKey.label": "Langue préférée",
+          "form.langKey.empty": "Langue non définie",
+          "form.langKey.options.fr": "Français",
+          "form.langKey.options.en": "English",
+          "form.theme.label": "Thème",
+          "form.theme.dark": "Sombre",
+          "form.theme.light": "Clair",
+          "form.theme.empty": "Thème non définie",
+          "form.actions.cancel": "Annuler",
+          "form.actions.save": "Enregister",
+          "actions.edit": "Modifier mes informations",
+          "image.validate": "Valider",
+          "image.cancel": "Annuler",
+          "image.upload": "Charger une image",
+          "alerts.updateError": "Une erreur s'est produite lors de la mise à jour."
         },
         "login": {
           "title": "Identifiant du compte",
-          "description": "Votre identifiant est utilisé pour vous connecter à votre compte. Il n'est pas visible publiquement et n'est jamais partagé avec des tiers. Vous pouvez le modifier à tout moment si nécessaire.",
+          "description": "Votre identifiant est utilisé pour vous connecter à votre compte. Il n'est <strong class=\"font-semibold\">pas visible publiquement</strong> et n'est jamais partagé avec des tiers.",
           "empty": "Aucun identifiant renseigné",
-          "label": "Identifiant",
+          "form.title": "Modifier l'identifiant",
+          "form.label": "Identifiant",
+          "form.required": "L'identifiant est requis.",
+          "form.minLength": "L'identifiant doit comporter au moins 4 caractères",
+          "form.maxLength": "L'identifiant ne peut pas dépasser 50 caractères",
+          "form.checking": "Vérification en cours...",
+          "form.unavailable": "Identifiant déjà utilisé",
+          "form.actions.cancel": "Annuler",
+          "form.actions.save": "Enregister",
           "edit": "Modifier l'identifiant",
-          "checking": "Vérification en cours...",
-          "unavailable": "Identifiant déjà utilisé",
-          "actions": {
-            "cancel": "Annuler",
-            "save": "Enregister"
-          }
+          "alerts.loginExists": "L'adresse e-mail est déjà utilisée.",
+          "alerts.updateSuccess": "Votre login a été mis à jour avec succès.",
+          "alerts.updateError": "Une erreur s'est produite."
         },
         "email": {
           "title": "Adresse email du compte",
-          "description": "Votre adresse email est utilisée uniquement pour la récupération de compte (mot de passe oublié, vérification d'identité). Elle n'est jamais utilisée pour des notifications intrusives, ni partagée avec des tiers.",
+          "description": "Votre adresse email est utilisée uniquement pour la récupération de compte (mot de passe oublié, vérification d'identité). <strong class=\"font-semibold\">Elle n'est jamais utilisée pour des notifications intrusives, ni partagée avec des tiers.</strong>",
           "empty": "Aucune adresse email renseignée",
-          "label": "Email",
-          "edit": "Modifier l'adresse email",
           "verified": "Vérifié",
           "unverified": "Non vérifié",
+          "form.label": "Email",
+          "form.required": "L'adresse email est requise.",
+          "form.email": "L'adresse email n'est pas valide.",
+          "form.minLength": "L'adresse email doit comporter au moins 5 caractères",
+          "form.maxLength": "L'adresse email ne peut pas dépasser 254 caractères",
+          "form.actions.cancel": "Annuler",
+          "form.actions.save": "Enregister",
+          "edit": "Modifier l'adresse email",
           "errorExists": "Email déjà utilisé.",
-          "actions": {
-            "cancel": "Annuler",
-            "save": "Enregister"
-          }
+          "alerts.emailExists": "L'adresse e-mail est déjà utilisée.",
+          "alerts.updateSuccess": "Votre e-mail a été mis à jour avec succès.",
+          "alerts.updateError": "Une erreur s'est produite."
         },
         "password": {
           "title": "Gestion du mot de passe",
           "description": "Votre mot de passe est stocké de manière sécurisée et n'est jamais partagé. Pour modifier votre mot de passe, vous devez confirmer l'ancien et en choisir un nouveau.",
           "edit": "Modifier le mot de passe",
-          "fields": {
-            "current": "Mot de passe actuel",
-            "new": "Nouveau mot de passe",
-            "confirm": "Confirmer le mot de passe",
-            "required": "Ce champ est requis.",
-            "minLength": "Le mot de passe doit comporter au moins 8 caractères.",
-            "maxLength": "Le mot de passe ne peut pas dépasser 20 caractères."
-          },
-          "alerts": {
-            "success": "Votre mot de passe a été mis à jour.",
-            "invalidCurrentPassword": "Le mot de passe actuel est incorrect.",
-            "error": "Une erreur s'est produite lors de la mise à jour de votre mot de passe.\nVeuillez réessayer."
-          },
-          "errors": {
-            "doNotMatch": "Les deux mots de passes ne correspondent pas."
-          },
-          "actions": {
-            "cancel": "Annuler",
-            "save": "Mettre à jour le mot de passe"
-          }
+          "label": "Mot de passe",
+          "badge.secure": "Sécurisé",
+          "hint": "Renforcez votre sécurité avec un mot de passe unique.",
+          "form.title": "Modifier le mot de passe",
+          "form.currentPassword.label": "Mot de passe actuel",
+          "form.newPassword.label": "Nouveau mot de passe",
+          "form.confirmPassword.label": "Confirmer le mot de passe",
+          "form.required": "Ce champ est requis.",
+          "form.minLength": "Le mot de passe doit comporter au moins 8 caractères.",
+          "form.maxLength": "Le mot de passe ne peut pas dépasser 20 caractères.",
+          "alerts.success": "Votre mot de passe a été mis à jour.",
+          "alerts.invalidCurrentPassword": "Le mot de passe actuel est incorrect.",
+          "alerts.error": "Une erreur s'est produite lors de la mise à jour de votre mot de passe.\nVeuillez réessayer.",
+          "errors.doNotMatch": "Les deux mots de passes ne correspondent pas.",
+          "actions.cancel": "Annuler",
+          "actions.save": "Mettre à jour le mot de passe"
         },
         "deletion": {
           "title": "Suppression du compte",
-          "description1": "La suppression de votre compte est un processus différé. Une fois la demande <strong>effectuée</strong>, votre compte sera placé en attente de suppression pendant <strong>{{ deletionDelayDays }}</strong> jours.",
-          "description2": "Toute reconnexion durant cette période sera interprétée comme une <strong>récupération du compte</strong>, et la suppression sera automatiquement annulée.",
-          "description3": "Passé ce délai, toutes vos données personnelles, contenus associés et informations liées seront <strong>permanemment supprimées</strong> et ne pourront plus être récupérés.",
+          "description": "La suppression de votre compte est un processus différé. Passé la période de récupération, toutes vos données seront définitivement effacées.",
+          "p1": "La suppression de votre compte est un processus différé. Une fois la demande <strong>effectuée</strong>, votre compte sera placé en attente de suppression pendant <strong>{{ deletionDelayDays }}</strong> jours.",
+          "p2": "Toute reconnexion durant cette période sera interprétée comme une <strong>récupération du compte</strong>, et la suppression sera automatiquement annulée.",
+          "p3": "Passé ce délai, toutes vos données personnelles, contenus associés et informations liées seront <strong>permanemment supprimées</strong> et ne pourront plus être récupérés.",
           "deleteButton": "Supprimer mon compte",
-          "modal": {
-            "title": "Confirmation de suppression",
-            "message": "Cette action est irréversible après le délai de récupération. Pour confirmer, veuillez saisir votre mot de passe."
-          }
+          "modal.title": "Confirmation de suppression",
+          "modal.message": "Cette action est irréversible après le délai de récupération. Pour confirmer, veuillez saisir votre mot de passe.",
+          "alerts.deletionSuccess": "Confirmation de la suppression de votre compte !",
+          "alerts.deletionError": "Une erreur s'est produite."
         }
       }
     },

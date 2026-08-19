@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { Field, form, maxLength, required } from '@angular/forms/signals';
+import { AttachmentType } from 'app/entities/enumerations/attachment-type.model';
 import { IComment, ICommentDTO } from 'app/entities/models/nk-comment.model';
 import { IFile } from 'app/entities/models/nk-file.model';
 import { IPostDTO } from 'app/entities/models/nk-post.model';
+import { FilePickerComponent } from 'app/entities/nk-file/file-picker/file-picker.component';
+import { ImageViewerComponent } from 'app/entities/nk-file/image-viewer/image-viewer.component';
 import { AlertService } from 'app/shared/alert/alert.service';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { CommentService } from '../nk-comment.service';
-import { AttachmentType } from 'app/entities/enumerations/attachment-type.model';
 
 const initComment: IComment = {
   id: null,
@@ -19,7 +21,7 @@ const initComment: IComment = {
 @Component({
   selector: 'app-comment-update',
   standalone: true,
-  imports: [CommonModule, Field, SharedModule],
+  imports: [CommonModule, Field, SharedModule, FilePickerComponent, ImageViewerComponent],
   templateUrl: './nk-comment-update.component.html',
 })
 export class CommentUpdateComponent implements OnInit {
@@ -35,6 +37,7 @@ export class CommentUpdateComponent implements OnInit {
 
   isSaving = signal(false);
   protected deletedFile: IFile = null;
+  selectedFile = signal<IFile>(null);
 
   commentModel = signal<IComment>(initComment);
 
@@ -47,7 +50,8 @@ export class CommentUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.comment()) {
-      this.commentModel.set({ ...this.comment() });
+      this.commentModel.set({ ...this.comment(), file: null });
+      this.selectedFile.set(this.comment().file);
     }
   }
 
@@ -61,8 +65,7 @@ export class CommentUpdateComponent implements OnInit {
 
     // Trim content to remove leading and trailing whitespace.
     comment.content = comment.content.trim();
-    const newMedia = comment.file?.data || null;
-    comment.file = null; // [TODO] handle file selection
+    const newMedia = this.selectedFile();
     if (comment.id) {
       this.subscribeToSaveResponse(this.commentService.update(comment, newMedia, this.deletedFile));
     } else {
@@ -74,8 +77,8 @@ export class CommentUpdateComponent implements OnInit {
    * Cancels the comment creation or update process and emits a cancellation event to the parent component.
    */
   cancel() {
-    this.remove(); // Clear file selection.
-    this.commentForm().reset({ ...initComment, file: null }); // reset post values.
+    this.removeFile(); // Clear file selection.
+    this.commentForm().reset({ ...initComment }); // reset post values.
     this.oncancel.emit();
   }
 
@@ -85,8 +88,8 @@ export class CommentUpdateComponent implements OnInit {
         // Emit the saved comment back to the parent component with all necessary data.
         this.oncomment.emit(body);
         // Reset the form and clear the file selection after successful save.
-        this.remove(); // Clear file selection.
-        this.commentForm().reset({ ...initComment, file: null }); // reset post values.
+        this.removeFile(); // Clear file selection.
+        this.commentForm().reset({ ...initComment }); // reset post values.
         this.alertService.addAlert({
           type: 'success',
           translationKey: this.comment()?.id
@@ -104,73 +107,18 @@ export class CommentUpdateComponent implements OnInit {
     });
   }
 
-  isImage(file: IFile): boolean {
-    return file.type.startsWith('image/');
-  }
-
-  isVideo(file: IFile): boolean {
-    return file.type.startsWith('video/');
-  }
-
-  formatFileSize(bytes: number): string {
-    if (bytes === 0) return '0 Bytes';
-
-    const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    const index = Math.floor(Math.log(bytes) / Math.log(1024));
-    const size = bytes / Math.pow(1024, index);
-
-    return `${size.toFixed(2)} ${units[index]}`;
-  }
-
-  extention(file: IFile): string {
-    return file.type.split('/').pop()?.toUpperCase();
-  }
-
-  /**
-   * Handles a file selected by the user.
-   * Creates an IFile object, generates a preview URL for images,
-   * warns the user if the file is a video, and stores the file in the post model.
-   */
-  handleFile(event): void {
-    if (!this.withAttach()) return;
-
-    // Extract the first selected file
-    const obj: File = event.target.files[0];
-
-    if (obj) {
-      // Build the internal file representation
-      const file: IFile = {
-        filename: obj.name,
-        size: obj.size,
-        type: obj.type,
-        data: obj,
-      };
-
-      if (this.isImage(file)) {
-        // Generate a preview URL for images
-        file.url = URL.createObjectURL(obj);
-      } else if (this.isVideo(file)) {
-        // Notify user that videos are not supported yet
-        this.alertService.addAlert({
-          type: 'info',
-          translationKey: 'ngelmakTranslation.entities.comment.update.alerts.videoNotSupported',
-          message: 'Les médias vidéos ne sont pas prise en compte pour les commentaires.',
-        });
-      } else {
-        // Nothing need to be done for other media files.
-      }
-
-      // Add the file to the post model
-      this.commentModel.update((c) => ({ ...c, file: file }));
+  addFiles(newFiles: IFile[]): void {
+    if (newFiles.length > 0) {
+      this.selectedFile.set(newFiles[0]);
     }
   }
 
-  remove(): void {
-    const file = this.commentModel().file;
+  removeFile(idx?: number): void {
+    const file = this.selectedFile();
     if (file.type == AttachmentType.IMAGE) {
       URL.revokeObjectURL(file.url);
     }
-    this.commentModel.update((c) => ({ ...c, file: null }));
+    this.selectedFile.set(null);
     if (file.id) {
       this.deletedFile = file;
     }

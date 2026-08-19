@@ -25,46 +25,46 @@ export class SecurityPasswordComponent {
   protected alertService = inject(AlertService);
 
   passwordModel = signal(initPassword);
-  editPassword = signal(false);
 
   passwordForm = form(this.passwordModel, (p) => {
     // Current password
     required(p.currentPassword, {
-      message: 'ngelmakTranslation.userManagement.security.password.fields.required',
+      message: 'ngelmakTranslation.userManagement.security.password.form.required',
     });
     minLength(p.currentPassword, 8, {
-      message: 'ngelmakTranslation.userManagement.security.password.fields.minLength',
+      message: 'ngelmakTranslation.userManagement.security.password.form.minLength',
     });
     maxLength(p.currentPassword, 20, {
-      message: 'ngelmakTranslation.userManagement.security.password.fields.maxLength',
-    });
-
-    // Confirm password
-    required(p.confirmPassword, {
-      message: 'ngelmakTranslation.userManagement.security.password.fields.required',
-    });
-    minLength(p.confirmPassword, 8, {
-      message: 'ngelmakTranslation.userManagement.security.password.fields.minLength',
-    });
-    maxLength(p.confirmPassword, 20, {
-      message: 'ngelmakTranslation.userManagement.security.password.fields.maxLength',
+      message: 'ngelmakTranslation.userManagement.security.password.form.maxLength',
     });
 
     // New password
     required(p.newPassword, {
-      message: 'ngelmakTranslation.userManagement.security.password.fields.required',
+      message: 'ngelmakTranslation.userManagement.security.password.form.required',
     });
     minLength(p.newPassword, 8, {
-      message: 'ngelmakTranslation.userManagement.security.password.fields.minLength',
+      message: 'ngelmakTranslation.userManagement.security.password.form.minLength',
     });
     maxLength(p.newPassword, 20, {
-      message: 'ngelmakTranslation.userManagement.security.password.fields.maxLength',
+      message: 'ngelmakTranslation.userManagement.security.password.form.maxLength',
+    });
+
+    // Confirm password
+    required(p.confirmPassword, {
+      message: 'ngelmakTranslation.userManagement.security.password.form.required',
+    });
+    minLength(p.confirmPassword, 8, {
+      message: 'ngelmakTranslation.userManagement.security.password.form.minLength',
+    });
+    maxLength(p.confirmPassword, 20, {
+      message: 'ngelmakTranslation.userManagement.security.password.form.maxLength',
     });
   });
 
   doNotMatch = signal(false);
-  isUpdating = signal(false);
+  isSaving = signal(false);
   showPassword = signal(false);
+  isEditing = signal(false);
 
   constructor() {
     effect(() => {
@@ -76,13 +76,14 @@ export class SecurityPasswordComponent {
   }
 
   updatePassword() {
-    this.isUpdating.set(true);
+    this.isSaving.set(true);
     const value = this.passwordModel();
     this.userService
       .changePassword(value)
-      .pipe(finalize(() => this.isUpdating.set(false)))
+      .pipe(finalize(() => this.isSaving.set(false)))
       .subscribe({
         next: () => {
+          this.isEditing.set(false);
           this.passwordForm().reset(initPassword);
           this.alertService.addAlert({
             type: 'success',

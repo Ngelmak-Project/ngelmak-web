@@ -215,10 +215,10 @@ export default class IUserManagementComponent implements OnInit {
           this.hasNextPage.set(this.currentPage() < totalPages);
         },
         error: (error) => {
-          this.alertService.addAlert({
-            type: 'error',
-            message: 'Erreur lors du chargement des utilisateurs.',
-          });
+          // this.alertService.addAlert({
+          //   type: 'error',
+          //   message: 'Erreur lors du chargement des utilisateurs.',
+          // });
           console.error('Error loading users:', error);
         },
       });

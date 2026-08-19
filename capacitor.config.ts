@@ -6,7 +6,8 @@ const config: CapacitorConfig = {
   webDir: 'dist/ngelmak-web/browser',
   plugins: {
     SplashScreen: {
-      launchShowDuration: 2000,
+      launchShowDuration: 2000, // Show for 2 seconds
+      launchAutoHide: true, // Auto hide after duration
       backgroundColor: '#000000',
       androidScaleType: 'CENTER_CROP',
       showSpinner: false,

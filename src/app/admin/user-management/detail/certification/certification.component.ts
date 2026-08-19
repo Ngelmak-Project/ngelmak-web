@@ -40,12 +40,14 @@ export class CertificationComponent implements OnInit {
       next: (res) => {
         this.alertService.addAlert({
           type: 'info',
+          translationKey: '',
           message: 'Votre requête pour idenfication est prise en compte.',
         });
       },
       error: () => {
         this.alertService.addAlert({
           type: 'error',
+          translationKey: '',
           message: "Une erreur s'est produite.",
         });
       },

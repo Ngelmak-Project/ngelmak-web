@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LANGUAGES } from 'app/config/language.constants';
-import { fadeInOutRight400ms } from 'app/shared/animations/fade-in-out-right.animation';
+import { fadeInOutRight400ms } from 'app/shared/animations/fade-in-out.animation';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import SharedModule from 'app/shared/shared.module';
 import { TranslationService } from 'app/shared/translation/translation.service';

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { Field, form, maxLength } from '@angular/forms/signals';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { AlertService } from 'app/shared/alert/alert.service';
@@ -7,6 +7,7 @@ import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs';
 import { UserUpdateDTO } from '../user.model';
 import { UserService } from '../user.service';
+import { LANGUAGES } from 'app/config/language.constants';
 
 @Component({
   selector: 'app-security-profile',
@@ -22,7 +23,7 @@ export class SecurityProfileComponent {
   editPersonalInfo = signal(false);
 
   isUploading = signal(false);
-  isUpdatingProfil = signal(false);
+  isSaving = signal(false);
 
   hideLangKeyOptions = signal(true);
 
@@ -34,13 +35,14 @@ export class SecurityProfileComponent {
   });
 
   userForm = form(this.userModel, (p) => {
-    maxLength(p.firstName, 50, { message: '' });
-    maxLength(p.lastName, 50, { message: '' });
-    maxLength(p.langKey, 5, { message: '' });
+    maxLength(p.firstName, 50, { message: 'Maximum 50 caractères' });
+    maxLength(p.lastName, 50, { message: 'Maximum 50 caractères' });
+    maxLength(p.langKey, 5, { message: 'Maximum 5 caractères' });
   });
 
   // Preview file before upload
   filePreview = signal<{ data: File; url: string } | null>(null);
+  languages = LANGUAGES;
 
   constructor() {
     effect(() => {
@@ -75,11 +77,11 @@ export class SecurityProfileComponent {
   }
 
   updateProfile() {
-    this.isUpdatingProfil.set(true);
+    this.isSaving.set(true);
     const userUpdate = this.userModel();
     this.userService
       .update(userUpdate)
-      .pipe(finalize(() => this.isUpdatingProfil.set(false)))
+      .pipe(finalize(() => this.isSaving.set(false)))
       .subscribe({
         next: ({ body }) => {
           // Update user profil info.
@@ -89,6 +91,7 @@ export class SecurityProfileComponent {
         error: () =>
           this.alertService.addAlert({
             type: 'error',
+            translationKey: 'ngelmakTranslation.userManagement.security.profile.alerts.updateError',
             message: "Une erreur s'est produite lors de la mise à jour.",
           }),
       });
@@ -109,7 +112,7 @@ export class SecurityProfileComponent {
         finalize(() => {
           this.isUploading.set(false);
           this.cancelEdit();
-        }),
+        })
       )
       .subscribe({
         next: (res) => {
@@ -121,6 +124,7 @@ export class SecurityProfileComponent {
         error: () =>
           this.alertService.addAlert({
             type: 'error',
+            translationKey: 'ngelmakTranslation.userManagement.security.profile.alerts.updateError',
             message: "Une erreur s'est produite lors de la mise à jour.",
           }),
       });
@@ -134,5 +138,10 @@ export class SecurityProfileComponent {
     if (preview) URL.revokeObjectURL(preview.url);
 
     this.filePreview.set(null);
+  }
+
+  formatLang(langKey: string) {
+    const lang = this.languages.find((l) => l.code === langKey);
+    return lang ? `${lang.flag} ${lang.label}` : '—';
   }
 }

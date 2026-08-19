@@ -1,10 +1,12 @@
 import { Component, computed, effect, inject, Injectable, signal } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { SignInService } from 'app/authentication/sign-in/sign-in.service';
 import { LANGUAGES } from 'app/config/language.constants';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { StateStorageService } from 'app/core/storage/state-storage.service';
 import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
+import { PostFeedStateService } from 'app/entities/nk-post/feed/nk-post-feed-state.service';
+import { fadeInOutDown400ms } from 'app/shared/animations/fade-in-out.animation';
 import { fadeInUp400ms } from 'app/shared/animations/fade-in-up.animation';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import { UserInitialsPipe } from 'app/shared/pipes/user-initials.pipe';
@@ -22,15 +24,17 @@ export class NavbarService {
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   imports: [RouterModule, SharedModule, ClickOutsideDirective, UserInitialsPipe],
-  animations: [fadeInUp400ms],
+  animations: [fadeInUp400ms, fadeInOutDown400ms],
 })
 export default class NavbarComponent {
   private sidebarBehavior = inject(NavbarService);
   private signInService = inject(SignInService);
   private translateService = inject(TranslationService);
   private authService = inject(AuthenticationService);
-  private routerService = inject(Router);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private storageService = inject(StateStorageService);
+  private state = inject(PostFeedStateService);
 
   user = inject(AuthenticationService).authentication;
   activeChannel = inject(ChannelService).channel;
@@ -40,6 +44,7 @@ export default class NavbarComponent {
   languages = LANGUAGES;
 
   isDarkMode = signal(true); // Manage the dark mode state
+  showSearchPannel = signal(false);
   showUserSettings = signal(false);
   showNotifications = signal(false);
   showLanguageSettings = signal(false);
@@ -59,6 +64,14 @@ export default class NavbarComponent {
       } else {
         this.isDarkMode.set(false);
         document.documentElement.classList.remove('dark');
+      }
+    });
+    // Read query param on reload
+    this.route.queryParams.subscribe((params) => {
+      const q = params['q'];
+      if (q) {
+        this.query.set(q);
+        this.state.startSearch();
       }
     });
     this.initializeTheme();
@@ -135,10 +148,37 @@ export default class NavbarComponent {
     this.showUserSettings.set(false);
     this.collapseNavbar();
     this.signInService.signOut();
-    this.routerService.navigate(['']);
+    this.router.navigate(['']);
   }
 
   toggleNavbar(): void {
     this.isNavbarCollapsed.update((isNavbarCollapsed) => !isNavbarCollapsed);
+  }
+
+  // Search query (visible in URL)
+  query = signal('');
+  /**
+   * Computed boolean: search is allowed only if query length >= 5
+   */
+  validForSearch = computed(() => this.query().length >= 5);
+  isSearching = this.state.isSearching;
+
+  /**
+   * Triggered when user clicks search button.
+   * Only updates the URL with the query (NOT page/size).
+   */
+  search(): void {
+    if (!this.validForSearch()) return;
+
+    this.state.startSearch(); // parent sets searching=true
+
+    this.router.navigate(['/search'], {
+      queryParams: { q: this.query() },
+    });
+  }
+
+  clearSearch() {
+    this.showSearchPannel.set(false);
+    this.router.navigate(['/']);
   }
 }

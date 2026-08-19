@@ -1,0 +1,146 @@
+@if (images().length > 0) {
+<div class="w-full">
+  <!-- Header Badge -->
+  <span
+    translate="ngelmakTranslation.entities.file.imageViewer.message"
+    [translateParams]="{ count: images().length }"
+    class="inline-block text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide"
+  ></span>
+
+  <!-- Responsive Grid -->
+  <div class="grid gap-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+    @for (file of images(); track file.filename; let i = $index) {
+    <div
+      class="group relative cursor-pointer overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300"
+      (click)="openImage(file)"
+    >
+      <!-- Image -->
+      <img
+        [src]="file.url"
+        [alt]="file.filename"
+        class="w-full aspect-square object-cover group-hover:brightness-90 transition-all duration-300"
+        loading="lazy"
+      />
+
+      <!-- Overlay -->
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end"
+      >
+        <div class="w-full p-2">
+          <p class="text-xs font-medium text-white truncate">{{ file.filename }}</p>
+        </div>
+      </div>
+
+      <!-- Delete Button -->
+      <button
+        type="button"
+        (click)="onDeleteImage(i); $event.stopPropagation()"
+        class="absolute top-2 right-2 bg-red-500/80 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 shadow-lg backdrop-blur-sm"
+        title="Delete"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-5 h-5"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    }
+  </div>
+</div>
+}
+
+<!-- Image Viewer Modal -->
+@if (selectedImage()) {
+<div
+  class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center"
+  (click)="selectedImage.set(null)"
+>
+  <!-- Close Button -->
+  <button
+    (click)="selectedImage.set(null)"
+    class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2 rounded-lg transition-all duration-200 z-[60] backdrop-blur-sm shadow-lg"
+    aria-label="Close"
+    title="Press ESC to close"
+  >
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+
+  <!-- Image Counter -->
+  <div
+    class="absolute top-4 left-4 bg-white/10 text-white text-sm px-3 py-1.5 rounded-lg backdrop-blur-sm shadow-lg z-[60]"
+  >
+    {{ getCurrentImageIndex() + 1 }} / {{ images().length }}
+  </div>
+
+  <!-- Main Image Container -->
+  <div class="relative w-full max-w-5xl h-[85vh] flex items-center justify-center group">
+    <img
+      [src]="selectedImage().url"
+      [alt]="selectedImage().filename"
+      class="max-w-full max-h-full object-contain drop-shadow-2xl"
+    />
+
+    <!-- Previous Button -->
+    @if (getCurrentImageIndex() > 0) {
+    <button
+      (click)="previousImage($event)"
+      class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white p-2 rounded-lg transition-all duration-200 z-[60] backdrop-blur-sm shadow-lg opacity-0 group-hover:opacity-100"
+      aria-label="Previous image"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+    }
+
+    <!-- Next Button -->
+    @if (getCurrentImageIndex() < images().length - 1) {
+    <button
+      (click)="nextImage($event)"
+      class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white p-2 rounded-lg transition-all duration-200 z-[60] backdrop-blur-sm shadow-lg opacity-0 group-hover:opacity-100"
+      aria-label="Next image"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+    }
+  </div>
+
+  <!-- Filename Info -->
+  <div
+    class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/10 text-white text-xs px-3 py-2 rounded-lg backdrop-blur-sm shadow-lg z-[60] max-w-xs text-center truncate"
+  >
+    {{ selectedImage().filename }}
+  </div>
+
+  <!-- Thumbnail Strip -->
+  @if (images().length > 1) {
+  <div
+    class="absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-2 z-[60] max-w-[80vw] overflow-x-auto pb-2"
+  >
+    @for (file of images(); track file.filename) {
+    <button
+      (click)="selectImageByFile(file); $event.stopPropagation()"
+      class="flex-shrink-0 w-14 h-14 rounded-md overflow-hidden border-2 transition-all duration-200 hover:border-white/80"
+      [ngClass]="{
+        'border-white shadow-lg': selectedImage().filename === file.filename,
+        'border-white/30 opacity-50': selectedImage().filename !== file.filename
+      }"
+      [attr.aria-label]="'Go to image ' + file.filename"
+    >
+      <img [src]="file.url" class="w-full h-full object-cover" />
+    </button>
+    }
+  </div>
+  }
+</div>
+}

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, signal } from '@angular/core';
-import { Field, form } from '@angular/forms/signals';
+import { Component, effect, inject, signal } from '@angular/core';
+import { Field, form, maxLength, minLength, required } from '@angular/forms/signals';
 import { ApiError } from 'app/core/auth/auth.model';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { AlertService } from 'app/shared/alert/alert.service';
@@ -11,8 +11,8 @@ import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-security-login',
-  imports: [CommonModule, Field, SharedModule],
   templateUrl: './app-security-login.component.html',
+  imports: [CommonModule, Field, SharedModule],
 })
 export class SecurityLoginComponent {
   user = inject(AuthenticationService).authentication;
@@ -20,28 +20,45 @@ export class SecurityLoginComponent {
   alertService = inject(AlertService);
   userService = inject(UserService);
 
-  loginModel = signal({
-    login: '',
+  loginModel = signal({ login: '' });
+  loginForm = form(this.loginModel, (p) => {
+    minLength(p.login, 4, {
+      message: 'ngelmakTranslation.userManagement.security.login.form.minLength',
+    });
+    maxLength(p.login, 50, {
+      message: 'ngelmakTranslation.userManagement.security.login.form.maxLength',
+    });
+    required(p.login, {
+      message: 'ngelmakTranslation.userManagement.security.login.form.required',
+    });
   });
-  loginForm = form(this.loginModel);
 
-  editLogin = signal(false);
-  isUpdating = signal(false);
+  isEditing = signal(false);
+  isSaving = signal(false);
   loginAlreadyInUse = signal(false);
 
+  constructor() {
+    effect(() => {
+      if (this.isEditing()) {
+        this.loginModel.set({ login: this.user().login });
+      }
+    });
+  }
+
   updateLogin() {
-    this.isUpdating.set(true);
+    this.isSaving.set(true);
     const value = this.loginModel();
     this.userService
       .updateLogin(value)
-      .pipe(finalize(() => this.isUpdating.set(false)))
+      .pipe(finalize(() => this.isSaving.set(false)))
       .subscribe({
         next: ({ body }) => {
-          this.editLogin.set(false);
+          this.isEditing.set(false);
           // Update user profil info.
           this.authenticationService.authenticate(body);
           this.alertService.addAlert({
             type: 'success',
+            translationKey: 'ngelmakTranslation.userManagement.security.login.alerts.updateSuccess',
             message: 'Votre login est mis à jour avec succès!',
           });
         },
@@ -50,11 +67,13 @@ export class SecurityLoginComponent {
           if (apiError?.errorKey === 'loginExists') {
             this.alertService.addAlert({
               type: 'error',
+              translationKey: 'ngelmakTranslation.userManagement.security.login.alerts.loginExists',
               message: "L'adresse e-mail est déjà utilisée !.",
             });
           } else {
             this.alertService.addAlert({
               type: 'error',
+              translationKey: 'ngelmakTranslation.userManagement.security.login.alerts.updateError',
               message: "Une erreur s'est produite.",
             });
           }

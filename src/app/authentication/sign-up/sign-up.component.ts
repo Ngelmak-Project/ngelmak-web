@@ -64,7 +64,7 @@ export class SignUpComponent {
     pattern(
       p.login,
       /^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$/,
-      { message: () => this.loginPatternErrorMessage() },
+      { message: () => this.loginPatternErrorMessage() }
     );
 
     // Email

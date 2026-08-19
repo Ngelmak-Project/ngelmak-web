@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, signal } from '@angular/core';
-import { Field, form } from '@angular/forms/signals';
+import { Component, effect, inject, signal } from '@angular/core';
+import { email, Field, form, maxLength, minLength, required } from '@angular/forms/signals';
 import { ApiError } from 'app/core/auth/auth.model';
 import { AuthenticationService } from 'app/core/auth/auth.service';
 import { AlertService } from 'app/shared/alert/alert.service';
@@ -11,8 +11,8 @@ import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-security-email',
-  imports: [CommonModule, Field, SharedModule],
   templateUrl: './app-security-email.component.html',
+  imports: [CommonModule, Field, SharedModule],
 })
 export class SecurityEmailComponent {
   user = inject(AuthenticationService).authentication;
@@ -20,29 +20,47 @@ export class SecurityEmailComponent {
   alertService = inject(AlertService);
   userService = inject(UserService);
 
-  emailModel = signal({
-    email: '',
+  emailModel = signal({ email: '' });
+  emailForm = form(this.emailModel, (p) => {
+    email(p.email, { message: 'ngelmakTranslation.userManagement.security.email.form.email' });
+    required(p.email, {
+      message: 'ngelmakTranslation.userManagement.security.email.form.required',
+    });
+    minLength(p.email, 5, {
+      message: 'ngelmakTranslation.userManagement.security.email.form.minLength',
+    });
+    maxLength(p.email, 254, {
+      message: 'ngelmakTranslation.userManagement.security.email.form.maxLength',
+    });
   });
-  emailForm = form(this.emailModel);
 
-  editEmail = signal(false);
-  isUpdating = signal(false);
+  isEditing = signal(false);
+  isSaving = signal(false);
   loginAlreadyInUse = signal(false);
   errorEmailExists = signal(false);
 
+  constructor() {
+    effect(() => {
+      if (this.isEditing()) {
+        this.emailModel.set({ email: this.user().email });
+      }
+    });
+  }
+
   updateEmail() {
-    this.isUpdating.set(true);
+    this.isSaving.set(true);
     const value = this.emailModel();
     this.userService
       .updateEmail(value)
-      .pipe(finalize(() => this.isUpdating.set(false)))
+      .pipe(finalize(() => this.isSaving.set(false)))
       .subscribe({
         next: ({ body }) => {
-          this.editEmail.set(false);
+          this.isEditing.set(false);
           // Update user profil info.
           this.authenticationService.authenticate(body);
           this.alertService.addAlert({
             type: 'success',
+            translationKey: 'ngelmakTranslation.userManagement.security.email.updateSuccess',
             message: 'Votre email est mis à jour avec succès!',
           });
         },
@@ -51,11 +69,13 @@ export class SecurityEmailComponent {
           if (apiError?.errorKey === 'emailExists') {
             this.alertService.addAlert({
               type: 'error',
+              translationKey: 'ngelmakTranslation.userManagement.security.email.emailExists',
               message: "L'adresse e-mail est déjà utilisée !.",
             });
           } else {
             this.alertService.addAlert({
               type: 'error',
+              translationKey: 'ngelmakTranslation.userManagement.security.email.updateError',
               message: "Une erreur s'est produite.",
             });
           }

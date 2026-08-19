@@ -56,12 +56,16 @@ export class ReportDetailComponent {
           this.ticketSig.update((value) => ({ ...value, ...body }));
           this.alertService.addAlert({
             type: 'success',
+            translationKey: '',
             message: body.resolved ? 'Le ticket est maintenant fermé.' : 'Le ticket est ouvert.',
           });
         },
         error: () =>
-          this.alertService.addAlert({ type: 'error',
-            message: "Une error s'est produite." }),
+          this.alertService.addAlert({
+            type: 'error',
+            translationKey: '',
+            message: "Une error s'est produite.",
+          }),
       });
   }
 

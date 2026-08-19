@@ -21,7 +21,8 @@ export class CertificationResetComponent {
     this.userService.certificationWithdrawal(this.id).subscribe({
       next: (res) => {
         this.alertService.addAlert({
-          type: "warning",
+          type: 'warning',
+          translationKey: '',
           message: `Le compte associé au nom d'utilisateur ${this.id} n'est plus certifié.`,
         });
         // this.dialogRef.close(res.body);
@@ -29,9 +30,9 @@ export class CertificationResetComponent {
       },
       error: () => {
         this.alertService.addAlert({
-          type: "error",
-          message:
-            "Une erreur s'est produite.",
+          type: 'error',
+          translationKey: '',
+          message: "Une erreur s'est produite.",
         });
         this.isSaving.set(false);
       },

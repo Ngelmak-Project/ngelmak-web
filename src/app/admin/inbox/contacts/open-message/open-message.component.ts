@@ -31,6 +31,7 @@ export class OpenMessageComponent {
         next: ({ body }) => {
           this.alertSevice.addAlert({
             type: 'success',
+            translationKey: '',
             message: 'Le message est clôturé.',
           });
           this.onclose.emit(body); // Emit the newly updated operation.
@@ -38,6 +39,7 @@ export class OpenMessageComponent {
         error: () => {
           this.alertSevice.addAlert({
             type: 'error',
+            translationKey: '',
             message: "Une erreur est survenue pendant l'opération",
           });
         },

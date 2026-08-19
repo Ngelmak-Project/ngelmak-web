@@ -13,13 +13,12 @@
   <!-- ERRORS + COUNTER -->
   <div class="flex justify-between items-start text-xs w-full mt-2">
     <div class="text-left flex-1">
-      @if (commentForm.content().dirty()) {
-        @for (error of commentForm.content().errors(); track error) {
-          <p class="text-red-600 dark:text-red-500 leading-tight">
-            {{ error.message | translate }}
-          </p>
-        }
-      }
+      @if (commentForm.content().dirty()) { @for (error of commentForm.content().errors(); track
+      error) {
+      <p class="text-red-600 dark:text-red-500 leading-tight">
+        {{ error.message | translate }}
+      </p>
+      } }
     </div>
 
     <div
@@ -36,31 +35,8 @@
   </div>
 
   <!-- IMAGE PREVIEW -->
-  @if (commentModel().file != null) {
-    <div class="relative mt-3">
-      <img
-        class="h-auto rounded-xl shadow-lg dark:shadow-gray-900"
-        [src]="commentModel().file.url"
-        alt="Imported image"
-      />
-
-      <button
-        type="button"
-        (click)="remove()"
-        [disabled]="isSaving()"
-        class="absolute top-2 left-2 h-8 w-8 flex items-center justify-center bg-white/70 dark:bg-gray-700/70 text-gray-600 dark:text-gray-300 rounded-full shadow-md hover:bg-white dark:hover:bg-gray-600 transition-all duration-300"
-      >
-        <svg class="w-3 h-3" fill="none" viewBox="0 0 14 14">
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-          />
-        </svg>
-      </button>
-    </div>
+  @if (selectedFile()) {
+  <app-image-viewer [images]="[selectedFile()]" (ondelete)="removeFile($event)" />
   }
 
   <!-- ACTIONS -->
@@ -73,26 +49,25 @@
         class="inline-flex items-center text-white bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700 hover:from-blue-600 hover:to-blue-700 border border-blue-500 dark:border-blue-600 shadow-md hover:shadow-lg rounded-xl text-sm px-4 py-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         @if (isSaving()) {
-          <svg class="w-4 h-4 animate-spin relative z-10" fill="none" viewBox="0 0 24 24">
-            <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"
-            ></circle>
-            <path
-              class="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg>
-        }
-        @if (comment()?.id) {
-          <span translate="ngelmakTranslation.entities.comment.update.saveUpdate">Modifier</span>
+        <svg class="w-4 h-4 animate-spin relative z-10" fill="none" viewBox="0 0 24 24">
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        } @if (comment()?.id) {
+        <span translate="ngelmakTranslation.entities.comment.update.saveUpdate">Modifier</span>
         } @else {
-          <span translate="ngelmakTranslation.entities.comment.update.savePublish">Publier</span>
+        <span translate="ngelmakTranslation.entities.comment.update.savePublish">Publier</span>
         }
       </button>
 
@@ -100,6 +75,7 @@
       <button
         (click)="cancel()"
         [disabled]="isSaving()"
+        translate="ngelmakTranslation.entities.comment.update.cancel"
         class="text-gray-600 dark:text-gray-300 bg-white/60 dark:bg-gray-700/60 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-2 text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Annuler
@@ -108,35 +84,12 @@
 
     <!-- Image Upload Button -->
     @if (withAttach()) {
-      <label
-        (click)="imgUpload.click()"
-        class="group relative p-2.5 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer rounded-lg hover:bg-blue-100/50 dark:hover:bg-blue-900/30 transition-all duration-300 hover:shadow-md"
-      >
-        <svg
-          class="w-5 h-5 transition-transform duration-300 group-hover:scale-110"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M13 10a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H14a1 1 0 0 1-1-1Z"
-            clip-rule="evenodd"
-          />
-          <path
-            fill-rule="evenodd"
-            d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12c0 .556-.227 1.06-.593 1.422A.999.999 0 0 1 20.5 20H4a2.002 2.002 0 0 1-2-2V6Zm6.892 12 3.833-5.356-3.99-4.322a1 1 0 0 0-1.549.097L4 12.879V6h16v9.95l-3.257-3.619a1 1 0 0 0-1.557.088L11.2 18H8.892Z"
-            clip-rule="evenodd"
-          />
-        </svg>
-        <input
-          type="file"
-          accept=".png, .jpg, .jpeg"
-          class="hidden"
-          (change)="handleFile($event)"
-          #imgUpload
-          [disabled]="isSaving()"
-        />
-      </label>
+    <app-file-picker
+      [allowMultiple]="false"
+      [isDisabled]="isSaving()"
+      [fileCategories]="['image']"
+      (filesSelected)="addFiles($event)"
+    />
     }
   </div>
 </div>
