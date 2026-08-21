@@ -41,7 +41,14 @@
         "admin.desc": "Administrator Area",
         "admin.users": "Users",
         "admin.inbox": "Inbox",
-        "admin.system": "System"
+        "admin.system": "System",
+        "search.panel.title": "Search on Ngelmak",
+        "search.panel.placeholder": "Search...",
+        "search.panel.actions.clear": "Clear",
+        "search.panel.actions.search": "Search",
+        "search.panel.actions.cancel": "Cancel Search",
+        "search.panel.actions.close": "Close",
+        "search.panel.status.searching": "Searching..."
       },
       "notFound": {
         "hero": {

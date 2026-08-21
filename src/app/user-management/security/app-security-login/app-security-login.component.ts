@@ -55,7 +55,7 @@ export class SecurityLoginComponent {
         next: ({ body }) => {
           this.isEditing.set(false);
           // Update user profil info.
-          this.authenticationService.authenticate(body);
+          this.authenticationService.setAuthentication(body);
           this.alertService.addAlert({
             type: 'success',
             translationKey: 'ngelmakTranslation.userManagement.security.login.alerts.updateSuccess',

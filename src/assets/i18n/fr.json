@@ -41,7 +41,14 @@
         "admin.desc": "Espace Administrateur",
         "admin.users": "Utilisateurs",
         "admin.inbox": "Boîte de réception",
-        "admin.system": "Système"
+        "admin.system": "Système",
+        "search.panel.title": "Recherche sur Ngelmak",
+        "search.panel.placeholder": "Rechercher...",
+        "search.panel.actions.clear": "Effacer",
+        "search.panel.actions.search": "Rechercher",
+        "search.panel.actions.cancel": "Annuler la recherche",
+        "search.panel.actions.close": "Fermer",
+        "search.panel.status.searching": "Recherche en cours..."
       },
       "notFound": {
         "title": "Page introuvable",

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthServerProvider } from 'app/core/auth/auth-jwt.service';
 import { AuthenticationService } from 'app/core/auth/auth.service';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SignInService {
@@ -16,7 +16,7 @@ export class SignInService {
    */
   signIn(credentials): Observable<void> {
     return this.authServerProvider.signIn(credentials).pipe(
-      tap(() => this.authService.loadAuthentication()),
+      switchMap(() => this.authService.loadAuthentication()),
       map(() => void 0),
     );
   }
@@ -24,6 +24,6 @@ export class SignInService {
   signOut(): void {
     this.authServerProvider
       .signOut()
-      .subscribe({ complete: () => this.authService.authenticate(null) });
+      .subscribe({ complete: () => this.authService.setAuthentication(null) });
   }
 }

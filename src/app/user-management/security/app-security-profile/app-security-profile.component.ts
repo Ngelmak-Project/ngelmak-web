@@ -85,7 +85,7 @@ export class SecurityProfileComponent {
       .subscribe({
         next: ({ body }) => {
           // Update user profil info.
-          this.authenticationService.authenticate(body);
+          this.authenticationService.setAuthentication(body);
           this.editPersonalInfo.set(false);
         },
         error: () =>
