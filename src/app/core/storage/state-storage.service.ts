@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { IChannel } from 'app/entities/models/nk-channel.model';
+import { Authentication } from './../auth/auth.model';
 import { NativeSecureStorageDriver } from './native-secured-storage.service';
 import { IStorageDriver } from './storage.model';
 import { WebStorageDriver } from './web-storage.service';
@@ -24,6 +25,7 @@ export class StateStorageService {
     PREVIOUS_URL: 'previousUrl',
     AUTHENTICATION_TOKEN: 'authenticationToken',
     REFRESH_TOKEN: 'refreshToken',
+    CONNECTED_USER_CACHE_KEY: 'cachedConnectedUser',
     CHANNEL_CACHE_KEY: 'cachedUserChannel',
     LOCALE: 'locale',
     THEME: 'theme',
@@ -110,6 +112,20 @@ export class StateStorageService {
 
   async clearChannel(): Promise<void> {
     return this.driver.remove(this.StorageKeys.CHANNEL_CACHE_KEY);
+  }
+
+  // ============= CONNECTED USER =============
+  async storeUser(user: Authentication): Promise<void> {
+    return this.driver.set(this.StorageKeys.CONNECTED_USER_CACHE_KEY, JSON.stringify(user));
+  }
+
+  async getUser(): Promise<Authentication | null> {
+    const raw = await this.driver.get(this.StorageKeys.CONNECTED_USER_CACHE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }
+
+  async clearUser(): Promise<void> {
+    return this.driver.remove(this.StorageKeys.CONNECTED_USER_CACHE_KEY);
   }
 
   // ============= GENERAL =============

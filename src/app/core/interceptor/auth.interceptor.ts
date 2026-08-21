@@ -34,24 +34,29 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
       return next(req).pipe(
         catchError((error) => {
-          if (error.status === 401 && error.error?.errorCode === 'TOKEN_EXPIRED') {
-            return handle401(req, next, authService, stateStorageService);
+          const expired = error.status === 401 && error.error?.errorCode === 'TOKEN_EXPIRED';
+
+          if (!expired) {
+            // Normal error, then do not wait, do not retry
+            return throwError(() => error);
           }
 
-          return throwError(() => error);
+          // This request FAILED, then it must retry after refresh
+          return retryAfterRefresh(req, next, authService, stateStorageService);
         })
       );
     })
   );
 };
 
-function handle401(
+function retryAfterRefresh(
   req: HttpRequest<any>,
   next: HttpHandlerFn,
   authService: AuthServerProvider,
   stateStorageService: StateStorageService
 ) {
   if (!isRefreshing) {
+    // Start refresh
     isRefreshing = true;
     refreshTokenSubject.next(null);
 
@@ -78,7 +83,7 @@ function handle401(
     );
   }
 
-  // Other requests wait for the refresh to complete
+  // Refresh already ongoing, this failed request must wait
   return refreshTokenSubject.pipe(
     filter((token) => token !== null),
     take(1),
