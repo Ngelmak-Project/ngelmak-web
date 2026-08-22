@@ -24,7 +24,7 @@ export class TranslationService {
     this.load(this.primaryLang());
 
     // Load persisted locale asynchronously
-    this.stateStorageService.getLocale().then((lang) => {
+    this.stateStorageService.getLang().then((lang) => {
       if (lang) this.load(lang);
     });
     effect(() => {
@@ -60,7 +60,7 @@ export class TranslationService {
    */
   async setLanguage(lang: string) {
     await this.load(lang);
-    await this.stateStorageService.storeLocale(lang);
+    await this.stateStorageService.storeLang(lang);
     this.authService.updateUser({ langKey: lang });
   }
 

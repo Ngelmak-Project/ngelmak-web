@@ -57,7 +57,7 @@ export class AuthServerProvider {
           { withCredentials: true }
         )
       ),
-      switchMap(() => from(this.storage.clearAll())),
+      switchMap(() => from(this.storage.clearAuthenticationToken())),
       map(() => void 0)
     );
   }

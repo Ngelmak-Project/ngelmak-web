@@ -10,18 +10,17 @@ export class AuthenticationService {
   private userService = inject(UserService);
   private storage = inject(StateStorageService);
 
-  /**
-   * Holds the current authenticated user.
-   * Null means "not authenticated".
-   */
+  // Holds the current authenticated user. Null means "not authenticated".
   private readonly _auth = signal<Authentication | null>(null);
-
-  /**
-   * Public readonly signal for components.
-   * Components should never mutate authentication directly.
-   */
+  // Public readonly signal for components.
   readonly authentication = this._auth.asReadonly();
 
+  // How long we consider the cached authentication valid.
+  private readonly AUTH_TTL = 6 * 60 * 60 * 1000;
+  // Last time we successfully loaded authentication from backend.
+  private lastBackendLoad = 0;
+
+  // Signals when authentication has finished initializing.
   private authReady = new BehaviorSubject<boolean>(false);
   authReady$ = this.authReady.asObservable();
 
@@ -57,28 +56,17 @@ export class AuthenticationService {
     this._auth.set(auth);
   }
 
-  /**
-   * How long we consider the cached authentication valid.
-   * Example: 10 minutes.
-   */
-  private readonly AUTH_MAX_AGE = 1 * 60 * 1000;
-
-  /**
-   * Last time we successfully loaded authentication from backend.
-   */
-  private lastBackendLoad = 0;
-
   loadAuthentication(): Observable<Authentication | null> {
     const currentAuth = this._auth();
 
-    // If already authenticated AND cache is fresh → return it
+    // If already authenticated AND cache is fresh: return it
     if (currentAuth && !this.isAuthStale()) {
       return of(currentAuth);
     }
 
     return from(this.storage.getAuthenticationToken()).pipe(
       switchMap((token) => {
-        // No token → do NOT call backend
+        // No token: do NOT call backend
         if (!token) {
           return of(null);
         }
@@ -91,7 +79,7 @@ export class AuthenticationService {
               return of(storedUser);
             }
 
-            // Token exists → backend call is allowed
+            // Token exists: backend call is allowed
             return this.userService.profile().pipe(
               tap(({ body }) => {
                 this.lastBackendLoad = Date.now();
@@ -99,8 +87,8 @@ export class AuthenticationService {
                 void this.storage.storeUser(body);
               }),
               map(({ body }) => body),
-              catchError((erro) => {
-                // Everything failed → clean unauthenticated state
+              catchError(() => {
+                // Everything failed: clean unauthenticated state
                 this.setAuthentication(null);
                 this.storage.clearUser();
                 return of(null);
@@ -116,7 +104,7 @@ export class AuthenticationService {
    * Returns true if the cached authentication is too old.
    */
   private isAuthStale(): boolean {
-    return Date.now() - this.lastBackendLoad > this.AUTH_MAX_AGE;
+    return Date.now() - this.lastBackendLoad > this.AUTH_TTL;
   }
 
   /**

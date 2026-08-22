@@ -10,12 +10,10 @@ import { WebStorageDriver } from './web-storage.service';
  * Service for managing application state persistence across storage layers.
  *
  * Handles storage and retrieval of:
- * - Previous navigation URL (session-only)
- * - Authentication tokens (session or persistent)
- * - User locale preference (session-only)
- * - Theme preference (persistent)
- *
- * Uses sessionStorage for temporary data and localStorage for persistent user preferences.
+ * - Previous navigation URL
+ * - Authentication tokens
+ * - User lang preference
+ * - Theme preference
  */
 @Injectable({ providedIn: 'root' })
 export class StateStorageService {
@@ -27,8 +25,8 @@ export class StateStorageService {
     REFRESH_TOKEN: 'refreshToken',
     CONNECTED_USER_CACHE_KEY: 'cachedConnectedUser',
     CHANNEL_CACHE_KEY: 'cachedUserChannel',
-    LOCALE: 'locale',
     THEME: 'theme',
+    LANG: 'lang',
   } as const;
 
   constructor() {
@@ -71,20 +69,21 @@ export class StateStorageService {
       this.driver.remove(this.StorageKeys.AUTHENTICATION_TOKEN),
       this.driver.remove(this.StorageKeys.REFRESH_TOKEN),
       this.clearChannel(),
+      this.clearUser(),
     ]);
   }
 
-  // ============= LOCALE =============
-  async storeLocale(locale: string): Promise<void> {
-    return this.driver.set(this.StorageKeys.LOCALE, locale);
+  // ============= LANG =============
+  async storeLang(lang: string): Promise<void> {
+    return this.driver.set(this.StorageKeys.LANG, lang);
   }
 
-  async getLocale(): Promise<string | null> {
-    return this.driver.get(this.StorageKeys.LOCALE);
+  async getLang(): Promise<string | null> {
+    return this.driver.get(this.StorageKeys.LANG);
   }
 
-  async clearLocale(): Promise<void> {
-    return this.driver.remove(this.StorageKeys.LOCALE);
+  async clearLang(): Promise<void> {
+    return this.driver.remove(this.StorageKeys.LANG);
   }
 
   // ============= THEME =============
@@ -126,10 +125,5 @@ export class StateStorageService {
 
   async clearUser(): Promise<void> {
     return this.driver.remove(this.StorageKeys.CONNECTED_USER_CACHE_KEY);
-  }
-
-  // ============= GENERAL =============
-  async clearAll(): Promise<void> {
-    return this.driver.clear();
   }
 }

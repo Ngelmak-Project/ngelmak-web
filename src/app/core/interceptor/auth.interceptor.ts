@@ -5,6 +5,7 @@ import { StateStorageService } from 'app/core/storage/state-storage.service';
 import { BehaviorSubject, catchError, from, switchMap, throwError } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { AuthServerProvider } from '../auth/auth-jwt.service';
+import { AuthenticationService } from '../auth/auth.service';
 
 let isRefreshing = false;
 const refreshTokenSubject = new BehaviorSubject<string | null>(null);
@@ -12,7 +13,8 @@ const refreshTokenSubject = new BehaviorSubject<string | null>(null);
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const stateStorageService = inject(StateStorageService);
   const apiConfigService = inject(ApiConfigService);
-  const authService = inject(AuthServerProvider);
+  const authServerProvider = inject(AuthServerProvider);
+  const authService = inject(AuthenticationService);
 
   const serverApiUrl = apiConfigService.buildApiUrl();
 
@@ -42,7 +44,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           }
 
           // This request FAILED, then it must retry after refresh
-          return retryAfterRefresh(req, next, authService, stateStorageService);
+          return retryAfterRefresh(req, next, authServerProvider, authService, stateStorageService);
         })
       );
     })
@@ -52,7 +54,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 function retryAfterRefresh(
   req: HttpRequest<any>,
   next: HttpHandlerFn,
-  authService: AuthServerProvider,
+  authServerProvider: AuthServerProvider,
+  authService: AuthenticationService,
   stateStorageService: StateStorageService
 ) {
   if (!isRefreshing) {
@@ -60,7 +63,7 @@ function retryAfterRefresh(
     isRefreshing = true;
     refreshTokenSubject.next(null);
 
-    return authService.refreshToken().pipe(
+    return authServerProvider.refreshToken().pipe(
       switchMap(() =>
         from(stateStorageService.getAuthenticationToken()).pipe(
           switchMap((newToken) => {
@@ -78,6 +81,10 @@ function retryAfterRefresh(
       catchError((err) => {
         isRefreshing = false;
         refreshTokenSubject.next(null);
+        // CLEAR STORAGE ON REFRESH FAILURE
+        from(stateStorageService.clearAuthenticationToken()).subscribe(() =>
+          authService.setAuthentication(null)
+        );
         return throwError(() => err);
       })
     );

@@ -1,9 +1,10 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { effect, inject, Injectable, signal } from '@angular/core';
+import { Authentication } from 'app/core/auth/auth.model';
 import { AuthenticationService } from 'app/core/auth/auth.service';
-import { StateStorageService } from 'app/core/storage/state-storage.service';
 import { ApiConfigService } from 'app/core/config/api-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
+import { StateStorageService } from 'app/core/storage/state-storage.service';
 import {
   IChannel,
   IEngagementStats,
@@ -28,24 +29,29 @@ export class ChannelService {
    */
   readonly channel = this._channel.asReadonly();
   private authService = inject(AuthenticationService);
+  private _prevAuth = signal<Authentication | null>(null);
 
   private http = inject(HttpClient);
   private resourceUrl = inject(ApiConfigService).buildApiUrl('core', 'channels');
   private stateStorageService = inject(StateStorageService);
 
   constructor() {
-    /**
-     * React to authentication changes.
-     * When the user logs in → fetch channel.
-     * When the user logs out → clear channel.
-     */
     effect(() => {
       const auth = this.authService.authentication();
-      if (auth) {
-        this.loadChannel().catch((error) => console.error('Failed to load channel:', error));
-      } else {
+      const prev = this._prevAuth();
+
+      // Authentication became valid → initialize channel
+      if (!prev && auth) {
+        this.loadChannel().catch((err) => console.error('Channel load failed:', err));
+      }
+
+      // Authentication became invalid → clear channel
+      if (prev && !auth) {
         this._channel.set(null);
       }
+
+      // Track current state for next evaluation
+      this._prevAuth.set(auth);
     });
   }
 

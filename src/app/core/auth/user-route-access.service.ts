@@ -6,19 +6,19 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { AuthenticationService } from 'app/core/auth/auth.service';
-import { StateStorageService } from '../storage/state-storage.service';
 import { filter, map, take } from 'rxjs';
+import { StateStorageService } from '../storage/state-storage.service';
 
 export const UserRouteAccessService: CanActivateFn = (
   next: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
   const authService = inject(AuthenticationService);
-  const router = inject(Router);
   const stateStorageService = inject(StateStorageService);
+  const router = inject(Router);
 
   return authService.authReady$.pipe(
-    filter(ready => ready),
+    filter((ready) => ready),
     take(1),
     map(() => {
       const auth = authService.authentication();
