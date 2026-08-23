@@ -1,27 +1,27 @@
 <article
-  class="group flex flex-col py-4 px-4 space-y-2 rounded-none md:rounded-xl lg:rounded-2xl bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 md:border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-2xl transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600"
+  class="flex flex-col px-4 py-4 space-y-2 transition-all duration-300 border-gray-200 rounded-none shadow-lg group md:rounded-xl lg:rounded-2xl bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 md:border dark:border-gray-700 hover:shadow-2xl hover:border-gray-300 dark:hover:border-gray-600"
 >
   <!-- HEADER -->
   <header class="flex items-start justify-between gap-4">
     <!-- LEFT SECTION -->
-    <div class="flex items-center gap-4 flex-1 min-w-0">
+    <div class="flex items-center flex-1 min-w-0 gap-4">
       <!-- AVATAR WITH GLOW EFFECT -->
       <a
         [routerLink]="['/channel', postSig().channel?.identifier, 'view']"
-        class="shrink-0 group/avatar relative"
+        class="relative shrink-0 group/avatar"
       >
         <div
-          class="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-lg opacity-0 group-hover/avatar:opacity-50 transition-opacity duration-300"
+          class="absolute inset-0 transition-opacity duration-300 rounded-full opacity-0 bg-gradient-to-r from-blue-400 to-purple-500 blur-lg group-hover/avatar:opacity-50"
         ></div>
         @if (postSig().channel?.avatar) {
         <img
           [src]="postSig().channel?.avatar"
           alt="Avatar"
-          class="relative w-12 h-12 rounded-full object-cover ring-2 ring-white dark:ring-gray-800 shadow-md transition-transform duration-300 hover:scale-110"
+          class="relative object-cover w-12 h-12 transition-transform duration-300 rounded-full shadow-md ring-2 ring-white dark:ring-gray-800 hover:scale-110"
         />
         } @else {
         <div
-          class="relative w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg shadow-md ring-2 ring-white dark:ring-gray-800"
+          class="relative flex items-center justify-center w-12 h-12 text-lg font-bold text-white rounded-full shadow-md bg-gradient-to-br from-blue-400 to-purple-500 ring-2 ring-white dark:ring-gray-800"
         >
           {{ postSig().channel | channelInitials }}
         </div>
@@ -29,16 +29,16 @@
       </a>
 
       <!-- USER INFO -->
-      <div class="flex flex-col min-w-0 flex-1">
+      <div class="flex flex-col flex-1 min-w-0">
         <!-- NAME & IDENTIFIER -->
-        <div class="flex items-center gap-1 min-w-0 flex-wrap">
+        <div class="flex flex-wrap items-center min-w-0 gap-1">
           <a
-            class="truncate font-bold text-gray-900 dark:text-white text-base hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            class="text-base font-bold text-gray-900 truncate transition-colors dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
             [routerLink]="['/channel', postSig().channel?.identifier, 'view']"
           >
             {{ postSig().channel?.name }}
           </a>
-          <span class="text-xs font-medium text-gray-500 dark:text-gray-400 truncate">
+          <span class="text-xs font-medium text-gray-500 truncate dark:text-gray-400">
             @{{ postSig().channel?.identifier }}
           </span>
         </div>
@@ -49,7 +49,7 @@
           <time
             class="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors"
           >
-            <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <svg class="flex-shrink-0 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path
                 d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"
               />
@@ -99,31 +99,39 @@
   </header>
 
   <!-- REPLY SECTION -->
-  @if (postSig()?.postReply) {
+  @if (postSig()?.replyTo) {
   <a
-    [routerLink]="['/post', postSig().postReply.id, 'view']"
-    class="group flex items-start gap-3 p-3 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+    [routerLink]="['/post', postSig().replyTo.id, 'view']"
+    class="flex items-start gap-3 p-3 transition-colors bg-gray-100 border border-gray-200 cursor-pointer group rounded-xl dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700"
   >
     <!-- Avatar -->
+    @if (postSig().replyTo?.channel?.avatar) {
     <img
-      [src]="postSig().postReply.channel?.avatar"
-      class="w-10 h-10 rounded-full object-cover"
+      [src]="postSig().replyTo?.channel?.avatar"
       alt="Avatar"
+      class="relative object-cover w-10 h-10 transition-transform duration-300 rounded-full shadow-md ring-2 ring-white dark:ring-gray-800 hover:scale-110"
     />
+    } @else {
+    <div
+      class="relative flex items-center justify-center w-10 h-10 text-lg font-bold text-white rounded-full shadow-md bg-gradient-to-br from-blue-400 to-purple-500 ring-2 ring-white dark:ring-gray-800"
+    >
+      {{ postSig().channel | channelInitials }}
+    </div>
+    }
 
     <!-- Text -->
     <div class="flex flex-col min-w-0">
       <div class="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-300">
         <span class="font-semibold text-gray-900 dark:text-white">
-          {{ postSig().postReply.channel?.name }}
+          {{ postSig().replyTo.channel?.name }}
         </span>
         <span class="text-xs text-gray-500 dark:text-gray-400">
-          @{{ postSig().postReply.channel?.identifier }}
+          @{{ postSig().replyTo.channel?.identifier }}
         </span>
       </div>
 
-      <p class="text-sm text-gray-700 dark:text-gray-300 truncate">
-        {{ postSig().postReply.content }}
+      <p class="text-sm text-gray-700 truncate dark:text-gray-300">
+        {{ postSig().replyTo.content }}
       </p>
     </div>
   </a>
@@ -132,7 +140,7 @@
   <!-- UPDATE FORM -->
   @if (isUpdating()) {
   <div
-    class="relative rounded-xl bg-white dark:bg-gray-800 border-2 border-blue-300 dark:border-blue-600 p-4 shadow-lg"
+    class="relative p-4 bg-white border-2 border-blue-300 shadow-lg rounded-xl dark:bg-gray-800 dark:border-blue-600"
   >
     <app-post-update
       [post]="postSig()"
@@ -151,7 +159,7 @@
   <!-- REPLY FORM -->
   @if (isReplying()) {
   <app-post-update
-    [postReply]="postSig()"
+    [replyTo]="postSig()"
     (onsaved)="handlePostUpdate($event)"
     (oncancel)="handleCancelUpdate()"
   ></app-post-update>
@@ -163,7 +171,7 @@
     <button
       type="button"
       (click)="isCommentOpened.set(!isCommentOpened())"
-      class="flex items-center justify-center gap-2 px-3 py-2 min-h-10 rounded-lg bg-gray-100 hover:bg-blue-100 dark:hover:bg-gray-700 dark:bg-gray-800 transition-all duration-200 group/comment hover:shadow-md"
+      class="flex items-center justify-center gap-2 px-3 py-2 transition-all duration-200 bg-gray-100 rounded-lg min-h-10 hover:bg-blue-100 dark:hover:bg-gray-700 dark:bg-gray-800 group/comment hover:shadow-md"
       [ngClass]="{ 'bg-blue-100 dark:bg-gray-700': isCommentOpened() }"
     >
       <svg
@@ -172,7 +180,7 @@
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover/comment:text-blue-600 dark:group-hover/comment:text-blue-400 transition-colors"
+        class="w-5 h-5 text-gray-600 transition-colors dark:text-gray-300 group-hover/comment:text-blue-600 dark:group-hover/comment:text-blue-400"
       >
         <path
           stroke-linecap="round"
@@ -182,7 +190,7 @@
       </svg>
       @if (postSig().commentCount > 0) {
       <span
-        class="text-sm font-bold text-gray-700 dark:text-gray-200 group-hover/comment:text-blue-700 dark:group-hover/comment:text-blue-300 transition-colors"
+        class="text-sm font-bold text-gray-700 transition-colors dark:text-gray-200 group-hover/comment:text-blue-700 dark:group-hover/comment:text-blue-300"
       >
         {{ postSig().commentCount }}
       </span>
@@ -190,7 +198,7 @@
     </button>
 
     <!-- REACTIONS -->
-    <div class="min-h-10 flex">
+    <div class="flex min-h-10">
       <app-reaction-dialog [post]="postSig()"></app-reaction-dialog>
     </div>
 
@@ -198,7 +206,7 @@
     <div *hasAnyAuthority="'ROLE_USER'" class="relative inline-flex items-center gap-2 ml-auto">
       @if (!postSig().visible) {
       <span
-        class="w-5 h-5 text-base leading-none inline-flex items-center justify-center transition-transform duration-300 hover:scale-110"
+        class="inline-flex items-center justify-center w-5 h-5 text-base leading-none transition-transform duration-300 hover:scale-110"
       >
         🔒
       </span>
@@ -207,7 +215,7 @@
         clickOutside
         (onClickOutside)="showMenu.set(false)"
         (click)="showMenu.set(!showMenu())"
-        class="flex items-center justify-center w-10 h-10 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 group/menu"
+        class="flex items-center justify-center w-10 h-10 text-gray-500 transition-all duration-200 rounded-lg dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 group/menu"
         [ngClass]="{ 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200': showMenu() }"
       >
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -219,15 +227,15 @@
       <!-- MENU ITEMS GO HERE -->
       @if (showMenu()) {
       <div
-        class="absolute right-0 bottom-11 w-48 rounded-2xl bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-2xl divide-y divide-gray-200 dark:divide-gray-700 transition-all duration-300 z-20 animate-fadeIn overflow-hidden"
+        class="absolute right-0 z-50 w-48 overflow-hidden transition-all duration-300 border border-gray-200 divide-y divide-gray-200 shadow-lg bottom-11 rounded-2xl bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 dark:border-gray-700 hover:shadow-2xl dark:divide-gray-700 animate-fadeIn"
       >
-        <ul *showForChannel="post().channel?.id">
+        <ul *hasAnyAuthority="['ROLE_USER']">
           <!-- REPLY -->
           <li>
             <button
               (click)="isReplying.set(true)"
               [disabled]="isReplying()"
-              class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 transition-all duration-200"
+              class="inline-flex items-center justify-between w-full px-4 py-2 text-sm text-gray-700 transition-all duration-200 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60"
             >
               <span translate="ngelmakTranslation.entities.post.card.menu.reply">Répondre</span>
               <svg
@@ -257,7 +265,7 @@
             <button
               (click)="isUpdating.set(true)"
               [disabled]="isUpdating()"
-              class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 transition-all duration-200"
+              class="inline-flex items-center justify-between w-full px-4 py-2 text-sm text-gray-700 transition-all duration-200 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60"
             >
               <span translate="ngelmakTranslation.entities.post.card.menu.update">Modifier</span>
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
@@ -276,7 +284,7 @@
           <li>
             <button
               (click)="confirmDeleteOpen.set(true)"
-              class="w-full px-4 py-2 text-left text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 flex items-center justify-between"
+              class="flex items-center justify-between w-full px-4 py-2 text-left text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
             >
               <span translate="ngelmakTranslation.entities.post.card.menu.delete">Supprimer</span>
 
@@ -325,7 +333,7 @@
           <li>
             <button
               (click)="isSignalPost.set(true)"
-              class="w-full flex flex-col px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 transition-all duration-200 text-left"
+              class="flex flex-col w-full px-4 py-2 text-sm text-left text-gray-700 transition-all duration-200 dark:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60"
             >
               <p class="flex items-center justify-between text-sm text-gray-700 dark:text-gray-200">
                 <span translate="ngelmakTranslation.entities.post.card.menu.report.label"
@@ -363,7 +371,7 @@
         <ul *hasAnyAuthority="'ROLE_ADMIN'">
           <li>
             <button
-              class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition"
+              class="inline-flex items-center justify-between w-full px-4 py-2 text-sm text-red-600 transition dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
             >
               <span translate="ngelmakTranslation.entities.post.card.menu.admin.blockUser"
                 >Bloquer l'utilisateur</span
@@ -387,7 +395,7 @@
 
           <li>
             <button
-              class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
+              class="inline-flex items-center justify-between w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
             >
               <span translate="ngelmakTranslation.entities.post.card.menu.admin.delete"
                 >Supprimer</span
@@ -413,7 +421,7 @@
           </li>
           <li>
             <button
-              class="w-full inline-flex items-center justify-between px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
+              class="inline-flex items-center justify-between w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
             >
               <span translate="ngelmakTranslation.entities.post.card.menu.admin.hide">Masquer</span>
               <svg
@@ -440,7 +448,7 @@
 
   <!-- COMMENTS SECTION -->
   @if (isCommentOpened()) {
-  <div class="pt-4 border-t border-gray-200 dark:border-gray-700 animate-in fade-in duration-300">
+  <div class="pt-4 duration-300 border-t border-gray-200 dark:border-gray-700 animate-in fade-in">
     <app-comment [post]="postSig()" (oncomment)="onComment($event)" />
   </div>
   }

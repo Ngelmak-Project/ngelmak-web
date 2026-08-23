@@ -16,7 +16,7 @@ export interface IPost {
   content?: string | null;
   status?: keyof typeof Status | null;
   channel?: IChannel | null;
-  postReply?: IPost | null;
+  replyTo?: IPost | null;
   files?: IFile[];
   comments?: IComment[];
 }
@@ -32,7 +32,7 @@ export interface IPostDTO {
   files?: IFileDTO[];
   reactions?: IReactionSummaryDTO;
   commentCount?: number;
-  postReply?: IPostDTO;
+  replyTo?: IPostDTO;
 }
 
 export interface IFeedPageDTO {

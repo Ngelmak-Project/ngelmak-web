@@ -28,7 +28,7 @@ const initPost: IPost = {
 })
 export class PostUpdateComponent {
   post = input<IPost | IPostDTO>(); // The post to edit, provided as an input property.
-  postReply = input<IPostDTO>(null); // The post this post is replying to, if any (used for context in replies)
+  replyTo = input<IPostDTO>(null); // The post this post is replying to, if any (used for context in replies)
   onsaved = output<IPostDTO>(); // Event emitted when the post is successfully saved.
   oncancel = output<void>(); // Event emitted when the user cancels the edit operation.
   protected postSig = signal<IPostDTO>(null);
@@ -69,8 +69,8 @@ export class PostUpdateComponent {
   save(): void {
     this.isSaving.set(true);
     const post: IPost = { ...this.postModel() }; // Create a copy of the post model to modify before sending to backend
-    if (this.postReply()) {
-      post.postReply = { id: this.postReply().id } as IPost; // Only ID is needed for postReply when sending to backend
+    if (this.replyTo()) {
+      post.replyTo = { id: this.replyTo().id } as IPost; // Only ID is needed for replyTo when sending to backend
     }
 
     post.content = post.content.trim();
@@ -103,12 +103,15 @@ export class PostUpdateComponent {
         this.selectedFiles.set([]); // Clear selected files.
         this.onsaved.emit(res.body);
       },
-      error: () =>
+      error: (error) => {
+        console.log(error);
+
         this.alertService.addAlert({
           type: 'error',
           translationKey: 'ngelmakTranslation.entities.post.update.alerts.error',
           message: "Une erreur s'est produite lors de l'enregistrement.",
-        }),
+        });
+      },
     });
   }
 
@@ -137,10 +140,10 @@ export class PostUpdateComponent {
   /**
    * Returns the placeholder text for the content textarea based on the current state.
    */
-  get contentPlaceholder(): string {
+  get placeholder(): string {
     if (this.post()?.id)
       return 'ngelmakTranslation.entities.post.update.content.onUpdatePlaceholder';
-    if (this.postReply())
+    if (this.replyTo())
       return 'ngelmakTranslation.entities.post.update.content.onReplyPlaceholder';
     return 'ngelmakTranslation.entities.post.update.content.placeholder';
   }

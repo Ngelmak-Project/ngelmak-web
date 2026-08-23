@@ -14,12 +14,12 @@ import { DurationPipe } from 'app/shared/date';
 import { ClickOutsideDirective } from 'app/shared/directives/click-outside.directive';
 import { ShowForChannelDirective } from 'app/shared/directives/show-for-channel';
 import { ImageCarouselComponent } from 'app/shared/image-carousel/image-carousel.component';
+import { ChannelInitialsPipe } from 'app/shared/pipes/channel-initials.pipe';
 import SharedModule from 'app/shared/shared.module';
 import { TextCollapseComponent } from 'app/shared/text-collapse/text-collapse.component';
 import { finalize } from 'rxjs';
 import { PostService } from '../nk-post.service';
 import { PostUpdateComponent } from '../update/nk-post-update.component';
-import { ChannelInitialsPipe } from 'app/shared/pipes/channel-initials.pipe';
 
 @Component({
   standalone: true,
@@ -39,7 +39,7 @@ import { ChannelInitialsPipe } from 'app/shared/pipes/channel-initials.pipe';
     ImageCarouselComponent,
     TextCollapseComponent,
     TicketDialogComponent,
-    ChannelInitialsPipe
+    ChannelInitialsPipe,
   ],
 })
 export class PostCardComponent {
@@ -82,7 +82,7 @@ export class PostCardComponent {
 
     // Find the subscription where this channel follows the post's channel
     return this.activeChannel().stats?.following.find(
-      (e) => e.subscribedToId === this.post().channel?.id,
+      (e) => e.subscribedToId === this.post().channel?.id
     );
   });
 
@@ -138,7 +138,7 @@ export class PostCardComponent {
         finalize(() => {
           this.isDeleting.set(false);
           this.showMenu.set(false);
-        }),
+        })
       )
       .subscribe({
         next: () => {
