@@ -724,6 +724,7 @@
         "login": {
           "title": "Account login",
           "description": "Your login identifier is used to access your account. It is <strong class=\"font-semibold\">not publicly visible</strong> and is never shared with third parties. You can change it at any time if needed.",
+          "label": "Your login",
           "empty": "No login provided",
           "form.title": "Edit Login",
           "form.label": "Login",
@@ -749,12 +750,12 @@
           "form.email": "The email address is not valid.",
           "form.minLength": "The email address must be at least 5 characters long.",
           "form.maxLength": "The email address cannot exceed 254 characters.",
+          "form.actions.cancel": "Cancel",
+          "form.actions.save": "Save",
           "edit": "Edit email address",
           "verified": "Verified",
           "unverified": "Not verified",
           "errorExists": "Email already in use.",
-          "actions.cancel": "Cancel",
-          "actions.save": "Save",
           "alerts.emailExists": "The email address is already in use.",
           "alerts.updateSuccess": "Your email has been successfully updated.",
           "alerts.updateError": "An error occurred."
@@ -770,15 +771,15 @@
           "form.currentPassword.label": "Current password",
           "form.newPassword.label": "New password",
           "form.confirmPassword.label": "Confirm password",
+          "form.confirmPassword.passwordsDoNotMatch": "The two passwords do not match.",
           "form.required": "This field is required.",
           "form.minLength": "The password must be at least 8 characters long.",
           "form.maxLength": "The password cannot exceed 20 characters.",
+          "form.actions.cancel": "Cancel",
+          "form.actions.save": "Update password",
           "alerts.success": "Your password has been updated.",
           "alerts.invalidCurrentPassword": "The current password is incorrect.",
-          "alerts.error": "An error occurred while updating your password.\nPlease try again.",
-          "errors.doNotMatch": "The two passwords do not match.",
-          "actions.cancel": "Cancel",
-          "actions.save": "Update password"
+          "alerts.error": "An error occurred while updating your password.\nPlease try again."
         },
         "deletion": {
           "title": "Account deletion",

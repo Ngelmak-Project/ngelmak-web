@@ -6,11 +6,11 @@ YELLOW="\e[33m"
 RED="\e[31m"
 RESET="\e[0m"
 
-echo -e "${BLUE}🎨 Generating cross‑platform icons & splash...${RESET}"
+echo -e "${BLUE}🎨 Generating cross-platform icons & splash...${RESET}"
 npx capacitor-assets generate || { echo -e "${RED}❌ Asset generation failed${RESET}"; exit 1; }
 
 echo -e "${YELLOW}📦 Building Angular app...${RESET}"
-ng build || { echo -e "${RED}❌ Angular build failed${RESET}"; exit 1; }
+ng build > /dev/null 2>&1 || { echo -e "${RED}❌ Angular build failed${RESET}"; exit 1; }
 
 echo -e "${YELLOW}🔄 Syncing Capacitor...${RESET}"
 npx cap sync android || { echo -e "${RED}❌ Capacitor sync failed${RESET}"; exit 1; }

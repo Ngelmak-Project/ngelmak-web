@@ -717,6 +717,7 @@
         "login": {
           "title": "Identifiant du compte",
           "description": "Votre identifiant est utilisé pour vous connecter à votre compte. Il n'est <strong class=\"font-semibold\">pas visible publiquement</strong> et n'est jamais partagé avec des tiers.",
+          "label": "Votre identifiant",
           "empty": "Aucun identifiant renseigné",
           "form.title": "Modifier l'identifiant",
           "form.label": "Identifiant",
@@ -738,6 +739,7 @@
           "empty": "Aucune adresse email renseignée",
           "verified": "Vérifié",
           "unverified": "Non vérifié",
+          "label": "Email",
           "form.label": "Email",
           "form.required": "L'adresse email est requise.",
           "form.email": "L'adresse email n'est pas valide.",
@@ -762,15 +764,15 @@
           "form.currentPassword.label": "Mot de passe actuel",
           "form.newPassword.label": "Nouveau mot de passe",
           "form.confirmPassword.label": "Confirmer le mot de passe",
+          "form.confirmPassword.passwordsDoNotMatch": "Les deux mots de passes ne correspondent pas.",
           "form.required": "Ce champ est requis.",
           "form.minLength": "Le mot de passe doit comporter au moins 8 caractères.",
           "form.maxLength": "Le mot de passe ne peut pas dépasser 20 caractères.",
+          "form.actions.cancel": "Annuler",
+          "form.actions.save": "Mettre à jour le mot de passe",
           "alerts.success": "Votre mot de passe a été mis à jour.",
           "alerts.invalidCurrentPassword": "Le mot de passe actuel est incorrect.",
-          "alerts.error": "Une erreur s'est produite lors de la mise à jour de votre mot de passe.\nVeuillez réessayer.",
-          "errors.doNotMatch": "Les deux mots de passes ne correspondent pas.",
-          "actions.cancel": "Annuler",
-          "actions.save": "Mettre à jour le mot de passe"
+          "alerts.error": "Une erreur s'est produite lors de la mise à jour de votre mot de passe.\nVeuillez réessayer."
         },
         "deletion": {
           "title": "Suppression du compte",

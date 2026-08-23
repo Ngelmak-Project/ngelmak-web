@@ -1,4 +1,5 @@
-# 📱Angular + Capacitor  
+# 📱Angular + Capacitor
+
 Native mobile workflow for Android development
 
 This document describes the steps required to build the Angular web application, integrate Capacitor, prepare the Android native project, run the application on an emulator or device, inspect and debug it, and optionally enable live reload.
@@ -25,7 +26,7 @@ Capacitor uses the compiled Angular output located in `dist/`.
 ng build
 ```
 
-This produces the web assets that will be copied into the Android project. Capacitor `webDir`  in `capacitor.config.ts` must point to the folder containing `index.html` (and `assets` folder). If Angular outputs `dist/ngelmak-web/browser` :
+This produces the web assets that will be copied into the Android project. Capacitor `webDir` in `capacitor.config.ts` must point to the folder containing `index.html` (and `assets` folder). If Angular outputs `dist/ngelmak-web/browser` :
 
 ```ts
 import type { CapacitorConfig } from '@capacitor/cli';
@@ -33,7 +34,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'org.ngelmak.web',
   appName: 'ngelmak-web',
-  webDir: 'dist/ngelmak-web/browser'
+  webDir: 'dist/ngelmak-web/browser',
 };
 
 export default config;
@@ -65,11 +66,11 @@ npx cap sync
 
 This updates the native Android/iOS projects so they match the current Angular web build and installed Capacitor plugins. It is the "bridge" step between the web code and the native code.
 
-| Operation | Description |
-| --- | --- |
-| **Copy web assets** | Moves Angular build output into native projects |
-| **Sync plugins** | Ensures native code matches installed Capacitor plugins |
-| **Update native config** | Regenerates platform-specific settings |
+| Operation                | Description                                             |
+| ------------------------ | ------------------------------------------------------- |
+| **Copy web assets**      | Moves Angular build output into native projects         |
+| **Sync plugins**         | Ensures native code matches installed Capacitor plugins |
+| **Update native config** | Regenerates platform-specific settings                  |
 
 If only web assets changed:
 
@@ -83,15 +84,15 @@ npx cap copy
 
 Android Studio provides:
 
-- Android SDK  
-- Virtual device manager (emulators)  
-- Build tools  
-- Device inspector and debugging tools  
+- Android SDK
+- Virtual device manager (emulators)
+- Build tools
+- Device inspector and debugging tools
 
 Installation steps:
 
-1. Download Android Studio from the official website.  
-2. Install with default settings.  
+1. Download Android Studio from the official website.
+2. Install with default settings.
 3. Launch Android Studio and allow it to install required SDK components.
 
 ---
@@ -112,15 +113,15 @@ Android Studio will load the `android/` folder as a native Gradle project.
 
 ### Create an emulator
 
-1. Open **Device Manager** in Android Studio.  
-2. Create a new virtual device (e.g., Pixel 6).  
-3. Select a system image (Android 13 or later).  
+1. Open **Device Manager** in Android Studio.
+2. Create a new virtual device (e.g., Pixel 6).
+3. Select a system image (Android 13 or later).
 4. Finish setup.
 
 ### Launch the application
 
-1. Select the created emulator in the device dropdown.  
-2. Press **Run ▶** in Android Studio.  
+1. Select the created emulator in the device dropdown.
+2. Press **Run ▶** in Android Studio.
 3. The Capacitor application will install and launch on the emulator.
 
 ---
@@ -129,15 +130,15 @@ Android Studio will load the `android/` folder as a native Gradle project.
 
 ### Requirements
 
-- USB debugging enabled on the device  
-- USB cable  
-- Android Studio installed  
+- USB debugging enabled on the device
+- USB cable
+- Android Studio installed
 
 ### Steps
 
-1. Connect the device via USB.  
-2. Confirm the “Allow USB debugging” prompt on the device.  
-3. Select the device in Android Studio’s device list.  
+1. Connect the device via USB.
+2. Confirm the “Allow USB debugging” prompt on the device.
+3. Select the device in Android Studio’s device list.
 4. Press **Run ▶**.
 
 The application will install and launch on the physical device.
@@ -153,24 +154,24 @@ Chrome DevTools can inspect this WebView.
 
 Steps:
 
-1. Launch the application on an emulator or device.  
-2. Open Chrome on the development machine.  
+1. Launch the application on an emulator or device.
+2. Open Chrome on the development machine.
 3. Navigate to:
 
 ```
 chrome://inspect
 ```
 
-4. The running WebView instance will appear under “Remote Target”.  
-5. Select “Inspect” to open DevTools.  
+4. The running WebView instance will appear under “Remote Target”.
+5. Select “Inspect” to open DevTools.
 
 This provides access to:
 
-- Console  
-- Network panel  
-- Elements inspector  
-- Application storage  
-- Performance tools  
+- Console
+- Network panel
+- Elements inspector
+- Application storage
+- Performance tools
 
 ---
 
@@ -217,10 +218,10 @@ Android Studio provides release build tools.
 
 Steps:
 
-1. Open **Build > Generate Signed Bundle / APK**.  
-2. Create or select a keystore.  
-3. Choose **APK** or **App Bundle (AAB)**.  
-4. Complete the wizard.  
+1. Open **Build > Generate Signed Bundle / APK**.
+2. Create or select a keystore.
+3. Choose **APK** or **App Bundle (AAB)**.
+4. Complete the wizard.
 
 The release artifact will be generated in:
 
@@ -237,4 +238,102 @@ ng build --prod     # Build Angular
 npx cap copy        # Copy web assets
 npx cap sync        # Copy + update native plugins
 npx cap open android
+```
+
+Here’s a **tight, clean, copy‑paste‑ready summary** of _everything we did_, from installation to troubleshooting, suitable for your `.md` file. No fluff, no extra words — just the essential steps and fixes.
+
+---
+
+# Android SDK (No Android Studio)
+
+## Download
+Get the official Android Command Line Tools ZIP from Google:  
+**Android Command Line Tools [(developer.android.com in Bing)](https://www.bing.com/search?q="https%3A%2F%2Fdeveloper.android.com%2Fstudio%23downloads")**  
+(Choose **Command line tools only** for your OS)
+
+## Create SDK Directory
+```bash
+mkdir -p ~/Android/Sdk/cmdline-tools/latest
+```
+
+## Extract ZIP
+```bash
+unzip commandlinetools.zip -d ~/Android/Sdk/cmdline-tools/latest
+```
+
+## Fix Nested Folder Issue
+Google’s ZIP often creates:
+
+```bash
+latest/cmdline-tools/bin/
+```
+
+Fix it:
+
+```bash
+mv ~/Android/Sdk/cmdline-tools/latest/cmdline-tools/* ~/Android/Sdk/cmdline-tools/latest/
+rm -rf ~/Android/Sdk/cmdline-tools/latest/cmdline-tools
+```
+
+## Install SDK Components
+
+```
+sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+yes | sdkmanager --licenses
+```
+
+## Add Environment Variables (zsh)
+
+Add to `~/.zshrc`:
+
+```bash
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+```
+
+Reload:
+
+```bash
+source ~/.zshrc
+```
+
+## Create `local.properties`
+
+Gradle requires this file `android/local.properties`:
+
+```bash
+echo "sdk.dir=$HOME/Android/Sdk" > android/local.properties
+```
+
+## Build APK
+
+```
+npx cap sync android
+cd android
+./gradlew assembleDebug
+```
+
+## Fix `adb` Not Found
+
+Cause: PATH not updated in zsh.  
+Fix: add platform-tools to `~/.zshrc` (see step 4).
+
+## Fix `adb unauthorized`
+
+- Kill server: `adb kill-server`
+- Reconnect device
+- Accept USB debugging popup
+- If no popup: revoke authorizations in Developer Options
+- Ensure USB mode = File Transfer
+
+## Fix `INSTALL_FAILED_UPDATE_INCOMPATIBLE`
+
+Existing app signed with different key.
+
+Fix:
+
+```
+adb uninstall org.ngelmak.web
+adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```

@@ -80,19 +80,11 @@
   background-color: #a1a1a1; /* Hover state color */
 }
 
-/* Scrollbar buttons */
-::-webkit-scrollbar-button:vertical:decrement {
-  background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8"><path d="M0 4l4-4 4 4H0z" fill="gray"/></svg>') no-repeat center center;
-  background-size: 10px;
-  height: 16px; /* Height of the up button */
+::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
 }
-
-::-webkit-scrollbar-button:vertical:increment {
-  background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8"><path d="M0 0l4 4 4-4H0z" fill="gray"/></svg>') no-repeat center center;
-  background-size: 10px;
-  height: 16px; /* Height of the down button */
-}
-
 
 /* Light Theme */
 .light {

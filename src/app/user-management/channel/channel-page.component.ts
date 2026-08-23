@@ -89,7 +89,7 @@ export class ChannelPageComponent {
         error: () =>
           this.alertService.addAlert({
             type: 'error',
-            translationKey: 'ngelmakTranslation.userManagement.channel.channelUpdateError',
+            translationKey: 'ngelmakTranslation.userManagement.channel.alerts.channelUpdateError',
             message: "Une erreur s'est produite lors de la mise à jour.",
           }),
       });

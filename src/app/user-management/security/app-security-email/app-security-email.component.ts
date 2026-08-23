@@ -60,7 +60,7 @@ export class SecurityEmailComponent {
           this.authenticationService.setAuthentication(body);
           this.alertService.addAlert({
             type: 'success',
-            translationKey: 'ngelmakTranslation.userManagement.security.email.updateSuccess',
+            translationKey: 'ngelmakTranslation.userManagement.security.email.alerts.updateSuccess',
             message: 'Votre email est mis à jour avec succès!',
           });
         },
@@ -69,13 +69,13 @@ export class SecurityEmailComponent {
           if (apiError?.errorKey === 'emailExists') {
             this.alertService.addAlert({
               type: 'error',
-              translationKey: 'ngelmakTranslation.userManagement.security.email.emailExists',
+              translationKey: 'ngelmakTranslation.userManagement.security.email.alerts.emailExists',
               message: "L'adresse e-mail est déjà utilisée !.",
             });
           } else {
             this.alertService.addAlert({
               type: 'error',
-              translationKey: 'ngelmakTranslation.userManagement.security.email.updateError',
+              translationKey: 'ngelmakTranslation.userManagement.security.email.alerts.updateError',
               message: "Une erreur s'est produite.",
             });
           }

@@ -29,14 +29,14 @@ export class SecurityDeleteComponent {
         next: () => {
           this.alertService.addAlert({
             type: 'success',
-            translationKey: 'ngelmakTranslation.userManagement.security.deletion.deletionSuccess',
+            translationKey: 'ngelmakTranslation.userManagement.security.deletion.alerts.deletionSuccess',
             message: 'Confirmation da la suppression de votre compte!',
           });
         },
         error: () => {
           this.alertService.addAlert({
             type: 'error',
-            translationKey: 'ngelmakTranslation.userManagement.security.deletion.deletionError',
+            translationKey: 'ngelmakTranslation.userManagement.security.deletion.alerts.deletionError',
             message: "Une erreur s'est produite.",
           });
         },
