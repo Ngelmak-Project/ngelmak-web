@@ -404,6 +404,7 @@
         },
         "update": {
           "pageTitle": "Ngelmak — Post Update",
+          "title": "Create Post",
           "replyContext": {
             "replyingTo": "Replying to"
           },
@@ -411,6 +412,7 @@
             "placeholder": "Teach us something!",
             "onUpdatePlaceholder": "Edit your post...",
             "onReplyPlaceholder": "Write your reply...",
+            "characterCount": "{{count}} character(s)",
             "required": "Post content is required.",
             "maxLength": "Post content cannot exceed 10000 characters."
           },

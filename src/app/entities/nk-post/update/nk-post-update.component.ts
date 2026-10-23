@@ -8,9 +8,11 @@ import { ChannelService } from 'app/entities/nk-channel/nk-channel.service';
 import { FilePickerComponent } from 'app/entities/nk-file/file-picker/file-picker.component';
 import { ImageViewerComponent } from 'app/entities/nk-file/image-viewer/image-viewer.component';
 import { AlertService } from 'app/shared/alert/alert.service';
+import { fadeInOutDown400ms } from 'app/shared/animations/fade-in-out.animation';
 import SharedModule from 'app/shared/shared.module';
 import { finalize } from 'rxjs/operators';
 import { PostService } from './../nk-post.service';
+import { ChannelInitialsPipe } from 'app/shared/pipes/channel-initials.pipe';
 
 const initPost: IPost = {
   id: null,
@@ -23,7 +25,15 @@ const initPost: IPost = {
   standalone: true,
   selector: 'app-post-update',
   templateUrl: './nk-post-update.component.html',
-  imports: [RouterModule, Field, SharedModule, FilePickerComponent, ImageViewerComponent],
+  imports: [
+    RouterModule,
+    Field,
+    SharedModule,
+    FilePickerComponent,
+    ImageViewerComponent,
+    ChannelInitialsPipe,
+  ],
+  animations: [fadeInOutDown400ms],
   encapsulation: ViewEncapsulation.None, // Disable encapsulation
 })
 export class PostUpdateComponent {
@@ -41,6 +51,7 @@ export class PostUpdateComponent {
   selectedFiles = signal<IFile[]>([]);
   activeChannel = inject(ChannelService).channel;
   expandedIndexes: Set<number> = new Set<number>();
+  showDialog = signal(true);
 
   protected postModel = signal<IPost>(initPost);
 
@@ -66,7 +77,7 @@ export class PostUpdateComponent {
     });
   }
 
-  save(): void {
+  publishPost(): void {
     this.isSaving.set(true);
     const post: IPost = { ...this.postModel() }; // Create a copy of the post model to modify before sending to backend
     if (this.replyTo()) {
@@ -104,8 +115,6 @@ export class PostUpdateComponent {
         this.onsaved.emit(res.body);
       },
       error: (error) => {
-        console.log(error);
-
         this.alertService.addAlert({
           type: 'error',
           translationKey: 'ngelmakTranslation.entities.post.update.alerts.error',
@@ -143,8 +152,7 @@ export class PostUpdateComponent {
   get placeholder(): string {
     if (this.post()?.id)
       return 'ngelmakTranslation.entities.post.update.content.onUpdatePlaceholder';
-    if (this.replyTo())
-      return 'ngelmakTranslation.entities.post.update.content.onReplyPlaceholder';
+    if (this.replyTo()) return 'ngelmakTranslation.entities.post.update.content.onReplyPlaceholder';
     return 'ngelmakTranslation.entities.post.update.content.placeholder';
   }
 }

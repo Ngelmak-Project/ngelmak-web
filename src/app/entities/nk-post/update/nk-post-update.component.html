@@ -1,111 +1,157 @@
 <div class="w-full max-w-2xl mx-auto">
-  <!-- Main Card with Gradient Background -->
   <div
-    class="relative overflow-hidden transition-all duration-300 rounded-none shadow-lg md:rounded-xl lg:rounded-2xl bg-gradient-to-br from-white via-blue-50/30 to-white dark:from-gray-800 dark:via-blue-900/10 dark:to-gray-800 md:border border-gray-200/50 dark:border-gray-700/50 dark:shadow-2xl hover:shadow-xl hover:border-gray-300/70 dark:hover:border-gray-600/70"
+    class="transition-all duration-200 border border-gray-200 rounded-none shadow-sm bg-gray-50 md:rounded-2xl dark:bg-gray-900 dark:border-gray-700 hover:shadow-md"
   >
-    <!-- Decorative Gradient Orb (Background) -->
-    <div
-      class="absolute rounded-full pointer-events-none -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-200/20 to-purple-200/20 dark:from-blue-500/10 dark:to-purple-500/10 blur-3xl"
-    ></div>
-    <div
-      class="absolute rounded-full pointer-events-none -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-cyan-200/20 to-blue-200/20 dark:from-cyan-500/10 dark:to-blue-500/10 blur-3xl"
-    ></div>
-
-    <!-- Main Content -->
-    <div class="flex flex-col gap-4 px-6 py-5">
-      <!-- Reply Context - Enhanced -->
-      @if (replyTo()) {
+    <div class="flex items-center gap-2 px-4 py-3">
+      <!-- Avatar -->
       <div
-        class="flex gap-3 p-4 transition-all duration-300 border-l-4 border-blue-400 group bg-gradient-to-r from-blue-50/80 to-cyan-50/80 dark:from-blue-900/30 dark:to-cyan-900/30 dark:border-blue-500 rounded-r-xl hover:from-blue-100/80 hover:to-cyan-100/80 dark:hover:from-blue-900/40 dark:hover:to-cyan-900/40"
+        class="flex items-center justify-center text-sm font-bold text-white rounded-full shadow-md w-11 h-11 bg-gradient-to-br from-blue-400 to-indigo-600"
       >
-        <div class="flex-1 min-w-0">
-          <p class="text-sm font-semibold text-blue-900 dark:text-blue-200">
-            {{ replyTo().channel.name }}
-            <span class="font-normal text-blue-700 text-opacity-75 dark:text-blue-300"
-              >@{{ replyTo().channel.identifier }}</span
-            >
-          </p>
-          <p
-            class="mt-1 text-sm leading-relaxed text-blue-800 truncate dark:text-blue-300 opacity-80"
-          >
-            {{ replyTo().content }}
-          </p>
-        </div>
-        <button
-          class="flex-shrink-0 p-1 text-blue-400 transition-opacity opacity-0 hover:text-blue-600 dark:hover:text-blue-300 group-hover:opacity-100"
-          type="button"
-        >
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              fill-rule="evenodd"
-              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </button>
+        @if (activeChannel().avatar) {
+        <img [src]="activeChannel().avatar" class="object-cover w-full h-full" />
+        } @else {
+        {{ activeChannel() | channelInitials }}
+        }
       </div>
-      }
 
-      <!-- Textarea - Premium Design -->
-      <div class="relative group">
+      <!-- Input -->
+      <button
+        (click)="showDialog.set(true)"
+        class="flex-1 px-5 py-2 text-sm text-left text-gray-500 transition-all duration-200 bg-white border-2 border-transparent rounded-full dark:text-gray-400 dark:bg-gray-800 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:border-blue-500"
+      >
+        {{ placeholder | translate }}
+      </button>
+
+      <!-- Quick action icon -->
+      <button
+        (click)="showDialog.set(true)"
+        class="flex-shrink-0 p-2.5 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors duration-200"
+        title="Add photo or video"
+      >
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path
+            d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Dialog -->
+@if (showDialog()) {
+<!-- Modal -->
+<div @fadeInOutDown class="fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div
+    class="w-full md:max-w-2xl max-h-[90vh] bg-white dark:bg-gray-900 rounded-3xl md:rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Header - Always Visible -->
+    <div
+      class="flex items-center justify-between flex-shrink-0 px-6 py-3 border-b border-gray-200 dark:border-gray-700"
+    >
+      <h2
+        translate="ngelmakTranslation.entities.post.update.title"
+        class="text-lg font-bold text-gray-900 dark:text-gray-100"
+      >
+        Créer une publication
+      </h2>
+      <button
+        (click)="showDialog.set(false)"
+        class="p-2 text-gray-400 transition-colors rounded-lg hover:text-gray-600 dark:hover:text-gray-300"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Content - Flex Column, Not Scrollable -->
+    <div class="flex flex-col flex-1 min-h-0">
+      <!-- User Info -->
+      <div
+        class="flex items-center flex-shrink-0 gap-3 px-6 py-3 border-b border-gray-100 dark:border-gray-800"
+      >
+        <!-- Avatar -->
+        <div
+          class="flex items-center justify-center text-sm font-bold text-white rounded-full shadow-md w-11 h-11 bg-gradient-to-br from-blue-400 to-indigo-600"
+        >
+          @if (activeChannel().avatar) {
+          <img [src]="activeChannel().avatar" class="object-cover w-full h-full" />
+          } @else {
+          {{ activeChannel() | channelInitials }}
+          }
+        </div>
+        <div class="inline-flex items-center flex-1 gap-2">
+          <p class="text-xl font-semibold text-gray-900 md:text-2xl dark:text-gray-100">
+            {{ activeChannel()?.name }}
+          </p>
+          <button
+            type="button"
+            (click)="toggleVisibility()"
+            [attr.aria-pressed]="postModel().visible"
+            class="mt-1 inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium border transition-all"
+            [ngClass]="{
+              'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800': postModel().visible,
+              'bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800': !postModel().visible,
+            }"
+          >
+            <span>{{ postModel().visible ? '🌍' : '🔒' }}</span>
+            <span>{{ postModel().visible ? 'Public' : 'Private' }}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Textarea - Grows, No Scroll -->
+      <div class="flex-shrink-0 px-6 py-4">
         <textarea
           [field]="postForm.content"
           id="content"
           rows="5"
-          class="w-full px-5 py-4 text-sm text-gray-900 placeholder-gray-400 transition-all duration-300 bg-white border-2 border-gray-200 shadow-sm resize-none dark:text-gray-100 dark:bg-gray-700/50 dark:border-gray-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 dark:focus:ring-offset-0 focus:border-transparent dark:focus:border-transparent dark:placeholder-gray-500 hover:border-gray-300 dark:hover:border-gray-500 focus:shadow-lg focus:bg-white dark:focus:bg-gray-700"
+          class="w-full text-xl font-light text-gray-900 placeholder-gray-400 bg-transparent border-0 outline-none resize-none dark:text-gray-100 dark:placeholder-gray-500"
           [placeholder]="placeholder | translate"
         ></textarea>
 
-        <!-- Character count - Repositioned & Styled -->
+        <!-- Character count -->
         <div
-          class="flex-shrink-0 text-xs font-medium transition-colors duration-300 float-end bottom-2 right-3"
-          [class.text-red-500]="postForm.content().value().length >= postForm.content().maxLength()"
-          [class.text-blue-500]="
-            postForm.content().value().length >= postForm.content().maxLength() * 0.9 &&
-            postForm.content().value().length < postForm.content().maxLength()
-          "
-          [class.text-gray-400]="
-            postForm.content().value().length < postForm.content().maxLength() * 0.9
-          "
-        >
-          <span class="opacity-70">{{ postForm.content().value().length }}</span>
-          <span class="opacity-50">/{{ postForm.content().maxLength() }}</span>
-        </div>
+          translate="ngelmakTranslation.entities.post.update.content.characterCount"
+          [translateParams]="{ count: postModel().content.length }"
+          class="mt-2 text-xs text-gray-500 dark:text-gray-400"
+        ></div>
       </div>
 
-      <!-- Validation Errors - Enhanced Display -->
-      @if (postForm.content().dirty() && postForm.content().errors().length > 0) {
-      <div
-        class="p-3 space-y-2 duration-300 border rounded-lg animate-in fade-in slide-in-from-top-2 bg-red-50/80 dark:bg-red-900/20 border-red-200/50 dark:border-red-800/50"
-      >
-        @for (error of postForm.content().errors(); track error) {
-        <p class="flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
-          {{ error.message | translate }}
-        </p>
-        }
+      <!-- Image Preview Grid - Only This Scrolls -->
+      <div class="flex-1 px-6 overflow-y-auto">
+        <app-image-viewer [images]="selectedFiles()" (ondelete)="removeFile($event)" />
       </div>
-      }
-
-      <app-image-viewer [images]="selectedFiles()" (ondelete)="removeFile($event)" />
     </div>
 
-    <!-- Actions Footer - Redesigned -->
+    <!-- Footer - Always Visible -->
     <div
-      class="flex items-center justify-between gap-4 px-6 py-4 border-t bg-gradient-to-r from-gray-50/50 to-blue-50/30 dark:from-gray-800/40 dark:to-blue-900/20 border-gray-200/50 dark:border-gray-700/50"
+      class="flex-shrink-0 px-6 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50"
     >
-      <div class="flex items-center gap-2">
-        <!-- Publish/Update Button -->
-        <button
-          (click)="save()"
-          [disabled]="postForm().invalid() || isSaving() || !activeChannel()"
-          type="button"
-          class="relative inline-flex gap-2 items-center px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-700 dark:to-blue-800 dark:hover:from-blue-600 dark:hover:to-blue-700 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:shadow-lg overflow-hidden group"
-        >
-          <!-- Button Shine Effect -->
-          <div
-            class="absolute inset-0 transition-transform duration-700 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:translate-x-full"
-          ></div>
+      <div class="flex items-center justify-between gap-3">
+        <!-- Quick actions -->
+        <div class="flex items-center gap-1">
+          <app-file-picker
+            [allowMultiple]="true"
+            [isDisabled]="isSaving()"
+            [fileCategories]="['image']"
+            (filesSelected)="addFiles($event)"
+          />
+        </div>
 
+        <!-- Publish button -->
+        <button
+          (click)="publishPost()"
+          [disabled]="postForm().invalid() || isSaving() || !activeChannel()"
+          class="flex items-center gap-2 px-5 py-2 text-sm font-semibold text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+        >
           @if (isSaving()) {
           <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
             <circle
@@ -129,7 +175,7 @@
             />
           </svg>
           }
-          <span class="relative">
+          <span>
             {{
               post()?.id
                 ? ('ngelmakTranslation.entities.post.update.actions.update' | translate)
@@ -137,126 +183,9 @@
             }}
           </span>
         </button>
-
-        <!-- Cancel Button -->
-        @if (post()?.id) {
-        <button
-          type="button"
-          (click)="oncancel.emit()"
-          class="px-5 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800/50 border-2 border-gray-200 dark:border-gray-600/50 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:border-gray-300 dark:hover:border-gray-500 transition-all duration-300 hover:shadow-md"
-        >
-          {{ 'ngelmakTranslation.entities.post.update.actions.cancel' | translate }}
-        </button>
-        }
-      </div>
-
-      <!-- Right Side Actions -->
-      <div class="flex items-center gap-2">
-        <!-- Image Upload Button -->
-        <app-file-picker
-          [allowMultiple]="true"
-          [isDisabled]="isSaving()"
-          [fileCategories]="['image']"
-          (filesSelected)="addFiles($event)"
-        />
-
-        <button
-          type="button"
-          (click)="toggleVisibility()"
-          [attr.aria-pressed]="postModel().visible"
-          [title]="postModel().visible ? 'Make private' : 'Make public'"
-          class="group relative p-2.5 text-gray-600 dark:text-gray-400 transition-all duration-300 rounded-lg hover:shadow-md"
-          [ngClass]="{
-            'text-blue-600 dark:text-blue-400 hover:bg-blue-100/50 dark:hover:bg-blue-900/30':
-              postModel().visible,
-            'text-purple-600 dark:text-purple-400 hover:bg-purple-100/50 dark:hover:bg-purple-900/30':
-              !postModel().visible,
-          }"
-        >
-          <span
-            class="inline-flex items-center justify-center w-5 h-5 text-base leading-none transition-transform duration-300 group-hover:scale-110"
-          >
-            {{ postModel().visible ? '🌍' : '🔒' }}
-          </span>
-        </button>
       </div>
     </div>
-
-    <!-- Login Prompt - Beautiful Alert -->
-    <div
-      *hasNoAuthority="'ROLE_USER'"
-      class="px-6 py-4 transition-all duration-300 border-t bg-gradient-to-r from-amber-50/80 to-orange-50/80 dark:from-amber-900/30 dark:to-orange-900/30 border-amber-200/50 dark:border-amber-800/50"
-    >
-      <div class="flex flex-col items-center gap-3 md:flex-row">
-        <p
-          class="inline-flex items-center space-x-1 text-sm font-medium text-amber-900 dark:text-amber-200"
-        >
-          <svg
-            class="flex-shrink-0 w-6 h-6 text-amber-600 dark:text-amber-400"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-              clip-rule="evenodd"
-            />
-          </svg>
-          <span translate="ngelmakTranslation.entities.post.update.actions.loginToPost">
-            Sign in to publish your thoughts and engage with the community.
-          </span>
-        </p>
-        <a
-          translate="ngelmakTranslation.entities.post.update.actions.signIn"
-          routerLink="/sign-in"
-          class="ml-auto flex-shrink-0 px-4 py-1.5 text-sm font-semibold text-amber-700 dark:text-amber-300 hover:bg-amber-100/50 dark:hover:bg-amber-900/40 rounded-lg transition-colors"
-        >
-          Sign In
-        </a>
-      </div>
-    </div>
-
-    <!-- Channel Not Created Yet - Alert -->
-    @if (!activeChannel()) {
-    <div
-      *hasAnyAuthority="'ROLE_USER'"
-      class="px-6 py-4 transition-all duration-300 border-t bg-gradient-to-r from-blue-50/80 to-cyan-50/80 dark:from-blue-900/30 dark:to-cyan-900/30 border-blue-200/50 dark:border-blue-800/50"
-    >
-      <div class="flex flex-col items-center gap-3 md:flex-row">
-        <p
-          class="inline-flex items-center space-x-1 text-sm font-medium text-blue-900 dark:text-blue-200"
-        >
-          <svg
-            class="flex-shrink-0 w-6 h-6 text-blue-600 dark:text-blue-400"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-            />
-          </svg>
-
-          <span translate="ngelmakTranslation.entities.post.update.noChannel.message">
-            No channel created yet. Create a new channel to get started.
-          </span>
-        </p>
-        <a
-          translate="ngelmakTranslation.entities.post.update.noChannel.create"
-          routerLink="/channel/new"
-          class="ml-auto flex-shrink-0 px-4 py-1.5 text-sm font-semibold text-blue-700 dark:text-blue-300 hover:bg-blue-100/50 dark:hover:bg-blue-900/40 rounded-lg transition-colors"
-        >
-          Create Channel
-        </a>
-      </div>
-    </div>
-    }
   </div>
 </div>
+
+}

@@ -405,6 +405,7 @@
         },
         "update": {
           "pageTitle": "Ngelmak — Mise à jour du post",
+          "title": "Créer une publication",
           "replyContext": {
             "replyingTo": "En réponse à"
           },
@@ -412,6 +413,7 @@
             "placeholder": "Enseignez-nous quelque chose!",
             "onUpdatePlaceholder": "Modifiez votre poste...",
             "onReplyPlaceholder": "Écrivez votre réponse...",
+            "characterCount": "{{count}} caractère(s)",
             "required": "Le contenu du post est requis.",
             "maxLength": "Le contenu du post ne peut pas dépasser 10000 caractères."
           },
