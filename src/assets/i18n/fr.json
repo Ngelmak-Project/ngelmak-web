@@ -424,8 +424,11 @@
           "actions": {
             "publish": "Publier",
             "update": "Modifier",
-            "cancel": "Annuler",
-            "loginToPost": "Connectez-vous pour publier vos idées et interagir avec la communauté.",
+            "cancel": "Annuler"
+          },
+          "unauthenticated": {
+            "title": "Prêt à partager votre voix ?",
+            "description": "Connectez-vous pour publier des messages et vous engager avec la communauté.",
             "signIn": "Se connecter"
           },
           "noChannel": {

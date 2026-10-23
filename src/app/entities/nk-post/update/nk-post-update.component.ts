@@ -51,7 +51,7 @@ export class PostUpdateComponent {
   selectedFiles = signal<IFile[]>([]);
   activeChannel = inject(ChannelService).channel;
   expandedIndexes: Set<number> = new Set<number>();
-  showDialog = signal(true);
+  showDialog = signal(false);
 
   protected postModel = signal<IPost>(initPost);
 

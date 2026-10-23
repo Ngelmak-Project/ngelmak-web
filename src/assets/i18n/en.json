@@ -427,6 +427,11 @@
             "loginToPost": "Log in to share your ideas and interact with the community.",
             "signIn": "Sign in"
           },
+          "unauthenticated": {
+            "title": "Ready to share your voice?",
+            "description": "Sign in to publish posts and connect with the community.",
+            "signIn": "Sign In"
+          },
           "noChannel": {
             "message": "No channel created yet. Create a new channel to get started.",
             "create": "Create Channel"
